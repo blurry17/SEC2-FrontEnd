@@ -28,17 +28,18 @@
 <body ng-controller="indexController" layout="column" ng-cloak>
 
   <div class="wrapper">
-    <div class="topbar" ng-show="showLayout">
+    <div class="topbar container-fluid" ng-show="showLayout">
       <div class="row" style="height:100%">
-        <div class="col-md-6">
-          <button type="button" id="sidebarCollapse" class="btn btn-light"><i class="fas fa-bars"></i></button>
-          <label style="height:50%">Sistema de Evaluación Continua</label>
+        <div class="col-md-10">
+          <button type="button" id="sidebarCollapse" class="btn btn-light vertical-center"><i class="fas fa-bars"></i></button>
+          <label class="vertical-center" style="font-size: 150%"><b>Sistema de Evaluación Continua</b></label>
         </div>
         <div class="col-md-1">
-          Juan Perez
+          <label class="vertical-center">Juan Perez</label>
         </div>
-        <div class="col-md-1 float-right">
-          <button type="button" id="sidebarCollapse" class="btn btn-light" ng-click="btnLogout()"><i class="fas fa-sign-out-alt"></i></button>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-light total-center" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesión" ng-click="btnLogout()"><i
+              class="fas fa-sign-out-alt"></i></button>
         </div>
       </div>
 
@@ -47,7 +48,7 @@
     <nav id="sidebar" ng-show="showLayout">
       <ul class="list-unstyled components">
         <li class="active">
-          <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cursos</a>
+          <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-book"></i>&nbspCursos</a>
           <ul class="collapse list-unstyled" id="homeSubmenu">
             <li>
               <a>Sistemas de Información 1</a>
@@ -61,13 +62,13 @@
           </ul>
         </li>
         <li>
-          <a>Información Histórica</a>
+          <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
         </li>
       </ul>
 
       <ul class="list-unstyled CTAs">
         <li>
-          <a href="https://www.pucp.edu.pe/">PUCP</a>
+          <a rel="noopener noreferrer" target="_blank" href="https://www.pucp.edu.pe/">PUCP</a>
         </li>
       </ul>
     </nav>
@@ -144,10 +145,13 @@
 
   <div class="overlay"></div>
 
-  <script src="app/app.js"></script>
-  <script src="app/modules/index/indexController.js"></script>
-  <script src="app/modules/login/LoginController.js"></script>
-  <script src="app/modules/main/mainController.js"></script>
+  <script>
+    document.write("<script type='text/javascript' src='app/app.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/index/indexController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/login/LoginController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/main/mainController.js?v=" + Date.now() + "'><\/script>");
+      document.write("<script type='text/javascript' src='app/services/serviceCRUD.js?v=" + Date.now() + "'><\/script>");
+  </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -162,21 +166,25 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
   <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function () { 
+      $('[data-toggle="tooltip"]').tooltip({
+        trigger: 'hover'
+      })
+
       $("#sidebar").mCustomScrollbar({
         theme: "minimal"
       });
 
-      $('#dismiss, .overlay').on('click', function () {
-        $('#sidebar').removeClass('active');
-        $('.overlay').removeClass('active');
-      });
-
       $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').addClass('active');
-        $('.overlay').addClass('active');
-        $('.collapse.in').toggleClass('in');
-        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        if ($('#sidebar').hasClass('active')) {
+          $('#sidebar').removeClass('active');
+          $('.overlay').removeClass('active');
+        } else {
+          $('#sidebar').addClass('active');
+          $('.overlay').addClass('active');
+          $('.collapse.in').toggleClass('in');
+          $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        }
       });
     });
   </script>

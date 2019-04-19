@@ -1,4 +1,4 @@
-var app = angular.module('appFS', ['ng', 'ngRoute', 'ngCookies','ngMessages']);
+var app = angular.module('appFS', ['ng', 'ngRoute', 'ngCookies','ngMessages','ServiceCRUD']);
 
 app.config(function ($routeProvider, $httpProvider) {
     $httpProvider.defaults.headers.post = { 'Content-Type': 'application/json; charset=utf-8' };

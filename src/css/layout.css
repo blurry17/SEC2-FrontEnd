@@ -41,12 +41,29 @@ a:focus {
     margin: 40px 0;
 }
 
-.center-vertical {
+.vertical-center {
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+.horizontal-center {
+    position: absolute;
+    left: 50%;
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.total-center{
     position: absolute;
     top: 50%;
-    -moz-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
 }
 
 /* ---------------------------------------------------
@@ -54,9 +71,11 @@ a:focus {
 ----------------------------------------------------- */
 
 .topbar{
+    position: fixed;
     width: 100%;
-    height: 80px;
+    height: 70px;
     z-index: 999;
+    background-color: whitesmoke;
 }
 
 /* ---------------------------------------------------
@@ -66,12 +85,13 @@ a:focus {
 #sidebar {
     width: 250px;
     position: fixed;
-    top: 80px;
+    top: 70px;
     left: -250px;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
-    color: #fff;
+    background: whitesmoke;
+    color: #6d7fcc;
+    
     transition: all 0.3s;
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
@@ -79,26 +99,6 @@ a:focus {
 
 #sidebar.active {
     left: 0;
-}
-
-#dismiss {
-    width: 35px;
-    height: 35px;
-    line-height: 35px;
-    text-align: center;
-    background: #7386D5;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-}
-
-#dismiss:hover {
-    background: #fff;
-    color: #7386D5;
 }
 
 .overlay {
@@ -118,7 +118,7 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #6d7fcc;
+    background: whitesmoke;
 }
 
 #sidebar ul.components {
@@ -144,8 +144,8 @@ a:focus {
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    color: #7386D5;
+    background-color: #bacfef;
 }
 
 a[data-toggle="collapse"] {
@@ -163,7 +163,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: whitesmoke;
 }
 
 ul.CTAs {
@@ -199,6 +199,7 @@ a.article:hover {
     min-height: 100vh;
     transition: all 0.3s;
     position: absolute;
-    top: 80px;
+    top: 70px;
     right: 0;
+    z-index: 998;
 }
