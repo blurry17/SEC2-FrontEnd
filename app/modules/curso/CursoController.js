@@ -12,7 +12,6 @@ app.controller('CursoController',function($scope){
         }
     ]
 
-
     $scope.mostrarCurso = function(curso){
         var cursoElegido = $scope.cursos.indexOf(curso)
         console.log(cursoElegido)
