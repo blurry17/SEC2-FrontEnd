@@ -41,6 +41,10 @@ a:focus {
     margin: 40px 0;
 }
 
+.dropdown-toggle::after {
+    display:none !important;
+}
+
 .vertical-center {
     margin: 0;
     position: relative;
@@ -76,6 +80,7 @@ a:focus {
     height: 70px;
     z-index: 999;
     background-color: whitesmoke;
+    border-bottom: 1px solid #47748b;
 }
 
 /* ---------------------------------------------------
@@ -90,7 +95,7 @@ a:focus {
     height: 100vh;
     z-index: 999;
     background: whitesmoke;
-    color: #6d7fcc;
+    color: #001942;
     
     transition: all 0.3s;
     overflow-y: scroll;
@@ -138,15 +143,11 @@ a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
+    cursor: pointer;
+    color: #001942;
     background: #fff;
 }
 
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #7386D5;
-    background-color: #bacfef;
-}
 
 a[data-toggle="collapse"] {
     position: relative;
@@ -180,7 +181,7 @@ ul.CTAs a {
 
 a.download {
     background: #fff;
-    color: #7386D5;
+    color: whitesmoke;
 }
 
 a.article,
