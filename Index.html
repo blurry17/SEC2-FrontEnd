@@ -49,16 +49,9 @@
       <ul class="list-unstyled components">
         <li class="active">
           <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-book"></i>&nbspCursos</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li>
-              <a>Sistemas de Información 1</a>
-            </li>
-            <li>
-              <a>Algoritmia</a>
-            </li>
-            <li>
-              <a>Ingeniería de Software</a>
-            </li>
+          <!-- Manuel Delgado: "He cambiado esto" -->
+          <ul class="collapse list-unstyled" id="homeSubmenu" ng-controller="CursoController">
+            <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a href="#!curso">{{curso.nombre}}</a></li>
           </ul>
         </li>
         <li>
@@ -72,6 +65,7 @@
         </li>
       </ul>
     </nav>
+
 
     <div id="content" ng-view>
 
@@ -150,7 +144,8 @@
     document.write("<script type='text/javascript' src='app/modules/index/indexController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/login/LoginController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/main/mainController.js?v=" + Date.now() + "'><\/script>");
-      document.write("<script type='text/javascript' src='app/services/serviceCRUD.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/cursoController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/services/serviceCRUD.js?v=" + Date.now() + "'><\/script>");
   </script>
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

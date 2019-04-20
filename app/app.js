@@ -12,7 +12,13 @@ app.config(function ($routeProvider, $httpProvider) {
         .when('/main', {
             templateUrl: 'app/modules/main/main.html?v=' + Date.now(),
             controller: 'mainController'
-        })        
+        })   
+        
+        //Manuel Delgado: "He cambiado esto"
+        .when('/curso', {
+            templateUrl: 'app/modules/curso/Curso.html?v=' + Date.now(),
+            controller: 'cursoController'
+        })     
 
         .otherwise({
             redirectTo: '/main'
