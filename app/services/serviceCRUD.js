@@ -1,5 +1,5 @@
 (function(){
-    var serviceCRUD = function($http, $q){
+    var serviceCRUD = function($http){
         var baseURL = "http://localhost:1234/api/";
 
         var TypeGet = function(Api, Method, Params){

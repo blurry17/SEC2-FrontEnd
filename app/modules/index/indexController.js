@@ -3,6 +3,8 @@
     $scope.mostrarCursos = true;
 
     $scope.btnLogout = function(){
+        $('#sidebar').removeClass('active');
+        $('.overlay').removeClass('active');
         $location.path('/')
     }
 })
