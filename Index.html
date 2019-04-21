@@ -25,7 +25,7 @@
   <title>SEC2 - Sistema de Evaluación Continua</title>
 </head>
 
-<body ng-controller="indexController" layout="column" ng-cloak>
+<body ng-controller="IndexController" layout="column" ng-cloak>
 
   <div class="wrapper">
     <div class="topbar container-fluid" ng-show="showLayout">
@@ -50,9 +50,8 @@
       <ul class="list-unstyled components">
         <li class="active">
           <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-book"></i>&nbspCursos</a>
-          <!-- Manuel Delgado: "He cambiado esto" -->
-          <ul class="collapse list-unstyled" id="homeSubmenu" ng-controller="CursoController">
-            <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a href="#!curso">{{curso.nombre}}</a></li>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a>{{curso.nombre}}</a></li>
           </ul>
         </li>
         <li>
@@ -91,10 +90,10 @@
 
   <script>
     document.write("<script type='text/javascript' src='app/app.js?v=" + Date.now() + "'><\/script>");
-    document.write("<script type='text/javascript' src='app/modules/index/indexController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/index/IndexController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/login/LoginController.js?v=" + Date.now() + "'><\/script>");
-    document.write("<script type='text/javascript' src='app/modules/main/mainController.js?v=" + Date.now() + "'><\/script>");
-    document.write("<script type='text/javascript' src='app/modules/curso/cursoController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/main/MainController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/CursoController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/services/serviceCRUD.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/services/serviceUtil.js?v=" + Date.now() + "'><\/script>");
   </script>

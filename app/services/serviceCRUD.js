@@ -1,9 +1,9 @@
 (function(){
     var serviceCRUD = function($http){
-        var baseURL = "http://localhost:1234/api/";
+        var baseURL = "http://localhost:5500/api/";
 
-        var TypeGet = function(Api, Method, Params){
-            var url = baseURL + Api + "/" + Method;
+        var TypeGet = function(Method, Params){
+            var url = baseURL + Method;
             return $http.get(url, {params: Params});
         }
 

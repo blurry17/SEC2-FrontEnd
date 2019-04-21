@@ -1,7 +1,7 @@
 (function(){
     var serviceUtil = function(){
         var utilitario = {
-            
+            cursoActual : null
         }
 
         return {

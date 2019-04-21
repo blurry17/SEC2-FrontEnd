@@ -10,14 +10,13 @@ app.config(function ($routeProvider, $httpProvider) {
         })
 
         .when('/main', {
-            templateUrl: 'app/modules/main/main.html?v=' + Date.now(),
-            controller: 'mainController'
+            templateUrl: 'app/modules/main/Main.html?v=' + Date.now(),
+            controller: 'MainController'
         })   
         
-        //Manuel Delgado: "He cambiado esto"
         .when('/curso', {
             templateUrl: 'app/modules/curso/Curso.html?v=' + Date.now(),
-            controller: 'cursoController'
+            controller: 'CursoController'
         })     
 
         .otherwise({

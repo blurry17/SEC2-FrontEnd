@@ -1,3 +1,3 @@
-app.controller('mainController', function ($rootScope, $scope, $location, $window) {
+app.controller('MainController', function ($rootScope, $scope, $location, $window) {
 
 })

@@ -1,8 +1,57 @@
-<!-- Manuel Delgado: "He cambiado esto" -->
-<p>Estoy en Curso!!</p>
-<br>
+<div>
+    <h3>{{curso.nombre}}</h3><br>
 
-<div ng-app="app" ng-controller="CursoController">
-    <p>{{mostrarCurso()}}</p>
+    <h4>Actividades</h4>
+    <span class="badge badge-pill badge-success">Entregado</span>
+    <span class="badge badge-pill badge-warning" style="color: white">Pendiente</span>
+    <span class="badge badge-pill badge-dark">Inactivo</span>
+    <div class="line"></div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <div class="card text-center border-success">
+                <div class="card-body">
+                    <h5 class="card-title">Laboratorio 1&nbsp<i class="fas fa-user"></i></h5>
+                    <p class="card-text">Descripción breve</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Fecha: 6 de Abril</li>
+                    <li class="list-group-item">Horario: 8:00 - 10:00</li>
+                </ul>
+                <div class="card-body">
+                    <button class="btn btn-primary" style="color: white">Ver actividad</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <div class="card text-center border-warning">
+                <div class="card-body">
+                    <h5 class="card-title">Casos de uso&nbsp<i class="fas fa-users"></i></h5>
+                    <p class="card-text">Descripción breve</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Fecha: 10 de Abril</li>
+                    <li class="list-group-item">Horario: 8:00 - 10:00</li>
+                </ul>
+                <div class="card-body">
+                    <button class="btn btn-primary" style="color: white">Ver actividad</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+            <div class="card text-center border-dark">
+                <div class="card-body">
+                    <h5 class="card-title">Laboratorio 2&nbsp<i class="fas fa-user"></i></h5>
+                    <p class="card-text">Descripción breve</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Fecha: 13 de Abril</li>
+                    <li class="list-group-item">Horario: 8:00 - 10:00</li>
+                </ul>
+                <div class="card-body">
+                    <button class="btn btn-primary" style="color: white">Ver actividad</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
