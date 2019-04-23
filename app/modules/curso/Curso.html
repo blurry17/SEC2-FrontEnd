@@ -1,56 +1,83 @@
+<!-- <style>
+    .modal-backdrop {
+        display:none
+    }
+</style> -->
 <div>
     <h3>{{curso.nombre}}</h3><br>
 
     <h4>Actividades</h4>
+    <br>
     <span class="badge badge-pill badge-success">Entregado</span>
     <span class="badge badge-pill badge-warning" style="color: white">Pendiente</span>
     <span class="badge badge-pill badge-dark">Inactivo</span>
+    <button class="btn btn-success float-right" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
+        actividad</button>
     <div class="line"></div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-repeat="act in lstActividad">
             <div class="card text-center border-success">
                 <div class="card-body">
-                    <h5 class="card-title">Laboratorio 1&nbsp<i class="fas fa-user"></i></h5>
-                    <p class="card-text">Descripción breve</p>
+                    <h5 class="card-title">{{act.nombre}}&nbsp<i class="fas fa-user"></i></h5>
+                    <p class="card-text">{{act.descripcion}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Fecha: 6 de Abril</li>
-                    <li class="list-group-item">Horario: 8:00 - 10:00</li>
+                    <li class="list-group-item">Nota: {{act.nota}}</li>
+                    <li class="list-group-item">Fecha: {{act.fecha}}</li>
+                    <li class="list-group-item">Horario: {{act.horario}}</li>
                 </ul>
                 <div class="card-body">
                     <button class="btn btn-primary" style="color: white">Ver actividad</button>
                 </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-            <div class="card text-center border-warning">
-                <div class="card-body">
-                    <h5 class="card-title">Casos de uso&nbsp<i class="fas fa-users"></i></h5>
-                    <p class="card-text">Descripción breve</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Fecha: 10 de Abril</li>
-                    <li class="list-group-item">Horario: 8:00 - 10:00</li>
-                </ul>
-                <div class="card-body">
-                    <button class="btn btn-primary" style="color: white">Ver actividad</button>
-                </div>
+    </div>
+</div>
+<div class="modal fade shadow-lg" id="mdAgregarActividad" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar actividad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
-            <div class="card text-center border-dark">
-                <div class="card-body">
-                    <h5 class="card-title">Laboratorio 2&nbsp<i class="fas fa-user"></i></h5>
-                    <p class="card-text">Descripción breve</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Fecha: 13 de Abril</li>
-                    <li class="list-group-item">Horario: 8:00 - 10:00</li>
-                </ul>
-                <div class="card-body">
-                    <button class="btn btn-primary" style="color: white">Ver actividad</button>
-                </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" ng-model="regAct.nombre">
+                    </div>
+                    <div class="form-group col-md-4">
+                            <label>Tipo</label>
+                            <select class="form-control" ng-model="regAct.tipo">
+                                <option>Individual</option>
+                                <option>Grupal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <input type="text" class="form-control" ng-model="regAct.desc">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Fecha</label>
+                            <input type="date" class="form-control" ng-model="regAct.fecha">
+                        </div>
+                        <div class="form-group col">
+                            <label>Horario</label>
+                            <input type="text" class="form-control" ng-model="regAct.horario">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="btnGuardarActividad()">Guardar</button>
+                <button type="button" class="btn btn-default " data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

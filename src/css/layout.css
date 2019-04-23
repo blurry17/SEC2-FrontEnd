@@ -78,7 +78,7 @@ a:focus {
     position: fixed;
     width: 100%;
     height: 70px;
-    z-index: 999;
+    z-index: 991;
     background-color: whitesmoke;
     border-bottom: 1px solid #47748b;
 }
@@ -93,10 +93,9 @@ a:focus {
     top: 70px;
     left: -250px;
     height: 100vh;
-    z-index: 999;
+    z-index: 991;
     background: whitesmoke;
     color: #001942;
-    
     transition: all 0.3s;
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
@@ -112,10 +111,11 @@ a:focus {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.7);
-    z-index: 998;
+    z-index: 990;
     opacity: 0;
     transition: all 0.5s ease-in-out;
 }
+
 .overlay.active {
     display: block;
     opacity: 1;
@@ -202,5 +202,5 @@ a.article:hover {
     position: absolute;
     top: 70px;
     right: 0;
-    z-index: 998;
+    z-index: 990;
 }

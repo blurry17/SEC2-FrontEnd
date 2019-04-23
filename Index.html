@@ -27,63 +27,55 @@
 
 <body ng-controller="IndexController" layout="column" ng-cloak>
 
-  <div class="wrapper">
-    <div class="topbar container-fluid" ng-show="showLayout">
-      <div class="row" style="height:100%">
-        <div class="col-md-10">
-          <button type="button" id="sidebarCollapse" class="btn btn-light vertical-center"><i class="fas fa-bars"></i></button>
-          <img src="src/img/logoSEC.jpg" class="vertical-center" alt="SEC2" width="3%">
-          <label class="vertical-center" style="font-size: 150%"><b>Sistema de Evaluación Continua</b></label>
-        </div>
-        <div class="col-md-2" style="text-align: right">
-          <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="vertical-center dropdown-toggle" style="font-size: 130%; cursor: pointer">Juan Perez&nbsp<i class="fas fa-user-circle" style="font-size: 150%"></i></label>          
-          <div class="dropdown-menu">
+  <div ng-cloak class="container-fluid">
+
+    <div class="row">
+
+      <div class="topbar container-fluid" ng-show="showLayout">
+        <div class="row" style="height:100%">
+          <div class="col-md-10">
+            <button type="button" id="sidebarCollapse" class="btn btn-light vertical-center"><i
+                class="fas fa-bars"></i></button>
+            <img src="src/img/logoSEC.jpg" class="vertical-center" alt="SEC2" width="3%">
+            <label class="vertical-center" style="font-size: 150%"><b>Sistema de Evaluación Continua</b></label>
+          </div>
+          <div class="col-md-2" style="text-align: right">
+            <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+              class="vertical-center dropdown-toggle" style="font-size: 130%; cursor: pointer">Juan Perez&nbsp<i
+                class="fas fa-user-circle" style="font-size: 150%"></i></label>
+            <div class="dropdown-menu">
               <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbspMi Perfil</a>
-              <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i class="fas fa-sign-out-alt"></i>&nbspCerrar Sesión</a>
+              <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i
+                  class="fas fa-sign-out-alt"></i>&nbspCerrar Sesión</a>
             </div>
+          </div>
         </div>
       </div>
 
-    </div>
+      <div id="content" ng-view></div>
 
-    <nav id="sidebar" ng-show="showLayout">
-      <ul class="list-unstyled components">
-        <li class="active">
-          <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-book"></i>&nbspCursos</a>
-          <ul class="collapse list-unstyled" id="homeSubmenu">
-            <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a>{{curso.nombre}}</a></li>
-          </ul>
-        </li>
-        <li>
-          <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
-        </li>
-      </ul>
-
-      <ul class="list-unstyled CTAs">
-        <li>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.pucp.edu.pe/">PUCP</a>
-        </li>
-      </ul>
-    </nav>
-
-
-    <div id="content" ng-view>
-
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">  
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="#">Page</a>
-              </li>
+      <nav id="sidebar" ng-show="showLayout">
+        <ul class="list-unstyled components">
+          <li class="active">
+            <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                class="fas fa-book"></i>&nbspCursos</a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a>{{curso.nombre}}</a></li>
             </ul>
-          </div>
-        </div>
-      </nav>
+          </li>
+          <li>
+            <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
+          </li>
+        </ul>
 
-      <div class="line"></div>
+        <ul class="list-unstyled CTAs">
+          <li>
+            <a rel="noopener noreferrer" target="_blank" href="https://www.pucp.edu.pe/">PUCP</a>
+          </li>
+        </ul>
+      </nav>
     </div>
+
   </div>
 
   <div class="overlay"></div>
@@ -111,7 +103,7 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
   <script type="text/javascript">
-    $(document).ready(function () { 
+    $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip({
         trigger: 'hover'
       })

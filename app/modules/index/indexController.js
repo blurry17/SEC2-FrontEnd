@@ -19,13 +19,9 @@
         $location.path('/curso')
     }
 
-    /* serviceCRUD.TypeGet('hello').then(function(response){
-        console.dir(response);
-    }) */
-
     $scope.btnLogout = function(){
         $('#sidebar').removeClass('active');
         $('.overlay').removeClass('active');
         $location.path('/')
-    }    
+    }
 })
