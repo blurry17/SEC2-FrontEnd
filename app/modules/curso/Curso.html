@@ -1,34 +1,47 @@
-<!-- <style>
-    .modal-backdrop {
-        display:none
+<style>
+    .error-msg {
+        display: inline;
+        color: red;
+        font-size: 0.9rem;
     }
-</style> -->
+</style>
 <div>
-    <h3>{{curso.nombre}}</h3><br>
-
-    <h4>Actividades</h4>
-    <br>
-    <span class="badge badge-pill badge-success">Entregado</span>
-    <span class="badge badge-pill badge-warning" style="color: white">Pendiente</span>
-    <span class="badge badge-pill badge-dark">Inactivo</span>
-    <button class="btn btn-success float-right" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
-        actividad</button>
+    <h1><span class="badge badge-primary">{{curso.nombre}}</span></h1>
     <div class="line"></div>
+    <h2><span class="badge badge-info">Actividades</span></h2>
 
-    <div class="row">
+    <div class="row justify-content-between">
+        <div class="col-xs-12 col-md-3">
+            <h5 style="display:inline-block"><span class="badge badge-pill badge-success">Entregado</span></h5>
+            <h5 style="display:inline-block"><span class="badge badge-pill badge-warning"
+                    style="color: white">Pendiente</span>
+            </h5>
+            <h5 style="display:inline-block"><span class="badge badge-pill badge-dark">Inactivo</span></h5>
+        </div>
+        <div class="col-xs-12 col-lg-2">
+            <button class="btn btn-success" ng-click="btnAgregarActividad()"><i
+                    class="fas fa-plus"></i>&nbspAgregar
+                actividad</button>
+        </div>
+    </div>
+
+
+
+    <div class="row" style="padding-top: 15px">
         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-repeat="act in lstActividad">
             <div class="card text-center border-success">
                 <div class="card-body">
                     <h5 class="card-title">{{act.nombre}}&nbsp<i class="fas fa-user"></i></h5>
-                    <p class="card-text">{{act.descripcion}}</p>
+                    <p class="card-text">{{act.desc}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Nota: {{act.nota}}</li>
+                    <li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
                     <li class="list-group-item">Fecha: {{act.fecha}}</li>
                     <li class="list-group-item">Horario: {{act.horario}}</li>
                 </ul>
                 <div class="card-body">
                     <button class="btn btn-primary" style="color: white">Ver actividad</button>
+                    <button class="btn btn-info" style="color: white" ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>
                 </div>
             </div>
         </div>
@@ -45,39 +58,55 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form name="ActForm" novalidate>
                     <div class="form-row">
-                    <div class="form-group col-md-8">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" ng-model="regAct.nombre">
-                    </div>
-                    <div class="form-group col-md-4">
+                        <div class="form-group col-md-8">
+                            <label>Nombre</label>
+                            <input name="nombre" type="text" class="form-control" ng-model="regAct.nombre"
+                                ng-required="true">
+                            <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                                <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4">
                             <label>Tipo</label>
                             <select class="form-control" ng-model="regAct.tipo">
-                                <option>Individual</option>
-                                <option>Grupal</option>
+                                <option value="0">Individual</option>
+                                <option value="1">Grupal</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
-                        <input type="text" class="form-control" ng-model="regAct.desc">
+                        <input name="desc" type="text" class="form-control" ng-model="regAct.desc" ng-required="true">
+                        <span ng-messages="ActForm.desc.$error" ng-show="ActForm.desc.$touched">
+                            <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                        </span>
                     </div>
                     <div class="form-row">
                         <div class="form-group col">
                             <label>Fecha</label>
-                            <input type="date" class="form-control" ng-model="regAct.fecha">
+                            <input name="fecha" type="date" class="form-control" ng-model="regAct.fecha"
+                                ng-required="true">
+                            <span ng-messages="ActForm.fecha.$error" ng-show="ActForm.fecha.$touched">
+                                <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                            </span>
                         </div>
                         <div class="form-group col">
                             <label>Horario</label>
-                            <input type="text" class="form-control" ng-model="regAct.horario">
+                            <input name="horario" type="text" class="form-control" ng-model="regAct.horario"
+                                ng-required="true">
+                            <span ng-messages="ActForm.horario.$error" ng-show="ActForm.horario.$touched">
+                                <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                            </span>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" ng-click="btnGuardarActividad()">Guardar</button>
-                <button type="button" class="btn btn-default " data-dismiss="modal">Cancelar</button>
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
+                    ng-disabled="ActForm.$invalid">Guardar</button>
+                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>

@@ -16,9 +16,18 @@
             return [day, month, year].join('/');
         }
 
+        var convertToDate = function(datestring){
+            var dd = parseInt(datestring.substring(0,2));
+            var mm = parseInt(datestring.substring(3,5));
+            var yyyy = parseInt(datestring.substring(6,10));
+
+            return new Date(yyyy, mm - 1, dd);
+        }
+
         return {
             utilitario : utilitario,
-            ddmmyyyy : ddmmyyyy
+            ddmmyyyy : ddmmyyyy,
+            convertToDate : convertToDate
         }
 
     }
