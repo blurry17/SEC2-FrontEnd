@@ -28,60 +28,45 @@
 <br>
 <br>
 
-            <div ng-show="mostrarCrearRubrica">
-                <div class="form-group row">
-                        <label class="col-sm-5 col-lg-2 col-form-label">Nombre de la rúbrica: </label>
-                        <div class="col-sm-7 col-lg-4">
-                            <input type="text" class="form-control" id="inputPassword" placeholder="Ingrese el nombre de la rúbrica">
-                        </div>
+<div ng-show="mostrarCrearRubrica">
+  <div class="form-group row">
+    <label class="col-sm-5 col-lg-2 col-form-label">Nombre de la rúbrica: </label>
+    <div class="col-sm-7 col-lg-4">
+      <input type="text" class="form-control" id="inputPassword" placeholder="Ingrese el nombre de la rúbrica">
+    </div>
 
-                        <div class="input-group mb-3 col-3">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">
-                                    <input type="checkbox" aria-label="Checkbox for following text input">Rúbrica Especial
-                                  </div>
-                                </div>
-                        </div>
-                </div>
+    <div class="input-group mb-3 col-3">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <input type="checkbox" aria-label="Checkbox for following text input">Rúbrica Especial
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <!-- Aca tengo que colocar el lstAspectos[i] -->
-                <!-- Tengo que colocar todos los datos en una sola columna -->
+  <!-- Aca tengo que colocar el lstAspectos[i] -->
+  <!-- Tengo que colocar todos los datos en una sola columna -->
 
-                <div class="form-group row" style="padding-left: 1%;">
-                    <div>
-                            <label class="col-sm-5 col-lg-2 col-form-label">Aspecto: </label>
-                    </div>
-                        
-                    <div ng-repeat="aspecto in lstAspectos">
-                            <!-- Criterio {{aspectoIndex + 1}} <br> -->
-                            Nombre:<input class="form-control" ng-model="aspecto.nomAspecto" />
-                            Descripción:<input class="form-control" ng-model="aspecto.descripcion" />
-                            Puntaje Máximo:<input class="form-control" ng-model="aspecto.puntajeMax" />
-                            <br><br>
+  <div class="form-group row" style="padding-left: 1%;">
 
-                            <div ng-repeat="indicador in aspecto.lstIndicadores" >
-                                    <!-- Criterio {{aspectoIndex + 1}} <br> -->
-                                    Nombre:<input class="form-control" ng-model="indicador.nombre" />
-                                    Descripción:<input class="form-control" ng-model="indicador.descripcion" />
-                                    Puntaje Máximo:<input class="form-control" ng-model="indicador.puntajeMax" />
-                                        
-                            </div>
-                            <br><br> 
-                        </div>
-                    </div>
-                </div>  
+    <div class="row" ng-repeat="aspecto in lstAspectos">
+      Nombre Aspecto: <button type="button" class="btn rounded-circle btn-outline-primary" ng-click="btnAgregarAspecto()"><i class="fa fa-plus"></i></a></button>
+      <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control" ng-model="aspecto.nomAspecto"/>
+      Descripción:<input style="border-width:2px !important;" class="border border-primary form-control" ng-model="aspecto.descripcion" />
+      Puntaje Máximo:<input style="border-width:2px !important;" class="border border-primary form-control" ng-model="aspecto.puntajeMax" />
 
-
-
-
-            </div>
-
-
-
+      <div class="row" style="margin-left: 10%;" ng-repeat="indicador in aspecto.lstIndicadores">   
+        Nombre Indicador: <button type="button" class="btn rounded-circle btn-outline-success" ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></a></button>
+        <input style="border-width:2px !important;" class="border border-success form-control" ng-model="indicador.nomIndicador" />
+        Descripción:<input style="border-width:2px !important;" class="border border-success form-control" ng-model="indicador.descripcion" />
+        Puntaje Máximo:<input style="border-width:2px !important;" class="border border-success form-control" ng-model="indicador.puntajeMax" />    
+      </div>
+      <br><br><br> 
+    </div>
+  </div>  
+</div>
 
 <br><br>
-
-</div>
 
 
 </div>

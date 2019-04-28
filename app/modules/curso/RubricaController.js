@@ -5,26 +5,19 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
     $scope.mostrarCrearRubrica = false;
 
     $scope.lstAspectos = [
-        [
-            {
+            {   
                 nomAspecto: '',
                 descripcion: '',
-                puntajeMax: 0,
-                lstIndicadores: $scope.lstIndicadores[0]
+                puntajeMax: null,
+                lstIndicadores:[
+                    {
+                        nomIndicador: '',
+                        descripcion: '',
+                        puntajeMax: null
+                    }
+                ]
             }
-        ]
     ]
-
-    $scope.lstIndicadores = [
-        [
-            {
-                nomIndicador: 'indicador1',
-                descripcion: '',
-                puntajeMax: 0
-            }
-        ]
-    ]
-
 
     $scope.btnCrearRubrica = function(){
         $scope.mostrarCrearRubrica = true;
@@ -32,9 +25,6 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
         y un indicador a lstIndicadores.
         Luego, estos van a a ser usados por el ng-repeat
         pero como están vacíos, van a parecer nuevos registros*/
-        $scope.lstAspectos.push({
-
-        })
 
     }
 
@@ -43,18 +33,23 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
             /* datos del aspecto */
             nomAspecto: '',
             descripcion: '',
-            puntajeMax: 0,
-            lstIndicadores: []
+            puntajeMax: null,
+            lstIndicadores:[
+                {
+                    nomIndicador: '',
+                    descripcion: '',
+                    puntajeMax: null
+                }
+            ]
         });
      }
 
     $scope.btnAgregarIndicador= function(aspecto) {
-        var numAspecto = lstAspectos.indexof(aspecto);
-        $scope.lstAspectos[numAspecto].push({
+        aspecto.lstIndicadores.push({  
             /* datos del indicador */
             nomIndicador: '',
             descripcion: '',
-            puntajeMax: 0
+            puntajeMax: null
         });
      }
     
