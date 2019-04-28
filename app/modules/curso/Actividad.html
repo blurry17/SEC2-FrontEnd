@@ -1,31 +1,37 @@
-<div class="col-md-10">
-    <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b></label>
+<div >
+  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b></label>
+  <div class="row">
+    <div class="form-group col-md-3">
+      <label style="font-size: 100%"><b>Fecha de Entrega:</b></label>
+      <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+    </div>
+  
+    <div class="form-group col-md-1.5">
+        <label style="font-size: 100%"><b>Hora de Entrega:</b></label>
+        <input type="text" class="form-control" readonly value="11:00 am">
+      </div>
+  </div>
+  <div class="row">
+      
+        <div class="form-group col-md-3">
+            <label style="font-size: 100%"><b>Fecha última modificación:</b></label>
+            <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+          </div>
+
+        <div class="form-group col-md-1.5">
+          <label style="font-size: 100%"><b>Hora última modificación:</b></label>
+          <input type="text" class="form-control" readonly value="10:57 am">
+        </div>
+
   </div>
   
-  <label class="vertical-center" style="font-size: 100%" style="margin-right:120%;"><b>Fecha de Entrega:</b></label>
-  <div class="card" style="margin-left:50%;">
-    <div class="card-body">
-      <h1 class="card-title" style="font-size: 20%"></h1>Sábado, 06 de abril del 2019, 11:00 am:</h1>
-    </div>
-  </div>
-  <label class="vertical-center" width="50%" style="font-size: 100%" style="margin-right:120%;"><b>Última modificación:</b></label>
-  <div class="card" style="margin-left:50%;">
-    <div class="card-body">
-      <h1 class="card-title" style="font-size: 20%"></h1>Sábado, 06 de abril del 2019, 10:57 am:</h1>
-    </div>
-  </div>
   
   <hr/>
-  
-  <div class="card" style="margin-right:30%;" style="width: 15rem;">
-    <div class="card-body">
-      <h1 class="card-title" style="font-size: 20%"></h1>Indicaciones:</h1>
-      <h2 class="card-title" style="font-size: 20%"></h2>- Para este laboratorio se deberá subir el archivo resuelto con el formato:
-          codigo_apellido_nombre.</h2>
-      <h3 class="card-title" style="font-size: 20%"></h3>- Recuerde subir el documento a tiempo de lo 
-      contrario no se  calificará.</h3>
+    <div class="form-group col-md-11">
+        <label style="font-size: 100%"><b>Indicaciones:</b></label>
+        <input type="text" class="form-control" readonly value="- Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.
+        - Recuerde subir el documento a tiempo de lo contrario no se  calificará.">
     </div>
-  </div>
   
   <hr/>
   
@@ -36,7 +42,8 @@
       <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
       <button type="button" class="btn btn-secondary">Comentarios</button>
       <button type="button" class="btn btn-secondary">Alertas</button>
-      <button type="button" class="btn btn-secondary">Estadisticas</button>
+      <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadisticas</button>
       <button type="button" class="btn btn-secondary">Coevaluación</button>
       <button type="button" class="btn btn-secondary">Autoevaluación</button>
     </div>
+</div>
