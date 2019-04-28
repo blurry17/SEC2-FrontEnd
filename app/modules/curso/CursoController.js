@@ -49,8 +49,10 @@ app.controller('CursoController',function($scope, $location, $cookieStore, servi
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
 
-    $scope.btnVerActividad = function(){
+    $scope.btnVerActividad = function(act){
+        $cookieStore.put('actividadActual',act)
         $location.path("actividad")
+        
     }
 
     $scope.btnGuardarActividad = function(){

@@ -27,7 +27,7 @@
         return {
             utilitario : utilitario,
             ddmmyyyy : ddmmyyyy,
-            convertToDate : convertToDate
+            convertToDate : convertToDate,
         }
 
     }
