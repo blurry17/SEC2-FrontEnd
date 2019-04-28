@@ -28,6 +28,16 @@ app.config(function ($routeProvider, $httpProvider) {
             templateUrl: 'app/modules/curso/Calificaciones.html?v=' + Date.now(),
             controller: 'CalificacionesController'
         }) 
+        .when('/autoeval',{
+            templateUrl:'app/modules/curso/AutoEval.html?v=' + Date.now()
+            
+        }
+        )
+
+        .when('/rubrica',{
+            templateUrl: 'app/modules/curso/Rubrica.html?v=' + Date.now(),
+            controller: 'RubricaController'
+        })
 
         .when('/estadisticas', {
             templateUrl: 'app/modules/curso/Estadisticas.html?v=' + Date.now(),

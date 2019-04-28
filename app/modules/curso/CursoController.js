@@ -80,4 +80,5 @@ app.controller('CursoController',function($scope, $location, $cookieStore, servi
         $('#mdAgregarActividad').appendTo("body").modal('show');
 
     }
+    
 })
