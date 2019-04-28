@@ -1,0 +1,113 @@
+<h3 >Rúbrica de la evaluación: </h3>
+
+
+<div class="row">
+    <div class="col-xs-2 col-2">
+        <button ng-click="crearRubrica()" class="btn btn-primary">Crear una nueva rúbrica</button>
+    </div>
+
+    <div class="col-xs-2 col-2 dropdown">
+            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Usar rúbrica pasada
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" >Rúbrica 1</a>
+              <a class="dropdown-item" >Rúbrica 2</a>
+              <a class="dropdown-item" >Rúbrica 3</a>
+            </div>
+          </div>
+</div>
+
+<div class="modal fade shadow-lg" id="mdCrearRubrica" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Crear Rúbrica</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="ActForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Familia</label>
+                            <input name="nombre" type="text" class="form-control" ng-model="regAct.familia"
+                                ng-required="true">
+                            <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                                <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4">
+                                <button type="button" class="btn rounded-circle btn-outline-success"><i class="fa fa-plus"></i></a></button>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                                <label>Criterios</label>
+                        </div>
+                            <div class="form-group col-md-4">
+                                    <button type="button" class="btn rounded-circle btn-outline-success" ng-click="agregarCriterio()"><i class="fa fa-plus"></i></a></button>
+                            </div>
+                            <div class="form-group col-md-8">
+                                    <div ng-repeat="criterio in formCriterio" ng-init="criterioIndex = $index">
+                                            Criterio {{criterioIndex + 1}} <br>
+                                            Nombre del Criterio:<input class="form-control" ng-model="criterio.nombre" />
+                                            Puntaje Máximo:<input class="form-control" ng-model="criterio.puntajeMaximo" />
+                                            <div class="clearfix"></div>
+                                            <br><br>
+                                    </div>
+                            </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="btnCrearRubrica()">Crear Rúbrica</button>
+                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<br><br>
+<table class="table table-bordered">
+    <tr>
+        <th>Nro</th>
+        <th>Criterio</th>
+        <th>Puntaje Max.</th>
+    </tr>     
+    <tr>          
+        <td>1</td>
+        <td>Colocar Requisitos ordenados</td>
+        <td>5</td>
+    </tr>
+    <tr>          
+        <td>2</td>
+        <td>Colocar Prioridad</td>
+        <td>5</td>
+    </tr>
+    <tr>          
+        <td>3</td>
+        <td>Formato adecuado</td>
+        <td>5</td>
+    </tr>
+    <tr>          
+        <td>4</td>
+        <td>No utilizar palabras ambiguas</td>
+        <td>5</td>
+    </tr>
+</table>
+
+
+<div id="familia" style="display:none">
+
+</div>
+
+
+</div>

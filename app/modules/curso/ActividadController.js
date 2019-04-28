@@ -3,4 +3,8 @@ app.controller('ActividadController',function($scope, $location, $cookieStore, s
     $scope.btnCalificaciones = function(){
         $location.path("calificaciones")
     }
+
+    $scope.btnRubrica = function(){
+        $location.path("rubrica")
+    }
 })
