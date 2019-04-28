@@ -21,4 +21,8 @@ app.controller('ActividadController',function($scope, $location, $cookieStore, s
     $scope.btnRubrica = function(){
         $location.path("rubrica")
     }
+
+    $scope.btnEstadisticas = function(){
+        $location.path("estadisticas")
+    }
 })
