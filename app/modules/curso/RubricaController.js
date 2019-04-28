@@ -80,9 +80,7 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
         }
     ]
 
-
-
-    $scope.crearRubrica = function(){
+    $scope.btnCrearRubrica = function(){
         $scope.regAct = {
             familia: '',
             lstCriterios: []   
@@ -93,12 +91,30 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
 
     $scope.formCriterio = [];
 
-    $scope.agregarCriterio = function() {
+    $scope.btnAgregarCriterio = function() {
         $scope.formCriterio.push({
             nombre: '',
             puntajeMaximo: ''
         });
      }
+
+    $scope.nuevaRubrica = []
+
+    $scope.btnGuardarRubrica = function(){
+        if($scope.ActForm.$valid){
+            var obj = {
+                familia: $scope.regAct.familia,
+                lstCriterios: []
+            }
+            $scope.nuevaRubrica.push(obj);
+            $("#mdCrearRubrica").modal('hide');
+        }else{
+            console.dir('invalid');
+        }
+    }
+
+
+
 
     $scope.usarRubrica = function(){
         console.dir('Uso usar rubrica')
