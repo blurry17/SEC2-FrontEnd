@@ -54,4 +54,18 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
      }
     
 
+    $scope.btnOcultarAspecto = function(aspecto){
+
+    }
+
+    $scope.btnQuitarAspecto = function(aspecto){
+        var pos = $scope.lstAspectos.indexOf(aspecto)
+        $scope.lstAspectos.splice(pos,1)
+    }
+
+    $scope.btnQuitarIndicador = function(aspecto,indicador){
+        var pos = aspecto.lstIndicadores.indexOf(indicador)
+        aspecto.lstIndicadores.splice(pos,1)
+    }
+
 })

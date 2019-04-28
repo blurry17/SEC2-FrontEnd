@@ -51,22 +51,21 @@
 
     <div class="row" ng-repeat="aspecto in lstAspectos">
       Nombre Aspecto: <button type="button" class="btn rounded-circle btn-outline-primary" ng-click="btnAgregarAspecto()"><i class="fa fa-plus"></i></a></button>
+      <button type="button" class="btn rounded-circle btn-outline-warning" ng-click="btnOcultarAspecto(aspecto)"><i class="fa fa-minus"></i></a></button>
+      <button type="button" class="btn rounded-circle btn-outline-danger" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times-circle"></i></a></button>
       <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control" ng-model="aspecto.nomAspecto"/>
       Descripción:<input style="border-width:2px !important;" class="border border-primary form-control" ng-model="aspecto.descripcion" />
       Puntaje Máximo:<input style="border-width:2px !important;" class="border border-primary form-control" ng-model="aspecto.puntajeMax" />
 
       <div class="row" style="margin-left: 10%;" ng-repeat="indicador in aspecto.lstIndicadores">   
         Nombre Indicador: <button type="button" class="btn rounded-circle btn-outline-success" ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></a></button>
+        <button type="button" class="btn rounded-circle btn-outline-danger" ng-click="btnQuitarIndicador(aspecto, indicador)"><i class="fas fa-times-circle"></i></a></button>
         <input style="border-width:2px !important;" class="border border-success form-control" ng-model="indicador.nomIndicador" />
         Descripción:<input style="border-width:2px !important;" class="border border-success form-control" ng-model="indicador.descripcion" />
         Puntaje Máximo:<input style="border-width:2px !important;" class="border border-success form-control" ng-model="indicador.puntajeMax" />    
       </div>
-      <br><br><br> 
     </div>
   </div>  
 </div>
-
-<br><br>
-
 
 </div>
