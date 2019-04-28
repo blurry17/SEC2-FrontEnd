@@ -1,3 +1,5 @@
+
+
 app.controller('RubricaController',function($scope, $location, $cookieStore, serviceUtil){ 
 
     $scope.regAct = {
@@ -7,6 +9,113 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
         horario : '',
         tipo : "0"        
     }
+
+    $scope.lstIndicadores = [
+        [
+            [
+                {
+                    descripcion: 'Indicador 1 del Aspecto 1 de la Rubrica 1',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                },
+                {
+                    descripcion: 'Indicador 2 del Aspecto 1 de la Rubrica 1',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                }
+            ],
+            [
+                {
+                    descripcion: 'Indicador 1 del Aspecto 2 de la Rubrica 1',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                },
+                {
+                    descripcion: 'Indicador 2 del Aspecto 2 de la Rubrica 1',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                }
+            ]
+        ],
+        [
+            [
+                {
+                    descripcion: 'Indicador 1 del Aspecto 1 de la Rubrica 2',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                },
+                {
+                    descripcion: 'Indicador 2 del Aspecto 1 de la Rubrica 2',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                }
+            ],
+            [
+                {
+                    descripcion: 'Indicador 1 del Aspecto 2 de la Rubrica 2',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                },
+                {
+                    descripcion: 'Indicador 2 del Aspecto 2 de la Rubrica 2',
+                    informacion: 'Hola',
+                    puntajeMax: 1
+                }
+            ]
+        ]
+    ]
+
+    $scope.lstAspectos = [
+        [
+            {
+                descripcion: 'Aspecto 1 de la Rubrica 1',
+                informacion: 'Informacion 1 1',
+                puntajeMax: 10,
+                tipoClasificacion: 'Grupal',
+                lstIndicadores: $scope.lstIndicadores[0][0]
+            },
+            {
+                descripcion: 'Aspecto 2 de la Rubrica 1',
+                informacion: 'Informacion 1 2',
+                puntajeMax: 10,
+                tipoClasificacion: 'Grupal',
+                lstIndicadores: $scope.lstIndicadores[0][1]
+            }
+        ],
+        [
+            {
+                descripcion: 'Aspecto 1 de la Rubrica 2',
+                informacion: 'Informacion 2 1',
+                puntajeMax: 4,
+                tipoClasificacion: 'Grupal',
+                lstIndicadores: $scope.lstIndicadores[1][0]
+            },
+            {
+                descripcion: 'Aspecto 2 de la Rubrica 2',
+                informacion: 'Informacion 2 2',
+                puntajeMax: 16,
+                tipoClasificacion: 'Grupal',
+                lstIndicadores: $scope.lstIndicadores[1][1]
+            }
+        ]
+    ]
+
+    $scope.lstRubricaOficial = [
+        {
+            estado: 1,
+            fechaRegistro: '25/04/2019',
+            fechaValidacion: '27/04/2019',
+            flgRubricaEspecial: 0,
+            lstAspectos: $scope.lstAspectos[0]
+        },
+        {
+            estado: 1,
+            fechaRegistro: '25/04/2019',
+            fechaValidacion: '27/04/2019',
+            flgRubricaEspecial: 0,
+            lstAspectos: $scope.lstAspectos[1]
+        }
+    ]
 
     $scope.lstRubrica = [
         {
