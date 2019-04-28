@@ -1,78 +1,83 @@
-<h3 >Rúbrica de la evaluación: </h3>
+
 
 
 <div class="row">
-    <div class="col-xs-2 col-2">
-        <button ng-click="btnCrearRubrica()" class="btn btn-primary">Crear una nueva rúbrica</button>
+    <div class="col-6">
+        <h3 >Rúbrica de la evaluación: </h3>
+    </div>
+    
+
+    <div class="col-xs-4 col-lg-2 col-2">
+        <button ng-click="btnCrearRubrica()" class="btn btn-sm btn-primary">Crear una nueva rúbrica</button>
     </div>
 
-    <div class="col-xs-2 col-2 dropdown">
-            <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class=" col-xs-4 col-lg-2 col-2">
+        <button class="btn btn-sm btn-success">Ver Rúbrica Actual</button>
+    </div>
+
+    <div class="col-xs-4 col-lg-2 col-2 dropdown">
+            <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Usar rúbrica pasada
-            </button>
+            </button>   
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" >Rúbrica 1</a>
               <a class="dropdown-item" >Rúbrica 2</a>
             </div>
           </div>
 </div>
+<br>
+<br>
 
-<div>
-    
-</div>
-
-
-
-<div class="modal fade shadow-lg" id="mdCrearRubrica" tabindex="-1" role="dialog" data-backdrop="static"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Crear Rúbrica</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form name="ActForm" novalidate>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label>Familia</label>
-                            <input  type="text" class="form-control" ng-model="regAct.familia"
-                                ng-required="true">
-                            <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                                <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                            </span>
-                        </div>
-                        <div class="form-group col-md-4">
-                                <button type="button" class="btn rounded-circle btn-outline-success"><i class="fa fa-plus"></i></a></button>
+            <div ng-show="mostrarCrearRubrica">
+                <div class="form-group row">
+                        <label class="col-sm-5 col-lg-2 col-form-label">Nombre de la rúbrica: </label>
+                        <div class="col-sm-7 col-lg-4">
+                            <input type="text" class="form-control" id="inputPassword" placeholder="Ingrese el nombre de la rúbrica">
                         </div>
 
-                        <div class="form-group col-md-8">
-                                <label>Criterios</label>
+                        <div class="input-group mb-3 col-3">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    <input type="checkbox" aria-label="Checkbox for following text input">Rúbrica Especial
+                                  </div>
+                                </div>
                         </div>
-                            <div class="form-group col-md-4">
-                                    <button type="button" class="btn rounded-circle btn-outline-success" ng-click="btnAgregarCriterio()"><i class="fa fa-plus"></i></a></button>
-                            </div>
-                            <div class="form-group col-md-8">
-                                    <div ng-repeat="criterio in formCriterio" ng-init="criterioIndex = $index" ng-model="regAct.lstCriterios">
-                                            Criterio {{criterioIndex + 1}} <br>
-                                            Nombre del Criterio:<input class="form-control" ng-model="criterio.nombre" />
-                                            Puntaje Máximo:<input class="form-control" ng-model="criterio.puntajeMaximo" />
-                                            <div class="clearfix"></div>
-                                            <br><br>
-                                    </div>
-                            </div>
+                </div>
+
+                <!-- Aca tengo que colocar el lstAspectos[i] -->
+                <!-- Tengo que colocar todos los datos en una sola columna -->
+
+                <div class="form-group row" style="padding-left: 1%;">
+                    <div>
+                            <label class="col-sm-5 col-lg-2 col-form-label">Aspecto: </label>
                     </div>
-                </form>
+                        
+                    <div ng-repeat="aspecto in lstAspectos">
+                            <!-- Criterio {{aspectoIndex + 1}} <br> -->
+                            Nombre:<input class="form-control" ng-model="aspecto.nomAspecto" />
+                            Descripción:<input class="form-control" ng-model="aspecto.descripcion" />
+                            Puntaje Máximo:<input class="form-control" ng-model="aspecto.puntajeMax" />
+                            <br><br>
+
+                            <div ng-repeat="indicador in aspecto.lstIndicadores" >
+                                    <!-- Criterio {{aspectoIndex + 1}} <br> -->
+                                    Nombre:<input class="form-control" ng-model="indicador.nombre" />
+                                    Descripción:<input class="form-control" ng-model="indicador.descripcion" />
+                                    Puntaje Máximo:<input class="form-control" ng-model="indicador.puntajeMax" />
+                                        
+                            </div>
+                            <br><br> 
+                        </div>
+                    </div>
+                </div>  
+
+
+
+
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="submit" ng-click="btnGuardarRubrica()">Guardar Rúbrica</button>
-                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
 
 <br><br>
 
