@@ -49,6 +49,10 @@ app.controller('CursoController',function($scope, $location, $cookieStore, servi
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
 
+    $scope.btnVerActividad = function(){
+        $location.path("actividad")
+    }
+
     $scope.btnGuardarActividad = function(){
         if($scope.ActForm.$valid){
             var obj = {
@@ -76,4 +80,5 @@ app.controller('CursoController',function($scope, $location, $cookieStore, servi
         $('#mdAgregarActividad').appendTo("body").modal('show');
 
     }
+    
 })
