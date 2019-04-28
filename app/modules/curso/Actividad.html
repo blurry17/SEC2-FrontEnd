@@ -1,45 +1,96 @@
-<div class="col-md-10">
+<div>
+  <div class="col-md-10">
     <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b></label>
   </div>
-  
+
   <label class="vertical-center" style="font-size: 100%" style="margin-right:120%;"><b>Fecha de Entrega:</b></label>
   <div class="card" style="margin-left:50%;">
     <div class="card-body">
       <h1 class="card-title" style="font-size: 20%"></h1>Sábado, 06 de abril del 2019, 11:00 am:</h1>
     </div>
   </div>
-  <label class="vertical-center" width="50%" style="font-size: 100%" style="margin-right:120%;"><b>Última modificación:</b></label>
+  <label class="vertical-center" width="50%" style="font-size: 100%" style="margin-right:120%;"><b>Última
+      modificación:</b></label>
   <div class="card" style="margin-left:50%;">
     <div class="card-body">
       <h1 class="card-title" style="font-size: 20%"></h1>Sábado, 06 de abril del 2019, 10:57 am:</h1>
     </div>
   </div>
-  
-  <hr/>
-  
+
+  <hr />
+
   <div class="card" style="margin-right:30%;" style="width: 15rem;">
     <div class="card-body">
       <h1 class="card-title" style="font-size: 20%"></h1>Indicaciones:</h1>
-      <h2 class="card-title" style="font-size: 20%"></h2>- Para este laboratorio se deberá subir el archivo resuelto con el formato:
-          codigo_apellido_nombre.</h2>
-      <h3 class="card-title" style="font-size: 20%"></h3>- Recuerde subir el documento a tiempo de lo 
-      contrario no se  calificará.</h3>
+      <h2 class="card-title" style="font-size: 20%"></h2>- Para este laboratorio se deberá subir el archivo resuelto con
+      el formato:
+      codigo_apellido_nombre.</h2>
+      <h3 class="card-title" style="font-size: 20%"></h3>- Recuerde subir el documento a tiempo de lo
+      contrario no se calificará.</h3>
     </div>
   </div>
-  
-  <hr/>
 
-  
+  <hr />
+
   <div class="btn-group" role="group" aria-label="Basic example">
-      <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificaciones</button>
-      <button ng-click="btnRubrica()" class="btn btn-info">Rubrica</button>
-      <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-      <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-      <button type="button" class="btn btn-secondary">Comentarios</button>
-      <button type="button" class="btn btn-secondary">Alertas</button>
-      <button type="button" class="btn btn-secondary">Estadisticas</button>
-      <button type="button" class="btn btn-secondary">Coevaluación</button>
-      <button type="button" class="btn btn-secondary">Autoevaluación</button>
+    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificaciones</button>
+    <button ng-click="btnRubrica()" class="btn btn-info">Rubrica</button>
+    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
+    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
+    <button type="button" class="btn btn-secondary">Comentarios</button>
+    <button type="button" class="btn btn-secondary">Alertas</button>
+    <button type="button" class="btn btn-secondary">Estadisticas</button>
+    <button type="button" class="btn btn-secondary">Coevaluación</button>
+
+    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
+      style="color: white">AutoEvaluacion</button>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
+          class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
+      <a class="dropdown-item" style="cursor: pointer"><i class="far fa-eye"></i>&nbspVer</a>
     </div>
 
- 
+  </div>
+</div>
+
+
+<div class="modal fade" id="mdCrearAutoEval" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear AutoEvaluacion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form name="AutoEvalForm" novalidate>
+          <span style="font-size: 20px;padding-right: 10px">Agregar Pregunta</span>
+          <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
+          <div class="form-row" ng-show="mostrarFila" ng-repeat="preg in listaPreg">
+            <div class="form-group col-md-6">
+                <label>Familia</label>
+                <input name="familia" type="text" class="form-control" ng-model="regAct.nombre"
+                    ng-required="true">
+                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                    <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                </span>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Pregunta</label>
+                <input type="text" name="pregunta" class="form-control" >
+            </div>
+        </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
+          ng-disabled="ActForm.$invalid">Guardar</button>
+        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--ng-click="btnAutoEvaluacion()"-->
