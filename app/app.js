@@ -28,6 +28,11 @@ app.config(function ($routeProvider, $httpProvider) {
             templateUrl: 'app/modules/curso/Calificaciones.html?v=' + Date.now(),
             controller: 'CalificacionesController'
         }) 
+        .when('/autoeval',{
+            templateUrl:'app/modules/curso/AutoEval.html?v=' + Date.now()
+            
+        }
+        )
 
         .otherwise({
             redirectTo: '/main'
