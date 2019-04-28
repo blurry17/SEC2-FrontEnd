@@ -47,7 +47,8 @@
     <div class="dropdown-menu">
       <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
           class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
-      <a class="dropdown-item" style="cursor: pointer"><i class="far fa-eye"></i>&nbspVer</a>
+      <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
+          class="far fa-eye"></i>&nbspVer</a>
     </div>
 
   </div>
@@ -69,17 +70,56 @@
           <span style="font-size: 20px;padding-right: 10px">Agregar Pregunta</span>
           <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
           <div class="form-row" ng-show="mostrarFila" ng-repeat="preg in listaPreg">
-            <div class="form-group col-md-6">
-                <label>Familia</label>
-                <input name="familia" type="text" class="form-control" ng-model="regAct.nombre"
-                    ng-required="true">
-                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                    <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                </span>
+            <div class="form-group col-md-4">
+              <label>Familia</label>
+              <input name="familia" type="text" class="form-control" ng-model="regAct.nombre" ng-required="true">
+              <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                <p class="error-msg" ng-message="required">Este campo es requerido</p>
+              </span>
             </div>
-            <div class="form-group col-md-6">
-                <label>Pregunta</label>
-                <input type="text" name="pregunta" class="form-control" >
+            <div class="form-group col-md-8">
+              <label>Pregunta</label>
+              <input type="text" name="pregunta" class="form-control">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
+          ng-disabled="ActForm.$invalid">Guardar</button>
+        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--ng-click="btnAutoEvaluacion()"-->
+
+<div class="modal fade" id="mdVerAuto" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">AutoEvaluación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form name="" novalidate>
+          <div class="form-row" ng-repeat="item in ejemplo">
+            <div class="form-group col-md-4">
+              <label>Familia</label>
+              <input ng-disabled="true" name="familia" type="text" class="form-control" ng-model="item.familia"
+                ng-required="true">
+              <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                <p class="error-msg" ng-message="required">Este campo es requerido</p>
+              </span>
+            </div>
+            <div class="form-group col-md-8">
+              <label>Pregunta</label>
+              <textarea cols="20" ng-disabled="true" type="text" name="pregunta" class="form-control"
+                ng-model="item.pregunta">
             </div>
         </div>
         </form>
@@ -93,4 +133,3 @@
     </div>
   </div>
 </div>
-<!--ng-click="btnAutoEvaluacion()"-->
