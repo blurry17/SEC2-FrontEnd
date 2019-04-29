@@ -42,6 +42,7 @@
   <div>
     <!-- Aspectos -->
     <div ng-repeat="aspecto in lstAspectos">
+      <br>
       <form class="form-inline">
         <div class="form-group mr-2">
             <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control" ng-model="aspecto.nomAspecto" name="nomAspecto" placeholder="Nombre del Aspecto"/>
@@ -63,6 +64,7 @@
         </div>
     </form>
       <!-- Indicadores -->
+      <br>
       <div style="margin-left: 5%" ng-repeat="indicador in aspecto.lstIndicadores">   
         <form class="form-inline">
           <div class="form-group mr-3">
