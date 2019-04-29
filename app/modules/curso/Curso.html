@@ -37,7 +37,7 @@
                     <li class="list-group-item" ng-show="act.entregable">Fecha máx entrega: {{act.fechaEntrega}}</li>
                 </ul>
                 <div class="card-body">
-                    <button class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Ver" ng-click="btnVerActividad()"><i class="fas fa-eye"></i></button>
                     <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar" ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>
                     <button class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Publicar" ng-click=""><i class="fas fa-check"></i></button>
                 </div>

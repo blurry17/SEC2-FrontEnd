@@ -71,10 +71,12 @@ app.controller('CursoController', function ($scope, $location, $cookieStore, ser
             } else {
                 console.dir('invalid');
             }
-        } else {
-
         }
     }
+
+    $scope.btnVerActividad = function(){
+        $location.path("actividad")
+    }            
 
     $scope.btnEditarActividad = function (act) {
         $scope.nuevo = false;
