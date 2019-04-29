@@ -75,7 +75,8 @@ app.controller('CursoController', function ($scope, $location, $cookieStore, ser
     }
 
     $scope.btnVerActividad = function(){
-        $location.path("actividad")
+        $('#btnVer').tooltip('hide');
+        $location.path("actividad");
     }            
 
     $scope.btnEditarActividad = function (act) {
@@ -91,14 +92,23 @@ app.controller('CursoController', function ($scope, $location, $cookieStore, ser
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
 
-    function activarTooltips() {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
+    $scope.btnPublicarActividad = function() {
+        $('#mdPublicarActividad').appendTo("body").modal('show');
     }
 
+    $scope.btnConfirmarPublicacion = function() {
+        $("#mdPublicarActividad").modal('hide');
+    }
+
+    angular.element(document).ready(function () {
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
+        })
+    });
+
     function init() {
-        activarTooltips();
     }
 
     init();
