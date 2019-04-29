@@ -1,5 +1,7 @@
 ﻿app.controller('IndexController', function ($rootScope, $scope, $location, $cookieStore, $window, serviceCRUD, serviceUtil) {
+    $scope.usuario = $cookieStore.get('usuario');
     $rootScope.showLayout = true;
+    
     $scope.cursos = [
         {
             nombre: 'Sistemas de Información 1'
@@ -11,10 +13,6 @@
             nombre: 'Ingeniería de Software'
         }
     ]
-
-    $scope.usuario = $cookieStore.get('usuario');
-
-    console.dir($scope.usuario)
 
     $scope.mostrarCurso = function(curso){
         $cookieStore.put('cursoActual', curso);

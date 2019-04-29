@@ -1,10 +1,5 @@
 ﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookieStore, $window, serviceCRUD) {
   $rootScope.showLayout = false;
-  var option = {
-    animation: true,
-    autohide: true,
-    delay: 3000
-  }
 
   $scope.btnLogin = function() {
     $rootScope.showLayout = true;
