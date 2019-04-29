@@ -3,6 +3,7 @@
 app.controller('RubricaController',function($scope, $location, $cookieStore, serviceUtil){ 
 
     $scope.mostrarCrearRubrica = false;
+    $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
     $scope.lstAspectos = [
             {   
@@ -52,10 +53,11 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
             puntajeMax: null
         });
      }
-    
+
 
     $scope.btnOcultarAspecto = function(aspecto){
-
+        var indexAspecto = lstIndicadores.indexof(aspecto)
+        
     }
 
     $scope.btnQuitarAspecto = function(aspecto){
