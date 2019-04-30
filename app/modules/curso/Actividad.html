@@ -69,7 +69,7 @@
           <span style="font-size: 20px;padding-right: 10px">Agregar Pregunta</span>
           <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
           <div class="form-row" ng-show="mostrarFila" ng-repeat="preg in listaPreg">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label>Familia</label>
               <input name="familia" type="text" class="form-control" ng-model="regAct.nombre" ng-required="true">
               <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
@@ -79,6 +79,9 @@
             <div class="form-group col-md-9">
               <label>Pregunta</label>
               <input type="text" name="pregunta" class="form-control">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-danger vertical-center" ng-click="deleteRow()"><i class="fas fa-minus"></i></button>
             </div>
           </div>
         </form>

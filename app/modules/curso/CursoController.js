@@ -1,5 +1,5 @@
-app.controller('CursoController', function ($scope, $location, $cookieStore, serviceUtil, serviceCRUD) {
-    $scope.curso = $cookieStore.get('cursoActual');
+app.controller('CursoController', function ($scope, $location, $cookies, serviceUtil, serviceCRUD) {
+    $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
 
     $scope.regAct = {
@@ -70,8 +70,10 @@ app.controller('CursoController', function ($scope, $location, $cookieStore, ser
                 }
                 $scope.lstActividad.push(obj);
                 $("#mdAgregarActividad").modal('hide');
-            } else {
-                console.dir('invalid');
+            }
+        } else {
+            if (formAct.checkValidity()) {                
+                $("#mdAgregarActividad").modal('hide');
             }
         }
     }

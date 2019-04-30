@@ -1,4 +1,4 @@
-﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookieStore, $window, serviceCRUD) {
+﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookies, $window, serviceCRUD) {
   $rootScope.showLayout = false;
 
   $scope.btnLogin = function() {
@@ -12,8 +12,8 @@
       esAlumno: 0
     }
 
-    $cookieStore.put('usuario', usuario);
-    $location.path('/main');
+    $cookies.putObject('usuario', usuario);
+    $location.path('main');
   }
 
   $scope.btnForgotPassword = function() {
