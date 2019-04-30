@@ -1,5 +1,4 @@
-app.controller('ActividadController',function($scope, $location, $cookieStore, serviceUtil){ 
-
+app.controller('ActividadController',function($scope, $location, $cookies, serviceUtil){ 
     $scope.mostrarFila=false;
     $scope.listaPreg=[];
     $scope.ejemplo=[{

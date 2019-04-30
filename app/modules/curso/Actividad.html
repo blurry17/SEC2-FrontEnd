@@ -1,29 +1,26 @@
-<div >
+<div>
   <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b></label>
   <div class="row">
     <div class="form-group col-md-3">
       <label style="font-size: 100%"><b>Fecha de Entrega:</b></label>
       <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
     </div>
-  
+
     <div class="form-group col-md-1.5">
-        <label style="font-size: 100%"><b>Hora de Entrega:</b></label>
-        <input type="text" class="form-control" readonly value="11:00 am">
-      </div>
+      <label style="font-size: 100%"><b>Hora de Entrega:</b></label>
+      <input type="text" class="form-control" readonly value="11:00 am">
+    </div>
   </div>
-<div class="row">
-      
-  <div class="form-group col-md-3">
+  <div class="row">
+    <div class="form-group col-md-3">
       <label style="font-size: 100%"><b>Fecha última modificación:</b></label>
       <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
     </div>
-
-  <div class="form-group col-md-1.5">
-    <label style="font-size: 100%"><b>Hora última modificación:</b></label>
-    <input type="text" class="form-control" readonly value="10:57 am">
+    <div class="form-group col-md-1.5">
+      <label style="font-size: 100%"><b>Hora última modificación:</b></label>
+      <input type="text" class="form-control" readonly value="10:57 am">
+    </div>
   </div>
-
-</div>
 
   <hr />
 
@@ -31,7 +28,7 @@
     <label style="font-size: 100%"><b>Indicaciones:</b></label>
     <input type="text" class="form-control" readonly value="- Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.
     - Recuerde subir el documento a tiempo de lo contrario no se  calificará.">
-</div>
+  </div>
 
   <hr />
 
@@ -72,7 +69,7 @@
           <span style="font-size: 20px;padding-right: 10px">Agregar Pregunta</span>
           <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
           <div class="form-row" ng-show="mostrarFila" ng-repeat="preg in listaPreg">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label>Familia</label>
               <input name="familia" type="text" class="form-control" ng-model="regAct.nombre" ng-required="true">
               <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
@@ -82,6 +79,9 @@
             <div class="form-group col-md-9">
               <label>Pregunta</label>
               <input type="text" name="pregunta" class="form-control">
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-danger vertical-center" ng-click="deleteRow()"><i class="fas fa-minus"></i></button>
             </div>
           </div>
         </form>
@@ -120,10 +120,9 @@
             </div>
             <div class="form-group col-md-9">
               <label>Pregunta</label>
-              <input ng-disabled="true" type="text" name="pregunta" class="form-control"
-                ng-model="item.pregunta">
+              <input ng-disabled="true" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
             </div>
-        </div>
+          </div>
         </form>
       </div>
 

@@ -1,5 +1,5 @@
-﻿app.controller('IndexController', function ($rootScope, $scope, $location, $cookieStore, $window, serviceCRUD, serviceUtil) {
-    $scope.usuario = $cookieStore.get('usuario');
+﻿app.controller('IndexController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
+    $scope.usuario = $cookies.getObject('usuario');
     $rootScope.showLayout = true;
     
     $scope.cursos = [
@@ -15,8 +15,7 @@
     ]
 
     $scope.mostrarCurso = function(curso){
-        $cookieStore.put('cursoActual', curso);
-
+        $cookies.putObject('cursoActual', curso);
         $('#sidebar').removeClass('active');
         $('.overlay').removeClass('active');
         $location.path('/curso')
@@ -25,7 +24,7 @@
     $scope.btnLogout = function(){
         $('#sidebar').removeClass('active');
         $('.overlay').removeClass('active');
-        $cookieStore.remove('usuario');
+        $cookies.remove('usuario');
         $location.path('/')
     }
 })

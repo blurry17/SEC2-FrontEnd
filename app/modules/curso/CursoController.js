@@ -1,5 +1,5 @@
-app.controller('CursoController', function ($scope, $location, $cookieStore, serviceUtil, serviceCRUD) {
-    $scope.curso = $cookieStore.get('cursoActual');
+app.controller('CursoController', function ($scope, $location, $cookies, serviceUtil, serviceCRUD) {
+    $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
 
     $scope.regAct = {
@@ -44,6 +44,7 @@ app.controller('CursoController', function ($scope, $location, $cookieStore, ser
 
     $scope.btnAgregarActividad = function () {
         $scope.nuevo = true;
+        $("#formAct").removeClass("was-validated");
         $scope.regAct = {
             nombre: '',
             desc: '',
@@ -56,47 +57,51 @@ app.controller('CursoController', function ($scope, $location, $cookieStore, ser
     }
 
     $scope.btnGuardarActividad = function () {
+        $("#formAct").addClass("was-validated");
         if ($scope.nuevo) {
-            if ($scope.ActForm.$valid) {
+            if (formAct.checkValidity()) {
                 var obj = {
                     nombre: $scope.regAct.nombre,
                     desc: $scope.regAct.desc,
                     tipo: $scope.regAct.tipo,
-                    entregable : $scope.regAct.entregable,
+                    entregable: $scope.regAct.entregable,
                     fechaEntrega: $scope.regAct.entregable ? serviceUtil.ddmmyyyy($scope.regAct.fechaEntrega) : '',
                     estado: 'P'
                 }
                 $scope.lstActividad.push(obj);
                 $("#mdAgregarActividad").modal('hide');
-            } else {
-                console.dir('invalid');
+            }
+        } else {
+            if (formAct.checkValidity()) {                
+                $("#mdAgregarActividad").modal('hide');
             }
         }
     }
 
-    $scope.btnVerActividad = function(){
+    $scope.btnVerActividad = function () {
         $('#btnVer').tooltip('hide');
         $location.path("actividad");
-    }            
+    }
 
     $scope.btnEditarActividad = function (act) {
         $scope.nuevo = false;
+        $("#formAct").removeClass("was-validated");
         $scope.regAct = {
             nombre: act.nombre,
             desc: act.desc,
             tipo: act.tipo,
             entregable: act.entregable,
-            fechaEntrega: act.fechaEntrega==null ? null : serviceUtil.convertToDate(act.fechaEntrega),
+            fechaEntrega: act.fechaEntrega == null ? null : serviceUtil.convertToDate(act.fechaEntrega),
             estado: act.estado
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
 
-    $scope.btnPublicarActividad = function() {
+    $scope.btnPublicarActividad = function () {
         $('#mdPublicarActividad').appendTo("body").modal('show');
     }
 
-    $scope.btnConfirmarPublicacion = function() {
+    $scope.btnConfirmarPublicacion = function () {
         $("#mdPublicarActividad").modal('hide');
     }
 
