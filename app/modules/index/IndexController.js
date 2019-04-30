@@ -16,7 +16,6 @@
 
     $scope.mostrarCurso = function(curso){
         $cookieStore.put('cursoActual', curso);
-
         $('#sidebar').removeClass('active');
         $('.overlay').removeClass('active');
         $location.path('/curso')
