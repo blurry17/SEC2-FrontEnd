@@ -1,10 +1,5 @@
-﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookieStore, $window, serviceCRUD) {
+﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookies, $window, serviceCRUD) {
   $rootScope.showLayout = false;
-  var option = {
-    animation: true,
-    autohide: true,
-    delay: 3000
-  }
 
   $scope.btnLogin = function() {
     $rootScope.showLayout = true;
@@ -17,8 +12,8 @@
       esAlumno: 0
     }
 
-    $cookieStore.put('usuario', usuario);
-    $location.path('/main');
+    $cookies.putObject('usuario', usuario);
+    $location.path('main');
   }
 
   $scope.btnForgotPassword = function() {
