@@ -2,7 +2,10 @@
 
 app.controller('RubricaController',function($scope, $location, $cookieStore, serviceUtil){ 
 
+    /* Variables */
     $scope.mostrarCrearRubrica = false;
+    $scope.mostrarAspecto = true;
+
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
     $scope.lstAspectos = [
@@ -23,11 +26,24 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
 
     $scope.btnCrearRubrica = function(){
         $scope.mostrarCrearRubrica = true;
-        /* Tengo que pushear un aspecto a lstAspectos
-        y un indicador a lstIndicadores.
-        Luego, estos van a a ser usados por el ng-repeat
-        pero como están vacíos, van a parecer nuevos registros*/
+        //Tengo que limpiar los datos
+        document.getElementById("nomRubrica").value = ""
+        $scope.lstAspectos.length = 1
+        var aspecto = $scope.lstAspectos[0];
+        aspecto.nomAspecto = ''
+        aspecto.descripcion = ''
+        aspecto.puntajeMax = null
+        aspecto.lstIndicadores.length = 1;
+        var indicador = aspecto.lstIndicadores[0];
+        indicador.nomIndicador = ''
+        indicador.descripcion = ''
+        indicador.puntajeMax = null
 
+    }
+
+    $scope.btnGuardarRubrica = function(){
+        $scope.mostrarCrearRubrica = false;
+        window.alert("Se guardó la Rúbrica!")
     }
 
      $scope.btnAgregarAspecto= function() {
@@ -56,7 +72,7 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
         });
      }
 
-    $scope.mostrarAspecto = true;
+    
 
     $scope.btnMostrarAspecto = function(aspecto){
         aspecto.mostrar = !(aspecto.mostrar);
@@ -72,6 +88,19 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
     $scope.btnQuitarIndicador = function(aspecto,indicador){
         var pos = aspecto.lstIndicadores.indexOf(indicador)
         aspecto.lstIndicadores.splice(pos,1)
+    }
+
+    $scope.btnVerRubricaActual = function(){
+        /*  
+        if(($scope.lstAspectos.length = 1 && $scope.lstAspectos[0].nomAspecto != "") || $scope.lstAspectos.length > 1)
+            $scope.mostrarCrearRubrica = true;
+        else{
+            window.alert("Primero debe guardar una rúbrica!");
+        }
+        */
+       $scope.mostrarCrearRubrica = true;
+        
+
     }
 
 })

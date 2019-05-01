@@ -6,6 +6,8 @@
   </ol>
 </nav>
 
+<!-- CrearRubrica + VerRubrica + UsarRubricaPasada -->
+
 <div class="row">
     <div class="col-6">
         <h3 >Rúbrica de la evaluación: </h3>
@@ -17,7 +19,7 @@
     </div>
 
     <div class=" col-xs-4 col-lg-2 col-2">
-        <button class="btn btn-sm btn-success">Ver Rúbrica Actual</button>
+        <button class="btn btn-sm btn-success" ng-click="btnVerRubricaActual()">Ver Rúbrica Actual</button>
     </div>
 
     <div class="col-xs-4 col-lg-2 col-2 dropdown">
@@ -37,7 +39,7 @@
   <div class="row">
     <form>
       <div class="col">
-          <input type="text" class="form-control" placeholder="Nombre de la Rúbrica">
+          <input id="nomRubrica" type="text" class="form-control" placeholder="Nombre de la Rúbrica">
       </div>
     </form>
     <div class="col">
