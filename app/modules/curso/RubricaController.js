@@ -1,6 +1,6 @@
 
 
-app.controller('RubricaController',function($scope, $location, $cookieStore, serviceUtil){ 
+app.controller('RubricaController',function($scope, $location, $cookies, serviceUtil){ 
 
     /* Variables */
     $scope.mostrarCrearRubrica = false;
