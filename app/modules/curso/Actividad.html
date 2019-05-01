@@ -1,5 +1,13 @@
-<div>
-  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b></label>
+<div >
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
+      </ol>
+    </nav>
+
+  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
   <div class="row">
     <div class="form-group col-md-3">
       <label style="font-size: 100%"><b>Fecha de Entrega:</b></label>
@@ -33,14 +41,13 @@
   <hr />
 
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificaciones</button>
-    <button ng-click="btnRubrica()" class="btn btn-info">Rúbrica</button>
-    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-    <button type="button" class="btn btn-secondary">Comentarios</button>
-    <button type="button" class="btn btn-secondary">Alertas</button>
-    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadisticas</button>
-    <button type="button" class="btn btn-secondary">Coevaluación</button>
+    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificar</button>
+    <button ng-click="btnRubrica()" class="btn btn-primary">Rubrica</button>
+    <button type="button" class="btn btn-primary">Grupos de Trabajo</button>
+    <button type="button" class="btn btn-primary">Comentarios</button>
+    <button type="button" class="btn btn-primary">Alertas</button>
+    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadísticas</button>
+    <button type="button" class="btn btn-primary">Coevaluación</button>
     <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
       style="color: white">AutoEvaluacion</button>
     <div class="dropdown-menu">

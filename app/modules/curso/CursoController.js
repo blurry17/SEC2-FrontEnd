@@ -78,7 +78,8 @@ app.controller('CursoController', function ($scope, $location, $cookies, service
         }
     }
 
-    $scope.btnVerActividad = function () {
+    $scope.btnVerActividad = function (act) {
+        $cookies.putObject('actividadActual',act)
         $('#btnVer').tooltip('hide');
         $location.path("actividad");
     }
