@@ -1,4 +1,6 @@
 app.controller('ActividadController',function($scope, $location, $cookies, serviceUtil){ 
+    $scope.curso=$cookies.getObject("cursoActual")
+    $scope.actividad=$cookies.getObject("actividadActual")
     $scope.mostrarFila=false;
     $scope.listaPreg=[];
     $scope.ejemplo=[{
@@ -35,6 +37,10 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
 
     $scope.btnRubrica = function(){
         $location.path("rubrica")
+    }
+
+    $scope.irCurso = function(){
+        $location.path("curso")
     }
 
     $scope.btnEstadisticas = function(){

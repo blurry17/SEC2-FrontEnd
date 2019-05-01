@@ -1,5 +1,11 @@
 <div>
-    
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a ng-click="irCurso()"> {{curso.nombre}}</a></li>
+            <li class="breadcrumb-item"><a ng-click="irActividad()"> {{actividad.nombre}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Calificaciones</li>
+        </ol>
+    </nav>
     <div class="form-group col-md-4">
         <label style="font-size: 100%"><b>Alumno:</b></label>
         <select class="form-control" ng-model="regAct.tipo">
@@ -19,14 +25,18 @@
             <div class="card-body">
                 <h1 class="card-title" style="font-size: 20%"></h1>20150666_Alvarez_fernando.zip&nbsp;<i
                     class="fas fa-download"></i></h1>
-
             </div>
         </div>
     </div>
-    <hr />
-    
 
-    <div class="col-md-12">
+    <div class="col-md-8">
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="btnValidarPuntaje()"
+            ng-disabled="ActForm.$invalid">Validar Resultados</button>
+        </div>
+    </div>
+
+    <div class="col-md-8">
     <label class="vertical-center" style="font-size: 100%"><b>Rúbrica:</b></label>
     <table class="table table-bordered">
         <thead>
@@ -71,19 +81,15 @@
             </tr>
         
         </tbody>
-       <tfoot>
+        <tfoot>
             <tr>
-                    <td></td>
-                    <td></td>
-                    <td>Nota Final:</td>
-                    <td><input type="text" name="" value=""></td>
-                    <td><input type="text" name="" value=""></td>
-                </tr>
-       </tfoot>
+                <td colspan="3" align="right"><b>Nota Final:</b></td>
+                <td><input type="text" class="form-control" readonly value=""></td>
+                <td><input type="text" name="" value=""></td>
+            </tr>
+        </tfoot>
         
-    </table>
-</div>
-    
+    </table>    
     <div class="modal-footer">
         <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
         ng-disabled="ActForm.$invalid">Guardar</button>
