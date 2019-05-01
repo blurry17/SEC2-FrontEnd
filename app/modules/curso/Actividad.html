@@ -1,29 +1,34 @@
 <div >
-  <label class="vertical-center" style="font-size: 150%; padding-top: 35px;" ><b>Laboratorio 1</b></label>
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
+      </ol>
+    </nav>
+
+  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
   <div class="row">
     <div class="form-group col-md-3">
       <label style="font-size: 100%"><b>Fecha de Entrega:</b></label>
       <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
     </div>
-  
+
     <div class="form-group col-md-1.5">
-        <label style="font-size: 100%"><b>Hora de Entrega:</b></label>
-        <input type="text" class="form-control" readonly value="11:00 am">
-      </div>
+      <label style="font-size: 100%"><b>Hora de Entrega:</b></label>
+      <input type="text" class="form-control" readonly value="11:00 am">
+    </div>
   </div>
-<div class="row">
-      
-  <div class="form-group col-md-3">
+  <div class="row">
+    <div class="form-group col-md-3">
       <label style="font-size: 100%"><b>Fecha última modificación:</b></label>
       <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
     </div>
-
-  <div class="form-group col-md-1.5">
-    <label style="font-size: 100%"><b>Hora última modificación:</b></label>
-    <input type="text" class="form-control" readonly value="10:57 am">
+    <div class="form-group col-md-1.5">
+      <label style="font-size: 100%"><b>Hora última modificación:</b></label>
+      <input type="text" class="form-control" readonly value="10:57 am">
+    </div>
   </div>
-
-</div>
 
   <hr />
 
@@ -31,19 +36,18 @@
     <label style="font-size: 100%"><b>Indicaciones:</b></label>
     <input type="text" class="form-control" readonly value="- Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.
     - Recuerde subir el documento a tiempo de lo contrario no se  calificará.">
-</div>
+  </div>
 
   <hr />
 
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificaciones</button>
-    <button ng-click="btnRubrica()" class="btn btn-info">Rubrica</button>
-    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-    <button type="button" class="btn btn-secondary">Comentarios</button>
-    <button type="button" class="btn btn-secondary">Alertas</button>
-    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadisticas</button>
-    <button type="button" class="btn btn-secondary">Coevaluación</button>
+    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificar</button>
+    <button ng-click="btnRubrica()" class="btn btn-primary">Rubrica</button>
+    <button type="button" class="btn btn-primary">Grupos de Trabajo</button>
+    <button type="button" class="btn btn-primary">Comentarios</button>
+    <button type="button" class="btn btn-primary">Alertas</button>
+    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadísticas</button>
+    <button type="button" class="btn btn-primary">Coevaluación</button>
     <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
       style="color: white">AutoEvaluacion</button>
     <div class="dropdown-menu">
@@ -88,6 +92,9 @@
               <br>
               <button class="btn btn-warning" ngclick="deleteRow()" style="vertical-align: bottom"><i class="fas fa-minus"></i></button>
             </div>
+            <div class="col-md-1">
+              <button class="btn btn-danger vertical-center" ng-click="deleteRow()"><i class="fas fa-minus"></i></button>
+            </div>
           </div>
         </form>
       </div>
@@ -125,10 +132,9 @@
             </div>
             <div class="form-group col-md-9">
               <label>Pregunta</label>
-              <input ng-disabled="true" type="text" name="pregunta" class="form-control"
-                ng-model="item.pregunta">
+              <input ng-disabled="true" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
             </div>
-        </div>
+          </div>
         </form>
       </div>
 
