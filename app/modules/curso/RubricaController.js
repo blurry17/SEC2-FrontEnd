@@ -16,7 +16,8 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
                         descripcion: '',
                         puntajeMax: null
                     }
-                ]
+                ],
+                mostrar: true
             }
     ]
 
@@ -41,7 +42,8 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
                     descripcion: '',
                     puntajeMax: null
                 }
-            ]
+            ],
+            mostrar: true
         });
      }
 
@@ -54,16 +56,18 @@ app.controller('RubricaController',function($scope, $location, $cookieStore, ser
         });
      }
 
+    $scope.mostrarAspecto = true;
 
-    $scope.btnOcultarAspecto = function(aspecto){
-        var indexAspecto = lstIndicadores.indexof(aspecto)
-        
+    $scope.btnMostrarAspecto = function(aspecto){
+        aspecto.mostrar = !(aspecto.mostrar);
     }
 
     $scope.btnQuitarAspecto = function(aspecto){
         var pos = $scope.lstAspectos.indexOf(aspecto)
         $scope.lstAspectos.splice(pos,1)
     }
+    
+
 
     $scope.btnQuitarIndicador = function(aspecto,indicador){
         var pos = aspecto.lstIndicadores.indexOf(indicador)
