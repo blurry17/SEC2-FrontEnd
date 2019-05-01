@@ -1,3 +1,11 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+    <li class="breadcrumb-item"><a href="#!actividad">Actividad</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Rúbrica</li>
+  </ol>
+</nav>
+
 <div class="row">
     <div class="col-6">
         <h3 >Rúbrica de la evaluación: </h3>
@@ -25,13 +33,18 @@
 
 <div ng-show="mostrarCrearRubrica">
 
-  <!-- NomRubrica + inputNomRubrica + btnGuardarRubrica -->
-  <form class="form-inline row">
-      <div class="form-group mr-12">
-          <input type="email" class="form-control col-sm-12 col-md-11" id="inputEmail" placeholder="Nombre de la Rúbrica">
+  <!-- InputNomRubrica + btnGuardarRubrica -->
+  <div class="row">
+    <form>
+      <div class="col">
+          <input type="text" class="form-control" placeholder="Nombre de la Rúbrica">
       </div>
-      <button type="button" class="btn btn-outline-danger col-sm-12 col-md-1" ng-click="btnGuardarRubrica()">Guardar Rúbrica</button>
-  </form>
+    </form>
+    <div class="col">
+        <button type="button" class="btn btn-outline-danger" ng-click="btnGuardarRubrica()">Guardar Rúbrica</button>
+    </div>
+  </div>
+
 
   <!-- Boton Agregar Aspecto -->
   <div class="row">
