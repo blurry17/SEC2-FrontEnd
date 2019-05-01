@@ -11,7 +11,7 @@ app.controller('EstadisticasController',function($scope, $location, $cookieStore
 
 
     google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
+    google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
 
@@ -22,7 +22,7 @@ app.controller('EstadisticasController',function($scope, $location, $cookieStore
     ]);
 
     var options = {
-      title: 'My Daily Activities'
+      title: 'Resultados:'
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
