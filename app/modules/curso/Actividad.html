@@ -86,9 +86,11 @@
             <div class="form-group col-md-9">
               <label>Pregunta</label>
               <input type="text" name="pregunta" class="form-control">
+              
             </div>
-            <div class="col-md-1">
-              <button class="btn btn-danger vertical-center" ng-click="deleteRow()"><i class="fas fa-minus"></i></button>
+            
+            <div class="form-group col-md-1">
+              <button class="btn btn-danger vertical-center" ng-click="deleteRow(preg)"><i class="fas fa-minus"></i></button>
             </div>
           </div>
         </form>
@@ -117,9 +119,9 @@
       <div class="modal-body">
         <form name="" novalidate>
           <div class="form-row" ng-repeat="item in ejemplo">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label>Familia</label>
-              <input ng-disabled="true" name="familia" type="text" class="form-control" ng-model="item.familia"
+              <input ng-disabled="!item.editar" name="familia" type="text" class="form-control" ng-model="item.familia"
                 ng-required="true">
               <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
                 <p class="error-msg" ng-message="required">Este campo es requerido</p>
@@ -127,7 +129,11 @@
             </div>
             <div class="form-group col-md-9">
               <label>Pregunta</label>
-              <input ng-disabled="true" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
+              <input ng-disabled="!item.editar" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
+            </div>
+            <div class="form-group col-md-1">
+              <br>
+              <button class="btn btn-primary" ng-click="habilitarCampos(item)"><i class="fas fa-edit"></i></button>
             </div>
           </div>
         </form>
@@ -136,6 +142,7 @@
       <div class="modal-footer">
         <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
           ng-disabled="ActForm.$invalid">Guardar</button>
+          
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
     </div>
