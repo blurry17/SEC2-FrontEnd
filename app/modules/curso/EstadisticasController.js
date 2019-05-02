@@ -1,6 +1,8 @@
-app.controller('EstadisticasController',function($scope, $location, $cookieStore, serviceUtil){ 
-    $scope.curso=$cookieStore.get("cursoActual")
-    $scope.actividad=$cookieStore.get("actividadActual")
+app.controller('EstadisticasController',function($scope, $location, $cookies, serviceUtil){ 
+    $scope.usuario = $cookies.getObject('usuario');
+    if ($scope.usuario == undefined) $location.path('/');
+    $scope.curso=$cookies.getObject("cursoActual")
+    $scope.actividad=$cookies.getObject("actividadActual")
 
     $scope.irActividad = function(){
         $location.path("actividad")
