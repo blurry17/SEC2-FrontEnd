@@ -27,73 +27,89 @@
                     class="fas fa-download"></i></h1>
             </div>
         </div>
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                <label for="file">Choose file to upload</label>
+                <input type="file" id="file" name="file" multiple>
+            </div>
+            <div>
+                <button ng-click="btnclick()">Submit</button>
+            </div>
+        </form>
     </div>
 
     <div class="col-md-8">
         <div class="modal-footer">
             <button class="btn btn-primary" type="submit" ng-click="btnValidarPuntaje()"
-            ng-disabled="ActForm.$invalid">Validar Resultados</button>
+                ng-disabled="ActForm.$invalid">Validar Resultados</button>
         </div>
     </div>
 
     <div class="col-md-8">
-    <label class="vertical-center" style="font-size: 100%"><b>Rúbrica:</b></label>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nro</th>
-                <th>Criterio</th>
-                <th>Puntaje Max.</th>
-                <th>Puntaje</th>
-                <th>Comentarios</th>
-            </tr>
-        
-        </thead>
+        <label class="vertical-center" style="font-size: 100%"><b>Rúbrica:</b></label>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nro</th>
+                    <th>Criterio</th>
+                    <th>Puntaje Max.</th>
+                    <th>Puntaje</th>
+                    <th>Comentarios</th>
+                </tr>
 
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Colocar Requisitos ordenados</td>
-                <td>5</td>
-                <td><input type="text" name="" value=""></td>
-                <td><input type="text" name="" value=""></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Colocar Prioridad</td>
-                <td>5</td>
-                <td><input type="text" name="" value=""></td>
-                <td><input type="text" name="" value=""></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Formato adecuado</td>
-                <td>5</td>
-                <td><input type="text" name="" value=""></td>
-                <td><input type="text" name="" value=""></td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>No utilizar palabras ambiguas</td>
-                <td>5</td>
-                <td><input type="text" name="" value=""></td>
-                <td><input type="text" name="" value=""></td>
-            </tr>
-        
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" align="right"><b>Nota Final:</b></td>
-                <td><input type="text" class="form-control" readonly value=""></td>
-                <td><input type="text" name="" value=""></td>
-            </tr>
-        </tfoot>
-        
-    </table>    
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
-        ng-disabled="ActForm.$invalid">Guardar</button>
-        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Colocar Requisitos ordenados</td>
+                    <td>5</td>
+                    <td><input type="text" name="" value=""></td>
+                    <td><input type="text" name="" value=""></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Colocar Prioridad</td>
+                    <td>5</td>
+                    <td><input type="text" name="" value=""></td>
+                    <td><input type="text" name="" value=""></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Formato adecuado</td>
+                    <td>5</td>
+                    <td><input type="text" name="" value=""></td>
+                    <td><input type="text" name="" value=""></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>No utilizar palabras ambiguas</td>
+                    <td>5</td>
+                    <td><input type="text" name="" value=""></td>
+                    <td><input type="text" name="" value=""></td>
+                </tr>
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"><b>Nota Final:</b></td>
+                    <td><input type="text" class="form-control" readonly value=""></td>
+                    <td><input type="text" name="" value=""></td>
+                </tr>
+            </tfoot>
+
+        </table>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
+                ng-disabled="ActForm.$invalid">Guardar</button>
+            <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+        </div>
+
     </div>
-   
+    <iframe id="my_iframe" style="display:none;"></iframe>
 </div>
+<script>
+    function Download(url) {
+        document.getElementById('my_iframe').src = url;
+    };
+</script>
