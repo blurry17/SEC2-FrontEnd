@@ -1,5 +1,13 @@
-<div>
-  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b></label>
+<div >
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
+      </ol>
+    </nav>
+
+  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
   <div class="row">
     <div class="form-group col-md-3">
       <label style="font-size: 100%"><b>Fecha de Entrega:</b></label>
@@ -33,14 +41,13 @@
   <hr />
 
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificaciones</button>
-    <button ng-click="btnRubrica()" class="btn btn-info">Rubrica</button>
-    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-    <button type="button" class="btn btn-secondary">Grupos de Trabajo</button>
-    <button type="button" class="btn btn-secondary">Comentarios</button>
-    <button type="button" class="btn btn-secondary">Alertas</button>
-    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadisticas</button>
-    <button type="button" class="btn btn-secondary">Coevaluación</button>
+    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificar</button>
+    <button ng-click="btnRubrica()" class="btn btn-primary">Rubrica</button>
+    <button type="button" class="btn btn-primary">Grupos de Trabajo</button>
+    <button type="button" class="btn btn-primary">Comentarios</button>
+    <button type="button" class="btn btn-primary">Alertas</button>
+    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadísticas</button>
+    <button type="button" class="btn btn-primary">Coevaluación</button>
     <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
       style="color: white">AutoEvaluacion</button>
     <div class="dropdown-menu">
@@ -79,9 +86,11 @@
             <div class="form-group col-md-9">
               <label>Pregunta</label>
               <input type="text" name="pregunta" class="form-control">
+              
             </div>
-            <div class="col-md-1">
-              <button class="btn btn-danger vertical-center" ng-click="deleteRow()"><i class="fas fa-minus"></i></button>
+            
+            <div class="form-group col-md-1">
+              <button class="btn btn-danger vertical-center" ng-click="deleteRow(preg)"><i class="fas fa-minus"></i></button>
             </div>
           </div>
         </form>
@@ -110,9 +119,9 @@
       <div class="modal-body">
         <form name="" novalidate>
           <div class="form-row" ng-repeat="item in ejemplo">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
               <label>Familia</label>
-              <input ng-disabled="true" name="familia" type="text" class="form-control" ng-model="item.familia"
+              <input ng-disabled="!item.editar" name="familia" type="text" class="form-control" ng-model="item.familia"
                 ng-required="true">
               <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
                 <p class="error-msg" ng-message="required">Este campo es requerido</p>
@@ -120,7 +129,11 @@
             </div>
             <div class="form-group col-md-9">
               <label>Pregunta</label>
-              <input ng-disabled="true" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
+              <input ng-disabled="!item.editar" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
+            </div>
+            <div class="form-group col-md-1">
+              <br>
+              <button class="btn btn-primary" ng-click="habilitarCampos(item)"><i class="fas fa-edit"></i></button>
             </div>
           </div>
         </form>
@@ -129,6 +142,7 @@
       <div class="modal-footer">
         <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
           ng-disabled="ActForm.$invalid">Guardar</button>
+          
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
     </div>

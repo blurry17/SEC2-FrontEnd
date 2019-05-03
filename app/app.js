@@ -31,8 +31,7 @@ app.config(function ($routeProvider, $httpProvider) {
         .when('/autoeval',{
             templateUrl:'app/modules/curso/AutoEval.html?v=' + Date.now()
             
-        }
-        )
+        })
 
         .when('/rubrica',{
             templateUrl: 'app/modules/curso/Rubrica.html?v=' + Date.now(),

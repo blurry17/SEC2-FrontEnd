@@ -13,14 +13,26 @@
                 url: baseURL + Api + "/" + Method,
                 data: $.param(Params),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).success(function(response){
+            }).then(function(response){
+                return response;
+            });
+        }
+
+        var TypePostFile = function (Method, Params){
+            return $http({
+                method: 'POST',
+                url: baseURL + Method,
+                data: $.param(Params),
+                headers: {'Content-Type': 'multipart/form-data'}
+            }).then(function(response){
                 return response;
             });
         }
 
         return {
             TypeGet : TypeGet,
-            TypePost : TypePost
+            TypePost : TypePost,
+            TypePostFile : TypePostFile
         }
     }
 
