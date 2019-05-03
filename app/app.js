@@ -1,4 +1,4 @@
-var app = angular.module('appFS', ['ng', 'ngRoute', 'ngCookies','ngMessages','ServiceCRUD','ServiceUtil']);
+var app = angular.module('appFS', ['ng', 'ngRoute', 'ngCookies', 'ServiceCRUD', 'ServiceUtil']);
 
 app.config(function ($routeProvider, $httpProvider) {
     $httpProvider.defaults.headers.post = { 'Content-Type': 'application/json; charset=utf-8' };
@@ -28,11 +28,6 @@ app.config(function ($routeProvider, $httpProvider) {
             templateUrl: 'app/modules/curso/Calificaciones.html?v=' + Date.now(),
             controller: 'CalificacionesController'
         }) 
-        .when('/autoeval',{
-            templateUrl:'app/modules/curso/AutoEval.html?v=' + Date.now()
-            
-        }
-        )
 
         .when('/rubrica',{
             templateUrl: 'app/modules/curso/Rubrica.html?v=' + Date.now(),

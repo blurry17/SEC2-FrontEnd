@@ -1,10 +1,3 @@
-<style>
-    .error-msg {
-        display: inline;
-        color: red;
-        font-size: 0.9rem;
-    }
-</style>
 <div>
     <h1><span class="badge badge-primary">{{curso.nombre}}</span></h1>
     <div class="line"></div>
@@ -94,7 +87,7 @@
                     <div class="form-row" ng-show="regAct.entregable">
                         <div class="form-group col-xs-12 col-sm-8 col-md-6 col-lg-5">
                             <label>Fecha máxima de entrega</label>
-                            <input type="date" class="form-control" ng-model="regAct.fechaEntrega" required>
+                            <input type="date" class="form-control" ng-model="regAct.fechaEntrega" required="regAct.entregable">
                         </div>
                     </div>
 

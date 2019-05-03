@@ -1,6 +1,8 @@
-app.controller('EstadisticasController',function($scope, $location, $cookieStore, serviceUtil){ 
-    $scope.curso=$cookieStore.get("cursoActual")
-    $scope.actividad=$cookieStore.get("actividadActual")
+app.controller('EstadisticasController',function($scope, $location, $cookies, serviceUtil){ 
+    $scope.usuario = $cookies.getObject('usuario');
+    if ($scope.usuario == undefined) $location.path('/');
+    $scope.curso=$cookies.getObject("cursoActual")
+    $scope.actividad=$cookies.getObject("actividadActual")
 
     $scope.irActividad = function(){
         $location.path("actividad")
@@ -10,8 +12,9 @@ app.controller('EstadisticasController',function($scope, $location, $cookieStore
     }
 
 
-    $scope.gc=true;
+    $scope.gc=false;
     $scope.gb=false;
+    $scope.seleccion = 'gc';
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChartC);
@@ -34,13 +37,7 @@ app.controller('EstadisticasController',function($scope, $location, $cookieStore
     chart.draw(data, options);
   }
 
-
-
-
-
-
-  google.charts.load('current', { 'packages': ['bar'] });
-  google.charts.setOnLoadCallback(drawChartB);
+  
 
   function drawChartB() {
     $scope.gb=true;
@@ -62,5 +59,20 @@ app.controller('EstadisticasController',function($scope, $location, $cookieStore
 
     var chart = new google.charts.Bar(document.getElementById('barchart_material'));
     chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+
+
+  $scope.TipoGrafico = function(){
+    if($scope.seleccion == 'gc') {
+      $scope.gc=true;
+      $scope.gb = false;
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChartC);
+    }else{
+      google.charts.load('current', { 'packages': ['bar'] });
+      google.charts.setOnLoadCallback(drawChartB);
+      $scope.gc=false;
+      $scope.gb = true;
+    }
   }
 })

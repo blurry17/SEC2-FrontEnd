@@ -1,4 +1,6 @@
 app.controller('ActividadController',function($scope, $location, $cookies, serviceUtil){ 
+    $scope.usuario = $cookies.getObject('usuario');
+    if ($scope.usuario == undefined) $location.path('/');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
     $scope.mostrarFila=false;
