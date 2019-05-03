@@ -6,17 +6,17 @@
     }
 </style>
 <div>
-    <h1><span class="badge badge-primary">{{curso.nombre}}</span></h1>
+    <h1><span class="badge badge-dark" style="background-color: maroon"><div style="margin: 25px">{{curso.nombre}}</div></span></h1>
     <div class="line"></div>
-    <h2><span class="badge badge-info">Actividades</span></h2>
+    <h2><span class="badge badge-secondary"><div style="margin: 10px">Actividades</div></span></h2> <br><br>
 
     <div class="row justify-content-between">
         <div class="col-xs-12 col-md-3">
-            <h5 style="display:inline-block"><span class="badge badge-pill badge-success">Entregado</span></h5>
+            <h5 style="display:inline-block"><span class="badge badge-pill badge-success"><div style="margin: 5px">Entregado</div></span></h5>
             <h5 style="display:inline-block"><span class="badge badge-pill badge-warning"
-                    style="color: white">Pendiente</span>
+                    style="color: white"><div style="margin: 5px">Pendiente</div></span>
             </h5>
-            <h5 style="display:inline-block"><span class="badge badge-pill badge-dark">Inactivo</span></h5>
+            <h5 style="display:inline-block"><span class="badge badge-pill badge-dark"><div style="margin: 5px">Inactivo</div></span></h5>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
             <button class="btn btn-success" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
