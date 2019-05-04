@@ -1,6 +1,6 @@
 (function(){
     var serviceCRUD = function($http){
-        var baseURL = "http://localhost:5500/api/";
+        var baseURL = "http://localhost:5000/api/";
 
         var TypeGet = function(Method, Params){
             var url = baseURL + Method;
@@ -11,7 +11,7 @@
             return $http({
                 method: 'POST',
                 url: baseURL + Method,
-                data: $.param(Params),
+                data: $.param(Params, true),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(response){
                 return response;
