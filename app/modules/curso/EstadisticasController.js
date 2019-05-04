@@ -12,8 +12,9 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
     }
 
 
-    $scope.gc=true;
+    $scope.gc=false;
     $scope.gb=false;
+    $scope.seleccion = 'gc';
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChartC);
@@ -36,13 +37,7 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
     chart.draw(data, options);
   }
 
-
-
-
-
-
-  google.charts.load('current', { 'packages': ['bar'] });
-  google.charts.setOnLoadCallback(drawChartB);
+  
 
   function drawChartB() {
     $scope.gb=true;
@@ -64,5 +59,20 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
 
     var chart = new google.charts.Bar(document.getElementById('barchart_material'));
     chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+
+
+  $scope.TipoGrafico = function(){
+    if($scope.seleccion == 'gc') {
+      $scope.gc=true;
+      $scope.gb = false;
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChartC);
+    }else{
+      google.charts.load('current', { 'packages': ['bar'] });
+      google.charts.setOnLoadCallback(drawChartB);
+      $scope.gc=false;
+      $scope.gb = true;
+    }
   }
 })
