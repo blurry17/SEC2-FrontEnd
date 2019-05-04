@@ -4,6 +4,8 @@ app.controller('CalificacionesController',function($scope, $location, $cookies, 
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
 
+    var file = null;
+
     $scope.irActividad = function(){
         $location.path("actividad")
     }
@@ -12,9 +14,22 @@ app.controller('CalificacionesController',function($scope, $location, $cookies, 
     }
 
     $scope.btnclick = function(){
-        var file = document.getElementById('file').files;
+        file = document.getElementById('file').files;
         console.dir(file);
     }
+
+    var params = {
+        irActividad : 1,
+        idUsuario : 1,
+        tipo : 1,
+        fecha : new Date(),
+        files : file,
+        url : ''
+    }
+
+    serviceCRUD.TypePost('entregable/entrega', params).then(function(response){
+        console.dir(response);
+    })
 
     var url = 'https://paideia.pucp.edu.pe/cursos/mod/resource/view.php?id=381468';
     //document.getElementById('my_iframe').src = url;
