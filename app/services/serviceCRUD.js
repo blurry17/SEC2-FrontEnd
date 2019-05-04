@@ -7,10 +7,10 @@
             return $http.get(url, {params: Params});
         }
 
-        var TypePost = function (Api, Method, Params){
+        var TypePost = function (Method, Params){
             return $http({
                 method: 'POST',
-                url: baseURL + Api + "/" + Method,
+                url: baseURL + Method,
                 data: $.param(Params),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(response){
