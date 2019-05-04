@@ -9,13 +9,6 @@
       pass: $scope.pass
     }
 
-    serviceCRUD.TypePost('login', params).then(function (response) {
-      
-    })
-
-
-
-
     $rootScope.showLayout = true;
 
     var usuario = {
