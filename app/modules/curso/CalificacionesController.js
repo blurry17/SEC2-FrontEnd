@@ -1,4 +1,4 @@
-app.controller('CalificacionesController', function ($scope, $location, $cookies, serviceUtil, serviceCRUD) {
+app.controller('CalificacionesController', function ($scope, $location, $cookies, $http, serviceUtil, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual")
@@ -15,15 +15,18 @@ app.controller('CalificacionesController', function ($scope, $location, $cookies
 
     $scope.btnclick = function () {
         file = document.getElementById('file').files;
-
+        console.dir(file);
         var datos = new FormData();
-
+        var hoy = new Date();
         datos.append("idActividad", 1);
         datos.append('idUsuario', 1);
         datos.append('tipo', 1);
-        datos.append('fecha', new Date());
-        datos.append('files', file);
+        datos.append('cantidadFiles',1)
+        datos.append('fechaEntrega', serviceUtil.ddmmyyyy(hoy));
+        datos.append('files 1', file[0]);
+        datos.append('files 2', file[1]);
         datos.append('url', '');
+        //zconsole.dir({form:datos,files:file})
 
         return $http({
             url: 'http://localhost:5000/api/entregable/entrega',
@@ -32,21 +35,7 @@ app.controller('CalificacionesController', function ($scope, $location, $cookies
             headers: { 'Content-Type': undefined },
             //prevents serializing datos.  don't do it.
             transformRequest: angular.identity
-        });
-
-        var params = {
-            idActividad: 1,
-            idUsuario: 1,
-            tipo: 1,
-            fecha: new Date(),
-            files: file,
-            url: ''
-        }
-
-        console.dir(file);
-        serviceCRUD.TypePostFile('entregable/entrega', params).then(function (response) {
-            console.dir(response);
-        })
+        }).then(function(respuesta){console.dir(respuesta)}).catch(function(error){console.dir(error)})
     }
 
 
