@@ -1,4 +1,6 @@
 app.controller('CursoController', function ($scope, $location, $cookies, serviceUtil, serviceCRUD) {
+    $scope.usuario = $cookies.getObject('usuario');
+    if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
 
@@ -78,7 +80,8 @@ app.controller('CursoController', function ($scope, $location, $cookies, service
         }
     }
 
-    $scope.btnVerActividad = function () {
+    $scope.btnVerActividad = function (act) {
+        $cookies.putObject('actividadActual',act)
         $('#btnVer').tooltip('hide');
         $location.path("actividad");
     }
