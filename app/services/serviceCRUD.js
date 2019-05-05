@@ -11,12 +11,22 @@
             return $http({
                 method: 'POST',
                 url: baseURL + Method,
-                data: $.param(Params),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function(response){
-                return response;
-            });
+                data : Params
+                //data: $.param(Params),
+                //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
         }
+
+        /* var TypePost = function (Method, Params){
+            return $http({
+                method: 'POST',
+                url: baseURL + Method,
+                data : Params
+            }).then(function(response){
+                console.dir(response.data);
+                return response.data;
+            });
+        } */
 
         var TypePostFile = function (Method, Params){
             return $http({
