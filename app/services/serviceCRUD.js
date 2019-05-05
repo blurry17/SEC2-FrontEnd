@@ -11,7 +11,7 @@
             return $http({
                 method: 'POST',
                 url: baseURL + Method,
-                data: $.param(Params, true),
+                data: $.param(Params),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(response){
                 return response;
@@ -20,11 +20,12 @@
 
         var TypePostFile = function (Method, Params){
             return $http({
-                method: 'POST',
                 url: baseURL + Method,
-                data: $.param(Params),
-                headers: {'Content-Type': 'multipart/form-data'}
-            }).then(function(response){
+                method: 'POST',
+                data: Params,
+                headers: { 'Content-Type': undefined },
+                transformRequest: angular.identity
+            }).then(function (response) {
                 return response;
             });
         }
