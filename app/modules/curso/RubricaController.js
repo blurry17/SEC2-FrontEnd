@@ -17,18 +17,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
         result = window.confirm('¿Desea crear una nueva rúbrica?');
         if (result){
             $scope.mostrarCrearRubrica = true;
-            /* Limpiar datos de lstAspectos */
-            document.getElementById("nomRubrica").value = ""
-            $scope.lstAspectos.length = 0
-            var aspecto = $scope.lstAspectos[0];
-            aspecto.nomAspecto = ''
-            aspecto.descripcion = ''
-            aspecto.puntajeMax = null
-            aspecto.lstIndicadores.length = 0;
-            var indicador = aspecto.lstIndicadores[0];
-            indicador.nomIndicador = ''
-            indicador.descripcion = ''
-            indicador.puntajeMax = null
+
         }
     }
 
@@ -75,6 +64,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             descripcion: '',
             puntajeMax: null
         });
+        console.dir($scope.lstAspectos)
      }
 
      $scope.btnQuitarIndicador = function(aspecto,indicador){
