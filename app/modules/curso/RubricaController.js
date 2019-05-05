@@ -1,5 +1,3 @@
-
-
 app.controller('RubricaController',function($scope, $location, $cookies, serviceUtil){ 
 
     /* Variables */
@@ -9,21 +7,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
     /* Inicializando la lista de aspectos */
-    $scope.lstAspectos = [
-            {   
-                nomAspecto: '',
-                descripcion: '',
-                puntajeMax: null,
-                lstIndicadores:[
-                    {
-                        nomIndicador: '',
-                        descripcion: '',
-                        puntajeMax: null
-                    }
-                ],
-                mostrar: true
-            }
-    ]
+    $scope.lstAspectos = []
 
     /* Funciones Rubrica */
     $scope.btnCrearRubrica = function(){
@@ -53,7 +37,6 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             $scope.mostrarCrearRubrica = false;
             window.alert("Se guardó la Rúbrica!")
         }
-        
     }
 
     $scope.btnVerRubricaActual = function(){
@@ -68,13 +51,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             nomAspecto: '',
             descripcion: '',
             puntajeMax: null,
-            lstIndicadores:[
-                {
-                    nomIndicador: '',
-                    descripcion: '',
-                    puntajeMax: null
-                }
-            ],
+            lstIndicadores:[],
             mostrar: true
         });
      }

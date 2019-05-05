@@ -60,7 +60,7 @@
     <div ng-repeat="aspecto in lstAspectos">
       <br>
       <!-- Aca tengo que colocar el ng-hide -->
-      <div class="row" ng-show="aspecto.mostrar">
+      <div class="row">
           <form class="form-inline">
               <div class="form-group mr-2">
                   <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control" ng-model="aspecto.nomAspecto" name="nomAspecto" placeholder="Nombre del Aspecto"/>
@@ -72,7 +72,7 @@
                   <input style="border-width:2px !important;" class="border border-primary form-control" ng-model="aspecto.puntajeMax" placeholder="Puntaje Máximo del Aspecto"/>
                 </div>
               <div class="form-group mr-2">
-              <button type="button"  class="btn btn-outline-success"  ng-click="btnAgregarIndicador(aspecto)">Agregar Indicador</a></button>
+                <button type="button"  class="btn btn-outline-success"  ng-click="btnAgregarIndicador(aspecto)">Agregar Indicador</a></button>
               </div>
               <div class="form-group mr-2">
                   <button type="button" class="btn rounded-circle btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Ocultar Aspecto" ng-click="aspecto.mostrar = !aspecto.mostrar"><i class="fa fa-minus"></i></a></button>
@@ -84,7 +84,7 @@
       </div>
 
       <div class="form-group mr-2">
-          <button type="button" class="btn btn-outline-warning" ng-show="!aspecto.mostrar" ng-click="btnMostrarAspecto(aspecto)">Mostrar Aspecto</a></button>
+          <button type="button" class="btn btn-outline-warning" ng-show="!aspecto.mostrar" ng-click="btnMostrarAspecto(aspecto)">Mostrar Indicadores</a></button>
       </div>
 
       <!-- Indicadores -->
