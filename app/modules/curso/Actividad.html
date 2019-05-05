@@ -120,6 +120,8 @@
 
       <div class="modal-body">
         <form name="" novalidate>
+            <br>
+
           <div class="form-row" ng-repeat="item in ejemplo">
             <div class="form-group col-md-2">
               <span>Familia</span>
@@ -134,7 +136,7 @@
               <input ng-disabled="!item.editar" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
             </div>
             <div class="form-group col-md-1">
-              <span> <br></span>
+              <span><br></span>
               <button class="btn btn-primary" ng-click="habilitarCampos(item)"><i class="fas fa-edit"></i></button>
             </div>
           </div>
