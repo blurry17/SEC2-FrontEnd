@@ -9,21 +9,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
     /* Inicializando la lista de aspectos */
-    $scope.lstAspectos = [
-            {   
-                nomAspecto: '',
-                descripcion: '',
-                puntajeMax: null,
-                lstIndicadores:[
-                    {
-                        nomIndicador: '',
-                        descripcion: '',
-                        puntajeMax: null
-                    }
-                ],
-                mostrar: true
-            }
-    ]
+    $scope.lstAspectos = []
 
     /* Funciones Rubrica */
     $scope.btnCrearRubrica = function(){
@@ -33,12 +19,12 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             $scope.mostrarCrearRubrica = true;
             /* Limpiar datos de lstAspectos */
             document.getElementById("nomRubrica").value = ""
-            $scope.lstAspectos.length = 1
+            $scope.lstAspectos.length = 0
             var aspecto = $scope.lstAspectos[0];
             aspecto.nomAspecto = ''
             aspecto.descripcion = ''
             aspecto.puntajeMax = null
-            aspecto.lstIndicadores.length = 1;
+            aspecto.lstIndicadores.length = 0;
             var indicador = aspecto.lstIndicadores[0];
             indicador.nomIndicador = ''
             indicador.descripcion = ''
@@ -53,7 +39,6 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             $scope.mostrarCrearRubrica = false;
             window.alert("Se guardó la Rúbrica!")
         }
-        
     }
 
     $scope.btnVerRubricaActual = function(){
@@ -68,13 +53,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             nomAspecto: '',
             descripcion: '',
             puntajeMax: null,
-            lstIndicadores:[
-                {
-                    nomIndicador: '',
-                    descripcion: '',
-                    puntajeMax: null
-                }
-            ],
+            lstIndicadores:[],
             mostrar: true
         });
      }
