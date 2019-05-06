@@ -4,7 +4,9 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
     $scope.mostrarFila=false;
-    $scope.listaPreg=[];
+    $scope.mostrarPreg=false
+    $scope.listaFam=[];
+
     $scope.ejemplo=[{
         familia:"Preparacion",
         pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
@@ -36,10 +38,18 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         $scope.mostrarFila=true;
         let auxLista={
             familia:"",
+            listaPreg:[],
+        };
+        $scope.listaFam.push(auxLista);
+    }  
+
+    $scope.showPreg=function(fam){
+        $scope.mostrarPreg=true;
+        let auxPreg={
             pregunta:"",
         };
-        $scope.listaPreg.push(auxLista);
-    }  
+        fam.listaPreg.push(auxPreg);
+    }
 
     $scope.btnRubrica = function(){
         $location.path("rubrica")
@@ -53,11 +63,20 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         $location.path("estadisticas")
     }
 
-    $scope.deleteRow=function(preg){
-        let pos=$scope.listaPreg.indexOf(preg);
-        $scope.listaPreg.splice(pos,1);
+    $scope.deleteFam=function(fam){
+        let pos=$scope.listaFam.indexOf(fam);
+        $scope.listaFam.splice(pos,1);
+    }
+
+    $scope.deleteRow=function(fam,preg){
+        let posFam=$scope.listaFam.indexOf(fam);
+        let posPreg=$scope.listaFam[posFam].listaPreg.indexOf(preg);
+        fam.listaPreg.splice(posPreg,1);
     }
     $scope.habilitarCampos=function(item){
         item.editar=!(item.editar);
+    }
+    $scope.btnGuardarAutoEval=function(){
+        console.log($scope.listaFam);
     }
 })
