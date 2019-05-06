@@ -74,6 +74,7 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         fam.listaPreg.splice(posPreg,1);
     }
     $scope.habilitarCampos=function(item){
+        if(!item.editar)
         item.editar=!(item.editar);
     }
     $scope.btnGuardarAutoEval=function(){
