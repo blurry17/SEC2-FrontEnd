@@ -11,22 +11,9 @@
             return $http({
                 method: 'POST',
                 url: baseURL + Method,
-                data : Params
-                //data: $.param(Params),
-                //headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                data : JSON.stringify(Params)
             })
         }
-
-        /* var TypePost = function (Method, Params){
-            return $http({
-                method: 'POST',
-                url: baseURL + Method,
-                data : Params
-            }).then(function(response){
-                console.dir(response.data);
-                return response.data;
-            });
-        } */
 
         var TypePostFile = function (Method, Params){
             return $http({
