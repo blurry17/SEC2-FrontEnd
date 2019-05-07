@@ -7,7 +7,7 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
     $scope.mostrarPreg=false
     $scope.listaFam=[];
 
-    $scope.ejemplo=[{
+    $scope.ejemplo1=[{
         familia:"Preparacion",
         listaPreg:[
             {
@@ -51,6 +51,11 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
     $scope.btnVerAutoEval=function(){
+        serviceCRUD.TypePost("auto-evaluacion/listarPreguntas",params).then(function(response){
+            console.dir(response.data);
+            $scope.ejemplo=response.data;
+        })
+
         $('#mdVerAuto').appendTo("body").modal('show');
     }
     $scope.showFila=function(){
@@ -97,7 +102,28 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         preg.editar=!(preg.editar);
     }
     $scope.btnGuardarAutoEval=function(){
-        console.log($scope.listaFam);
+        //console.log($scope.listaFam);
+        let params={
+            idActividad:1,
+            listaFamilia:[{
+                familia:"Matematica",
+                listaPregunta:[{
+                    pregunta:"Sabe Sumar"
+                },
+                {
+                    pregunta:"Sabe Restar"
+                }]
+            },
+            {
+                familia:"Puntualidad",
+                listaPregunta:[{
+                    pregunta:"Entrega a tiempo"
+                }]
+            }]
+        }
+        serviceCRUD.TypePost("auto-evaluacion/creacion",params).then(function(response){
+            console.dir(response);
+        })
     }
 
     $scope.btnGuardarAutoEval1=function(){
