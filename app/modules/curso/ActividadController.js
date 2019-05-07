@@ -9,20 +9,39 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
 
     $scope.ejemplo=[{
         familia:"Preparacion",
-        pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
+                editar:false,
+            },
+            {
+                pregunta:"¿Vio los videos mencionados en la 1ra clase en el min 34 por el profesor?",
+                editar:false,
+            }],
     },{
         familia:"Aprendizaje",
-        pregunta:"¿Lograste aprender los conceptos clave para esta actividad?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Lograste aprender los conceptos clave para esta actividad?",
+                editar:false,
+            }
+        ],
     },{
         familia:"Responsabilidad",
-        pregunta:"¿Organizaste bien tu tiempo para lograr los objetivos de la actividad?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Organizaste bien tu tiempo para lograr los objetivos de la actividad?",
+                editar:false,
+            }
+        ],
     },{
         familia:"Interiorizacion",
-        pregunta:"¿Crees que lo aprendido te servira en un futuro?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Crees que lo aprendido te servira en un futuro?",
+                editar:false,
+            }
+        ],
     }];
 
     $scope.btnCalificaciones = function(){
@@ -73,11 +92,15 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         let posPreg=$scope.listaFam[posFam].listaPreg.indexOf(preg);
         fam.listaPreg.splice(posPreg,1);
     }
-    $scope.habilitarCampos=function(item){
-        if(!item.editar)
-        item.editar=!(item.editar);
+    $scope.habilitarCampos=function(preg){
+        if(!preg.editar)
+        preg.editar=!(preg.editar);
     }
     $scope.btnGuardarAutoEval=function(){
         console.log($scope.listaFam);
+    }
+
+    $scope.btnGuardarAutoEval1=function(){
+        console.log($scope.ejemplo);
     }
 })
