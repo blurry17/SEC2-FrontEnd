@@ -1,4 +1,4 @@
-app.controller('ActividadController',function($scope, $location, $cookies, serviceUtil){ 
+app.controller('ActividadController',function($scope, $location, $cookies,serviceCRUD, serviceUtil){ 
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso=$cookies.getObject("cursoActual")
@@ -51,6 +51,9 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
     $scope.btnVerAutoEval=function(){
+        params={
+            id:1,
+        };
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas",params).then(function(response){
             console.dir(response.data);
             $scope.ejemplo=response.data;
