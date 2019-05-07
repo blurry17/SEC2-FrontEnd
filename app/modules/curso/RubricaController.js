@@ -33,6 +33,7 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
     $scope.btnVerRubricaActual = function(){
         //Falta: Validar que primero haya guardado la rúbrica
        $scope.mostrarCrearRubrica = true;
+       console.dir($scope.lstAspectos);
     }
 
     /* Funciones Aspectos */
@@ -48,14 +49,23 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
      }
 
     $scope.btnMostrarAspecto = function(aspecto){
-        aspecto.mostrar = !(aspecto.mostrar);
+        if (!aspecto.mostrar){
+            aspecto.mostrar = !(aspecto.mostrar);   
+        }
+            
     }
 
+    $scope.btnOcultarIndicadores = function(aspecto){
+        if (aspecto.mostrar){
+            aspecto.mostrar = !(aspecto.mostrar);   
+        }
+    }
+    
     $scope.btnQuitarAspecto = function(aspecto){
         var pos = $scope.lstAspectos.indexOf(aspecto)
         $scope.lstAspectos.splice(pos,1)
     }
-
+    
     /* Funciones Indicadores */
     $scope.btnAgregarIndicador= function(aspecto) {
         aspecto.lstIndicadores.push({  
@@ -64,12 +74,12 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
             descripcion: '',
             puntajeMax: null
         });
-        console.dir($scope.lstAspectos)
-     }
-
-     $scope.btnQuitarIndicador = function(aspecto,indicador){
+    }
+    
+    $scope.btnQuitarIndicador = function(aspecto,indicador){
         var pos = aspecto.lstIndicadores.indexOf(indicador)
         aspecto.lstIndicadores.splice(pos,1)
     }
+    console.dir($scope.lstAspectos)
 
 })
