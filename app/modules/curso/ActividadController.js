@@ -1,27 +1,48 @@
-app.controller('ActividadController',function($scope, $location, $cookies, serviceUtil){ 
+app.controller('ActividadController',function($scope, $location, $cookies,serviceCRUD, serviceUtil){ 
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
     $scope.mostrarFila=false;
-    $scope.listaPreg=[];
-    $scope.ejemplo=[{
+    $scope.mostrarPreg=false
+    $scope.listaFam=[];
+
+    $scope.ejemplo=[/*{
         familia:"Preparacion",
-        pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
+                editar:false,
+            },
+            {
+                pregunta:"¿Vio los videos mencionados en la 1ra clase en el min 34 por el profesor?",
+                editar:false,
+            }],
     },{
         familia:"Aprendizaje",
-        pregunta:"¿Lograste aprender los conceptos clave para esta actividad?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Lograste aprender los conceptos clave para esta actividad?",
+                editar:false,
+            }
+        ],
     },{
         familia:"Responsabilidad",
-        pregunta:"¿Organizaste bien tu tiempo para lograr los objetivos de la actividad?",
-        editar:false,
+        listaPreg:[
+            {
+                pregunta:"¿Organizaste bien tu tiempo para lograr los objetivos de la actividad?",
+                editar:false,
+            }
+        ],
     },{
         familia:"Interiorizacion",
-        pregunta:"¿Crees que lo aprendido te servira en un futuro?",
-        editar:false,
-    }];
+        listaPreg:[
+            {
+                pregunta:"¿Crees que lo aprendido te servira en un futuro?",
+                editar:false,
+            }
+        ],
+    }*/];
 
     $scope.btnCalificaciones = function(){
         $location.path("calificaciones")
@@ -30,16 +51,32 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
     $scope.btnVerAutoEval=function(){
+        params={
+            idActividad:1,
+        };
+        serviceCRUD.TypePost("auto-evaluacion/listarPreguntas",params).then(function(response){
+            console.dir(response.data);
+            $scope.ejemplo=response.data.listaFamilia;
+        })
+
         $('#mdVerAuto').appendTo("body").modal('show');
     }
     $scope.showFila=function(){
         $scope.mostrarFila=true;
         let auxLista={
             familia:"",
+            listaPreg:[],
+        };
+        $scope.listaFam.push(auxLista);
+    }  
+
+    $scope.showPreg=function(fam){
+        $scope.mostrarPreg=true;
+        let auxPreg={
             pregunta:"",
         };
-        $scope.listaPreg.push(auxLista);
-    }  
+        fam.listaPreg.push(auxPreg);
+    }
 
     $scope.btnRubrica = function(){
         $location.path("rubrica")
@@ -53,11 +90,46 @@ app.controller('ActividadController',function($scope, $location, $cookies, servi
         $location.path("estadisticas")
     }
 
-    $scope.deleteRow=function(preg){
-        let pos=$scope.listaPreg.indexOf(preg);
-        $scope.listaPreg.splice(pos,1);
+    $scope.deleteFam=function(fam){
+        let pos=$scope.listaFam.indexOf(fam);
+        $scope.listaFam.splice(pos,1);
     }
-    $scope.habilitarCampos=function(item){
-        item.editar=!(item.editar);
+
+    $scope.deleteRow=function(fam,preg){
+        let posFam=$scope.listaFam.indexOf(fam);
+        let posPreg=$scope.listaFam[posFam].listaPreg.indexOf(preg);
+        fam.listaPreg.splice(posPreg,1);
+    }
+    $scope.habilitarCampos=function(preg){
+        if(!preg.editar)
+        preg.editar=!(preg.editar);
+    }
+    $scope.btnGuardarAutoEval=function(){
+        //console.log($scope.listaFam);
+        let params={
+            idActividad:1,
+            listaFamilia:[{
+                familia:"Matematica",
+                listaPregunta:[{
+                    pregunta:"Sabe Sumar"
+                },
+                {
+                    pregunta:"Sabe Restar"
+                }]
+            },
+            {
+                familia:"Puntualidad",
+                listaPregunta:[{
+                    pregunta:"Entrega a tiempo"
+                }]
+            }]
+        }
+        serviceCRUD.TypePost("auto-evaluacion/creacion",params).then(function(response){
+            console.dir(response);
+        })
+    }
+
+    $scope.btnGuardarAutoEval1=function(){
+        console.log($scope.ejemplo);
     }
 })

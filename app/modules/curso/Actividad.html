@@ -1,11 +1,11 @@
-<div >
+<div>
 
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
-      </ol>
-    </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
+    </ol>
+  </nav>
 
   <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
   <div class="row">
@@ -72,34 +72,55 @@
       </div>
 
       <div class="modal-body">
+
         <form name="AutoEvalForm" novalidate>
-          <span style="font-size: 20px;padding-right: 10px">Agregar Pregunta</span>
-          <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
-          <br><br>
-          <div class="form-row" ng-show="mostrarFila" ng-repeat="preg in listaPreg">
-            <div class="form-group col-md-2">
-              <span>Familia</span>
-              <input name="familia" type="text" class="form-control" ng-model="regAct.nombre" ng-required="true">
+          <div class="col-12" style="padding-bottom: 15px">
+            <span style="font-size: 20px;padding-right: 10px; padding-bottom: 10px">Agregar Familia</span>
+            <button class="btn btn-success" ng-click="showFila()" style="padding-bottom: 10px"><i
+                class="fas fa-plus"></i></button>
+          </div>
+          <!--<br><br> -->
+
+          <div class="form-row" ng-show="mostrarFila" ng-repeat="fam in listaFam"
+            style="margin: 15px; background-color: rgb(243, 241, 241)">
+
+            <div class="form-group col-md-2" style="padding-bottom: 10px">
+
+              <input name="familia" placeholder="Familia" type="text" class="form-control" ng-model="fam.familia"
+                ng-required="true">
               <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
                 <p class="error-msg" ng-message="required">Este campo es requerido</p>
               </span>
             </div>
-            <div class="form-group col-md-9">
-              <span>Pregunta</span>
-              <input type="text" name="pregunta" class="form-control">
-              
+            <div class="form-group col-lg-8 col-md-7 col-xs-7"></div>
+            <div class="form-group col-lg-2 col-md-3 col-xs-3">
+              <button class="btn btn-success" ng-click="showPreg(fam)"><i class="fas fa-plus"></i></button>
+              <button class="btn btn-danger" ng-click="deleteFam(fam)"><i class="fas fa-times"></i></button>
             </div>
-            
-            <div class="form-group col-md-1">
-              <span><br></span>
-              <button class="btn btn-danger" ng-click="deleteRow(preg)"><i class="fas fa-minus"></i></button>
+
+
+            <div ng-show="mostrarPreg" ng-repeat="preg in fam.listaPreg"
+              class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+              <div class="form-group col-md-10" style="padding-right: 20px">
+                <input type="text" placeholder="Pregunta" name="pregunta" class="form-control" ng-model="preg.pregunta"
+                  ng-required="true">
+                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                  <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                </span>
+              </div>
+
+              <div class="form-group col-2">
+                <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i class="fas fa-times"></i></button>
+              </div>
             </div>
+
           </div>
         </form>
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()"
           ng-disabled="ActForm.$invalid">Guardar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
@@ -120,35 +141,69 @@
 
       <div class="modal-body">
         <form name="" novalidate>
-            <br>
+          <br>
+          <div class="form-row" ng-repeat="fam in ejemplo" style="margin: 15px; background-color: rgb(243, 241, 241)">
 
-          <div class="form-row" ng-repeat="item in ejemplo">
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4" style="padding-bottom: 10px">
               <span>Familia</span>
-              <input ng-disabled="!item.editar" name="familia" type="text" class="form-control" ng-model="item.familia"
+              <input ng-disabled="!fam.editar" name="familia" type="text" class="form-control" ng-model="fam.familia"
                 ng-required="true">
               <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
                 <p class="error-msg" ng-message="required">Este campo es requerido</p>
               </span>
             </div>
-            <div class="form-group col-md-9">
-              <span>Pregunta</span>
-              <input ng-disabled="!item.editar" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
+
+            <div class="form-group col-8"></div>
+
+            <div ng-repeat="preg in fam.listaPregunta" class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+              <div class="form-group col-md-11" style="padding-right: 20px">
+                <span>Pregunta</span>
+                <input ng-disabled="!preg.editar" type="text" name="pregunta" class="form-control"
+                  ng-model="preg.pregunta" ng-required="true">
+                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                  <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                </span>
+              </div>
+
+              <div class="form-group col-1">
+                <span><br></span>
+                <button class="btn btn-primary" ng-click="habilitarCampos(preg)"><i class="fas fa-edit"></i></button>
+              </div>
             </div>
-            <div class="form-group col-md-1">
-              <span><br></span>
-              <button class="btn btn-primary" ng-click="habilitarCampos(item)"><i class="fas fa-edit"></i></button>
-            </div>
+
           </div>
         </form>
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval1()"
           ng-disabled="ActForm.$invalid">Guardar</button>
-          
+
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
 </div>
+
+
+
+<!--<div class="form-row" ng-repeat="item in ejemplo">
+              <div class="form-group col-md-2">
+                <span>Familia</span>
+                <input ng-disabled="!item.editar" name="familia" type="text" class="form-control" ng-model="item.familia"
+                  ng-required="true">
+                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                  <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                </span>
+              </div>
+    
+              <div class="form-group col-md-9">
+                <span>Pregunta</span>
+                <input ng-disabled="!item.editar" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
+              </div>
+              <div class="form-group col-md-1">
+                <span><br></span>
+                <button class="btn btn-primary" ng-click="habilitarCampos(item)"><i class="fas fa-edit"></i></button>
+              </div>
+            </div>-->
