@@ -4,6 +4,14 @@ app.controller('CalificacionesController', function ($scope, $location, $cookies
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
 
+    var params = {
+        idActividad : 1
+    }
+
+    serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
+        console.dir(res);
+    })
+
     var file = null;
 
     $scope.irActividad = function () {
