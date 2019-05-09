@@ -15,6 +15,8 @@
         }
     ]
 
+    //console.log(window.location.pathname);
+
     $scope.mostrarCurso = function(curso){
         $cookies.putObject('cursoActual', curso);
         $('#sidebar').removeClass('active');

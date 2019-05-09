@@ -8,14 +8,9 @@
     </nav>
     <div class="form-group col-md-4">
         <label style="font-size: 100%"><b>Alumno:</b></label>
-        <select class="form-control" ng-model="regAct.tipo">
-            <option>20150666 - Fernando Alvarez Morán</option>
-            <option>20123454 - Alberto Díaz Tejada</option>
-            <option>20112453 - Anthony Vallejos Ramos</option>
-            <option>20163423 - Carlos Sambrano Díaz</option>
-            <option>20183245 - Andrea Zevallos Martos</option>
-            <option>20153241 - Kiara Quispe Cabrera</option>
-            <option>20152131 - Fiorella Cabrera Morán</option>
+        <select class="form-control" ng-model="regAct.tipo" ng-init="regAct.tipo = '0'">
+            <option value="0">Seleccione</option>
+            <option ng-repeat="item in listaAl">{{item.nombre}}</option>
         </select>
     </div>
 
