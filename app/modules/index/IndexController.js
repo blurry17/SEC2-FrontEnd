@@ -5,13 +5,13 @@
     
     $scope.cursos = [
         {
-            nombre: 'Sistemas de Información 1'
+            nombre: 'Sistemas de Información 1 H603'
         },
         {
-            nombre: 'Algoritmia'
+            nombre: 'Algoritmia H501'
         },
         {   
-            nombre: 'Ingeniería de Software'
+            nombre: 'Ingeniería de Software H883'
         }
     ]
 
