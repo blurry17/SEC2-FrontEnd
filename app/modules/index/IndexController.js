@@ -1,6 +1,6 @@
 ﻿app.controller('IndexController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
     $scope.usuario = $cookies.getObject('usuario');
-    if ($scope.usuario == undefined) $location.path('/');
+    //if ($scope.usuario == undefined) $location.path('/');
     $rootScope.showLayout = true;
     
     $scope.cursos = [

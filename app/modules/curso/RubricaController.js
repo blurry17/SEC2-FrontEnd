@@ -1,6 +1,6 @@
 app.controller('RubricaController',function($scope, $location, $cookies, serviceUtil, serviceCRUD){ 
     $scope.usuario = $cookies.getObject('usuario');
-    if ($scope.usuario == undefined) $location.path('/');
+    //if ($scope.usuario == undefined) $location.path('/');
 
     /* Variables */
     $scope.mostrarCrearRubrica = false;
