@@ -40,7 +40,7 @@
   <div class="row">
     <form>
       <div class="col">
-        <input id="nomRubrica" type="text" class="form-control" placeholder="Nombre de la Rúbrica">
+        <input id="nomRubrica" type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="nomRubrica">
       </div>
     </form>
     <div class="col">
@@ -60,17 +60,17 @@
   <!-- Aspecto + Indicadores -->
   <div>
     <!-- Aspectos -->
-    <div ng-repeat="aspecto in lstAspectos" class="border border-solid" style=" background-color: #e9ecef; margin-bottom: 10px;">
+    <div ng-repeat="aspecto in rubrica.listaAspectos" class="border border-solid" style=" background-color: #e9ecef; margin-bottom: 10px;">
       <br>
       <!-- Aca tengo que colocar el ng-hide -->
       <div class="row" style="padding-left: 4%;">
           <div class="form-group col-md-3">
             <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control"
-              ng-model="aspecto.nomAspecto" placeholder="Nombre del Aspecto" />
+              ng-model="aspecto.descripcion" placeholder="Nombre del Aspecto" />
           </div>
           <div class="form-group col-md-5">
             <input style="border-width:2px !important;" class="border border-primary form-control"
-              ng-model="aspecto.descripcion" placeholder="Descripción del Aspecto" />
+              ng-model="aspecto.informacion" placeholder="Descripción del Aspecto" />
           </div>
           <div class="form-group col-md-1">
             <input style="border-width:2px !important;" class="border border-primary form-control"
@@ -96,15 +96,15 @@
     </div>
 
     <!-- Indicadores -->
-    <div style="margin-left: 10%" ng-repeat="indicador in aspecto.lstIndicadores" ng-show="aspecto.mostrar">
+    <div style="margin-left: 10%" ng-repeat="indicador in aspecto.listaIndicadores" ng-show="aspecto.mostrar">
       <form class="form-inline">
         <div class="form-group mr-3">
           <input style="border-width:2px !important;" class="border border-info form-control"
-            ng-model="indicador.nomIndicador" placeholder="Nombre del indicador" />
+            ng-model="indicador.descripcion" placeholder="Nombre del indicador" />
         </div>
         <div class="form-group mr-3">
           <input style="border-width:2px !important;" class="border border-info form-control"
-            ng-model="indicador.descripcion" placeholder="Descripción del indicador" />
+            ng-model="indicador.informacion" placeholder="Descripción del indicador" />
         </div>
         <div class="form-group mr-3">
           <input style="border-width:2px !important;" class="border border-info form-control"

@@ -1,8 +1,18 @@
 app.controller('CalificacionesController', function ($scope, $location, $cookies, $http, serviceUtil, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
-    if ($scope.usuario == undefined) $location.path('/');
+    //if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
+    $scope.listaAl=[];
+
+    var params = {
+        idActividad : 1
+    }
+
+    serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
+        console.dir(res.data);
+        $scope.listaAl=res.data.lista;
+    })
 
     var file = null;
 

@@ -1,12 +1,19 @@
-app.controller('RubricaController',function($scope, $location, $cookies, serviceUtil){ 
+app.controller('RubricaController',function($scope, $location, $cookies, serviceUtil, serviceCRUD){ 
     $scope.usuario = $cookies.getObject('usuario');
-    if ($scope.usuario == undefined) $location.path('/');
+    //if ($scope.usuario == undefined) $location.path('/');
 
     /* Variables */
     $scope.mostrarCrearRubrica = false;
     $scope.mostrarAspecto = true;
 
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
+
+    $scope.rubrica = {
+        flgRubricaEspecial : 0,
+        idUsuarioCreador : 2,
+        nombreRubrica : "test",
+        listaAspectos : []
+    }
 
     /* Inicializando la lista de aspectos */
     $scope.lstAspectos = []
@@ -23,28 +30,44 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
 
     $scope.btnGuardarRubrica = function(){
         if (document.getElementById('nomRubrica').value == '')
-            window.alert("Ingrese el nombre de la rúbrica!")
+            window.alert("Ingrese el nombre de la rúbrica!");
         else{
             $scope.mostrarCrearRubrica = false;
+            console.dir($scope.rubrica);
+
+            serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function(response){
+                console.dir(response);
+            })
+
             window.alert("Se guardó la Rúbrica!")
         }
     }
 
     $scope.btnVerRubricaActual = function(){
         //Falta: Validar que primero haya guardado la rúbrica
+
+        var params = {
+            idActividad : 1
+        }
+        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function(res){
+            console.dir(res.data);
+        })
+
+
        $scope.mostrarCrearRubrica = true;
        console.dir($scope.lstAspectos);
     }
 
     /* Funciones Aspectos */
      $scope.btnAgregarAspecto= function() {
-        $scope.lstAspectos.push({
+        $scope.rubrica.listaAspectos.push({
             /* datos del aspecto */
-            nomAspecto: '',
             descripcion: '',
+            informacion: '',
             puntajeMax: null,
-            lstIndicadores:[],
-            mostrar: true
+            listaIndicadores:[],
+            mostrar: true,
+            tipoClasificacion : 1
         });
      }
 
@@ -62,23 +85,25 @@ app.controller('RubricaController',function($scope, $location, $cookies, service
     }
     
     $scope.btnQuitarAspecto = function(aspecto){
-        var pos = $scope.lstAspectos.indexOf(aspecto)
-        $scope.lstAspectos.splice(pos,1)
+        var pos = $scope.rubrica.listaAspectos.indexOf(aspecto)
+        $scope.rubrica.listaAspectos.splice(pos,1)
     }
     
     /* Funciones Indicadores */
     $scope.btnAgregarIndicador= function(aspecto) {
-        aspecto.lstIndicadores.push({  
+        aspecto.listaIndicadores.push({  
             /* datos del indicador */
-            nomIndicador: '',
             descripcion: '',
-            puntajeMax: null
+            informacion: '',
+            puntajeMax: null,
+            tipo : 'NOTA'
         });
-    }
-    
-    $scope.btnQuitarIndicador = function(aspecto,indicador){
-        var pos = aspecto.lstIndicadores.indexOf(indicador)
-        aspecto.lstIndicadores.splice(pos,1)
+        console.dir($scope.rubrica.listaAspectos)
+     }
+
+     $scope.btnQuitarIndicador = function(aspecto,indicador){
+        var pos = aspecto.listaIndicadores.indexOf(indicador)
+        aspecto.listaIndicadores.splice(pos,1)
     }
     console.dir($scope.lstAspectos)
 
