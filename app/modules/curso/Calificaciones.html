@@ -6,15 +6,22 @@
             <li class="breadcrumb-item active" aria-current="page">Calificaciones</li>
         </ol>
     </nav>
+    <br/>
     <div class="form-group col-md-4">
         <label style="font-size: 100%"><b>Alumno:</b></label>
         <select class="form-control" ng-model="regAct.tipo" ng-init="regAct.tipo = '0'">
             <option value="0">Seleccione</option>
             <option ng-repeat="item in listaAl">{{item.nombre}}</option>
+            
         </select>
+        
+    </div>
+    <div class="modal-footer";  style="float: right">
+            <button class="btn btn-outline-success" type="submit" ng-click="btnValidarPuntaje()"
+                ng-disabled="ActForm.$invalid">Validar Resultados</button>
     </div>
 
-    <div class="form-group col-md-4">
+    <!--<div class="form-group col-md">
         <label class="vertical-center" style="font-size: 100%;padding-top:20px"><b>Archivos:</b></label>
         <div class="card" style="width: 20rem;">
             <div class="card-body">
@@ -31,25 +38,29 @@
                 <button ng-click="btnclick()">Submit</button>
             </div>
         </form>
-    </div>
+    </div>-->
 
-    <div class="col-md-8">
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="btnValidarPuntaje()"
-                ng-disabled="ActForm.$invalid">Validar Resultados</button>
-        </div>
+
+    <div class="form-group col-md-8" style="float: right">
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                <a class="btn btn-outline-primary" role="button" href="20153454_Perez_Juan.zip" download="20153454_Perez_Juan.zip">Descargar Archivo</a>
+            </div>
+        </form>
     </div>
+    <br/>
 
     <div class="col-md-12">
+        <br/>
         <label class="vertical-center" style="font-size: 100%"><b>Rúbrica:</b></label>
         <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Nro</th>
                     <th>Criterio</th>
-                    <th>Puntaje Max.</th>
-                    <th>Puntaje</th>
-                    <th style="width: 50%">Comentarios</th>
+                    <th style="width: 5%">Puntaje Max.</th>
+                    <th style="width: 7%">Puntaje</th>
+                    <th style="width: 30%">Comentarios</th>
                 </tr>
 
             </thead>
@@ -60,28 +71,32 @@
                     <td>Colocar Requisitos ordenados</td>
                     <td>5</td>
                     <td><input class="form-control" type="text" name="" value=""></td>
-                    <td><input type="text"  class="form-control" name="" value=""></td>
+                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></a></button></td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Colocar Prioridad</td>
                     <td>5</td>
-                    <td><input type="text" name="" value=""></td>
-                    <td><input type="text" name="" value=""></td>
+                    <td><input class="form-control" type="text" name="" value=""></td>
+                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></a></button></td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Formato adecuado</td>
                     <td>5</td>
-                    <td><input type="text" name="" value=""></td>
-                    <td><input type="text" name="" value=""></td>
+                    <td><input class="form-control" type="text" name="" value=""></td>
+                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></a></button></td>
                 </tr>
                 <tr>
                     <td>4</td>
                     <td>No utilizar palabras ambiguas</td>
                     <td>5</td>
-                    <td><input type="text" name="" value=""></td>
-                    <td><input type="text" name="" value=""></td>
+                    <td><input class="form-control" type="text" name="" value=""></td>
+                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></a></button></td>
                 </tr>
 
             </tbody>
@@ -89,7 +104,10 @@
                 <tr>
                     <td colspan="3"><b>Nota Final:</b></td>
                     <td><input type="text" class="form-control" readonly value=""></td>
-                    <td><input type="text" name="" value=""></td>
+                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></a></button></td>
+                    <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
+                    
                 </tr>
             </tfoot>
 

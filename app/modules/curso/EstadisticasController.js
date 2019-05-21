@@ -61,18 +61,63 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
     chart.draw(data, google.charts.Bar.convertOptions(options));
   }
 
+  google.charts.load('current', { 'packages': ['bar'] });
+      google.charts.setOnLoadCallback(drawChartR);
+      $scope.gc=false;
+      //$scope.gr = true;
+      $scope.gb = false;
+  function drawChartR() {
+    $scope.gr=true;
+    $scope.gc=false;
+    $scope.gb=false;
+    var data = google.visualization.arrayToDataTable([
+      ['Ranking', 'Notas '],
+      ['16', 1],
+      ['17', 1],
+      ['18', 1],
+      ['20', 2]
+    ]);
+
+    var options = {
+      chart: {
+        title: 'Resultados:'
+      },
+      bars: 'vertical' // Required for Material Bar Charts.
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('barchart_materialR'));
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+
+    //FALTA COLOCAR LA TABLA DE LOS 5 MEJORES ALUMNOS CON CODIGO Y NOMBRE
+    // ¿COMO SE HACE?
+
+    google.charts.load('current', { 'packages': ['bar'] });
+      google.charts.setOnLoadCallback(drawChartR);
+      $scope.gc=false;
+      //$scope.gr = true;
+      $scope.gb = false;
+  }
+
 
   $scope.TipoGrafico = function(){
     if($scope.seleccion == 'gc') {
       $scope.gc=true;
       $scope.gb = false;
+      //$scope.gr = false;
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChartC);
-    }else{
+    }else if($scope.seleccion == 'gb') {
       google.charts.load('current', { 'packages': ['bar'] });
       google.charts.setOnLoadCallback(drawChartB);
       $scope.gc=false;
+      //$scope.gr = false;
       $scope.gb = true;
+    }else if($scope.seleccion == 'gr') {
+      google.charts.load('current', { 'packages': ['bar'] });
+      google.charts.setOnLoadCallback(drawChartR);
+      $scope.gc=false;
+      //$scope.gr = true;
+      $scope.gb = false;
     }
   }
 })

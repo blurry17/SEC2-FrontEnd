@@ -35,19 +35,65 @@
     </table>
   </div>
 
-  <div class="form-group col-md-7 col sm-12">
+<div style="float: right">
+  <label style="font-size: 120%"><b>Ranking de los 5 mejores alumno</b></label>  
+  <div class="row">
+      <div class="form-group col-md col sm">
+        <table class="table table-bordered">
+          <tr>
+            <th>Código</th>
+            <th>Nombres</th>
+            <th>Nota</th>
+          </tr>
+          <tr>
+            <td>20157687</td>
+            <td>Dayana Burga Díaz</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>20146787</td>
+            <td>Wendy Torres Valencia</td>
+            <td>20</td>
+          </tr>
+          <tr>
+              <td>20132387</td>
+              <td>Arturo Galvez Díaz</td>
+              <td>18</td>
+          </tr>
+          <tr>
+              <td>20129885</td>
+              <td>Gabriel Mendoza Sanchez</td>
+              <td>17</td>
+          </tr>
+          <tr>
+              <td>20134567</td>
+              <td>Alex Sanchez Díaz</td>
+              <td>16</td>
+          </tr>
+        </table>
+      </div>
+      <div style="float: right" ng-show="gr" id="barchart_materialR" style="width: 900px; height: 500px;"></div>
+      
+</div>
+  
+
+  <div class="form-group">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm">
+          <label style="font-size: 120%">Elegir Grafico:</label>
           <select  ng-change=TipoGrafico() class="form-control" ng-model="seleccion">
             <option value="gc">Gráfico Circular</option>
             <option value="gb">Gráfico de Barras</option>
+            <option value="gr">Gráfico de Ranking</option>
           </select>
         </div>
     </div>
   </div>
   
-  <div ng-show="gc" class="col-md-8 col-sm-12" id="piechart" style="width: 900px; height: 500px; color: whitesmoke "></div>
+  <div  ng-show="gc" class="col-md-8 col-sm-12" id="piechart" style="width: 900px; height: 500px; color: whitesmoke "></div>
 
   <div ng-show="gb" id="barchart_material" style="width: 900px; height: 500px;"></div>
+
+  
 </div>
 </div>
