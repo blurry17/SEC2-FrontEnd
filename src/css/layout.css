@@ -1,10 +1,10 @@
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif;
     background: #fafafa;
 }
 
 p {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Nunito', sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
@@ -16,17 +16,17 @@ a:hover,
 a:focus {
     color: inherit;
     text-decoration: none;
-    transition: all 0.3s;
+    /*transition: all 0.3s;*/
 }
 
-.navbar {
+/* .navbar {
     padding: 15px 10px;
     background: #fff;
     border: none;
     border-radius: 0;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .navbar-btn {
     box-shadow: none;
@@ -74,13 +74,30 @@ a:focus {
     TOPBAR STYLE
 ----------------------------------------------------- */
 
-.topbar{
+/* .topbar{
     position: fixed;
     width: 100%;
     height: 70px;
     z-index: 991;
     background-color: whitesmoke;
     border-bottom: 1px solid #47748b;
+} */
+
+.topbar{
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+    color: white;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-color: #30323D;
+    width: 100%;
+    background-color: #5C80BC !important
+}
+
+.btn-menu{
+    background-color: #CED3DC;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #30323D;
 }
 
 /* ---------------------------------------------------
@@ -90,15 +107,14 @@ a:focus {
 #sidebar {
     width: 250px;
     position: fixed;
-    top: 70px;
+    top: 62px;
     left: -250px;
     height: 100vh;
     z-index: 991;
-    background: whitesmoke;
-    color: #001942;
+    background: #CED3DC;
+    color: #30323D;
     transition: all 0.3s;
     overflow-y: scroll;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
 #sidebar.active {
@@ -121,33 +137,47 @@ a:focus {
     opacity: 1;
 }
 
-#sidebar .sidebar-header {
+/* #sidebar .sidebar-header {
     padding: 20px;
     background: whitesmoke;
-}
+} */
 
-#sidebar ul.components {
+/* #sidebar ul.components {
     padding: 0 0;
     border-bottom: 1px solid #47748b;
-}
+} */
 
-#sidebar ul p {
+/* #sidebar ul p {
     color: #fff;
     padding: 10px;
-}
+} */
 
 #sidebar ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
+    border: #001942;
+    border-width: 1px;
+    border-style: none none solid none;
 }
 
-#sidebar ul li a:hover {
+/* #sidebar ul li a:hover {
     cursor: pointer;
     color: #001942;
     background: #fff;
+} */
+
+.menu-item:hover{
+    background-color: rgb(151, 163, 185);
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
+.submenu-item:hover{
+    background-color: rgb(219, 219, 219);
+    cursor: pointer;
+    transition: all 0.3s;
+}
 
 a[data-toggle="collapse"] {
     position: relative;

@@ -1,6 +1,6 @@
 app.controller('CalificacionesController', function ($scope, $location, $cookies, $http, serviceUtil, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
-    if ($scope.usuario == undefined) $location.path('/');
+    //if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
     $scope.listaAl=[];
