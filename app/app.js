@@ -1,8 +1,9 @@
 var app = angular.module('appFS', ['ng', 'ngRoute', 'ngCookies', 'ServiceCRUD', 'ServiceUtil']);
+var indexURL = "http://127.0.0.1:5500/Index.html#!/";
 
 app.config(function ($routeProvider, $httpProvider) {
     $httpProvider.defaults.headers.post = { 'Content-Type': 'application/json; charset=utf-8' };
-
+    
     $routeProvider
         .when('/', {
             templateUrl: 'app/modules/login/Login.html?v=' + Date.now(),
@@ -37,7 +38,12 @@ app.config(function ($routeProvider, $httpProvider) {
         .when('/estadisticas', {
             templateUrl: 'app/modules/curso/Estadisticas.html?v=' + Date.now(),
             controller: 'EstadisticasController'
-        }) 
+        })
+        
+        .when('/grupos', {
+            templateUrl: 'app/modules/curso/Grupos.html?v=' + Date.now(),
+            controller: 'GruposController'
+        })
 
         .when('/comentarios', {
             templateUrl: 'app/modules/curso/Comentarios.html?v=' + Date.now(),

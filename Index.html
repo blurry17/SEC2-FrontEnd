@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="src/css/layout.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito&display=swap"> 
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
@@ -30,7 +30,7 @@
 
     <div class="row">
 
-      <div class="topbar container-fluid" ng-show="showLayout">
+      <!-- <div class="topbar container-fluid" ng-show="showLayout">
         <div class="row" style="height:100%">
           <div class="col-md-10">
             <button type="button" id="sidebarCollapse" class="btn btn-light vertical-center"><i
@@ -49,50 +49,48 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div>  -->
 
-      <!-- <nav class="navbar navbar-light bg-light" style="width: 100%; margin: 0px">
-          <div class="row justify-content-between" style="width: 100%">
-              <div class="col-md-10">
-                <button type="button" id="sidebarCollapse" class="btn btn-light vertical-center"><i
-                    class="fas fa-bars"></i></button>
-                <img src="src/img/logoSEC.jpg" class="vertical-center" alt="SEC2" width="30px" height="45px">
-                <label class="vertical-center" style="font-size: 1.5rem"><b>Sistema de Evaluación Continua</b></label>
-              </div>
-              <div class="col-md-2" style="text-align: right">
-                <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                  class="vertical-center dropdown-toggle" style="font-size: 130%; cursor: pointer">{{usuario.nombre}}&nbsp<i
-                    class="fas fa-user-circle" style="font-size: 150%"></i></label>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbspMi Perfil</a>
-                  <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i
-                      class="fas fa-sign-out-alt"></i>&nbspCerrar Sesión</a>
-                </div>
-              </div>
-            </div>
-      </nav> -->
+      <nav class="navbar topbar" ng-show="showLayout">
+        <button type="button" id="sidebarCollapse" class="btn btn-light btn-menu"><i class="fas fa-bars"></i></button>
+        <div class="vertical-center">
+          <img src="src/img/logoSEC.jpg" alt="SEC2" width="30px" height="45px">
+          <label style="font-size: 1.5rem; font-weight: bold; margin: 0px">SEC<sup>2</sup></label>
+        </div>
+      
+        <div class="dropdown">
+          <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
+            style="font-size: 130%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp<i class="fas fa-user-circle"
+              style="font-size: 150%"></i></label>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbspMi Perfil</a>
+            <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i
+                class="fas fa-sign-out-alt"></i>&nbspCerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
 
       <div id="content" ng-view></div>
 
       <nav id="sidebar" ng-show="showLayout">
         <ul class="list-unstyled components">
           <li class="active">
-            <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+            <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu-item"><i
                 class="fas fa-book"></i>&nbspCursos</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
-              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a>{{curso.nombre}}</a></li>
+              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a class="submenu-item">{{curso.nombre}}</a></li>
             </ul>
           </li>
-          <li>
+          <li class="menu-item">
             <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
           </li>
         </ul>
 
-        <ul class="list-unstyled CTAs">
+        <!-- <ul class="list-unstyled CTAs">
           <li>
             <a rel="noopener noreferrer" target="_blank" href="https://www.pucp.edu.pe/">PUCP</a>
           </li>
-        </ul>
+        </ul> -->
       </nav>
     </div>
 
@@ -111,8 +109,9 @@
     document.write("<script type='text/javascript' src='app/modules/curso/ActividadController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/RubricaController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/CalificacionesController.js?v=" + Date.now() + "'><\/script>");
-      document.write("<script type='text/javascript' src='app/modules/curso/EstadisticasController.js?v=" + Date.now() + "'><\/script>");  
-      document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");  
+    document.write("<script type='text/javascript' src='app/modules/curso/EstadisticasController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
   </script>
   
   
