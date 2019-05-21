@@ -90,6 +90,10 @@ app.controller('ActividadController',function($scope, $location, $cookies,servic
         $location.path("estadisticas")
     }
 
+    $scope.btnComentarios = function () {
+        $location.path("comentarios")
+    }
+
     $scope.deleteFam=function(fam){
         let pos=$scope.listaFam.indexOf(fam);
         $scope.listaFam.splice(pos,1);
