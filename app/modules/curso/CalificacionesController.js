@@ -23,6 +23,22 @@ app.controller('CalificacionesController', function ($scope, $location, $cookies
         $location.path("curso")
     }
 
+    $scope.btnAgregarComentario= function(){
+        $scope.texto=true;
+    }
+    $scope.btnAgregarComentario1= function(){
+        $scope.texto1=true;
+    }
+    $scope.btnAgregarComentario2= function(){
+        $scope.texto2=true;
+    }
+    $scope.btnAgregarComentario3= function(){
+        $scope.texto3=true;
+    }
+    $scope.btnAgregarComentario4= function(){
+        $scope.texto4=true;
+    }
+
     $scope.btnclick = function () {
         file = document.getElementById('file').files;
         var datos = new FormData();

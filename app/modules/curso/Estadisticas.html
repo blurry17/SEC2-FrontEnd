@@ -7,10 +7,12 @@
       <li class="breadcrumb-item active" aria-current="page">Estadisticas</li>
     </ol>
   </nav>
-  <label style="font-size: 120%"><b>Estadísticas de Evaluación</b></label>
+</div>
+<div >
+<br/>  
 <div class="row">
-  
-  <div class="form-group col-md-4 col sm-12">
+  <div class="form-group col-md-3">
+      <label style="font-size: 120%"><b>Estadísticas de Evaluación</b></label>
     <table class="table table-bordered">
       <tr>
         <th>Media:</th>
@@ -34,16 +36,13 @@
       </tr>
     </table>
   </div>
-
-<div style="float: right">
-  <label style="font-size: 120%"><b>Ranking de los 5 mejores alumno</b></label>  
-  <div class="row">
-      <div class="form-group col-md col sm">
-        <table class="table table-bordered">
+  <div class="col-md-5">
+      <label style="font-size: 120%"><b>Ranking de los 5 mejores alumnos</b></label>
+      <table class="table table-bordered">
           <tr>
-            <th>Código</th>
-            <th>Nombres</th>
-            <th>Nota</th>
+            <th style="width: 10%" >Código</th>
+            <th style="width: 30%">Nombres</th>
+            <th style="width: 10%">Nota</th>
           </tr>
           <tr>
             <td>20157687</td>
@@ -71,29 +70,30 @@
               <td>16</td>
           </tr>
         </table>
+  </div>
+</div>
+    
+  <div class="row">
+      <div class="form-group col-md">
+        
       </div>
-      <div style="float: right" ng-show="gr" id="barchart_materialR" style="width: 900px; height: 500px;"></div>
+      <!--<div style="float: right" id="barchart_materialR" style="width: 500px; height: 300px;"></div>-->
       
 </div>
-  
 
-  <div class="form-group">
+<div role="group">
     <div class="row">
-        <div class="col-sm">
-          <label style="font-size: 120%">Elegir Grafico:</label>
+        <div>
+          <label style="font-size: 100%"><b>Elegir Grafico:</b></label>
           <select  ng-change=TipoGrafico() class="form-control" ng-model="seleccion">
+            <option value="g">Seleccione una opción</option>
             <option value="gc">Gráfico Circular</option>
             <option value="gb">Gráfico de Barras</option>
-            <option value="gr">Gráfico de Ranking</option>
           </select>
         </div>
-    </div>
+    
+    <div  ng-show="gc" class="col-md-10 col-sm-12" id="piechart" style="width: 500px; height: 300px; color: whitesmoke "></div>
+    <div ng-show="gb" id="barchart_material" style="width: 700px; height: 300px;"></div>
   </div>
+</div>  
   
-  <div  ng-show="gc" class="col-md-8 col-sm-12" id="piechart" style="width: 900px; height: 500px; color: whitesmoke "></div>
-
-  <div ng-show="gb" id="barchart_material" style="width: 900px; height: 500px;"></div>
-
-  
-</div>
-</div>

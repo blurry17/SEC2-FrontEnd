@@ -14,7 +14,7 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
 
     $scope.gc=false;
     $scope.gb=false;
-    $scope.seleccion = 'gc';
+    $scope.seleccion = 'g';
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChartC);
@@ -62,10 +62,7 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
   }
 
   google.charts.load('current', { 'packages': ['bar'] });
-      google.charts.setOnLoadCallback(drawChartR);
-      $scope.gc=false;
-      //$scope.gr = true;
-      $scope.gb = false;
+  google.charts.setOnLoadCallback(drawChartR);
   function drawChartR() {
     $scope.gr=true;
     $scope.gc=false;
@@ -77,6 +74,8 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
       ['18', 1],
       ['20', 2]
     ]);
+
+    
 
     var options = {
       chart: {
@@ -90,12 +89,6 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
 
     //FALTA COLOCAR LA TABLA DE LOS 5 MEJORES ALUMNOS CON CODIGO Y NOMBRE
     // ¿COMO SE HACE?
-
-    google.charts.load('current', { 'packages': ['bar'] });
-      google.charts.setOnLoadCallback(drawChartR);
-      $scope.gc=false;
-      //$scope.gr = true;
-      $scope.gb = false;
   }
 
 
@@ -113,11 +106,11 @@ app.controller('EstadisticasController',function($scope, $location, $cookies, se
       //$scope.gr = false;
       $scope.gb = true;
     }else if($scope.seleccion == 'gr') {
-      google.charts.load('current', { 'packages': ['bar'] });
-      google.charts.setOnLoadCallback(drawChartR);
-      $scope.gc=false;
+      //google.charts.load('current', { 'packages': ['bar'] });
+      //google.charts.setOnLoadCallback(drawChartR);
+      //$scope.gc=false;
       //$scope.gr = true;
-      $scope.gb = false;
+      //$scope.gb = false;
     }
   }
 })

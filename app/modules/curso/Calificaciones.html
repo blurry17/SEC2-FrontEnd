@@ -16,7 +16,7 @@
         </select>
         
     </div>
-    <div class="modal-footer";  style="float: right">
+    <div style="float: right">
             <button class="btn btn-outline-success" type="submit" ng-click="btnValidarPuntaje()"
                 ng-disabled="ActForm.$invalid">Validar Resultados</button>
     </div>
@@ -60,7 +60,7 @@
                     <th>Criterio</th>
                     <th style="width: 5%">Puntaje Max.</th>
                     <th style="width: 7%">Puntaje</th>
-                    <th style="width: 30%">Comentarios</th>
+                    <th style="width: 20%">Comentarios</th>
                 </tr>
 
             </thead>
@@ -71,32 +71,60 @@
                     <td>Colocar Requisitos ordenados</td>
                     <td>5</td>
                     <td><input class="form-control" type="text" name="" value=""></td>
-                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
-                        class="fas fa-plus"></i></a></button></td>
+                    <td>
+                        <button ng-show="!texto" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></a></button>
+                        <div class="btn-group">
+                        <textarea  ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
+                        <button  ng-show="texto" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario()"><i
+                            class="fas fa-check"></i></a></button>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>2</td>
                     <td>Colocar Prioridad</td>
                     <td>5</td>
                     <td><input class="form-control" type="text" name="" value=""></td>
-                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
-                        class="fas fa-plus"></i></a></button></td>
+                    <td>
+                            <button ng-show="!texto1" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario1()"><i
+                            class="fas fa-plus"></i></a></button>
+                            <div class="btn-group">
+                            <textarea  ng-show="texto1" class="form-control" type="text" name="" value=""></textarea>
+                            <button  ng-show="texto1" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario1()"><i
+                                class="fas fa-check"></i></a></button>
+                            </div>
+                        </td>
                 </tr>
                 <tr>
                     <td>3</td>
                     <td>Formato adecuado</td>
                     <td>5</td>
                     <td><input class="form-control" type="text" name="" value=""></td>
-                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
-                        class="fas fa-plus"></i></a></button></td>
+                    <td>
+                            <button ng-show="!texto2" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario2()"><i
+                            class="fas fa-plus"></i></a></button>
+                            <div class="btn-group">
+                            <textarea  ng-show="texto2" class="form-control" type="text" name="" value=""></textarea>
+                            <button  ng-show="texto2" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario2()"><i
+                                class="fas fa-check"></i></a></button>
+                            </div>
+                        </td>
                 </tr>
                 <tr>
                     <td>4</td>
                     <td>No utilizar palabras ambiguas</td>
                     <td>5</td>
                     <td><input class="form-control" type="text" name="" value=""></td>
-                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
-                        class="fas fa-plus"></i></a></button></td>
+                    <td>
+                            <button ng-show="!texto3" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario3()"><i
+                            class="fas fa-plus"></i></a></button>
+                            <div class="btn-group">
+                            <textarea  ng-show="texto3" class="form-control" type="text" name="" value=""></textarea>
+                            <button  ng-show="texto3" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario3()"><i
+                                class="fas fa-check"></i></a></button>
+                            </div>
+                        </td>
                 </tr>
 
             </tbody>
@@ -104,8 +132,15 @@
                 <tr>
                     <td colspan="3"><b>Nota Final:</b></td>
                     <td><input type="text" class="form-control" readonly value=""></td>
-                    <td><button type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
-                        class="fas fa-plus"></i></a></button></td>
+                    <td>
+                            <button ng-show="!texto4" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario4()"><i
+                            class="fas fa-plus"></i></a></button>
+                            <div class="btn-group">
+                            <textarea  ng-show="texto4" class="form-control" type="text" name="" value=""></textarea>
+                            <button  ng-show="texto4" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario4()"><i
+                                class="fas fa-check"></i></a></button>
+                            </div>
+                        </td>
                     <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
                     
                 </tr>
