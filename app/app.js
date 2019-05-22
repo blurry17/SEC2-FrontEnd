@@ -38,7 +38,12 @@ app.config(function ($routeProvider, $httpProvider) {
         .when('/estadisticas', {
             templateUrl: 'app/modules/curso/Estadisticas.html?v=' + Date.now(),
             controller: 'EstadisticasController'
-        }) 
+        })
+        
+        .when('/grupos', {
+            templateUrl: 'app/modules/curso/Grupos.html?v=' + Date.now(),
+            controller: 'GruposController'
+        })
 
         .otherwise({
             redirectTo: '/main'

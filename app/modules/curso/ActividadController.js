@@ -45,11 +45,17 @@ app.controller('ActividadController',function($scope, $location, $cookies,servic
     }*/];
 
     $scope.btnCalificaciones = function(){
-        $location.path("calificaciones")
+        $location.path('calificaciones');
     }
+
+    $scope.btnGrupos = function(){
+        $location.path('grupos');
+    }
+
     $scope.btnAutoEvaluacion=function(){
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
+    
     $scope.btnVerAutoEval=function(){
         params={
             idActividad:1,

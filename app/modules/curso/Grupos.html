@@ -1,0 +1,59 @@
+<div>
+    <!-- <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a ng-click="irCurso()"> {{curso.nombre}}</a></li>
+            <li class="breadcrumb-item"><a ng-click="irActividad()"> {{actividad.nombre}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Estadisticas</li>
+        </ol>
+    </nav> -->
+    <h1>Grupos</h1>
+
+    <div class="btn-group" role="group">
+        <button ng-click="btnCrearGrupos()" type="button" class="btn btn-success">Crear Grupos</button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="al in lstAluSinGrupos" style="cursor: pointer" ng-click="agregarAlu($index,al)">
+                            <td>{{al.codigoPUCP}}</td>
+                            <td>{{al.nombre}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-5">
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="al in lstNuevoGrupo">
+                            <td>{{al.codigoPUCP}}</td>
+                            <td>{{al.nombre}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="text-align: center">
+                <button class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar grupo</button>
+            </div>
+        </div>
+    </div>
+</div>
