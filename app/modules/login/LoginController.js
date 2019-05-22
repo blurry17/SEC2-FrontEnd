@@ -21,12 +21,13 @@
         $scope.showAlert2 = true;
         return;
       }
+      var usuario = res.data;   
+      $cookies.putObject('usuario', usuario);
 
       $scope.showAlert2 = false;
-      usuario = res.data;
-      $cookies.putObject('usuario', usuario);      
+      
       location.href = indexURL + 'main';
-      $rootScope.showLayout = true;
+      //$rootScope.showLayout = true;
     })
   }
 
