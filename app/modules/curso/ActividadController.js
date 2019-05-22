@@ -6,7 +6,7 @@ app.controller('ActividadController',function($scope, $location, $cookies,servic
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false
     $scope.listaFam=[];
-
+    
     $scope.ejemplo=[/*{
         familia:"Preparacion",
         listaPreg:[
@@ -58,13 +58,13 @@ app.controller('ActividadController',function($scope, $location, $cookies,servic
     
     $scope.btnVerAutoEval=function(){
         params={
-            idActividad:1,
+            idActividad:$scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas",params).then(function(response){
             console.dir(response.data);
             $scope.ejemplo=response.data.listaFamilia;
         })
-
+        console.dir($scope.actividad);
         $('#mdVerAuto').appendTo("body").modal('show');
     }
     $scope.showFila=function(){
