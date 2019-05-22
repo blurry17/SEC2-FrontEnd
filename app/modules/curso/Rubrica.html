@@ -270,3 +270,60 @@
   </div>
 
 </div>
+
+<div class="modal fade" id="mdVistaPrevia" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Vista previa de la Rúbrica</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!--
+        Contenido de la Rúbrica
+      -->
+
+
+      <div class="modal-body">
+
+
+        <div ng-repeat="aspecto in lstAspectos">
+          <label>{{aspecto.descripcion + ' - ' + aspecto.informacion}}</label>
+          <table class="table table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Nro</th>
+                <th scope="col">Indicador</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Puntaje Máx.</th>
+              </tr>
+            </thead>
+            <tbody ng-repeat="indicador in aspecto.lista_indicadores">
+              <tr>
+                <th scope="row">{{$index + 1}}</th>
+                <td>{{indicador.descripcion}}</td>
+                <td>{{indicador.informacion}}</td>
+                <td>{{indicador.puntaje_max}}</td>
+              </tr>
+
+            </tbody>
+            <tfoot>
+              <th scope="row" colspan="2"></th>
+              <td>Total: </td>
+              <td>{{aspecto.puntaje_max}}</td>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--
+        Botón salir
+      -->
+      <div class="modal-footer">
+
+        <button class="btn btn-default " data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

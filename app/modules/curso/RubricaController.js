@@ -75,10 +75,15 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             console.dir(res.data);
+            $scope.lstAspectos = res.data.lista_aspectos;
         })
 
+        
+            $('#mdVistaPrevia').appendTo("body").modal('show');
+        
 
-        $scope.mostrarCrearRubrica = true;
+
+        //$scope.mostrarCrearRubrica = true;
         console.dir($scope.lstAspectos);
     }
 
