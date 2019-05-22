@@ -1,23 +1,33 @@
 ﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookies, $window, serviceCRUD) {
   $rootScope.showLayout = false;
   var usuario = null;
-  $scope.showAlert = false;
+  $scope.showAlert1 = false;
+  $scope.showAlert2 = false;
 
   $scope.btnLogin = function () {
+    if (!$scope.email || !$scope.pass) {
+      $scope.showAlert1 = true;
+      return;
+    }
+    $scope.showAlert1 = false;
+
     var params = {
       email: $scope.email,
       clave: $scope.pass
     }
 
-    $rootScope.showLayout = true;
+    serviceCRUD.TypePost('login', params).then(function (res) {
+      if (res.data.message == 'error datos') {
+        $scope.showAlert2 = true;
+        return;
+      }
 
-    serviceCRUD.TypePost('login', params).then(function(res){
-        usuario = res.data;
-        $cookies.putObject('usuario', usuario);
-        location.replace(indexURL + 'main');
+      $scope.showAlert2 = false;
+      usuario = res.data;
+      $cookies.putObject('usuario', usuario);      
+      location.href = indexURL + 'main';
+      $rootScope.showLayout = true;
     })
-
-    $location.path('main');
   }
 
   $scope.btnForgotPassword = function () {
