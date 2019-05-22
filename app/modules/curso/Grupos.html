@@ -12,7 +12,7 @@
         <button ng-click="btnCrearGrupos()" type="button" class="btn btn-success">Crear Grupos</button>
     </div>
 
-    <div class="row">
+    <div class="row" ng-show="creacionGrupos">
         <div class="col-md-5">
             <div class="table-responsive">
                 <table class="table table-bordered table-condensed table-hover">
@@ -31,8 +31,8 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-2">
-
+        <div class="col-md-2" style="text-align: center">
+            <h1><i class="fas fa-arrow-right"></i></h1>
         </div>
         <div class="col-md-5">
             <div class="table-responsive">
@@ -41,18 +41,56 @@
                         <tr>
                             <th>Código</th>
                             <th>Nombre</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="al in lstNuevoGrupo">
                             <td>{{al.codigoPUCP}}</td>
                             <td>{{al.nombre}}</td>
+                            <td>
+                                <button class="btn btn-danger" ng-click="elimAlu($index,al)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div style="text-align: center">
-                <button class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar grupo</button>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+                    Debe ingresar un nombre del grupo
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert2">
+                    Grupo vacío
+                </div>
+                <div class="form-group" style="display: inline-block">
+                    <input ng-model="Reg.nomGrupo" class="form-control" placeholder="Nombre del grupo">
+                </div>
+                <button type="submit" class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar grupo</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 80%">Grupo</th>
+                            <th style="width: 20%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="grupo in lstGrupos">
+                            <td>{{grupo.nombre}}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" ng-click="verGrupo(grupo)">
+                                    <i class="fas fa-list-ul"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" ng-click="elimGrupo($index, grupo)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
