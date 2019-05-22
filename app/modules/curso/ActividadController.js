@@ -1,11 +1,13 @@
-app.controller('ActividadController', function ($scope, $location, $cookies, serviceCRUD, serviceUtil) {
+
+app.controller('ActividadController',function($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil){ 
     $scope.usuario = $cookies.getObject('usuario');
-    //if ($scope.usuario == undefined) $location.path('/');
-    $scope.curso = $cookies.getObject("cursoActual")
-    $scope.actividad = $cookies.getObject("actividadActual")
-    $scope.mostrarFila = false;
-    $scope.mostrarPreg = false
-    $scope.listaFam = [];
+    if ($scope.usuario == undefined) $location.path('/');
+    $rootScope.lstCursos = $cookies.getObject('cursos');
+    $scope.curso=$cookies.getObject("cursoActual")
+    $scope.actividad=$cookies.getObject("actividadActual")
+    $scope.mostrarFila=false;
+    $scope.mostrarPreg=false
+    $scope.listaFam=[];
 
     $scope.ejemplo = [/*{
         familia:"Preparacion",

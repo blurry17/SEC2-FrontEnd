@@ -1,9 +1,16 @@
 app.controller('GruposController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
     $scope.usuario = $cookies.getObject('usuario');
-    //if ($scope.usuario == undefined) $location.path('/');
+    if ($scope.usuario == undefined) $location.path('/');
+    $rootScope.lstCursos = $cookies.getObject('cursos');
 
     $scope.lstAluSinGrupos = [];
     $scope.lstNuevoGrupo = [];
+    $scope.lstGrupos = [];
+    $scope.creacionGrupos = false;
+    $scope.showAlert1 = false;
+    $scope.Reg = {
+        nomGrupo: ''
+    }
 
     var params = {
         idActividad: 1
@@ -13,14 +20,52 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         $scope.lstAluSinGrupos = res.data
     })
 
-    $scope.agregarAlu = function(i, al){
-        $scope.lstAluSinGrupos.splice(i,1);
+    $scope.btnCrearGrupos = function() {
+        $scope.creacionGrupos = true;
+    }
+
+    $scope.agregarAlu = function(i, al) {
+        $scope.lstAluSinGrupos.splice(i, 1);
         $scope.lstNuevoGrupo.push(al);
     }
 
-    $scope.elimAlu = function(al){
-        
-        $scope.lstNuevoGrupo.push(al);
-        $scope.lstAluSinGrupos.splice(i,1);
+    $scope.elimAlu = function(i, al) {
+        $scope.lstNuevoGrupo.splice(i, 1);
+        $scope.lstAluSinGrupos.push(al);        
+    }
+
+    $scope.btnGuardarGrupo = function() {
+        if (!$scope.Reg.nomGrupo){
+            $scope.showAlert1 = true;
+            return;
+        }
+        $scope.showAlert1 = false;
+
+        if ($scope.lstNuevoGrupo.length == 0){
+            $scope.showAlert2 = true;
+            return;
+        }
+        $scope.showAlert2 = false;
+
+        var gr = {
+            nombre: $scope.Reg.nomGrupo,
+            lstAlumnos: $scope.lstNuevoGrupo
+        }
+
+        $scope.lstGrupos.push(gr);
+        $scope.Reg.nomGrupo = '';
+        $scope.lstNuevoGrupo = [];
+    }
+
+    $scope.elimGrupo = function(i, gr) {
+        for (let i = 0; i < gr.lstAlumnos.length; i++){
+            $scope.lstAluSinGrupos.push(gr.lstAlumnos[i]);
+        }
+
+        $scope.lstGrupos.splice(i, 1);
+    }
+
+    $scope.verGrupo = function() {
+
     }
 })
