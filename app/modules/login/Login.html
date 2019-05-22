@@ -3,6 +3,9 @@
     <div style="margin-bottom: 15px; text-align: center">
       <img src="src/img/logo-fullSEC.jpg" alt="SEC2Logo" width="60%">
     </div>
+    <div class="alert alert-danger" role="alert" ng-show="showAlert">
+      Usuario o contraseña incorrectos
+    </div>
     <div class="form-group">
       <label>Correo Electrónico</label>
       <input type="email" class="form-control" ng-model="email">

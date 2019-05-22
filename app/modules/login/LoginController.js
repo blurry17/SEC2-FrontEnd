@@ -1,6 +1,7 @@
 ﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookies, $window, serviceCRUD) {
   $rootScope.showLayout = false;
   var usuario = null;
+  $scope.showAlert = false;
 
   $scope.btnLogin = function () {
     var params = {
