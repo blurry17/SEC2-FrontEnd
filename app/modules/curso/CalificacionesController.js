@@ -22,6 +22,40 @@ app.controller('CalificacionesController', function ($scope, $location, $cookies
     $scope.irCurso = function () {
         $location.path("curso")
     }
+    $scope.btnValidarPuntaje = function(){
+        /* Preguntar si desea validar los puntajes una vez llenados */
+        result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
+
+    }
+
+
+        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function(res){
+            console.dir(res.data);
+            $scope.listaAspectos=res.data.lista_aspectos;
+            $scope.listaIndicadores=[];
+            $scope.lstTabla = [];
+
+            for (let i = 0; i < $scope.listaAspectos.length ; i++) {
+                var nombre=$scope.listaAspectos[i].descripcion;
+                listaIndicadores=$scope.listaAspectos[i].lista_indicadores;
+                 
+                for (let j = 0; j < listaIndicadores.length ; j++) {
+                    var obj = {
+                        nombreAsp : nombre,
+                        indicador: listaIndicadores[j]
+                    }
+
+                    $scope.lstTabla.push(obj);
+
+                }
+            }
+
+            console.dir($scope.lstTabla);
+        })
+
+    $scope.btnGuardarPuntaje = function(){
+        result = window.confirm('¿Está seguro que desea Guardar?');
+    }
 
     $scope.btnAgregarComentario= function(){
         $scope.texto=true;
