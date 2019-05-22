@@ -13,10 +13,32 @@
     <h3>Rúbrica de la evaluación: </h3>
   </div>
 
-
+  <!-- Aquí debo preguntar qué tipo de rúbrica desea -->
   <div class="col-xs-4 col-lg-2 col-2">
     <button ng-click="btnCrearRubrica()" class="btn btn-sm btn-primary">Crear Rúbrica</button>
   </div>
+
+  <div class="modal fade" id="mdElegirTipoRubrica" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Elegir el tipo de rúbrica... </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-center align-self-center">
+          <button class="btn btn-primary" ng-click="btnRubricaTipo1()" data-dismiss="modal">Rúbrica Compleja</button>
+          <button class="btn btn-primary" ng-click="btnRubricaTipo2()" data-dismiss="modal">Lista de Aspectos</button>
+          <button class="btn btn-primary" ng-click="btnRubricaTipo3()" data-dismiss="modal">Checklist</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <div class=" col-xs-4 col-lg-2 col-2">
     <button class="btn btn-sm btn-success" ng-click="btnVerRubricaActual()">Rúbrica Actual</button>
@@ -34,7 +56,9 @@
   </div>
 </div>
 
-<div ng-show="mostrarCrearRubrica">
+<!-- Rubrica Tipo 1 -->
+
+<div ng-show="mostrarRubricaTipo1">
 
   <!-- InputNomRubrica + btnGuardarRubrica -->
   <div class="row">
@@ -60,65 +84,189 @@
   <!-- Aspecto + Indicadores -->
   <div>
     <!-- Aspectos -->
-    <div ng-repeat="aspecto in rubrica.listaAspectos" class="border border-solid" style=" background-color: #e9ecef; margin-bottom: 10px;">
+    <div ng-repeat="aspecto in rubrica.listaAspectos" class="border border-solid rounded"
+      style=" background-color: #e9ecef; margin-bottom: 10px;">
       <br>
       <!-- Aca tengo que colocar el ng-hide -->
       <div class="row" style="padding-left: 4%;">
-          <div class="form-group col-md-3">
-            <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control"
-              ng-model="aspecto.descripcion" placeholder="Nombre del Aspecto" />
-          </div>
-          <div class="form-group col-md-5">
-            <input style="border-width:2px !important;" class="border border-primary form-control"
-              ng-model="aspecto.informacion" placeholder="Descripción del Aspecto" />
-          </div>
-          <div class="form-group col-md-1">
-            <input style="border-width:2px !important;" class="border border-primary form-control"
-              ng-model="aspecto.puntajeMax" placeholder="Puntaje Máximo del Aspecto" />
-          </div>
-          <div class="form-group col-md-3">
-            <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top"
-              title="Agregar Indicador" ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></a></button>
-            <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top"
-              title="Ocultar Indicadores" ng-click="btnOcultarIndicadores(aspecto)"><i
-                class="fa fa-minus"></i></a></button>
-            <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-              title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i
-                class="fas fa-times"></i></a></button>
-          </div>
+        <div class="form-group col-md-3">
+          <label>Nombre del Aspecto</label>
+          <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control"
+            ng-model="aspecto.descripcion" placeholder="Nombre..." />
+        </div>
+        <div class="form-group col-md-5">
+          <label>Descripción del Aspecto</label>
+          <input style="border-width:2px !important;" class="border border-primary form-control"
+            ng-model="aspecto.informacion" placeholder="Descripción..." />
+        </div>
+        <div class="form-group col-md-1">
+          <label>Puntaje</label>
+          <input style="border-width:2px !important;" class="border border-primary form-control"
+            ng-model="aspecto.puntajeMax" />
+        </div>
+        <div class="form-group col-md-2 d-flex align-items-end justify-content-around">
+          <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top"
+            title="Agregar Indicador" ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></a></button>
+          <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top"
+            title="Ocultar Indicadores" ng-click="btnOcultarIndicadores(aspecto)"><i
+              class="fa fa-minus"></i></a></button>
+          <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+            title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></a></button>
+
+        </div>
 
       </div>
-    
 
-    <div class="form-group mr-2" style="padding-left: 4%;">
-      <button type="button" class="btn btn-warning" ng-show="!aspecto.mostrar"
-        ng-click="btnMostrarAspecto(aspecto)">Mostrar Indicadores</a></button>
+
+      <div class="form-group mr-2" style="padding-left: 4%;">
+        <button type="button" class="btn btn-warning" ng-show="!aspecto.mostrar"
+          ng-click="btnMostrarAspecto(aspecto)">Mostrar Indicadores</a></button>
+      </div>
+
+      <!-- Indicadores -->
+      <div style="overflow-y: scroll;overflow-x: hidden;max-height: 200px;">
+        <div style="margin-left: 10%" ng-repeat="indicador in aspecto.listaIndicadores" ng-show="aspecto.mostrar">
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label>Nombre del Indicador</label>
+              <input style="border-width:2px !important;" class="border border-info form-control"
+                ng-model="indicador.descripcion" placeholder="Nombre..." />
+            </div>
+            <div class="form-group col-md-3">
+              <label>Descripción del Indicador</label>
+              <input style="border-width:2px !important;" class="border border-info form-control"
+                ng-model="indicador.informacion" placeholder="Descripción..." />
+            </div>
+            <div class="form-group col-md-1">
+              <label>Puntaje</label>
+              <input style="border-width:2px !important;" class="border border-info form-control"
+                ng-model="indicador.puntajeMax" />
+            </div>
+            <div class="form-group col-md-3 d-flex align-items-end">
+              <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+                title="Eliminar Indicador" ng-click="btnQuitarIndicador(aspecto, indicador)"><i
+                  class="fas fa-times"></i></a></button>
+            </div>
+            <br>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Indicadores -->
-    <div style="margin-left: 10%" ng-repeat="indicador in aspecto.listaIndicadores" ng-show="aspecto.mostrar">
-      <form class="form-inline">
-        <div class="form-group mr-3">
-          <input style="border-width:2px !important;" class="border border-info form-control"
-            ng-model="indicador.descripcion" placeholder="Nombre del indicador" />
-        </div>
-        <div class="form-group mr-3">
-          <input style="border-width:2px !important;" class="border border-info form-control"
-            ng-model="indicador.informacion" placeholder="Descripción del indicador" />
-        </div>
-        <div class="form-group mr-3">
-          <input style="border-width:2px !important;" class="border border-info form-control"
-            ng-model="indicador.puntajeMax" placeholder="Puntaje Máximo del indicador" />
-        </div>
-        <div class="form-group mr-3">
-          <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-            title="Eliminar Indicador" ng-click="btnQuitarIndicador(aspecto, indicador)"><i
-              class="fas fa-times"></i></a></button>
-        </div>
-      </form>
+</div>
+
+
+<!-- Rubrica Tipo 2 -->
+<div ng-show="mostrarRubricaTipo2">
+
+  <!-- InputNomRubrica + btnGuardarRubrica -->
+  <div class="row">
+    <form>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="nomRubrica">
+      </div>
+    </form>
+    <div class="col">
+      <button type="button" class="btn btn-success" ng-click="btnGuardarRubrica()">Guardar Rúbrica</button>
+    </div>
+  </div>
+  <br>
+  <!-- Boton Agregar Aspecto -->
+  <div class="row">
+    <div class="col">
+      <span style="padding-right: 10px;">Agregar Aspecto</span>
+      <button type="button" class="btn btn-primary" ng-click="btnAgregarAspecto()"><i
+          class="fas fa-plus"></i></a></button>
+    </div>
+  </div>
+  <br>
+  <!-- Aspecto + Indicadores -->
+  <div>
+    <!-- Aspectos -->
+    <div ng-repeat="aspecto in rubrica.listaAspectos" class="border border-solid rounded"
+      style=" background-color: #e9ecef; margin-bottom: 10px;">
       <br>
+      <!-- Aca tengo que colocar el ng-hide -->
+      <div class="row" style="padding-left: 4%;">
+        <div class="form-group col-md-3">
+          <label>Nombre del Aspecto</label>
+          <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control"
+            ng-model="aspecto.descripcion" placeholder="Nombre del Aspecto" />
+        </div>
+        <div class="form-group col-md-5">
+          <label>Descripción del Aspecto</label>
+          <input style="border-width:2px !important;" class="border border-primary form-control"
+            ng-model="aspecto.informacion" placeholder="Descripción del Aspecto" />
+        </div>
+        <div class="form-group col-md-3">
+          <label>Puntaje</label>
+          <input style="border-width:2px !important;" class="border border-primary form-control"
+            ng-model="aspecto.puntajeMax" placeholder="Puntaje Máximo del Aspecto" />
+        </div>
+        <div class="form-group col-md-1 d-flex align-items-end">
+          <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+            title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></a></button>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>
+
+</div>
+
+<!-- Rubrica Tipo 3 -->
+<div ng-show="mostrarRubricaTipo3">
+
+  <!-- InputNomRubrica + btnGuardarRubrica -->
+  <div class="row">
+    <form>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="nomRubrica">
+      </div>
+    </form>
+    <div class="col">
+      <button type="button" class="btn btn-success" ng-click="btnGuardarRubrica()">Guardar Rúbrica</button>
+    </div>
+  </div>
+  <br>
+  <!-- Boton Agregar Aspecto -->
+  <div class="row">
+    <div class="col">
+      <span style="padding-right: 10px;">Agregar Aspecto</span>
+      <button type="button" class="btn btn-primary" ng-click="btnAgregarAspecto()"><i
+          class="fas fa-plus"></i></a></button>
+    </div>
+  </div>
+  <br>
+  <!-- Aspecto + Indicadores -->
+  <div>
+    <!-- Aspectos -->
+    <div ng-repeat="aspecto in rubrica.listaAspectos" class="border border-solid rounded"
+      style=" background-color: #e9ecef; margin-bottom: 10px;">
+      <br>
+      <!-- Aca tengo que colocar el ng-hide -->
+      <div class="row d-flex justify-content-around align-self-center" style="padding-left: 4%;">
+        <div class="form-group col-md-3">
+          <label>Nombre del Aspecto</label>
+          <input style="border-width:2px !important; padding-right: 30px;" class="border border-primary form-control"
+            ng-model="aspecto.descripcion" placeholder="Nombre..." />
+        </div>
+        <div class="form-group col-md-5">
+          <label>Descripción del Aspecto</label>
+          <input style="border-width:2px !important;" class="border border-primary form-control"
+            ng-model="aspecto.informacion" placeholder="Descripción..." />
+        </div>
+        <div class="form-group col-md-3 d-flex align-items-end">
+          <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+            title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></a></button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 
 </div>
