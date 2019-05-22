@@ -1,6 +1,7 @@
 body {
     font-family: 'Nunito', sans-serif;
-    background: #fafafa;
+    color: rgb(63, 62, 61);
+    background:	#a6b1bb;
 }
 
 p {
@@ -90,14 +91,14 @@ a:focus {
     border-bottom-style: solid;
     border-color: #30323D;
     width: 100%;
-    background-color: #5C80BC !important
+    background-color: #252932 !important
 }
 
 .btn-menu{
-    background-color: #CED3DC;
+    background-color: rgb(169, 174, 184);
     border-width: 1px;
     border-style: solid;
-    border-color: #30323D;
+    border-color: rgb(58, 61, 75);
 }
 
 /* ---------------------------------------------------
@@ -111,7 +112,7 @@ a:focus {
     left: -250px;
     height: 100vh;
     z-index: 991;
-    background: #CED3DC;
+    background: rgb(194, 201, 214);
     color: #30323D;
     transition: all 0.3s;
     overflow-y: scroll;
