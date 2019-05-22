@@ -1,48 +1,37 @@
-app.controller('CursoController', function ($scope, $location, $cookies, serviceUtil, serviceCRUD) {
+app.controller('CursoController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
-    //if ($scope.usuario == undefined) $location.path('/');
+    if ($scope.usuario == undefined) $location.path('/');
+    $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
+
+    console.dir($scope.curso);
+
+    function ListarActividades() {
+        var params = { idhorario: $scope.curso.idhorario };
+        serviceCRUD.TypePost('actividad/lista', params).then(function (res) {
+            for (let i = 0; i < res.data.length; i++) {
+                res.data[i].fechaInicio = serviceUtil.ddmmyyyy(new Date(res.data[i].fechaInicio));
+                res.data[i].fechaFin = serviceUtil.ddmmyyyy(new Date(res.data[i].fechaFin));
+            }
+            console.dir(res.data);
+            $scope.lstActividad = res.data;
+        })
+    }
+
+    
 
     $scope.regAct = {
         nombre: '',
         desc: '',
-        tipo: "0",
+        tipo: "I",
         entregable: true,
         nota: null,
+        fechaInicio: new Date(),
+        fechaFin: new Date(),
         fechaEntrega: new Date(),
-        estado: 'I'
+        etapa: 'I'
     }
-
-    $scope.lstActividad = [
-        {
-            nombre: 'Laboratorio 1',
-            desc: 'Una descripción muy larga para una actividad tan corta',
-            tipo: "1",
-            entregable: true,
-            nota: 12,
-            fechaEntrega: '04/05/2019',
-            estado: 'I'
-        },
-        {
-            nombre: 'Casos de uso',
-            desc: 'Esta es una descripción regular',
-            tipo: "0",
-            entregable: true,
-            nota: 14,
-            fechaEntrega: '07/05/2019',
-            estado: 'I'
-        },
-        {
-            nombre: 'Laboratorio 2',
-            desc: 'Esta actividad no tiene entregable y por eso no tiene fecha de entrega',
-            tipo: "0",
-            entregable: false,
-            nota: null,
-            fechaEntrega: null,
-            estado: 'I'
-        }
-    ]
 
     $scope.btnAgregarActividad = function () {
         $scope.nuevo = true;
@@ -52,8 +41,10 @@ app.controller('CursoController', function ($scope, $location, $cookies, service
             desc: '',
             tipo: "0",
             entregable: true,
+            fechaInicio: new Date(),
+            fechaFin: new Date(),
             fechaEntrega: new Date(),
-            estado: 'I'
+            etapa: 'I'
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
@@ -62,16 +53,45 @@ app.controller('CursoController', function ($scope, $location, $cookies, service
         $("#formAct").addClass("was-validated");
         if ($scope.nuevo) {
             if (formAct.checkValidity()) {
-                var obj = {
+                /* var obj = {
                     nombre: $scope.regAct.nombre,
                     desc: $scope.regAct.desc,
                     tipo: $scope.regAct.tipo,
                     entregable: $scope.regAct.entregable,
+                    fechaInicio: serviceUtil.ddmmyyyy($scope.regAct.fechaInicio),
+                    fechaFin: serviceUtil.ddmmyyyy($scope.regAct.fechaFin),
                     fechaEntrega: $scope.regAct.entregable ? serviceUtil.ddmmyyyy($scope.regAct.fechaEntrega) : '',
-                    estado: 'P'
-                }
-                $scope.lstActividad.push(obj);
+                    etapa: 'P'
+                } */
+
+                var obj = {
+                    idHorario: $scope.curso.idhorario,
+                    nombre: $scope.regAct.nombre,
+                    tipo: $scope.regAct.tipo,
+                    descripcion: '',
+                    fecha: $scope.regAct.fechaInicio,
+                    flg_entregable: $scope.regAct.entregable
+                } 
+
+                serviceCRUD.TypePost('actividad/crear_actividad', params).then(function(res){                               
+                    console.dir(res.data);
+                    ListarActividades();
+                })
+
+                
+
+                //$scope.lstActividad.push(obj);
                 $("#mdAgregarActividad").modal('hide');
+
+                /* {
+                    "idHorario":"4",
+                    "nombre":"Actividad 1",
+                    "tipo":"1",
+                    "descripcion":"descripcion",
+                    "fecha":"1000-01-01 00:00:00",
+                    "flg_entregable":"1"
+                } */
+
             }
         } else {
             if (formAct.checkValidity()) {                
@@ -94,8 +114,10 @@ app.controller('CursoController', function ($scope, $location, $cookies, service
             desc: act.desc,
             tipo: act.tipo,
             entregable: act.entregable,
+            fechaInicio: serviceUtil.convertToDate(act.fechaInicio),
+            fechaFin: serviceUtil.convertToDate(act.fechaFin),
             fechaEntrega: act.fechaEntrega == null ? null : serviceUtil.convertToDate(act.fechaEntrega),
-            estado: act.estado
+            etapa: act.etapa
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
@@ -117,6 +139,7 @@ app.controller('CursoController', function ($scope, $location, $cookies, service
     });
 
     function init() {
+        ListarActividades();
     }
 
     init();
