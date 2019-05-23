@@ -3,6 +3,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
+    $scope.actividad = $cookies.getObject('actividadActual');
     $rootScope.lstCursos = $cookies.getObject('cursos');
 
     /* Variables */
@@ -16,8 +17,8 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.rubrica = {
         flgRubricaEspecial: 0,
-        idUsuarioCreador: 2,
-        nombreRubrica: "test",
+        idUsuarioCreador: $scope.usuario.idUser,
+        nombreRubrica: $scope.nomRubrica,
         listaAspectos: []
     }
 
@@ -53,36 +54,33 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     }
 
     $scope.btnGuardarRubrica = function () {
-        if (document.getElementById('nomRubrica').value == '')
-            window.alert("Ingrese el nombre de la rúbrica!");
-        else {
+        
             $scope.mostrarCrearRubrica = false;
             console.dir($scope.rubrica);
 
+            $scope.rubrica.nombreRubrica = $scope.nomRubrica;
+            
             serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
                 console.dir(response);
             })
 
             window.alert("Se guardó la Rúbrica!")
-        }
+        
     }
 
     $scope.btnVerRubricaActual = function () {
         //Falta: Validar que primero haya guardado la rúbrica
 
         var params = {
-            idActividad: 1
+            idActividad: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             console.dir(res.data);
             $scope.lstAspectos = res.data.lista_aspectos;
         })
-
         
-            $('#mdVistaPrevia').appendTo("body").modal('show');
+        $('#mdVistaPrevia').appendTo("body").modal('show');
         
-
-
         //$scope.mostrarCrearRubrica = true;
         console.dir($scope.lstAspectos);
     }
