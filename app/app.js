@@ -45,6 +45,11 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'GruposController'
         })
 
+        .when('/comentarios', {
+            templateUrl: 'app/modules/curso/Comentarios.html?v=' + Date.now(),
+            controller: 'ComentariosController'
+        }) 
+
         .otherwise({
             redirectTo: '/main'
         });

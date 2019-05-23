@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="appFS" lang="es">
 
 <head>
@@ -12,7 +12,8 @@
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="src/css/layout.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito&display=swap"> 
-
+  <!--  Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-cookies.min.js"></script>
@@ -29,28 +30,6 @@
   <div ng-cloak class="container-fluid">
 
     <div class="row">
-
-      <!-- <div class="topbar container-fluid" ng-show="showLayout">
-        <div class="row" style="height:100%">
-          <div class="col-md-10">
-            <button type="button" id="sidebarCollapse" class="btn btn-light vertical-center"><i
-                class="fas fa-bars"></i></button>
-            <img src="src/img/logoSEC.jpg" class="vertical-center" alt="SEC2" width="3%">
-            <label class="vertical-center" style="font-size: 1.5rem"><b>Sistema de Evaluación Continua</b></label>
-          </div>
-          <div class="col-md-2" style="text-align: right">
-            <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-              class="vertical-center dropdown-toggle" style="font-size: 130%; cursor: pointer">{{usuario.nombre}}&nbsp<i
-                class="fas fa-user-circle" style="font-size: 150%"></i></label>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbspMi Perfil</a>
-              <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i
-                  class="fas fa-sign-out-alt"></i>&nbspCerrar Sesión</a>
-            </div>
-          </div>
-        </div>
-      </div>  -->
-
       <nav class="navbar topbar" ng-show="showLayout">
         <button type="button" id="sidebarCollapse" class="btn btn-light btn-menu"><i class="fas fa-bars"></i></button>
         <div class="vertical-center">
@@ -60,7 +39,7 @@
       
         <div class="dropdown">
           <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
-            style="font-size: 130%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp<i class="fas fa-user-circle"
+            style="font-size: 130%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp;<i class="fas fa-user-circle"
               style="font-size: 150%"></i></label>
           <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbspMi Perfil</a>
@@ -78,7 +57,7 @@
             <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu-item"><i
                 class="fas fa-book"></i>&nbspCursos</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
-              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in cursos"><a class="submenu-item">{{curso.nombre}}</a></li>
+              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in lstCursos"><a class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
             </ul>
           </li>
           <li class="menu-item">
@@ -110,6 +89,7 @@
     document.write("<script type='text/javascript' src='app/modules/curso/RubricaController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/CalificacionesController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/EstadisticasController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
   </script>
   
