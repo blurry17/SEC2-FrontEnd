@@ -46,7 +46,10 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         ],
     }*/];
 
-    $scope.btnCalificaciones = function () {
+    $scope.btnAgregarComentario= function() {
+     }
+
+    $scope.btnCalificaciones = function(){
         $location.path('calificaciones');
     }
 

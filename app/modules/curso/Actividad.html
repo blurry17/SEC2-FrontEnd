@@ -5,28 +5,57 @@
       <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
     </ol>
-  </nav>
+  </nav><br/>
 
-  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
-  <div class="row">
-    <div class="form-group col-md-3">
-      <label style="font-size: 100%"><b>Fecha de Entrega:</b></label>
-      <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+  <div style="float: right;"role="group" aria-label="Basic example">
+
+      <button ng-click="btnCalificaciones()" class="btn btn-outline-primary">Calificar</button>
+      <button ng-click="btnRubrica()" class="btn btn-outline-secondary">Rubrica</button>
+      <button type="button" class="btn btn-outline-success">Grupos de Trabajo</button>
+      <button type="button" class="btn btn-outline-danger">Comentarios</button>
+      <button type="button" class="btn btn-outline-warning">Alertas</button>
+      <button ng-click="btnEstadisticas()" class="btn btn-outline-info">Estadísticas</button>
+      <button type="button" class="btn btn-outline-dark">Coevaluación</button>
+      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle">AutoEvaluacion</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
+            class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
+            class="far fa-eye"></i>&nbspVer</a>
+      </div>
     </div>
 
-    <div class="form-group col-md-1.5">
-      <label style="font-size: 100%"><b>Hora de Entrega:</b></label>
-      <input type="text" class="form-control" readonly value="11:00 am">
+  <br/>
+  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
+
+      <div class="card">
+          <div class="card-body">
+            <h5 style="font-size: 90%" class="card-title"><b>Indicaciones:</b></h5>
+            <p style="font-size: 80%" class="card-text">Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.</p>
+            <p style="font-size: 80%" class="card-text">Recuerde subir el documento a tiempo de lo contrario no se  calificará.</p>
+          </div>
+        </div>    
+
+  <br/>
+  <div class="row">
+    <div class="form-group col-md-2">
+      <label style="font-size: 70%"><b>Fecha de Entrega:</b></label>
+      <input style="font-size: 70%" type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+    </div>
+
+    <div class="form-group col-md-1">
+      <label style="font-size: 70%"><b>Hora de Entrega:</b></label>
+      <input style="font-size: 70%" type="text" class="form-control" readonly value="11:00 am">
     </div>
   </div>
   <div class="row">
-    <div class="form-group col-md-3">
-      <label style="font-size: 100%"><b>Fecha última modificación:</b></label>
-      <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+    <div class="form-group col-md-2">
+      <label style="font-size: 70%"><b>Fecha última modificación:</b></label>
+      <input style="font-size: 70%" type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
     </div>
-    <div class="form-group col-md-1.5">
-      <label style="font-size: 100%"><b>Hora última modificación:</b></label>
-      <input type="text" class="form-control" readonly value="10:57 am">
+    <div class="form-group col-md-1">
+      <label style="font-size: 70%"><b>Hora última modificación:</b></label>
+      <input style="font-size: 70%" type="text" class="form-control" readonly value="10:57 am">
     </div>
   </div>
 
