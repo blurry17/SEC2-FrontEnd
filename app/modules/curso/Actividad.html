@@ -15,19 +15,19 @@
   <label class="vertical-center" style="font-size: 190%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
   <div class="row">
     <div class="col-md-5">
-      
-      <div class="form-group col-md-6" style="display: inline-block">      
-          <span style="font-size: 100%"><b>Fecha de Entrega:</b></span>
-      <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
-    </div>
-      
-    <div class="form-group col-md-4" style="display: inline-block">    
+
+      <div class="form-group col-md-6" style="display: inline-block">
+        <span style="font-size: 100%"><b>Fecha de Entrega:</b></span>
+        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      </div>
+
+      <div class="form-group col-md-4" style="display: inline-block">
         <span style="font-size: 100%"><b>Hora de Entrega:</b></span>
-      <input type="text" class="form-control" readonly value="11:00 am">
+        <input type="text" class="form-control" readonly value="11:00 am">
+      </div>
+
     </div>
-    
   </div>
-</div>
   <div class="row">
     <div class="col-md-5">
 
@@ -42,9 +42,9 @@
 
     </div>
   </div>
-    
-    
-    
+
+
+
 
   <hr />
 
@@ -55,16 +55,30 @@
     <button type="button" class="btn btn-primary">Comentarios</button>
     <button type="button" class="btn btn-primary">Alertas</button>
     <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadísticas</button>
-    <button type="button" class="btn btn-primary">Coevaluación</button>
-    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
-      style="color: white">AutoEvaluacion</button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
-          class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
-      <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
-          class="far fa-eye"></i>&nbspVer</a>
-    </div>
+    <div class="btn-group">
 
+      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
+      style="color: white">Coevaluación</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCoEvaluacion()"><i
+          class="fas fa-plus"></i>&nbspCrear</a>
+          <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerCoEval()"><i
+            class="far fa-eye"></i>&nbspVer</a>
+          </div>
+          
+        </div>
+        <div class="btn-group">
+
+          <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
+          style="color: white">AutoEvaluacion</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
+              class="fas fa-plus"></i>&nbspCrear</a>
+              <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
+                class="far fa-eye"></i>&nbspVer</a>
+              </div>
+              
+            </div>
   </div>
 </div>
 
@@ -185,9 +199,9 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval1()"
+        <button class="btn btn-primary" type="submit" ng-click="btnModificarAutoEval()"
           ng-disabled="ActForm.$invalid">Guardar</button>
-
+        <button class="btn btn-danger" type="submit" ng-click="btnEliminarAutoEval()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
     </div>

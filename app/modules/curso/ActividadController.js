@@ -132,7 +132,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             }]
         }*/
         let params={
-            idActividad:1,
+            idActividad:$scope.actividad.idActividad,
             listaFamilia:$scope.listaFam,
         }
         console.dir(params)
@@ -142,7 +142,23 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
     }
 
-    $scope.btnGuardarAutoEval1=function(){
-        console.log($scope.ejemplo);
+    $scope.btnModificarAutoEval=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            listaFamilia:$scope.listaFam,
+        }
+        console.dir(params);
+        serviceCRUD.TypePost("auto-evaluacion/editar", params).then(function(response){
+            console.dir(response);
+        })
+    }
+    $scope.btnEliminarAutoEval=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+        }
+        serviceCRUD.TypePost("auto-evaluacion/eliminar",params).then(function(response){
+            console.dir(response.data);
+            $scope.ejemplo=response.data.listaFamilia;
+        })
     }
 })
