@@ -59,13 +59,8 @@
     </div>
   </div>
 
-  <hr />
 
-  <div class="form-group col-md-11">
-    <label style="font-size: 100%"><b>Indicaciones:</b></label>
-    <input type="text" class="form-control" readonly value="- Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.
-    - Recuerde subir el documento a tiempo de lo contrario no se  calificará.">
-  </div>
+
 
   <hr />
 
@@ -76,16 +71,30 @@
     <button ng-click="btnComentarios()" type="button" class="btn btn-primary">Comentarios</button>
     <button type="button" class="btn btn-primary">Alertas</button>
     <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadísticas</button>
-    <button type="button" class="btn btn-primary">Coevaluación</button>
-    <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
-      style="color: white">AutoEvaluación</button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
-          class="fas fa-plus"></i>&nbspCrear Auto Evaluación</a>
-      <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
-          class="far fa-eye"></i>&nbspVer</a>
-    </div>
+    <div class="btn-group">
 
+      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
+      style="color: white">Coevaluación</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCoEvaluacion()"><i
+          class="fas fa-plus"></i>&nbspCrear</a>
+          <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerCoEval()"><i
+            class="far fa-eye"></i>&nbspVer</a>
+          </div>
+          
+        </div>
+        <div class="btn-group">
+
+          <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
+          style="color: white">AutoEvaluacion</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
+              class="fas fa-plus"></i>&nbspCrear</a>
+              <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
+                class="far fa-eye"></i>&nbspVer</a>
+              </div>
+              
+            </div>
   </div>
 </div>
 
@@ -206,9 +215,9 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval1()"
+        <button class="btn btn-primary" type="submit" ng-click="btnModificarAutoEval()"
           ng-disabled="ActForm.$invalid">Guardar</button>
-
+        <button class="btn btn-danger" type="submit" ng-click="btnEliminarAutoEval()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
     </div>

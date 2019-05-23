@@ -8,8 +8,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false
     $scope.listaFam=[];
-
-    $scope.ejemplo = [/*{
+    
+    $scope.ejemplo=[/*{
         familia:"Preparacion",
         listaPreg:[
             {
@@ -60,16 +60,16 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.btnAutoEvaluacion = function () {
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
-
-    $scope.btnVerAutoEval = function () {
-        params = {
-            idActividad: 1,
+    
+    $scope.btnVerAutoEval=function(){
+        params={
+            idActividad:$scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
             console.dir(response.data);
             $scope.ejemplo = response.data.listaFamilia;
         })
-
+        console.dir($scope.actividad);
         $('#mdVerAuto').appendTo("body").modal('show');
     }
     $scope.showFila = function () {
@@ -139,9 +139,9 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 }]
             }]
         }*/
-        let params = {
-            idActividad: 1,
-            listaFamilia: $scope.listaFam,
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            listaFamilia:$scope.listaFam,
         }
         console.dir(params)
         serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
@@ -150,7 +150,23 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
     }
 
-    $scope.btnGuardarAutoEval1 = function () {
-        console.log($scope.ejemplo);
+    $scope.btnModificarAutoEval=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            listaFamilia:$scope.listaFam,
+        }
+        console.dir(params);
+        serviceCRUD.TypePost("auto-evaluacion/editar", params).then(function(response){
+            console.dir(response);
+        })
+    }
+    $scope.btnEliminarAutoEval=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+        }
+        serviceCRUD.TypePost("auto-evaluacion/eliminar",params).then(function(response){
+            console.dir(response.data);
+            $scope.ejemplo=response.data.listaFamilia;
+        })
     }
 })
