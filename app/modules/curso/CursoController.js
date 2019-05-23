@@ -64,24 +64,26 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     etapa: 'P'
                 } */
 
-                var obj = {
+                var params = {
                     idHorario: $scope.curso.idhorario,
                     nombre: $scope.regAct.nombre,
                     tipo: $scope.regAct.tipo,
                     descripcion: '',
-                    fecha: $scope.regAct.fechaInicio,
-                    flg_entregable: $scope.regAct.entregable
+                    fecha: '2019-12-20 12:00:00',
+                    flg_entregable: $scope.regAct.entregable,
+                    etapa: ''
                 } 
 
                 serviceCRUD.TypePost('actividad/crear_actividad', params).then(function(res){                               
                     console.dir(res.data);
-                    ListarActividades();
+                    $("#mdAgregarActividad").modal('hide');
+                    ListarActividades();                    
                 })
 
                 
 
                 //$scope.lstActividad.push(obj);
-                $("#mdAgregarActividad").modal('hide');
+                
 
                 /* {
                     "idHorario":"4",

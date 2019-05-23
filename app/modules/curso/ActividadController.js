@@ -1,3 +1,4 @@
+
 app.controller('ActividadController',function($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil){ 
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
@@ -45,15 +46,18 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         ],
     }*/];
 
+    $scope.btnAgregarComentario= function() {
+     }
+
     $scope.btnCalificaciones = function(){
         $location.path('calificaciones');
     }
 
-    $scope.btnGrupos = function(){
+    $scope.btnGrupos = function () {
         $location.path('grupos');
     }
 
-    $scope.btnAutoEvaluacion=function(){
+    $scope.btnAutoEvaluacion = function () {
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
     
@@ -61,57 +65,61 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         params={
             idActividad:$scope.actividad.idActividad,
         };
-        serviceCRUD.TypePost("auto-evaluacion/listarPreguntas",params).then(function(response){
+        serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
             console.dir(response.data);
-            $scope.ejemplo=response.data.listaFamilia;
+            $scope.ejemplo = response.data.listaFamilia;
         })
         console.dir($scope.actividad);
         $('#mdVerAuto').appendTo("body").modal('show');
     }
-    $scope.showFila=function(){
-        $scope.mostrarFila=true;
-        let auxLista={
-            familia:"",
-            listaPregunta:[],
+    $scope.showFila = function () {
+        $scope.mostrarFila = true;
+        let auxLista = {
+            familia: "",
+            listaPregunta: [],
         };
         $scope.listaFam.push(auxLista);
-    }  
+    }
 
-    $scope.showPreg=function(fam){
-        $scope.mostrarPreg=true;
-        let auxPreg={
-            pregunta:"",
+    $scope.showPreg = function (fam) {
+        $scope.mostrarPreg = true;
+        let auxPreg = {
+            pregunta: "",
         };
         fam.listaPregunta.push(auxPreg);
     }
 
-    $scope.btnRubrica = function(){
+    $scope.btnRubrica = function () {
         $location.path("rubrica")
     }
 
-    $scope.irCurso = function(){
+    $scope.irCurso = function () {
         $location.path("curso")
     }
 
-    $scope.btnEstadisticas = function(){
+    $scope.btnEstadisticas = function () {
         $location.path("estadisticas")
     }
 
-    $scope.deleteFam=function(fam){
-        let pos=$scope.listaFam.indexOf(fam);
-        $scope.listaFam.splice(pos,1);
+    $scope.btnComentarios = function () {
+        $location.path("comentarios")
     }
 
-    $scope.deleteRow=function(fam,preg){
-        let posFam=$scope.listaFam.indexOf(fam);
-        let posPreg=$scope.listaFam[posFam].listaPregunta.indexOf(preg);
-        fam.listaPregunta.splice(posPreg,1);
+    $scope.deleteFam = function (fam) {
+        let pos = $scope.listaFam.indexOf(fam);
+        $scope.listaFam.splice(pos, 1);
     }
-    $scope.habilitarCampos=function(preg){
-        if(!preg.editar)
-        preg.editar=!(preg.editar);
+
+    $scope.deleteRow = function (fam, preg) {
+        let posFam = $scope.listaFam.indexOf(fam);
+        let posPreg = $scope.listaFam[posFam].listaPregunta.indexOf(preg);
+        fam.listaPregunta.splice(posPreg, 1);
     }
-    $scope.btnGuardarAutoEval=function(){
+    $scope.habilitarCampos = function (preg) {
+        if (!preg.editar)
+            preg.editar = !(preg.editar);
+    }
+    $scope.btnGuardarAutoEval = function () {
         //console.log($scope.listaFam);
         /*let params={
             idActividad:1,
@@ -136,9 +144,9 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             listaFamilia:$scope.listaFam,
         }
         console.dir(params)
-        serviceCRUD.TypePost("auto-evaluacion/creacion",params).then(function(response){
+        serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
             console.dir(response);
-            
+
         })
     }
 
