@@ -1,6 +1,7 @@
-app.controller('ComentariosController', function ($scope, $location, $cookies, serviceUtil, serviceCRUD) {
-
-    $scope.vistaProfesor = false
+app.controller('ComentariosController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
+    var usuario = $cookies.getObject('usuario');
+    $rootScope.lstCursos = $cookies.getObject('cursos');
+    $scope.vistaProfesor = usuario.profesor;
 
     $scope.lstComentarios = [
         {
@@ -9,14 +10,14 @@ app.controller('ComentariosController', function ($scope, $location, $cookies, s
             codAlumno : "20140631",
             nomProfesor: "daniel alpiste",
             comentario: "hola profe xd",            
-            respuesta: "calla gil"
+            respuesta: "ola"
         },
         {
             idComentario: 2,
             nomAlumno: "elizabeth esparza",
             codAlumno : "20135152",
             nomProfesor: "nicolas",
-            comentario: "profe no me salio la 2 ayude pues ptm",            
+            comentario: "profe no me salio la 2 ayude pues",            
             respuesta: ""
         }
     ]
