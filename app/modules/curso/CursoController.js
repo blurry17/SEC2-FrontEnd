@@ -4,6 +4,11 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
+    $scope.hoy = serviceUtil.yyyymmdd(new Date());
+    $scope.showAlert1 = false;
+    console.dir($scope.hoy);
+
+    console.dir(serviceUtil.formatSQL(new Date()));
 
     console.dir($scope.curso);
 
@@ -29,7 +34,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         nota: null,
         fechaInicio: new Date(),
         fechaFin: new Date(),
-        fechaEntrega: new Date(),
         etapa: 'I'
     }
 
@@ -39,31 +43,24 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $scope.regAct = {
             nombre: '',
             desc: '',
-            tipo: "0",
+            tipo: 'I',
             entregable: true,
             fechaInicio: new Date(),
             fechaFin: new Date(),
-            fechaEntrega: new Date(),
-            etapa: 'I'
+            etapa: ''
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
 
     $scope.btnGuardarActividad = function () {
         $("#formAct").addClass("was-validated");
+        if($scope.regAct.fechaInicio > $scope.regAct.fechaFin){
+            $scope.showAlert1 = true;
+            return;
+        }
+        $scope.showAlert1 = false;
         if ($scope.nuevo) {
             if (formAct.checkValidity()) {
-                /* var obj = {
-                    nombre: $scope.regAct.nombre,
-                    desc: $scope.regAct.desc,
-                    tipo: $scope.regAct.tipo,
-                    entregable: $scope.regAct.entregable,
-                    fechaInicio: serviceUtil.ddmmyyyy($scope.regAct.fechaInicio),
-                    fechaFin: serviceUtil.ddmmyyyy($scope.regAct.fechaFin),
-                    fechaEntrega: $scope.regAct.entregable ? serviceUtil.ddmmyyyy($scope.regAct.fechaEntrega) : '',
-                    etapa: 'P'
-                } */
-
                 var params = {
                     idHorario: $scope.curso.idhorario,
                     nombre: $scope.regAct.nombre,
@@ -79,21 +76,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     $("#mdAgregarActividad").modal('hide');
                     ListarActividades();                    
                 })
-
-                
-
-                //$scope.lstActividad.push(obj);
-                
-
-                /* {
-                    "idHorario":"4",
-                    "nombre":"Actividad 1",
-                    "tipo":"1",
-                    "descripcion":"descripcion",
-                    "fecha":"1000-01-01 00:00:00",
-                    "flg_entregable":"1"
-                } */
-
             }
         } else {
             if (formAct.checkValidity()) {                
@@ -118,7 +100,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             entregable: act.entregable,
             fechaInicio: serviceUtil.convertToDate(act.fechaInicio),
             fechaFin: serviceUtil.convertToDate(act.fechaFin),
-            fechaEntrega: act.fechaEntrega == null ? null : serviceUtil.convertToDate(act.fechaEntrega),
             etapa: act.etapa
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
