@@ -7,12 +7,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.listaAl = [];
 
     var params = {
-        idActividad: 1
+        idActividad: $scope.actividad.idActividad
     }
 
     serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
-        console.dir(res.data);
         $scope.listaAl = res.data.lista;
+
     })
 
     var file = null;
@@ -29,49 +29,76 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     }
 
+    $scope.rubrica = {
+        flgRubricaEspecial: 0,
+        idUsuarioCreador: $scope.usuario.idUser,
+        nombreRubrica: $scope.nomRubrica,
+        lstAspectos: []
+
+    }
+
 
     serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-        console.dir(res.data);
-        $scope.listaAspectos = res.data.lista_aspectos;
-        $scope.listaIndicadores = [];
-        $scope.lstTabla = [];
 
-        for (let i = 0; i < $scope.listaAspectos.length; i++) {
-            var nombre = $scope.listaAspectos[i].descripcion;
-            listaIndicadores = $scope.listaAspectos[i].lista_indicadores;
+        $scope.lstAspectos = res.data.listaAspectos;
+/* 
+        $scope.listaIndicadores = [];
+        $scope.lstTabla = $scope.lstAspectos;
+        $scope.sumaIndicadores=0; */
+
+/* 
+        for (let i = 0; i < $scope.lstAspectos.length; i++) {
+
+            $scope.tipoAspecto=$scope.lstAspectos.aspecto.tipoClasificacion;
+
+            var nombre = $scope.lstAspectos[i].descripcion;
+            listaIndicadores = $scope.lstAspectos[i].lista_indicadores;
+            $scope.lstAspectos[i].nota=null;
+            $scope.lstAspectos[i].comentario=null;
+            $scope.sumaIndicadores=0;
 
             for (let j = 0; j < listaIndicadores.length; j++) {
+                listaIndicadores[j].nota=null;
+                
+                listaIndicadores[j].comentario=null;
                 var obj = {
                     nombreAsp: nombre,
-                    indicador: listaIndicadores[j]
+                    indicador: listaIndicadores[j],
+
                 }
 
                 $scope.lstTabla.push(obj);
 
             }
         }
-
-        console.dir($scope.lstTabla);
+ */
+        console.dir($scope.lstAspectos);
     })
-
-    $scope.btnGuardarPuntaje = function () {
-        result = window.confirm('¿Está seguro que desea Guardar?');
-    }
 
     $scope.btnAgregarComentario = function () {
         $scope.texto = true;
     }
-    $scope.btnAgregarComentario1 = function () {
-        $scope.texto1 = true;
-    }
-    $scope.btnAgregarComentario2 = function () {
-        $scope.texto2 = true;
-    }
-    $scope.btnAgregarComentario3 = function () {
-        $scope.texto3 = true;
-    }
-    $scope.btnAgregarComentario4 = function () {
-        $scope.texto4 = true;
+
+    $scope.btnGuardarPuntaje =function(){
+        result = window.confirm('¿Está seguro que desea Guardar?');
+         var params={
+            idActividad: $scope.actividad.idActividad,
+            idAlumno: $scope.idalumno,
+            idJp:$scope.usuario.idUser,
+            nota:$scope.notaFinal,
+            flgFalta: $scope.falta ? 1 : 0,
+            //idRubrica: ,
+            listaNotaAspectos: $scope.lstAspectos 
+        } 
+
+
+
+        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+            console.dir(res.data);
+            
+    
+        })
+
     }
 
     $scope.btnclick = function () {
