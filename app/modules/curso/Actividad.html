@@ -2,58 +2,79 @@
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item" ><a href="#!curso">{{curso.nombre}}</a></li>
+      <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
     </ol>
-  </nav><br/>
-  
-<div class="form-group" style="padding-left: 15px">
+  </nav><br />
+
+  <div class="form-group" style="padding-left: 15px; padding-bottom: 5px">
 
     <div>
-      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i style="color: rgb(54, 105, 2);padding-left: 10px" class="fas fa-user"></i></label>
+      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i
+          style="color: rgb(54, 105, 2);padding-left: 10px" class="fas fa-user"></i></label>
     </div>
-  <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
-      
+    <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
+
       <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
       <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Rubrica</button>
-      <button ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos de Trabajo</button>
-      <button ng-click="btnComentarios()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Comentarios</button>
+      <button ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos de
+        Trabajo</button>
+      <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
+        style="margin: 2px;height: 32px;">Comentarios</button>
       <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Alertas</button>
       <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;height: 32px;">Estadísticas</button>
-      <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Coevaluación</button>
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle" style="margin: 2px;height: 32px;">AutoEvaluacion</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
-          class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
+
+      <div>
+
+        <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-dark"
+          style="margin: 2px;height: 32px;">Coevaluación</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" style="cursor:pointer" ng-click="btnCoEvaluacion()"><i
+              class="fas fa-plus"></i>&nbspCrear</a>
+          <a class="dropdown-item" style="cursor:pointer" ng-click="btnVerCoEval()"><i
+              class="fas fa-eye"></i>&nbspVer</a>
+        </div>
+      </div>
+
+      <div>
+
+        <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle"
+          style="margin: 2px;height: 32px;">AutoEvaluacion</button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
+              class="fas fa-plus"></i>&nbspCrear</a>
           <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
-            class="far fa-eye"></i>&nbspVer</a>
-          </div>
-        </div><br>
+              class="far fa-eye"></i>&nbspVer</a>
+        </div>
+      </div>
+    </div><br>
 
   </div>
-        
+
   <div class="col-9">
 
-  <div class="card" style="background-color: rgb(230, 230, 230)">
-    <div class="card-body">
-      <h5 style="font-size: 100%; color: black" class="card-title"><b>Indicaciones:</b></h5>
-      <p style="font-size: 100%; color: black" class="card-text">Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.</p>
-      <p style="font-size: 100%; color: black" class="card-text">Recuerde subir el documento a tiempo de lo contrario no se  calificará.</p>
+    <div class="card" style="background-color: rgb(230, 230, 230)">
+      <div class="card-body">
+        <h5 style="font-size: 100%; color: black" class="card-title"><b>Indicaciones:</b></h5>
+        <p style="font-size: 100%; color: black" class="card-text">Para este laboratorio se deberá subir el archivo
+          resuelto con el formato: codigo_apellido_nombre.</p>
+        <p style="font-size: 100%; color: black" class="card-text">Recuerde subir el documento a tiempo de lo contrario
+          no se calificará.</p>
+      </div>
     </div>
-  </div>    
-</div>
+  </div>
 
-  <br/>
+  <br />
   <div class="col-10">
 
     <div class="row">
       <div class="form-group col-md-4">
-        <label ><b>Fecha de Entrega:</b></label>
-        <input  type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+        <label><b>Fecha de Entrega:</b></label>
+        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
       </div>
-      
+
       <div class="form-group col-md-3">
-        <label ><b>Hora de Entrega:</b></label>
+        <label><b>Hora de Entrega:</b></label>
         <input style="width: 100px" type="text" class="form-control" readonly value="11:00 am">
       </div>
     </div>
@@ -63,7 +84,7 @@
     <div class="row">
 
       <div class="form-group col-md-4">
-        <label ><b>Fecha última mod.:</b></label>
+        <label><b>Fecha última mod.:</b></label>
         <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
       </div>
       <div class="form-group col-md-3">
@@ -73,43 +94,7 @@
     </div>
   </div>
 
-
-
-
   <hr />
-
-  <!-- <div class="btn-group" role="group" aria-label="Basic example">
-    <button ng-click="btnCalificaciones()" class="btn btn-primary" style="color: white">Calificar</button>
-    <button ng-click="btnRubrica()" class="btn btn-primary">Rúbrica</button>
-    <button ng-click="btnGrupos()" type="button" class="btn btn-primary">Grupos de Trabajo</button>
-    <button ng-click="btnComentarios()" type="button" class="btn btn-primary">Comentarios</button>
-    <button type="button" class="btn btn-primary">Alertas</button>
-    <button ng-click="btnEstadisticas()" class="btn btn-primary" style="color: white">Estadísticas</button>
-    <div class="btn-group">
-
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
-      style="color: white">Coevaluación</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCoEvaluacion()"><i
-          class="fas fa-plus"></i>&nbspCrear</a>
-          <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerCoEval()"><i
-            class="far fa-eye"></i>&nbspVer</a>
-          </div>
-          
-        </div>
-        <div class="btn-group">
-
-          <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary dropdown-toggle"
-          style="color: white">AutoEvaluacion</button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
-              class="fas fa-plus"></i>&nbspCrear</a>
-              <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
-                class="far fa-eye"></i>&nbspVer</a>
-              </div>
-              
-            </div>
-  </div> -->
 </div>
 
 
@@ -133,37 +118,48 @@
           </div>
           <!--<br><br> -->
 
-          <div class="form-row" ng-show="mostrarFila" ng-repeat="fam in listaFam"
-            style="margin: 15px; background-color: rgb(243, 241, 241)">
+          <div class="form-row" ng-show="mostrarFila" ng-repeat="fam in listaFam" style="margin: 15px">
 
-            <div class="form-group col-md-2" style="padding-bottom: 10px">
+            <div class="col-12">
 
-              <input name="familia" placeholder="Familia" type="text" class="form-control" ng-model="fam.familia"
-                ng-required="true">
-              <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                <p class="error-msg" ng-message="required">Este campo es requerido</p>
-              </span>
-            </div>
-            <div class="form-group col-lg-8 col-md-7 col-xs-7"></div>
-            <div class="form-group col-lg-2 col-md-3 col-xs-3">
-              <button class="btn btn-success" ng-click="showPreg(fam)"><i class="fas fa-plus"></i></button>
-              <button class="btn btn-danger" ng-click="deleteFam(fam)"><i class="fas fa-times"></i></button>
-            </div>
+              <div class="card" style="background-color: rgb(230, 230, 230)">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-3" style="padding-bottom: 5px">
+
+                      <input name="familia" placeholder="Familia" type="text" class="form-control"
+                        ng-model="fam.familia" ng-required="true">
+                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                      </span>
+                    </div>
 
 
-            <div ng-show="mostrarPreg" ng-repeat="preg in fam.listaPregunta"
-              class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group col-3">
+                      <button class="btn btn-success" ng-click="showPreg(fam)"><i class="fas fa-plus"></i></button>
+                      <button class="btn btn-danger" ng-click="deleteFam(fam)"><i class="fas fa-times"></i></button>
+                    </div>
+                  </div>
 
-              <div class="form-group col-md-10" style="padding-right: 20px">
-                <input type="text" placeholder="Pregunta" name="pregunta" class="form-control" ng-model="preg.pregunta"
-                  ng-required="true">
-                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                  <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                </span>
-              </div>
 
-              <div class="form-group col-2">
-                <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i class="fas fa-times"></i></button>
+
+                  <div ng-show="mostrarPreg" ng-repeat="preg in fam.listaPregunta"
+                    class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                    <div class="form-group col-md-10" style="padding-right: 20px">
+                      <input type="text" placeholder="Pregunta" name="pregunta" class="form-control"
+                        ng-model="preg.pregunta" ng-required="true">
+                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                      </span>
+                    </div>
+
+                    <div class="form-group col-2">
+                      <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i
+                          class="fas fa-times"></i></button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -185,44 +181,56 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">AutoEvaluación</h5>
+        <h5 class="modal-title">VerAutoEvaluación</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
       <div class="modal-body">
-        <form name="" novalidate>
+        <form name="VerAutoEvalForm" novalidate>
           <br>
           <div class="form-row" ng-repeat="fam in ejemplo" style="margin: 15px; background-color: rgb(243, 241, 241)">
 
-            <div class="form-group col-md-4" style="padding-bottom: 10px">
-              <span>Familia</span>
-              <input ng-disabled="!fam.editar" name="familia" type="text" class="form-control" ng-model="fam.familia"
-                ng-required="true">
-              <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                <p class="error-msg" ng-message="required">Este campo es requerido</p>
-              </span>
+            <div class="col-12">
+
+              <div class="card" style="background-color: rgb(230, 230, 230)">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-4" style="padding-bottom: 10px">
+                      <span>Familia</span>
+                      <input ng-disabled="!fam.editar" name="familia" type="text" class="form-control"
+                        ng-model="fam.familia" ng-required="true">
+                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                      </span>
+                    </div>
+                    <div class="form-group col-1">
+                      <span><br></span>
+                      <button class="btn btn-primary" ng-click="habilitarCampos(fam)"><i
+                          class="fas fa-edit"></i></button>
+                    </div>
+
+                    <div class="form-group col-8"></div>
+
+                    <div ng-repeat="preg in fam.listaPregunta" class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                      <div class="form-group col-md-11" style="padding-right: 20px">
+                        <span>Pregunta</span>
+                        <input ng-disabled="!preg.editar" type="text" name="pregunta" class="form-control"
+                          ng-model="preg.pregunta" ng-required="true">
+                        <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                          <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                        </span>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div class="form-group col-8"></div>
-
-            <div ng-repeat="preg in fam.listaPregunta" class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-              <div class="form-group col-md-11" style="padding-right: 20px">
-                <span>Pregunta</span>
-                <input ng-disabled="!preg.editar" type="text" name="pregunta" class="form-control"
-                  ng-model="preg.pregunta" ng-required="true">
-                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                  <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                </span>
-              </div>
-
-              <div class="form-group col-1">
-                <span><br></span>
-                <button class="btn btn-primary" ng-click="habilitarCampos(preg)"><i class="fas fa-edit"></i></button>
-              </div>
-            </div>
 
           </div>
         </form>
@@ -240,22 +248,83 @@
 
 
 
-<!--<div class="form-row" ng-repeat="item in ejemplo">
-              <div class="form-group col-md-2">
-                <span>Familia</span>
-                <input ng-disabled="!item.editar" name="familia" type="text" class="form-control" ng-model="item.familia"
-                  ng-required="true">
-                <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                  <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                </span>
+<!--A partir de aca se presentan a los 2 modales de co-evaluacion-->
+
+
+<div class="modal fade" id="mdCrearCoEval" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear CoEvaluacion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <form name="CoEvalForm" novalidate>
+          <div class="col-12" style="padding-bottom: 15px">
+            <span style="font-size: 20px;padding-right: 10px; padding-bottom: 10px">Agregar Pregunta</span>
+            <button class="btn btn-success" ng-click="showPregunta()" style="padding-bottom: 10px"><i
+                class="fas fa-plus"></i></button>
+          </div>
+
+          <div class="row" ng-show="mostrarPreg" ng-repeat="preg in listaPregunta" style="margin: 15px;">
+
+            <div class="col-12">
+
+              <div class="card" style="background-color: rgb(230, 230, 230)">
+                <div class="card-body">
+
+                  <input style="vertical-align: middle" name="pregunta" placeholder="Pregunta" type="text"
+                    class="form-control" ng-model="preg.pregunta" ng-required="true">
+                  <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                    <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                  </span>
+
+                </div>
               </div>
-    
-              <div class="form-group col-md-9">
-                <span>Pregunta</span>
-                <input ng-disabled="!item.editar" type="text" name="pregunta" class="form-control" ng-model="item.pregunta">
-              </div>
-              <div class="form-group col-md-1">
-                <span><br></span>
-                <button class="btn btn-primary" ng-click="habilitarCampos(item)"><i class="fas fa-edit"></i></button>
-              </div>
-            </div>-->
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()"
+          ng-disabled="ActForm.$invalid">Guardar</button>
+        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Ver Co-Evaluacion()"-->
+
+<div class="modal fade" id="mdVerCo" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">VerCoEvaluación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form name="VerCoEvalForm" novalidate>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="btnModificarAutoEval()"
+          ng-disabled="ActForm.$invalid">Guardar</button>
+        <button class="btn btn-danger" type="submit" ng-click="btnEliminarAutoEval()">Eliminar</button>
+        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

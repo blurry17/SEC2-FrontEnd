@@ -8,45 +8,9 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false
     $scope.listaFam=[];
-
+    $scope.listaPregunta=[];
     
-    
-    $scope.ejemplo=[/*{
-        familia:"Preparacion",
-        listaPreg:[
-            {
-                pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
-                editar:false,
-            },
-            {
-                pregunta:"¿Vio los videos mencionados en la 1ra clase en el min 34 por el profesor?",
-                editar:false,
-            }],
-    },{
-        familia:"Aprendizaje",
-        listaPreg:[
-            {
-                pregunta:"¿Lograste aprender los conceptos clave para esta actividad?",
-                editar:false,
-            }
-        ],
-    },{
-        familia:"Responsabilidad",
-        listaPreg:[
-            {
-                pregunta:"¿Organizaste bien tu tiempo para lograr los objetivos de la actividad?",
-                editar:false,
-            }
-        ],
-    },{
-        familia:"Interiorizacion",
-        listaPreg:[
-            {
-                pregunta:"¿Crees que lo aprendido te servira en un futuro?",
-                editar:false,
-            }
-        ],
-    }*/];
+    $scope.ejemplo=[];
 
     $scope.btnAgregarComentario= function() {
      }
@@ -62,25 +26,41 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.btnAutoEvaluacion = function () {
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
-    
-    $scope.btnVerAutoEval=function(){
-        params={
-            idActividad:$scope.actividad.idActividad,
+
+    $scope.btnVerAutoEval = function () {
+        params = {
+            idActividad: $scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
             console.dir(response.data);
-            $scope.ejemplo = response.data.listaFamilia;
+            
+            $scope.familia=response.data.listaFamilia;
+            console.dir($scope.familia);
         })
         console.dir($scope.actividad);
         $('#mdVerAuto').appendTo("body").modal('show');
     }
+
+    $scope.btnCoEvaluacion=function(){
+        $('#mdCrearCoEval').appendTo("body").modal('show');
+    }
+    
+    $scope.btnVerCoEval=function(){
+        params={
+            idActividad:$scope.actividad.idActividad,
+        };
+        $('#mdVerCo').appendTo("body").modal('show');
+    }
+
     $scope.showFila = function () {
         $scope.mostrarFila = true;
         let auxLista = {
             familia: "",
             listaPregunta: [],
         };
-        $scope.listaFam.push(auxLista);
+        if($scope.listaFam.length<10){    
+            $scope.listaFam.unshift(auxLista);
+        }
     }
 
     $scope.showPreg = function (fam) {
@@ -88,7 +68,19 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         let auxPreg = {
             pregunta: "",
         };
-        fam.listaPregunta.push(auxPreg);
+        if(fam.listaPregunta.length<5){
+            fam.listaPregunta.unshift(auxPreg);
+        }
+    }
+    
+    $scope.showPregunta=function(){
+        $scope.mostrarPreg=true;
+        let auxPreg={
+            pregunta:"",
+        };
+        if($scope.listaPregunta.length<10){
+            $scope.listaPregunta.unshift(auxPreg);
+        }
     }
 
     $scope.btnRubrica = function () {
@@ -98,49 +90,39 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.irCurso = function () {
         $location.path("curso")
     }
-
+    
     $scope.btnEstadisticas = function () {
         $location.path("estadisticas")
     }
-
+    
     $scope.btnComentarios = function () {
         $location.path("comentarios")
     }
-
+    
     $scope.deleteFam = function (fam) {
         let pos = $scope.listaFam.indexOf(fam);
         $scope.listaFam.splice(pos, 1);
     }
-
+    
     $scope.deleteRow = function (fam, preg) {
         let posFam = $scope.listaFam.indexOf(fam);
         let posPreg = $scope.listaFam[posFam].listaPregunta.indexOf(preg);
         fam.listaPregunta.splice(posPreg, 1);
     }
-    $scope.habilitarCampos = function (preg) {
-        if (!preg.editar)
-            preg.editar = !(preg.editar);
+    $scope.habilitarCampos = function (fam) {
+        if(!fam.editar){
+            fam.editar=!(fam.editar);
+        }
+        fam.listaPregunta.forEach(function(preg){
+            if (!preg.editar){
+                preg.editar = !(preg.editar);
+            }
+        })
     }
+
+
     $scope.btnGuardarAutoEval = function () {
-        //console.log($scope.listaFam);
-        /*let params={
-            idActividad:1,
-            listaFamilia:[{
-                familia:"Matematica",
-                listaPregunta:[{
-                    pregunta:"Sabe Sumar"
-                },
-                {
-                    pregunta:"Sabe Restar"
-                }]
-            },
-            {
-                familia:"Puntualidad",
-                listaPregunta:[{
-                    pregunta:"Entrega a tiempo"
-                }]
-            }]
-        }*/
+        
         let params={
             idActividad:$scope.actividad.idActividad,
             listaFamilia:$scope.listaFam,
@@ -151,6 +133,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
         })
     }
+    
 
     $scope.btnModificarAutoEval=function(){
         let params={
