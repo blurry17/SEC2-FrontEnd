@@ -8,6 +8,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false
     $scope.listaFam=[];
+
+    
     
     $scope.ejemplo=[/*{
         familia:"Preparacion",
