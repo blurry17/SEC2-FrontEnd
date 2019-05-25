@@ -4,15 +4,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
-    $scope.listaAl=[];
+    $scope.listaAl = [];
 
     var params = {
-        idActividad : 1
+        idActividad: 1
     }
 
-    serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
+    serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
         console.dir(res.data);
-        $scope.listaAl=res.data.lista;
+        $scope.listaAl = res.data.lista;
     })
 
     var file = null;
@@ -23,55 +23,55 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.irCurso = function () {
         $location.path("curso")
     }
-    $scope.btnValidarPuntaje = function(){
+    $scope.btnValidarPuntaje = function () {
         /* Preguntar si desea validar los puntajes una vez llenados */
         result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
 
     }
 
 
-        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function(res){
-            console.dir(res.data);
-            $scope.listaAspectos=res.data.lista_aspectos;
-            $scope.listaIndicadores=[];
-            $scope.lstTabla = [];
+    serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
+        console.dir(res.data);
+        $scope.listaAspectos = res.data.lista_aspectos;
+        $scope.listaIndicadores = [];
+        $scope.lstTabla = [];
 
-            for (let i = 0; i < $scope.listaAspectos.length ; i++) {
-                var nombre=$scope.listaAspectos[i].descripcion;
-                listaIndicadores=$scope.listaAspectos[i].lista_indicadores;
-                 
-                for (let j = 0; j < listaIndicadores.length ; j++) {
-                    var obj = {
-                        nombreAsp : nombre,
-                        indicador: listaIndicadores[j]
-                    }
+        for (let i = 0; i < $scope.listaAspectos.length; i++) {
+            var nombre = $scope.listaAspectos[i].descripcion;
+            listaIndicadores = $scope.listaAspectos[i].lista_indicadores;
 
-                    $scope.lstTabla.push(obj);
-
+            for (let j = 0; j < listaIndicadores.length; j++) {
+                var obj = {
+                    nombreAsp: nombre,
+                    indicador: listaIndicadores[j]
                 }
+
+                $scope.lstTabla.push(obj);
+
             }
+        }
 
-            console.dir($scope.lstTabla);
-        })
+        console.dir($scope.lstTabla);
+    })
 
-    $scope.btnGuardarPuntaje = function(){
+    $scope.btnGuardarPuntaje = function () {
         result = window.confirm('¿Está seguro que desea Guardar?');
     }
 
-    $scope.btnAgregarComentario= function(){
-        $scope.texto=true;
+    $scope.btnAgregarComentario = function () {
+        $scope.texto = true;
     }
-    $scope.btnAgregarComentario1= function(){
-        $scope.texto1=true;
+    $scope.btnAgregarComentario1 = function () {
+        $scope.texto1 = true;
     }
-    $scope.btnAgregarComentario2= function(){
-        $scope.texto2=true;
+    $scope.btnAgregarComentario2 = function () {
+        $scope.texto2 = true;
     }
-    $scope.btnAgregarComentario3= function(){
-        $scope.texto3=true;
+    $scope.btnAgregarComentario3 = function () {
+        $scope.texto3 = true;
     }
-    $scope.btnAgregarComentario4= function(){
-        $scope.texto4=true;
+    $scope.btnAgregarComentario4 = function () {
+        $scope.texto4 = true;
     }
 
     $scope.btnclick = function () {
@@ -86,9 +86,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         datos.append('fechaEntrega', serviceUtil.ddmmyyyy(hoy));
         datos.append('url', '');
 
-        for (var i=0; i<file.length; i++){
-            var name = 'file ' + (i+1);
-            datos.append(name, file[i]);    
+        for (var i = 0; i < file.length; i++) {
+            var name = 'file ' + (i + 1);
+            datos.append(name, file[i]);
         }
 
         console.dir(serviceUtil.TypePostFile('entregable/entrega', datos));
