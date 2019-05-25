@@ -2,60 +2,74 @@
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a ng-click="irCurso()">{{curso.nombre}}</a></li>
+      <li class="breadcrumb-item" ><a href="#!curso">{{curso.nombre}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
     </ol>
   </nav><br/>
+  
+<div class="form-group" style="padding-left: 15px">
 
-  <div style="float: right;"role="group" aria-label="Basic example">
-
-      <button ng-click="btnCalificaciones()" class="btn btn-dark">Calificar</button>
-      <button ng-click="btnRubrica()" class="btn btn-dark">Rubrica</button>
-      <button ng-click="btnGrupos()" type="button" class="btn btn-dark">Grupos de Trabajo</button>
-      <button ng-click="btnComentarios()" type="button" class="btn btn-dark">Comentarios</button>
-      <button type="button" class="btn btn-dark">Alertas</button>
-      <button ng-click="btnEstadisticas()" class="btn btn-dark">Estadísticas</button>
-      <button type="button" class="btn btn-dark">Coevaluación</button>
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle">AutoEvaluacion</button>
+    <div>
+      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i style="color: rgb(54, 105, 2);padding-left: 10px" class="fas fa-user"></i></label>
+    </div>
+  <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
+      
+      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
+      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Rubrica</button>
+      <button ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos de Trabajo</button>
+      <button ng-click="btnComentarios()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Comentarios</button>
+      <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Alertas</button>
+      <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;height: 32px;">Estadísticas</button>
+      <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Coevaluación</button>
+      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle" style="margin: 2px;height: 32px;">AutoEvaluacion</button>
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
-            class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
+          class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>
+          <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
             class="far fa-eye"></i>&nbspVer</a>
+          </div>
+        </div><br>
+
+  </div>
+        
+  <div class="col-9">
+
+  <div class="card" style="background-color: rgb(230, 230, 230)">
+    <div class="card-body">
+      <h5 style="font-size: 100%; color: black" class="card-title"><b>Indicaciones:</b></h5>
+      <p style="font-size: 100%; color: black" class="card-text">Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.</p>
+      <p style="font-size: 100%; color: black" class="card-text">Recuerde subir el documento a tiempo de lo contrario no se  calificará.</p>
+    </div>
+  </div>    
+</div>
+
+  <br/>
+  <div class="col-10">
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label ><b>Fecha de Entrega:</b></label>
+        <input  type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      </div>
+      
+      <div class="form-group col-md-3">
+        <label ><b>Hora de Entrega:</b></label>
+        <input style="width: 100px" type="text" class="form-control" readonly value="11:00 am">
       </div>
     </div>
-
-  <br/>
-  <label class="vertical-center" style="font-size: 150%"><b>Laboratorio 1</b> <i class="fas fa-user"></i></label>
-
-      <div class="card">
-          <div class="card-body">
-            <h5 style="font-size: 90%" class="card-title"><b>Indicaciones:</b></h5>
-            <p style="font-size: 80%" class="card-text">Para este laboratorio se deberá subir el archivo resuelto con el formato: codigo_apellido_nombre.</p>
-            <p style="font-size: 80%" class="card-text">Recuerde subir el documento a tiempo de lo contrario no se  calificará.</p>
-          </div>
-        </div>    
-
-  <br/>
-  <div class="row">
-    <div class="form-group col-md-2">
-      <label style=""><b>Fecha de Entrega:</b></label>
-      <input style="" type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
-    </div>
-
-    <div class="form-group col-md-2">
-      <label style=""><b>Hora de Entrega:</b></label>
-      <input style="width: 100px" type="text" class="form-control" readonly value="11:00 am">
-    </div>
   </div>
-  <div class="row">
-    <div class="form-group col-md-2">
-      <label style=""><b>Fecha última mod.:</b></label>
-      <input style="" type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
-    </div>
-    <div class="form-group col-md-2">
-      <label style=""><b>Hora última modificación:</b></label>
-      <input style="width: 100px" type="text" class="form-control" readonly value="10:57 am">
+
+  <div class="col-10">
+    <div class="row">
+
+      <div class="form-group col-md-4">
+        <label ><b>Fecha última mod.:</b></label>
+        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      </div>
+      <div class="form-group col-md-3">
+        <label style=""><b>Hora última modificación:</b></label>
+        <input style="width: 100px" type="text" class="form-control" readonly value="10:57 am">
+      </div>
     </div>
   </div>
 
