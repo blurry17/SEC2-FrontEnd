@@ -23,7 +23,7 @@
     </div>
 
     <div class="row" style="padding-top: 15px">
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" ng-repeat="act in lstActividad">
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px" ng-repeat="act in lstActividad">
             <div class="card text-center border-dark">
                 <div class="card-body">
                     <h5 class="card-title">{{act.nombre}}&nbsp<i class="fas fa-user"></i></h5>
@@ -57,6 +57,9 @@
                 </button>
             </div>
             <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+                            La fecha fin no puede ser menor a la fecha de inicio
+                          </div>
                 <form id="formAct" name="formAct" class="needs-validation" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-8">
@@ -68,7 +71,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Tipo</label>
-                            <select class="form-control custom-select" ng-model="regAct.tipo">
+                            <select class="form-control custom-select" ng-model="regAct.tipo" ng-init="regAct.tipo='I'">
                                 <option value="I">Individual</option>
                                 <option value="G">Grupal</option>
                             </select>
@@ -84,7 +87,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Fecha inicio</label>
-                            <input type="date" class="form-control" ng-model="regAct.fechaInicio" required>
+                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaInicio" required>
                             <div class="invalid-feedback">
                                 Este campo es requerido.
                             </div>
@@ -92,27 +95,10 @@
 
                         <div class="form-group col-md-6">
                             <label>Fecha fin</label>
-                            <input type="date" class="form-control" ng-model="regAct.fechaFin" required>
+                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaFin" required>
                             <div class="invalid-feedback">
                                 Este campo es requerido.
                             </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-group col-md-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" ng-model="regAct.entregable">
-                                <label class="form-check-label">
-                                    Tiene entregable
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row" ng-show="regAct.entregable">
-                        <div class="form-group col-xs-12 col-sm-8 col-md-6 col-lg-5">
-                            <label>Fecha máxima de entrega</label>
-                            <input type="date" class="form-control" ng-model="regAct.fechaEntrega"
-                                required="regAct.entregable">
                         </div>
                     </div>
                 </form>
@@ -120,8 +106,7 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
                     ng-show="nuevo">Crear</button>
-                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()" ng-show="!nuevo">Guardar
-                    cambios</button>
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()" ng-show="!nuevo">Guardar</button>
                 <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
             </div>
         </div>
