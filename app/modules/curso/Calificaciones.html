@@ -89,13 +89,28 @@
                             <th style="width: 7%">Puntaje</th>
                             <th style="width: 20%">Comentarios</th>
                         </tr>
-
                     </thead>
                     <tbody>
-                        <td>{{aspecto.descripcion}}</td>
-                        <div ng-repeat="indicador in aspecto.listaIndicadores">
-                            <td ng-model="indicador.descripcion">{{indicador.descripcion}}</td>
-                            <td ng-model="indicador.puntajeMax">{{indicador.puntajeMax}}</td>
+                        <tr ng-repeat="indicador in aspecto.listaIndicadores">
+                            <td>{{aspecto.descripcion}}</td>
+                            <td>{{indicador.descripcion}}</td>
+                            <td>{{indicador.puntajeMax}}</td>
+                            <td><input class="form-control" type="text" ng-model="indicador.puntajeAsignado" name=""
+                                value=""></td>
+                            <td><button ng-show="!texto" type="button" class="btn btn-warning"
+                                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                            <div class="btn-group">
+                                <textarea ng-show="texto" class="form-control" type="text" name=""
+                                    value=""></textarea>
+                                <button ng-show="texto" type="button" class="btn btn-success"
+                                    ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
+                            </div></td>
+                        </tr>
+                        
+                        <!-- <td>{{aspecto.descripcion}}</td> -->
+                        <!-- <div ng-repeat="indicador in aspecto.listaIndicadores">
+                            <td >{{indicador.descripcion}}</td>
+                            <td >{{indicador.puntajeMax}}</td>
                             <td><input class="form-control" type="text" ng-model="indicador.puntajeAsignado" name=""
                                     value=""></td>
                             <td>
@@ -108,13 +123,13 @@
                                         ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
                                 </div>
                             </td>
-                        </div>
+                        </div> -->
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3"><b>Nota Final:</b></td>
-                            <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly
-                                    value="">{{aspecto.indicador.puntaje_asignado}}
+                            <td><input ng-model="sumaInd" type="text" class="form-control" readonly
+                                    value="">{{aspecto.indicador.puntajeAsignado}}
                             </td>
                             <td>
                                 <button ng-show="!texto4" type="button" class="btn btn-warning"

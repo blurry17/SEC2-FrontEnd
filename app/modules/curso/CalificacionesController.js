@@ -6,6 +6,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.actividad = $cookies.getObject("actividadActual")
     $scope.listaAl = [];
 
+    $scope.sumaInd = 0;
+
     var params = {
         idActividad: $scope.actividad.idActividad
     }
@@ -39,16 +41,21 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
 
     serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-
+        console.dir(res.data)
+        
         $scope.lstAspectos = res.data.listaAspectos;
+/* 
+        
 
-        $scope.listaIn = [];
+        var listaIn = [];
         $scope.lstTabla = $scope.lstAspectos;
         $scope.sumaIndicadores=0;
 
         for (let i = 0; i < $scope.lstAspectos.length; i++) {
 
-            $scope.tipoAspecto=$scope.lstAspectos.aspecto.tipoClasificacion;
+            //$scope.tipoAspecto = $scope.lstAspectos[i].tipoClasificacion;
+
+          
 
             var nombre = $scope.lstAspectos[i].descripcion;
             listaIn = $scope.lstAspectos[i].listaIndicadores;
@@ -69,9 +76,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 $scope.lstTabla.push(obj);
 
             }
-        }
-
-        console.dir($scope.lstAspectos);
+        } */
     })
 
     $scope.btnAgregarComentario = function () {
@@ -93,7 +98,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
 
         serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
-            console.dir(res.data);
             
     
         })
@@ -117,7 +121,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             datos.append(name, file[i]);
         }
 
-        console.dir(serviceUtil.TypePostFile('entregable/entrega', datos));
 
         /* return $http({
             url: 'http://localhost:5000/api/entregable/entrega',
