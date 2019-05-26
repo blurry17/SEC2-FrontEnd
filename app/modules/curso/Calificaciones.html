@@ -19,7 +19,8 @@
             <label style="font-size: 100%"><b>Alumno:</b></label>
             <select class="form-control" ng-model="idalumno" ng-init="regAct.tipo = '0'">
                 <option value="0">Seleccione</option>
-                <option ng-repeat="item in listaAl" value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}</option>
+                <option ng-repeat="item in listaAl" value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
+                </option>
             </select>
 
             <!--checkbox-->
@@ -67,7 +68,7 @@
         <form method="post" enctype="multipart/form-data">
             <div>
                 <button type="button" class="btn btn-info" ng-click="btnAgregarComentario()"><i
-                  class="fas fa-download"></i>&nbsp;Descargar Archivo</button>
+                        class="fas fa-download"></i>&nbsp;Descargar Archivo</button>
             </div>
         </form>
     </div>
@@ -76,80 +77,26 @@
     <div class="col-md-12">
         <br />
         <label class="vertical-center" style="font-size: 100%"><b>Rúbrica:</b></label>
-        <table class="table table-borderedless">
-                <p>{{lstAspectos.tipoClasificacion}}</p>
-                <tr ng-repeat="aspecto in lstAspectos">
-                        <p>{{aspecto}}</p>
-
-                    <div ng-show="aspecto.tipoClasificacion == 1">
-                        <table class="table table-borderedless">
-                            <thead>
-
-                                    <tr class="table-info">
-                                        <th>Aspecto</th>
-                                        <th>Indicador</th>
-                                        <th style="width: 9%">Puntaje Max.</th>
-                                        <th style="width: 7%">Puntaje</th>
-                                        <th style="width: 20%">Comentarios</th>
-                                    </tr>
-                    
-                            </thead>
-                            <tbody>
-                                    <td>{{aspecto.descripcion}}</td>
-                                    <td>{{aspecto.indicador.descripcion}}</td>
-                                    <td>{{aspecto.indicador.puntajeMax}}</td>
-                                    <td><input class="form-control" type="text" ng-model="aspecto.indicador.puntaje_asignado" name=""
-                                            value=""></td>
-                                    <td>
-                                        <button ng-show="!texto" type="button" class="btn btn-warning"
-                                            ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-                                        <div class="btn-group">
-                                            <textarea ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
-                                            <button ng-show="texto" type="button" class="btn btn-success"
-                                                ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
-                                        </div>
-                                    </td>
-                            </tbody>
-                            
-                    </div>
-                    <tfoot>
-                        <tr>
-                            <td colspan="3"><b>Nota Final:</b></td>
-                            <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly value="">{{aspecto.indicador.puntaje_asignado}}
-                            </td>
-                            <td>
-                                <button ng-show="!texto4" type="button" class="btn btn-warning"
-                                    ng-click="btnAgregarComentario4()"><i class="fas fa-plus"></i></button>
-                                <div class="btn-group">
-                                    <textarea ng-show="texto4" class="form-control" type="text" name="" value=""></textarea>
-                                    <button ng-show="texto4" type="button" class="btn btn-outline-success"
-                                        ng-click="btnAgregarComentario4()"><i class="fas fa-check"></i></button>
-                                </div>
-                            </td>
-                            <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
-        
+        <p>{{lstAspectos.tipoClasificacion}}</p>
+        <div ng-repeat="aspecto in lstAspectos">
+            <div ng-show="aspecto.tipoClasificacion == 1">
+                <table class="table table-borderedless">
+                    <thead>
+                        <tr class="table-info">
+                            <th>Aspecto</th>
+                            <th>Indicador</th>
+                            <th style="width: 9%">Puntaje Max.</th>
+                            <th style="width: 7%">Puntaje</th>
+                            <th style="width: 20%">Comentarios</th>
                         </tr>
-                    </tfoot>
-                </table>
 
-                    <div ng-show="aspecto.tipoClasificacion==2">
-                        <table class="table table-borderedless">
-                        <thead>
-                            <tr class="table-info">
-                                <th>Aspecto</th>
-                                <th style="width: 20%">Descripción Aspecto</th>
-                                <th style="width: 9%">Puntaje Max.</th>
-                                <th style="width: 7%">Puntaje</th>
-                                <th style="width: 20%">Comentarios</th>
-                            </tr>
-                    
-                        </thead>
+                    </thead>
+                    <tbody>
                         <td>{{aspecto.descripcion}}</td>
-                        <td>{{aspecto.informacion}}</td>
-                        <td>{{aspecto.puntajeMax}}</td>
-
-                        <td><input class="form-control" type="text" ng-model="aspecto.indicador.puntaje_asignado" name=""
-                            value=""></td>
+                        <td>{{aspecto.indicador.descripcion}}</td>
+                        <td>{{aspecto.indicador.puntajeMax}}</td>
+                        <td><input class="form-control" type="text" ng-model="aspecto.indicador.puntaje_asignado"
+                                name="" value=""></td>
                         <td>
                             <button ng-show="!texto" type="button" class="btn btn-warning"
                                 ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
@@ -159,98 +106,128 @@
                                     ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
                             </div>
                         </td>
-
-                    </div>
+                    </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="3"><b>Nota Final:</b></td>
-                            <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly value="">{{aspecto.indicador.puntaje_asignado}}
+                            <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly
+                                    value="">{{aspecto.indicador.puntaje_asignado}}
                             </td>
                             <td>
                                 <button ng-show="!texto4" type="button" class="btn btn-warning"
                                     ng-click="btnAgregarComentario4()"><i class="fas fa-plus"></i></button>
                                 <div class="btn-group">
-                                    <textarea ng-show="texto4" class="form-control" type="text" name="" value=""></textarea>
+                                    <textarea ng-show="texto4" class="form-control" type="text" name=""
+                                        value=""></textarea>
                                     <button ng-show="texto4" type="button" class="btn btn-outline-success"
                                         ng-click="btnAgregarComentario4()"><i class="fas fa-check"></i></button>
                                 </div>
                             </td>
                             <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
-        
+
                         </tr>
                     </tfoot>
                 </table>
+            </div>
 
-                    <div ng-show="aspecto.tipoClasificacion==3">
-                        <table class="table table-borderedless">
-                        <thead>
-                            <tr class="table-info">
-                                <th>Aspecto</th>
-                                <th style="width: 20%">Descripción Aspecto</th>
-                                <th style="width: 7%">Sí</th>
-                                <th style="width: 20%">No</th>
-                            </tr>
-                            
-                        </thead>
-                            <td>{{aspecto.descripcion}}</td>
-                            <td>{{aspecto.informacion}}</td>
-                            <td><input ng-model="falta" type="checkbox"></td>
-                            <td><input ng-model="falta" type="checkbox"></td>
-                    </div>
-                    <tfoot>
-                            <tr>
-                                <td colspan="3"><b>Nota Final:</b></td>
-                                <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly value="">{{aspecto.indicador.puntaje_asignado}}
-                                </td>
-                                <td>
-                                    <button ng-show="!texto4" type="button" class="btn btn-warning"
-                                        ng-click="btnAgregarComentario4()"><i class="fas fa-plus"></i></button>
-                                    <div class="btn-group">
-                                        <textarea ng-show="texto4" class="form-control" type="text" name="" value=""></textarea>
-                                        <button ng-show="texto4" type="button" class="btn btn-outline-success"
-                                            ng-click="btnAgregarComentario4()"><i class="fas fa-check"></i></button>
-                                    </div>
-                                </td>
-                                <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
-            
-                            </tr>
-                        </tfoot>
-                    </table>    
+            <div ng-show="aspecto.tipoClasificacion==2">
+                <table class="table table-borderedless">
+                    <thead>
+                        <tr class="table-info">
+                            <th>Aspecto</th>
+                            <th style="width: 20%">Descripción Aspecto</th>
+                            <th style="width: 9%">Puntaje Max.</th>
+                            <th style="width: 7%">Puntaje</th>
+                            <th style="width: 20%">Comentarios</th>
+                        </tr>
 
-                    
-                </tr>
+                    </thead>
+                    <td>{{aspecto.descripcion}}</td>
+                    <td>{{aspecto.informacion}}</td>
+                    <td>{{aspecto.puntajeMax}}</td>
 
-            <!--
-            <tfoot>
-                <tr>
-                    <td colspan="3"><b>Nota Final:</b></td>
-                    <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly value="">{{aspecto.indicador.puntaje_asignado}}
-                    </td>
+                    <td><input class="form-control" type="text" ng-model="aspecto.indicador.puntaje_asignado" name=""
+                            value=""></td>
                     <td>
-                        <button ng-show="!texto4" type="button" class="btn btn-warning"
-                            ng-click="btnAgregarComentario4()"><i class="fas fa-plus"></i></button>
+                        <button ng-show="!texto" type="button" class="btn btn-warning"
+                            ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
                         <div class="btn-group">
-                            <textarea ng-show="texto4" class="form-control" type="text" name="" value=""></textarea>
-                            <button ng-show="texto4" type="button" class="btn btn-outline-success"
-                                ng-click="btnAgregarComentario4()"><i class="fas fa-check"></i></button>
+                            <textarea ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
+                            <button ng-show="texto" type="button" class="btn btn-success"
+                                ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
                         </div>
                     </td>
-                    <td><input type="text"  class="form-control" name="" value=""></td>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"><b>Nota Final:</b></td>
+                            <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly
+                                    value="">{{aspecto.indicador.puntaje_asignado}}
+                            </td>
+                            <td>
+                                <button ng-show="!texto4" type="button" class="btn btn-warning"
+                                    ng-click="btnAgregarComentario4()"><i class="fas fa-plus"></i></button>
+                                <div class="btn-group">
+                                    <textarea ng-show="texto4" class="form-control" type="text" name=""
+                                        value=""></textarea>
+                                    <button ng-show="texto4" type="button" class="btn btn-outline-success"
+                                        ng-click="btnAgregarComentario4()"><i class="fas fa-check"></i></button>
+                                </div>
+                            </td>
+                            <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
 
-                </tr>
-            </tfoot>
-            -->
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
-                ng-disabled="ActForm.$invalid">Guardar</button>
-            <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div ng-show="aspecto.tipoClasificacion==3">
+                <table class="table table-borderedless">
+                    <thead>
+                        <tr class="table-info">
+                            <th>Aspecto</th>
+                            <th style="width: 20%">Descripción Aspecto</th>
+                            <th style="width: 7%">Sí</th>
+                            <th style="width: 20%">No</th>
+                        </tr>
+
+                    </thead>
+                    <td>{{aspecto.descripcion}}</td>
+                    <td>{{aspecto.informacion}}</td>
+                    <td><input ng-model="falta" type="checkbox"></td>
+                    <td><input ng-model="falta" type="checkbox"></td>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"><b>Nota Final:</b></td>
+                            <td><input ng-model="puntajeFinal" type="text" class="form-control" readonly
+                                    value="">{{aspecto.indicador.puntaje_asignado}}
+                            </td>
+                            <td>
+                                <button ng-show="!texto4" type="button" class="btn btn-warning"
+                                    ng-click="btnAgregarComentario4()"><i class="fas fa-plus"></i></button>
+                                <div class="btn-group">
+                                    <textarea ng-show="texto4" class="form-control" type="text" name=""
+                                        value=""></textarea>
+                                    <button ng-show="texto4" type="button" class="btn btn-outline-success"
+                                        ng-click="btnAgregarComentario4()"><i class="fas fa-check"></i></button>
+                                </div>
+                            </td>
+                            <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
+                    ng-disabled="ActForm.$invalid">Guardar</button>
+                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </div>
+
         </div>
-
+        <iframe id="my_iframe" style="display:none;"></iframe>
     </div>
-    <iframe id="my_iframe" style="display:none;"></iframe>
-</div>
-<script>
-    function Download(url) {
-        document.getElementById('my_iframe').src = url;
-    };
-</script>
+    <script>
+        function Download(url) {
+            document.getElementById('my_iframe').src = url;
+        };
+    </script>
