@@ -25,7 +25,7 @@
 
                 <div class="form-group col-md-5">
                     <label ng-model="comentario.nomProfesor" for="exampleFormControlTextarea1">Su respuesta:</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="200"></textarea>
                 </div>
                 <div class="form-group col-md-2 d-flex justify-content-center align-self-center">
                     <button type="button" class="btn btn-success" ng-click="btnGuardarRespuesta(comentario)">Guardar
@@ -48,7 +48,7 @@
     <div class="d-flex justify-content-center align-self-center row">
         <div class="form-group col-md-5">
             <textarea ng-model="comentario.comentario" class="form-control" id="exampleFormControlTextarea1"
-                rows="4"></textarea>
+                rows="4" maxlength="200"></textarea>
         </div>
     </div>
     <br>
