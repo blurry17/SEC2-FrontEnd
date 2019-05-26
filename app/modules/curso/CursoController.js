@@ -27,8 +27,10 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         fechaInicio: new Date(),
         fechaFin: new Date(),
         flgConfianza : true,
-        horaInicio: '7',
-        horaFin: '7'
+        horaInicio: '',
+        horaFin: '',
+        minInicio: '00',
+        minFin: '00'
     }
 
     $scope.btnAgregarActividad = function () {
@@ -42,8 +44,10 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             flgConfianza: true,
             fechaInicio: new Date(),
             fechaFin: new Date(),
-            horaInicio: '7',
-            horaFin: '7'
+            horaInicio: '8',
+            horaFin: '10',
+            minInicio: '00',
+            minFin: '00'
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
     }
@@ -58,14 +62,23 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $scope.showAlert1 = false;
         if ($scope.nuevo) {
             if (formAct.checkValidity()) {
-                var x = new Date(2019, 4, 25, 8, 0, 0) //$scope.regAct.fechaInicio;
-                x.setMinutes(x.getMinutes() - x.getTimezoneOffset());
 
-                var y = new Date(2019, 4, 26, 15, 0, 0) //$scope.regAct.fechaFin;
-                y.setMinutes(y.getMinutes() - y.getTimezoneOffset());
+                $scope.regAct.fechaInicio.setMinutes(0);
+                $scope.regAct.fechaInicio.setHours(0);
+                $scope.regAct.fechaInicio.setSeconds(0);
+                $scope.regAct.fechaInicio.setMilliseconds(0);
+                $scope.regAct.fechaInicio.setMinutes($scope.regAct.fechaInicio.getMinutes() - $scope.regAct.fechaInicio.getTimezoneOffset() + parseInt($scope.regAct.minInicio));
+                $scope.regAct.fechaInicio.setHours($scope.regAct.fechaInicio.getHours() + parseInt($scope.regAct.horaInicio));
 
-                console.dir(x);
-                console.dir(y);
+                $scope.regAct.fechaFin.setMinutes(0);
+                $scope.regAct.fechaFin.setHours(0);
+                $scope.regAct.fechaFin.setSeconds(0);
+                $scope.regAct.fechaFin.setMilliseconds(0);
+                $scope.regAct.fechaFin.setMinutes($scope.regAct.fechaFin.getMinutes() - $scope.regAct.fechaFin.getTimezoneOffset() + parseInt($scope.regAct.minFin));
+                $scope.regAct.fechaFin.setHours($scope.regAct.fechaFin.getHours() + parseInt($scope.regAct.horaFin));
+
+                console.dir($scope.regAct.fechaInicio);
+                console.dir($scope.regAct.fechaFin);
 
 
                 var params = {
@@ -73,17 +86,17 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     nombre: $scope.regAct.nombre,
                     tipo: $scope.regAct.tipo,
                     descripcion: $scope.regAct.desc,
-                    fechaInicio: new Date(2019, 4, 25, 8, 0, 0), //$scope.regAct.fechaInicio,
-                    fechaFin: new Date(2019, 4, 26, 15, 0, 0), //$scope.regAct.fechaFin,
+                    fechaInicio: $scope.regAct.fechaInicio,
+                    fechaFin: $scope.regAct.fechaFin,
                     flgEntregable: $scope.regAct.entregable ? 1 : 0,
                     flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
                     idUsuarioCreador: $scope.usuario.idUser
                 } 
 
-                /* serviceCRUD.TypePost('actividad/crear_actividad', params).then(function(res){
+                serviceCRUD.TypePost('actividad/crear_actividad', params).then(function(res){
                     $("#mdAgregarActividad").modal('hide');
                     ListarActividades();               
-                }) */
+                })
             }
         } else {
             if (formAct.checkValidity()) {                
