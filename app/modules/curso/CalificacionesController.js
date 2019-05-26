@@ -6,7 +6,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.actividad = $cookies.getObject("actividadActual")
     $scope.listaAl = [];
 
-    $scope.sumaInd = 0;
+   /*  $scope.sumaInd = function(asp){
+        var sum = 0;
+        for (let i = 0; i < asp.listaIndicadores.length; i++) {
+            sum += parseInt(asp.listaIndicadores[i].puntajeAsignado);            
+        }
+        return sum;
+    }
+ */
+
 
     var params = {
         idActividad: $scope.actividad.idActividad
@@ -88,14 +96,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
          var params={
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.idalumno,
-            idJp:$scope.usuario.idUser,
-            nota:$scope.notaFinal,
+            idJp: $scope.usuario.idUser,
+            nota: $scope.sumInd,
             flgFalta: $scope.falta ? 1 : 0,
             //idRubrica: ,
             listaNotaAspectos: $scope.lstAspectos 
         } 
-
-
 
         serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
             
