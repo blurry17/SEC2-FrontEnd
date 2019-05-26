@@ -6,8 +6,12 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
     $scope.mostrarFila=false;
-    $scope.mostrarPreg=false
+    $scope.mostrarPreg=false;
+    $scope.agregar=false;
     $scope.listaFam=[];
+    $scope.guardado=false;
+    $scope.editado=false;
+    $scope.eliminado=false;
     $scope.listaPregunta=[];
     
     $scope.ejemplo=[];
@@ -22,8 +26,15 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.btnGrupos = function () {
         $location.path('grupos');
     }
+    $scope.btnCerrarModalAuto = function(){
+        $("#mdCrearAutoEval").modal('hide');
+    }
+    $scope.btnCerrarModalVerAuto=function(){
+        $("#mdVerAuto").modal('hide');
+    }
 
     $scope.btnAutoEvaluacion = function () {
+        $scope.listaFam=[];
         $('#mdCrearAutoEval').appendTo("body").modal('show');
     }
 
@@ -34,7 +45,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
             console.dir(response.data);
             
-            $scope.familia=response.data.listaFamilia;
+            $scope.listaFam=response.data.listaFamilia;
             console.dir($scope.familia);
         })
         console.dir($scope.actividad);
@@ -42,6 +53,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     }
 
     $scope.btnCoEvaluacion=function(){
+        $scope.listaPregunta=[];
         $('#mdCrearCoEval').appendTo("body").modal('show');
     }
     
@@ -70,7 +82,16 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         };
         if(fam.listaPregunta.length<5){
             fam.listaPregunta.unshift(auxPreg);
+            
         }
+        if(!fam.editar){
+            fam.editar=!(fam.editar);
+        }
+        fam.listaPregunta.forEach(function(preg){
+            if (!preg.editar){
+                preg.editar = !(preg.editar);
+            }
+        })
     }
     
     $scope.showPregunta=function(){
@@ -104,12 +125,20 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         $scope.listaFam.splice(pos, 1);
     }
     
+    $scope.deletePregunta = function(preg){
+        let pos=$scope.listaPregunta.indexOf(preg);
+        $scope.listaPregunta.splice(pos,1);
+    }
+
     $scope.deleteRow = function (fam, preg) {
         let posFam = $scope.listaFam.indexOf(fam);
         let posPreg = $scope.listaFam[posFam].listaPregunta.indexOf(preg);
         fam.listaPregunta.splice(posPreg, 1);
     }
     $scope.habilitarCampos = function (fam) {
+        if(!$scope.agregar){
+            $scope.agregar=!($scope.agregar);
+        }
         if(!fam.editar){
             fam.editar=!(fam.editar);
         }
@@ -127,11 +156,13 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             idActividad:$scope.actividad.idActividad,
             listaFamilia:$scope.listaFam,
         }
+        $scope.guardado=!($scope.guardado);
         console.dir(params)
         serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
             console.dir(response);
 
         })
+        //$("#mdCrearAutoEval").modal('hide');
     }
     
 
@@ -144,6 +175,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         serviceCRUD.TypePost("auto-evaluacion/editar", params).then(function(response){
             console.dir(response);
         })
+        $scope.editado=!($scope.editado);
     }
     $scope.btnEliminarAutoEval=function(){
         let params={
@@ -153,5 +185,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             console.dir(response.data);
             $scope.ejemplo=response.data.listaFamilia;
         })
+        $scope.eliminado=!($scope.eliminado);
     }
 })
