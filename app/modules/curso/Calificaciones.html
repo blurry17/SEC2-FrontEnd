@@ -94,8 +94,8 @@
                     <tbody>
                         <td>{{aspecto.descripcion}}</td>
                         <div ng-repeat="indicador in aspecto.listaIndicadores">
-                            <td>{{indicador.descripcion}}</td>
-                            <td>{{indicador.puntajeMax}}</td>
+                            <td ng-model="indicador.descripcion">{{indicador.descripcion}}</td>
+                            <td ng-model="indicador.puntajeMax">{{indicador.puntajeMax}}</td>
                             <td><input class="form-control" type="text" ng-model="indicador.puntajeAsignado" name=""
                                     value=""></td>
                             <td>
