@@ -51,7 +51,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             $scope.tipoAspecto=$scope.lstAspectos.aspecto.tipoClasificacion;
 
             var nombre = $scope.lstAspectos[i].descripcion;
-            listaIndicadores = $scope.lstAspectos[i].lista_indicadores;
+            listaIndicadores = $scope.lstAspectos[i].listaIndicadores;
             $scope.lstAspectos[i].nota=null;
             $scope.lstAspectos[i].comentario=null;
             $scope.sumaIndicadores=0;

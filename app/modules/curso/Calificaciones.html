@@ -93,19 +93,22 @@
                     </thead>
                     <tbody>
                         <td>{{aspecto.descripcion}}</td>
-                        <td>{{aspecto.indicador.descripcion}}</td>
-                        <td>{{aspecto.indicador.puntajeMax}}</td>
-                        <td><input class="form-control" type="text" ng-model="aspecto.indicador.puntaje_asignado"
-                                name="" value=""></td>
-                        <td>
-                            <button ng-show="!texto" type="button" class="btn btn-warning"
-                                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-                            <div class="btn-group">
-                                <textarea ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
-                                <button ng-show="texto" type="button" class="btn btn-success"
-                                    ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
-                            </div>
-                        </td>
+                        <div ng-repeat="indicador in aspecto.listaIndicadores">
+                            <td>{{indicador.descripcion}}</td>
+                            <td>{{indicador.puntajeMax}}</td>
+                            <td><input class="form-control" type="text" ng-model="indicador.puntajeAsignado" name=""
+                                    value=""></td>
+                            <td>
+                                <button ng-show="!texto" type="button" class="btn btn-warning"
+                                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                                <div class="btn-group">
+                                    <textarea ng-show="texto" class="form-control" type="text" name=""
+                                        value=""></textarea>
+                                    <button ng-show="texto" type="button" class="btn btn-success"
+                                        ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
+                                </div>
+                            </td>
+                        </div>
                     </tbody>
                     <tfoot>
                         <tr>
