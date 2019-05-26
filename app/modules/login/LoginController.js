@@ -5,12 +5,15 @@
   $scope.showAlert2 = false;
 
   $scope.btnLogin = function () {
+    location.href = indexURL + 'calificaciones';
+
     if (!$scope.email || !$scope.pass) {
       $scope.showAlert1 = true;
       return;
     }
-    $scope.showAlert1 = false;
 
+    $scope.showAlert1 = false;
+    /*
     var params = {
       email: $scope.email,
       clave: $scope.pass
@@ -29,6 +32,7 @@
       location.href = indexURL + 'main';
       //$rootScope.showLayout = true;
     })
+    */
   }
 
   $scope.btnForgotPassword = function () {

@@ -1,6 +1,6 @@
 app.controller('CursoController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
-    $scope.usuario = $cookies.getObject('usuario');
-    if ($scope.usuario == undefined) $location.path('/');
+    //$scope.usuario = $cookies.getObject('usuario');
+    //if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
