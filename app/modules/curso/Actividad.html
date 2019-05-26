@@ -1,27 +1,27 @@
 <div>
-
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item" ><a href="#!curso">{{curso.nombre}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{actividad.nombre}}</li>
     </ol>
-  </nav><br/>
+  </nav>
   
 <div class="form-group" style="padding-left: 15px">
-
     <div>
-      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i style="color: rgb(54, 105, 2);padding-left: 10px" class="fas fa-user"></i></label>
+      <h2>{{actividad.nombre}}</h2>
+      <label ng-if="esIndividual">Individual&nbsp;<i class="fas fa-user"></i></label>
+      <label ng-if="esGrupal">Grupal&nbsp;<i class="fas fa-users"></i></label>
     </div>
-  <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
+  <div class="row" style="float: left; margin-left: 1px;" role="group">
       
-      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
-      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Rubrica</button>
-      <button ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos de Trabajo</button>
-      <button ng-click="btnComentarios()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Comentarios</button>
-      <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Alertas</button>
-      <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;height: 32px;">Estadísticas</button>
-      <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Coevaluación</button>
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle" style="margin: 2px;height: 32px;">AutoEvaluacion</button>
+      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin-right: 5px">Calificar</button>
+      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin-right: 5px">Rubrica</button>
+      <button ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin-right: 5px">Grupos de Trabajo</button>
+      <button ng-click="btnComentarios()" type="button" class="btn btn-dark" style="margin-right: 5px">Comentarios</button>
+      <button type="button" class="btn btn-dark" style="margin-right: 5px">Alertas</button>
+      <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin-right: 5px">Estadísticas</button>
+      <button type="button" class="btn btn-dark" style="margin-right: 5px">Coevaluación</button>
+      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle" >AutoEvaluacion</button>
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
           class="fas fa-plus"></i>&nbspCrear Auto Evaluacion</a>

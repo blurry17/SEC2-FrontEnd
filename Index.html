@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" href="src/css/layout.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito&display=swap"> 
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito&display=swap">
   <!--  Angular Material style sheet -->
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
@@ -20,7 +20,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
   <title>SEC2 - Sistema de Evaluación Continua</title>
 </head>
@@ -30,14 +30,15 @@
   <div ng-cloak class="container-fluid">
 
     <div class="row">
-      
+
       <nav class="navbar topbar" ng-show="showLayout">
         <button type="button" id="sidebarCollapse" class="btn btn-light btn-menu"><i class="fas fa-bars"></i></button>
         <div class="vertical-center">
           <img src="src/img/logo-fullSEC.png" alt="SEC2" width="30px" height="45px">
-          <label style="font-size: 1.5rem; font-weight: bold;padding-top: 1px ;margin: 0px; vertical-align: middle">SEC<sup>2</sup></label>
+          <label
+            style="font-size: 1.5rem; font-weight: bold;padding-top: 1px ;margin: 0px; vertical-align: middle">SEC<sup>2</sup></label>
         </div>
-      
+
         <div class="dropdown">
           <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
             style="font-size: 130%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp;<i class="fas fa-user-circle"
@@ -54,11 +55,15 @@
 
       <nav id="sidebar" ng-show="showLayout">
         <ul class="list-unstyled components">
+          <li class="menu-item">
+            <a><i class="fas fa-tachometer-alt"></i>&nbspDashboard</a>
+          </li>
           <li class="active">
-            <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle menu-item"><i
-                class="fas fa-book"></i>&nbspCursos</a>
+            <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+              class="dropdown-toggle menu-item"><i class="fas fa-book"></i>&nbspCursos</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
-              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in lstCursos"><a class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
+              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in lstCursos"><a
+                  class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
             </ul>
           </li>
           <li class="menu-item">
@@ -93,8 +98,8 @@
     document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
   </script>
-  
-  
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>

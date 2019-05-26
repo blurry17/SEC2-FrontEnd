@@ -5,49 +5,14 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
-    $scope.mostrarFila=false;
-    $scope.mostrarPreg=false
-    $scope.listaFam=[];
-    
-    $scope.ejemplo=[/*{
-        familia:"Preparacion",
-        listaPreg:[
-            {
-                pregunta:"¿Dedicaste una cantidad adecuada de horas para la actividad?",
-                editar:false,
-            },
-            {
-                pregunta:"¿Vio los videos mencionados en la 1ra clase en el min 34 por el profesor?",
-                editar:false,
-            }],
-    },{
-        familia:"Aprendizaje",
-        listaPreg:[
-            {
-                pregunta:"¿Lograste aprender los conceptos clave para esta actividad?",
-                editar:false,
-            }
-        ],
-    },{
-        familia:"Responsabilidad",
-        listaPreg:[
-            {
-                pregunta:"¿Organizaste bien tu tiempo para lograr los objetivos de la actividad?",
-                editar:false,
-            }
-        ],
-    },{
-        familia:"Interiorizacion",
-        listaPreg:[
-            {
-                pregunta:"¿Crees que lo aprendido te servira en un futuro?",
-                editar:false,
-            }
-        ],
-    }*/];
 
-    $scope.btnAgregarComentario= function() {
-     }
+    $scope.esIndividual = false;
+    $scope.esGrupal = false;
+    $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
+
+    $scope.mostrarFila=false;
+    $scope.mostrarPreg=false;
+    $scope.listaFam=[];
 
     $scope.btnCalificaciones = function(){
         $location.path('calificaciones');
@@ -62,7 +27,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     }
     
     $scope.btnVerAutoEval=function(){
-        params={
+        var params = {
             idActividad:$scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
@@ -120,25 +85,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             preg.editar = !(preg.editar);
     }
     $scope.btnGuardarAutoEval = function () {
-        //console.log($scope.listaFam);
-        /*let params={
-            idActividad:1,
-            listaFamilia:[{
-                familia:"Matematica",
-                listaPregunta:[{
-                    pregunta:"Sabe Sumar"
-                },
-                {
-                    pregunta:"Sabe Restar"
-                }]
-            },
-            {
-                familia:"Puntualidad",
-                listaPregunta:[{
-                    pregunta:"Entrega a tiempo"
-                }]
-            }]
-        }*/
         let params={
             idActividad:$scope.actividad.idActividad,
             listaFamilia:$scope.listaFam,

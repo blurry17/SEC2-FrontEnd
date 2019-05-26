@@ -24,7 +24,7 @@
 
     <div class="row" style="padding-top: 15px">
         <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px" ng-repeat="act in lstActividad">
-            <div class="card text-center border-dark">
+            <div class="card text-center border-dark" style="border-width: 3px">
                 <div class="card-body">
                     <h5 class="card-title">{{act.nombre}}&nbsp<i class="fas fa-user"></i></h5>
                     <p class="card-text">{{act.desc}}</p>
@@ -33,15 +33,12 @@
                     <li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
                     <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
                     <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>
-                    <!-- <li class="list-group-item" ng-show="act.entregable">Fecha máx entrega: {{act.fechaEntrega}}</li> -->
                 </ul>
                 <div class="card-body">
                     <button id="btnVer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
                         title="Ver" ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
                     <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"
                         ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>
-                    <!-- <button class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="Publicar"
-                        ng-click="btnPublicarActividad()"><i class="fas fa-check"></i></button> -->
                 </div>
             </div>
         </div>
@@ -57,9 +54,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                    <div class="alert alert-danger" role="alert" ng-show="showAlert1">
-                            La fecha fin no puede ser menor a la fecha de inicio
-                          </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+                    La fecha fin no puede ser menor a la fecha de inicio
+                </div>
                 <form id="formAct" name="formAct" class="needs-validation" novalidate>
                     <div class="form-row">
                         <div class="form-group col-md-8">
@@ -87,17 +84,70 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label>Fecha inicio</label>
-                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaInicio" required>
+                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaInicio"
+                                required>
                             <div class="invalid-feedback">
                                 Este campo es requerido.
                             </div>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label>Fecha fin</label>
-                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaFin" required>
-                            <div class="invalid-feedback">
-                                Este campo es requerido.
+                                <label>Hora Inicio</label>
+                                <select class="form-control custom-select" ng-model="regAct.horaInicio" ng-init="regAct.horaInicio='7'">
+                                    <option value='7'>7:00</option>
+                                    <option value='8'>8:00</option>
+                                    <option value='9'>9:00</option>
+                                    <option value='10'>10:00</option>
+                                    <option value='11'>11:00</option>
+                                    <option value='12'>12:00</option>
+                                    <option value='13'>13:00</option>
+                                    <option value='14'>14:00</option>
+                                    <option value='15'>15:00</option>
+                                    <option value='16'>16:00</option>
+                                    <option value='17'>15:00</option>
+                                    <option value='18'>18:00</option>
+                                    <option value='19'>19:00</option>
+                                    <option value='20'>20:00</option>
+                                    <option value='21'>21:00</option>
+                                    <option value='22'>22:00</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Fecha inicio</label>
+                                <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaInicio"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+    
+                            <div class="form-group col-md-6">
+                                <label>Fecha fin</label>
+                                <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaFin" required>
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" ng-model="regAct.entregable">
+                                <label class="form-check-label">
+                                    Tiene entregable
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" ng-model="regAct.flgConfianza">
+                                <label class="form-check-label">
+                                    Permitir al JP publicar las notas
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -106,27 +156,8 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
                     ng-show="nuevo">Crear</button>
-                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()" ng-show="!nuevo">Guardar</button>
-                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="mdPublicarActividad" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmar publicación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Al hacer clic en "Confirmar" la actividad será publicada y los alumnos podrán verla y acceder a esta.
-                Esta acción no se puede deshacer. Algunos datos de la actividad aún podrán ser editados.
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" ng-click="btnConfirmarPublicacion()">Confirmar</button>
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
+                    ng-show="!nuevo">Guardar</button>
                 <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
             </div>
         </div>
