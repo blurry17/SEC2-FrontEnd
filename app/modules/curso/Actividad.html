@@ -88,7 +88,7 @@
         <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
       </div>
       <div class="form-group col-md-3">
-        <label ><b>Hora última modificación:</b></label>
+        <label><b>Hora última modificación:</b></label>
         <input style="width: 100px" type="text" class="form-control" readonly value="10:57 am">
       </div>
     </div>
@@ -155,7 +155,8 @@
                     </div>
 
                     <div class="form-group col-2">
-                      <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i class="fas fa-times"></i></button>
+                      <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i
+                          class="fas fa-times"></i></button>
                     </div>
                   </div>
                 </div>
@@ -166,14 +167,15 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()" ng-disabled="ActForm.$invalid">Guardar</button>
-          <button class="btn btn-default " data-dismiss="modal">Cancelar</button><br><br>
-            <div ng-show="guardado" class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Se guardó la autoevaluacion</strong>
-                <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalAuto()" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()"
+          ng-disabled="ActForm.$invalid">Guardar</button>
+        <button class="btn btn-default " data-dismiss="modal">Cancelar</button><br><br>
+        <div ng-show="guardado" class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Se guardó la autoevaluacion</strong>
+          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalAuto()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -192,7 +194,7 @@
 
       <div class="modal-body">
         <form name="VerAutoEvalForm" novalidate>
-          
+
 
           <div ng-show="agregar" class="col-12" style="padding-bottom: 15px">
             <span style="font-size: 20px;padding-right: 10px;"><b> Agregar Familia</b></span>
@@ -221,8 +223,10 @@
                     </div>
                     <div ng-show="agregar" class="form-group col-3">
                       <br>
-                      <button class="btn btn-success" ng-disabled="!fam.editar" ng-click="showPreg(fam)"><i class="fas fa-plus"></i></button>
-                      <button class="btn btn-danger" ng-disabled="!fam.editar" ng-click="deleteFam(fam)"><i class="fas fa-times"></i></button>
+                      <button class="btn btn-success" ng-disabled="!fam.editar" ng-click="showPreg(fam)"><i
+                          class="fas fa-plus"></i></button>
+                      <button class="btn btn-danger" ng-disabled="!fam.editar" ng-click="deleteFam(fam)"><i
+                          class="fas fa-times"></i></button>
                     </div>
 
                     <div class="form-group col-8"></div>
@@ -238,9 +242,10 @@
                         </span>
                       </div>
                       <div ng-show="agregar" class="form-group col-3">
-                          <br>
-                          <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i class="fas fa-times"></i></button>
-                        </div>
+                        <br>
+                        <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i
+                            class="fas fa-times"></i></button>
+                      </div>
                     </div>
 
                   </div>
@@ -259,16 +264,18 @@
         <button class="btn btn-danger" type="submit" ng-click="btnEliminarAutoEval()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button><br>
         <div ng-show="editado" class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Se modificó la autoevaluacion</strong>
-            <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+          <strong>Se modificó la autoevaluacion</strong>
+          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div ng-show="eliminado" class="alert alert-info alert-dismissible fade show" role="alert">
-            <strong>Se eliminó la autoevaluacion</strong>
-            <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+          <strong>Se eliminó la autoevaluacion</strong>
+          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       </div>
     </div>
@@ -300,20 +307,28 @@
           </div>
 
           <div class="row" ng-show="mostrarPreg" ng-repeat="preg in listaPregunta" style="margin: 15px;">
-
             <div class="col-12">
 
               <div class="card" style="background-color: rgb(230, 230, 230)">
                 <div class="card-body">
+                  <div class="row">
+                    <div class="col-9">
+                      <input style="vertical-align: middle" name="pregunta" placeholder="Pregunta" type="text"
+                        class="form-control" ng-model="preg.pregunta" ng-required="true">
+                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                      </span>
 
-                  <input style="vertical-align: middle" name="pregunta" placeholder="Pregunta" type="text"
-                    class="form-control" ng-model="preg.pregunta" ng-required="true">
-                  <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                    <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                  </span>
+                    </div>
+                    <div class="form-group col-3">
 
+                      <button class="btn btn-danger" ng-click="deletePregunta(preg)"><i
+                          class="fas fa-times"></i></button>
+                    </div>
+                  </div>
                 </div>
               </div>
+
             </div>
           </div>
 
@@ -344,36 +359,39 @@
 
       <div class="modal-body">
         <form name="VerCoEvalForm" novalidate>
-            <div class="form-row" ng-repeat="preg in listaPregunta" style="margin: 15px; background-color: rgb(243, 241, 241)">
+          <div class="form-row" ng-repeat="preg in listaPregunta"
+            style="margin: 15px; background-color: rgb(243, 241, 241)">
 
-                <div class="col-12">
-    
-                  <div class="card" style="background-color: rgb(230, 230, 230)">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="form-group col-md-8" style="padding-bottom: 10px">
-                          
-                            <input style="vertical-align: middle" name="pregunta" placeholder="Pregunta" type="text"
-                            class="form-control" ng-model="preg.pregunta" ng-required="true">
-                          <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                            <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                          </span>
-                        </div>
-                        
-                        <div ng-show="agregar" class="form-group col-3">
-                          <br>
-                          <button class="btn btn-success" ng-disabled="!fam.editar" ng-click="showPreg(fam)"><i class="fas fa-plus"></i></button>
-                          <button class="btn btn-danger" ng-disabled="!fam.editar" ng-click="deleteFam(fam)"><i class="fas fa-times"></i></button>
-                        </div>
-    
-                        
-                      </div>
+            <div class="col-12">
+
+              <div class="card" style="background-color: rgb(230, 230, 230)">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="form-group col-md-8" style="padding-bottom: 10px">
+
+                      <input style="vertical-align: middle" name="pregunta" placeholder="Pregunta" type="text"
+                        class="form-control" ng-model="preg.pregunta" ng-required="true">
+                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
+                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
+                      </span>
                     </div>
+
+                    <div ng-show="agregar" class="form-group col-3">
+                      <br>
+                      <button class="btn btn-success" ng-disabled="!fam.editar" ng-click="showPreg(fam)"><i
+                          class="fas fa-plus"></i></button>
+                      <button class="btn btn-danger" ng-disabled="!fam.editar" ng-click="deleteFam(fam)"><i
+                          class="fas fa-times"></i></button>
+                    </div>
+
+
                   </div>
                 </div>
-    
-    
               </div>
+            </div>
+
+
+          </div>
         </form>
       </div>
 

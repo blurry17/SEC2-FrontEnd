@@ -125,6 +125,11 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         $scope.listaFam.splice(pos, 1);
     }
     
+    $scope.deletePregunta = function(preg){
+        let pos=$scope.listaPregunta.indexOf(preg);
+        $scope.listaPregunta.splice(pos,1);
+    }
+
     $scope.deleteRow = function (fam, preg) {
         let posFam = $scope.listaFam.indexOf(fam);
         let posPreg = $scope.listaFam[posFam].listaPregunta.indexOf(preg);
