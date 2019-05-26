@@ -42,7 +42,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
         $scope.lstAspectos = res.data.listaAspectos;
 
-        $scope.listaIndicadores = [];
+        $scope.listaIn = [];
         $scope.lstTabla = $scope.lstAspectos;
         $scope.sumaIndicadores=0;
 
@@ -51,18 +51,18 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             $scope.tipoAspecto=$scope.lstAspectos.aspecto.tipoClasificacion;
 
             var nombre = $scope.lstAspectos[i].descripcion;
-            listaIndicadores = $scope.lstAspectos[i].listaIndicadores;
+            listaIn = $scope.lstAspectos[i].listaIndicadores;
             $scope.lstAspectos[i].nota=null;
             $scope.lstAspectos[i].comentario=null;
             $scope.sumaIndicadores=0;
 
-            for (let j = 0; j < listaIndicadores.length; j++) {
-                listaIndicadores[j].nota=null;
+            for (let j = 0; j < listaIn.length; j++) {
+                listaIn[j].nota=null;
                 
-                listaIndicadores[j].comentario=null;
+                listaIn[j].comentario=null;
                 var obj = {
                     nombreAsp: nombre,
-                    indicador: listaIndicadores[j],
+                    indicador: listaIn[j],
 
                 }
 
