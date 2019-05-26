@@ -41,12 +41,11 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
 
         $scope.lstAspectos = res.data.listaAspectos;
-/* 
+
         $scope.listaIndicadores = [];
         $scope.lstTabla = $scope.lstAspectos;
-        $scope.sumaIndicadores=0; */
+        $scope.sumaIndicadores=0;
 
-/* 
         for (let i = 0; i < $scope.lstAspectos.length; i++) {
 
             $scope.tipoAspecto=$scope.lstAspectos.aspecto.tipoClasificacion;
@@ -71,7 +70,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
             }
         }
- */
+
         console.dir($scope.lstAspectos);
     })
 
