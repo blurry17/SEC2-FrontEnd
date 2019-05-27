@@ -19,6 +19,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     //Se muestre al entrar a la rubrica
     function mostrarRubricaActual(){
         console.dir($scope.actividad.idRubrica)
+        console.dir(JSON.stringify($scope.rubrica))
         if($scope.actividad.idRubrica != null){
             $scope.hayRubrica = true;
             var params = {
@@ -56,13 +57,12 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $("#formAct").addClass("was-validated");
         //validando que la rubrica tenga nombre
             $scope.mostrarCrearRubrica = false;
-            console.dir("esta es la rubrica editada")
-            console.dir(JSON.stringify($scope.rubrica))
-            console.dir($scope.rubrica);
 
             $scope.rubrica.nombreRubrica = $scope.nomRubrica;
             $scope.rubrica.idActividad = $scope.actividad.idActividad;
-            $scope.rubrica.idRubrica_Actual = $scope.actividad.idRubrica;
+            $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;
+            console.dir("json enviado de editar rubrica")
+            console.dir(JSON.stringify($scope.rubrica))
             
             serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
                 console.dir(response);
@@ -96,12 +96,14 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.rubrica = {
         flgRubricaEspecial: 0,
-        //idRubrica_Actual = null,
         idUsuarioCreador: $scope.usuario.idUser,
         nombreRubrica: $scope.nomRubrica,
-        listaAspectos: []
+        listaAspectos: [],
+        idRubricaActual: null
 
     }
+
+
 
     /* Inicializando la lista de aspectos */
     $scope.lstAspectos = []
