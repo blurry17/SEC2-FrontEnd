@@ -212,4 +212,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
         $scope.eliminado=!($scope.eliminado);
     }
+
 })
+
