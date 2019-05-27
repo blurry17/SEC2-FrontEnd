@@ -1,6 +1,6 @@
 (function(){
     var serviceCRUD = function($http){
-        var baseURL = "http://localhost:5000/api/";
+        //var baseURL = "http://localhost:5000/api/";
         //var baseURL = "http://200.16.7.185:5000/api/"
 
         var TypeGet = function(Method, Params){
