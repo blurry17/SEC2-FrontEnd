@@ -16,11 +16,11 @@
   <!-- Aquí debo preguntar qué tipo de rúbrica desea -->
   <!-- Si la rubrica no existe, mostrar el boton Crear Rubrica -->
   <div class="col-xs-4 col-lg-2 col-2">
-    <button ng-show="noHayRubrica" ng-click="btnCrearRubrica()" class="btn btn-sm btn-primary">Crear Rúbrica</button>
+    <button ng-click="btnCrearRubrica()" class="btn btn-sm btn-primary">Crear Nueva Rúbrica</button>
   </div>
   <!-- Caso contrario, mostrar el boton Editar Rubrica -->
   <div class="col-xs-4 col-lg-2 col-2">
-    <button ng-show="hayRubrica" ng-click="btnEditarRubrica()" class="btn btn-sm btn-primary">Editar Rúbrica</button>
+    <button ng-show="hayRubrica" ng-click="btnEditarRubrica()" class="btn btn-sm btn-primary">Guardar cambios</button>
   </div>
 
   <!-- Modal Elegir Tipo Aspecto -->
@@ -52,16 +52,6 @@
   </div>
 
 
-  <div ng-show="mostrarCrearRubrica" class="col-xs-4 col-lg-2 col-2 dropdown">
-    <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
-      Rúbricas Pasadas
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item">Rúbrica 1</a>
-      <a class="dropdown-item">Rúbrica 2</a>
-    </div>
-  </div>
 </div>
 
 <!-- Rubrica Tipo 1 -->
@@ -293,7 +283,7 @@
     <div class="form-row">
 
       <div class="form-group col-md-2">
-        <input required type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="rubrica.nombreRubrica">
+        <input required type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="nombreRubrica">
         <div class="invalid-feedback">
             Este campo es requerido.
         </div>

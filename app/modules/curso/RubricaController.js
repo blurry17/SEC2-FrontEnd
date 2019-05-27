@@ -12,44 +12,78 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.mostrarRubrica = false
     $scope.mostrarIndicadores = true;
     $scope.puntajeAcumuladoRubricaVista = 0;
-    $scope.noHayRubrica = null;
-    $scope.hayRubrica = null;
+    $scope.hayRubrica = false;
     //$scope.rubricaEditar = null;
 
     //Verificando que si hay una rubrica asignada
     //Se muestre al entrar a la rubrica
     function mostrarRubricaActual(){
-        var params = {
-            idActividad: $scope.actividad.idActividad
-        }
-        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            console.dir(res.data);
-            if(res.data.idRubrica != null){
-                console.dir("hay una rubrica")
-                //$scope.mostrarEditarRubrica = true
-                //$scope.rubricaEditar = res.data;
-                return $scope.hayRubrica = true;
+        console.dir($scope.actividad.idRubrica)
+        if($scope.actividad.idRubrica != null){
+            $scope.hayRubrica = true;
+            var params = {
+                idActividad: $scope.actividad.idActividad
             }
-            return $scope.noHayRubrica = true;
+            //Si hay un idRubrica, llamar al servicio
+            serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
+                console.dir(res.data);
+                console.dir("hay rubrica mostrandola...")
+                $scope.nomRubrica = res.data.nombreRubrica;
+                $scope.lstAspectos = res.data.listaAspectos;
+                $scope.rubrica.listaAspectos = res.data.listaAspectos;
+    
+                /* Obtener la suma de los indicadores para mostrarlo*/
+                $scope.lstAspectos.forEach(aspecto => {
+                    $scope.puntajeAcumuladoRubricaVista = 0;
+                    aspecto.listaIndicadores.forEach(indicador => {
+                        $scope.puntajeAcumuladoRubricaVista += indicador.puntajeMax
+                    });
+                    
+                });
+                $scope.mostrarRubrica = true;
+    
+            })
 
-        })
+
+        }
     }
 
     //console.dir('Soy rubricaeditar' + $scope.rubricaEditar)
 
 
+
     $scope.btnEditarRubrica = function () {
         $("#formAct").addClass("was-validated");
+        //validando que la rubrica tenga nombre
             $scope.mostrarCrearRubrica = false;
-            console.dir($scope.rubricaEditar);
+            console.dir($scope.rubrica);
 
-            $scope.rubricaEditar.nombreRubrica = $scope.nomRubrica;
+            $scope.rubrica.nombreRubrica = $scope.nomRubrica;
+            $scope.rubrica.idActividad = $scope.actividad.idActividad;
+            $scope.rubrica.idRubrica_Actual = $scope.actividad.idRubrica;
             
-            serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubricaEditar).then(function (response) {
+            serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
                 console.dir(response);
+                $scope.mostrarRubrica = false;
+                window.alert("Se guardaron los cambios!")
+            })
+    }
+
+    $scope.btnGuardarRubrica = function () {
+        $("#formAct").addClass("was-validated");
+        //validando que la rubrica tenga nombre
+            $scope.mostrarCrearRubrica = false;
+            console.dir($scope.rubrica);
+
+            $scope.rubrica.nombreRubrica = $scope.nomRubrica;
+            $scope.rubrica.idActividad = $scope.actividad.idActividad;
+            
+            serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
+                console.dir(response);
+                $scope.mostrarRubrica = false;
+                window.alert("Se guardó la Rúbrica!")
             })
 
-            window.alert("Se editó la Rúbrica!")
         
     }
 
@@ -60,6 +94,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.rubrica = {
         flgRubricaEspecial: 0,
+        //idRubrica_Actual = null,
         idUsuarioCreador: $scope.usuario.idUser,
         nombreRubrica: $scope.nomRubrica,
         listaAspectos: []
@@ -85,27 +120,21 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
 
     $scope.btnCrearRubrica = function () {
-        $scope.mostrarRubrica = true;
+        //Preguntar si quiere crear una nueva rubrica
+        //Solamente si ya hay una rubrica creada
+        if($scope.actividad.idRubrica != null){
+            $scope.hayRubrica = true;
+            var r = window.confirm("Esta actividad ya tiene una rúbrica. ¿Desea crear una nueva?");
+            if (r){
+                $scope.mostrarRubrica = true;
+            }
+        }
+        if($scope.actividad.idRubrica == null){
+            $scope.mostrarRubrica = true;
+        }
     }
 
-    $scope.btnGuardarRubrica = function () {
-        $("#formAct").addClass("was-validated");
-        //validando que la rubrica tenga nombre
-            $scope.mostrarCrearRubrica = false;
-            console.dir($scope.rubrica);
 
-            $scope.rubrica.nombreRubrica = $scope.nomRubrica;
-            $scope.rubrica.idActividad = $scope.actividad.idActividad;
-            
-            serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
-                console.dir(response);
-                window.alert("Se guardó la Rúbrica!")
-            })
-
-            
-        
-        
-    }
 
     $scope.btnVerRubricaActual = function () {
         //Falta: Validar que primero haya guardado la rúbrica
