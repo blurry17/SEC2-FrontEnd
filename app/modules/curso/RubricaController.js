@@ -56,6 +56,8 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $("#formAct").addClass("was-validated");
         //validando que la rubrica tenga nombre
             $scope.mostrarCrearRubrica = false;
+            console.dir("esta es la rubrica editada")
+            console.dir(JSON.stringify($scope.rubrica))
             console.dir($scope.rubrica);
 
             $scope.rubrica.nombreRubrica = $scope.nomRubrica;
