@@ -9,42 +9,46 @@
   </nav>
 </div>
 <div >
-<br/>  
+<br/> 
 <div class="row">
   <div class="form-group col-md-3">
       <label style="font-size: 120%"><b>Estadísticas de Evaluación</b></label>
-    <table class="table table-bordered">
-      <tr>
-        <th>Media:</th>
-        <td>12.5%</td>
-      </tr>
-      <tr>
-        <th>Desviación:</th>
-        <td>1.85%</td>
-      </tr>
-      <tr>
-        <th>% de aprobados:</th>
-        <td>60%</td>
-      </tr>
-      <tr>
-        <th>Máx. nota:</th>
-        <td>19</td>
-      </tr>
-      <tr>
-        <th>Mín. nota:</th>
-        <td>4</td>
-      </tr>
-    </table>
-  </div>
-  <div class="col-md-5">
-      <label style="font-size: 120%"><b>Ranking de los 5 mejores alumnos</b></label>
-      <table class="table table-bordered">
-          <tr>
+<table class="table ">
+  <!--<caption>List of users</caption>-->
+  <tr>
+    <th class="table-dark" >Media:</th>
+    <td>12.5%</td>
+  </tr>
+  <tr>
+    <th class="table-dark">Desviación:</th>
+    <td>1.85%</td>
+  </tr>
+  <tr>
+    <th class="table-dark">% de aprobados:</th>
+    <td>60%</td>
+  </tr>
+  <tr>
+    <th class="table-dark">Máx. nota:</th>
+    <td>19</td>
+  </tr>
+  <tr>
+    <th class="table-dark">Mín. nota:</th>
+    <td>4</td>
+  </tr>
+</table>
+</div>
+<div class="col-md-5" class="table-responsive">
+    <label style="font-size: 120%"><b>Ranking de los 5 mejores alumnos</b></label>
+<table class="table table-hover">
+    <thead>
+        <tr class="table-info">
             <th style="width: 10%" >Código</th>
             <th style="width: 30%">Nombres</th>
             <th style="width: 10%">Nota</th>
           </tr>
-          <tr>
+    </thead>
+    <tbody>
+        <tr>
             <td>20157687</td>
             <td>Dayana Burga Díaz</td>
             <td>20</td>
@@ -69,8 +73,8 @@
               <td>Alex Sanchez Díaz</td>
               <td>16</td>
           </tr>
-        </table>
-  </div>
+    </tbody>
+  </table>
 </div>
     
   <div class="row">
@@ -81,18 +85,16 @@
       
 </div>
 
-<div role="group">
-    <div class="row">
-        <div>
-          <label style="font-size: 100%"><b>Elegir Grafico:</b></label>
-          <select  ng-change=TipoGrafico() class="form-control" ng-model="seleccion">
-            <option value="g">Seleccione una opción</option>
-            <option value="gc">Gráfico Circular</option>
-            <option value="gb">Gráfico de Barras</option>
-          </select>
-        </div>
+<div class="col-md-5" class="table-responsive">
+    <div>       
+      <label style="font-size: 100%"><b>Elegir Grafico:</b></label>
+      <select  ng-change=TipoGrafico() class="form-control" ng-model="seleccion">
+        <option value="g">Seleccione una opción</option>
+        <option value="gc">Gráfico Circular</option>
+        <option value="gb">Gráfico de Barras</option>
+      </select>
     
-    <div  ng-show="gc" class="col-md-10 col-sm-12" id="piechart" style="width: 500px; height: 300px; color: whitesmoke "></div>
+    <div  ng-show="gc" class="col-md-10 col-sm-12" id="piechart" style="width: 900px; height: 400px; color: whitesmoke "></div>
     <div ng-show="gb" id="barchart_material" style="width: 700px; height: 300px;"></div>
   </div>
 </div>  

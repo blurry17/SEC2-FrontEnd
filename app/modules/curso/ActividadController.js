@@ -5,6 +5,11 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
+
+    $scope.esIndividual = false;
+    $scope.esGrupal = false;
+    $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
+
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false;
     $scope.agregar=false;
