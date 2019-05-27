@@ -37,6 +37,23 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.btnValidarPuntaje = function () {
         /* Preguntar si desea validar los puntajes una vez llenados */
         result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
+        $("#formAct").addClass("was-validated");
+        if($scope.puntajeAsignado){
+            var params=
+            {
+                idActividad: $scope.actividad.idActividad,
+                idAlumno: $scope.idalumno,
+                nota:$scope.sumInd,
+                listaNotaAspectos: $scope.lstAspectos
+            
+            }
+        
+            serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+
+            })
+
+            window.alert("Las notas han sido validadas satisfactoriamente!")
+        }
 
     }
 
@@ -64,20 +81,24 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     $scope.btnGuardarPuntaje =function(){
         result = window.confirm('¿Está seguro que desea Guardar?');
-         var params={
-            idActividad: $scope.actividad.idActividad,
-            idAlumno: $scope.idalumno,
-            idJp: $scope.usuario.idUser,
-            nota: $scope.sumInd,
-            flgFalta: $scope.falta ? 1 : 0,
-            idRubrica: $scope.actividad.idRubrica,
-            listaNotaAspectos: $scope.lstAspectos 
-        } 
+        $("#formAct").addClass("was-validated");
+        if($scope.puntajeAsignado){
+            var params={
+                idActividad: $scope.actividad.idActividad,
+                idAlumno: $scope.idalumno,
+                idJp: $scope.usuario.idUser,
+                nota: $scope.sumInd,
+                flgFalta: $scope.falta ? 1 : 0,
+                idRubrica: $scope.actividad.idRubrica,
+                listaNotaAspectos: $scope.lstAspectos 
+            } 
+    
+            serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+                $scope.falta = false;
+            })
 
-        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
-            
-        })
-
+            window.alert("Se guardó correctamente!")
+        }
     }
 
     $scope.btnEditarPuntaje=function(){
@@ -89,10 +110,11 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 listaNotaAspectos: $scope.lstAspectos
             
             }
-        }
-        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+        
+            serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
 
-        })
+            })
+        
     }
 
     $scope.btnclick = function () {

@@ -79,7 +79,10 @@
                     <label class="vertical-center" style="font-size: 100%">{{indicador.puntajeMax}}</label>
                 </div>
                 <div class="col-md-3">
-                    <input disabled="falta" class="form-control" type="text" ng-model="indicador.puntajeAsignado" name="" value="">
+                    <input required type="number" min="0" max="20" disabled="falta" class="form-control" type="text" ng-model="indicador.puntajeAsignado" name="" value="">
+                    <div class="invalid-feedback">
+                            Este campo es requerido.
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <button disabled="falta" ng-show="!texto" ng-show="mas"type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
@@ -93,7 +96,10 @@
         <!-- <div ng-show="aspecto.tipoClasificacion == 2">
                 <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
                 <label class="vertical-center" style="font-size: 100%">{{aspecto.puntajeMax}}</label>
-                <input disabled="falta" class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
+                <input required type="number" min="0" max="20" disabled="falta" class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
+                <div class="invalid-feedback">
+                  Este campo es requerido.
+                </div>
                 <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
                         class="fas fa-plus"></i></button>
                 <div class="btn-group">
@@ -106,7 +112,10 @@
                 <label class="vertical-center" style="font-size: 100%">{{aspecto.informacion}}</label>
                 <label class="vertical-center" style="font-size: 100%"></label>Realizado</label>
                 <input type="checkbox">
-                <input disabled="falta" class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
+                <input required type="number" min="0" max="20" disabled="falta" class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
+                <div class="invalid-feedback">
+                  Este campo es requerido.
+                </div>
                 <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
                         class="fas fa-plus"></i></button>
                 <div class="btn-group">
