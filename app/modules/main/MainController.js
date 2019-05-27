@@ -1,6 +1,6 @@
 app.controller('MainController', function ($rootScope, $cookies, serviceCRUD, $scope, $location){
-    //$scope.usuario = $cookies.getObject('usuario');
-    //if ($scope.usuario == undefined) $location.path('/');
+    $scope.usuario = $cookies.getObject('usuario');
+    if ($scope.usuario == undefined) $location.path('/');
     //$scope.$apply();
     $rootScope.showLayout = true;
 
