@@ -7,14 +7,53 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     /* Variables */
     $scope.mostrarCrearRubrica = false;
+    $scope.mostrarEditarRubrica = false;
     $scope.mostrarAspecto = true;
     $scope.mostrarRubrica = false
     $scope.mostrarIndicadores = true;
     $scope.puntajeAcumuladoRubricaVista = 0;
-
+    $scope.noHayRubrica = null;
+    $scope.hayRubrica = null;
+    //$scope.rubricaEditar = null;
 
     //Verificando que si hay una rubrica asignada
     //Se muestre al entrar a la rubrica
+    function mostrarRubricaActual(){
+        var params = {
+            idActividad: $scope.actividad.idActividad
+        }
+        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
+            console.dir(res.data);
+            if(res.data.idRubrica != null){
+                console.dir("hay una rubrica")
+                //$scope.mostrarEditarRubrica = true
+                //$scope.rubricaEditar = res.data;
+                return $scope.hayRubrica = true;
+            }
+            return $scope.noHayRubrica = true;
+
+        })
+    }
+
+    //console.dir('Soy rubricaeditar' + $scope.rubricaEditar)
+
+
+    $scope.btnEditarRubrica = function () {
+        $("#formAct").addClass("was-validated");
+            $scope.mostrarCrearRubrica = false;
+            console.dir($scope.rubricaEditar);
+
+            $scope.rubricaEditar.nombreRubrica = $scope.nomRubrica;
+            
+            serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubricaEditar).then(function (response) {
+                console.dir(response);
+            })
+
+            window.alert("Se editó la Rúbrica!")
+        
+    }
+
+
 
 
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
@@ -52,7 +91,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.btnGuardarRubrica = function () {
         $("#formAct").addClass("was-validated");
         //validando que la rubrica tenga nombre
-        if($scope.nomRubrica){
             $scope.mostrarCrearRubrica = false;
             console.dir($scope.rubrica);
 
@@ -63,7 +101,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             })
 
             window.alert("Se guardó la Rúbrica!")
-        }
         
     }
 
@@ -189,5 +226,12 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         aspecto.listaIndicadores.splice(pos, 1)
     }
     console.dir($scope.lstAspectos)
+
+
+    function init() {
+        mostrarRubricaActual();
+    }
+
+    init();
 
 })
