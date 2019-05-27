@@ -7,6 +7,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.listaAl = [];
     $scope.falta = false;
     $scope.profe = $scope.usuario.esProfesor;
+    $scope.notaFinal = null;
 
     /*  $scope.sumaInd = function(asp){
          var sum = 0;
@@ -22,9 +23,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         idUsuarioCreador: $scope.usuario.idUser,
         nombreRubrica: $scope.nomRubrica,
         lstAspectos: []
-    }
-
-    
+    }   
 
     $scope.irActividad = function () {
         $location.path("actividad")
@@ -40,8 +39,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     }
 
-    
-
     $scope.btnAgregarComentario = function () {
         $scope.texto = true;
     }
@@ -52,11 +49,21 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     $scope.btnGuardarPuntaje = function () {
         result = window.confirm('¿Está seguro que desea Guardar?');
+
+        for (let i = 0; i < $scope.lstAspectos.length; i++) {
+            $scope.lstAspectos[i].nota = parseInt($scope.lstAspectos[i].nota);
+            if ($scope.lstAspectos[i].tipoClasificacion == 1){
+                for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
+                    $scope.lstAspectos[i].listaNotaIndicador[j].nota = parseInt($scope.lstAspectos[i].listaNotaIndicador[j].nota);                    
+                }
+            }            
+        }
+
         var params = {
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.idalumno,
             idJp: $scope.usuario.idUser,
-            nota: $scope.sumInd,
+            nota: parseInt($scope.notaFinal),
             flgFalta: $scope.falta ? 1 : 0,
             idRubrica: $scope.actividad.idRubrica,
             listaNotaAspectos: $scope.lstAspectos
@@ -71,7 +78,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var params = {
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.idalumno,
-            nota: $scope.sumInd,
+            nota: parseInt($scope.notaFinal),
             listaNotaAspectos: $scope.lstAspectos
         }
 
@@ -113,7 +120,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     function ListarAlumnos(){
         var params = { idActividad: $scope.actividad.idActividad }
-        console.dir(params);
         serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
             $scope.listaAl = res.data.lista;
         })
@@ -121,9 +127,19 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     function ObtenerRubrica(){
         var params = { idActividad: $scope.actividad.idActividad }
-        console.dir(params);
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             $scope.lstAspectos = res.data.listaAspectos;
+
+            for (let i = 0; i < $scope.lstAspectos.length; i++) {
+                $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
+                $scope.lstAspectos[i].comentario = '';
+                delete $scope.lstAspectos[i].listaIndicadores;
+                for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
+                    $scope.lstAspectos[i].listaNotaIndicador[j].comentario = '';
+                }
+            }
+
+            console.dir($scope.lstAspectos);
         })
     }
 
