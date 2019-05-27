@@ -68,7 +68,7 @@
     <div class="form-row">
 
       <div class="form-group col-md-2">
-        <input required type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="rubrica.nomRubrica">
+        <input required type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="nomRubrica">
         <div class="invalid-feedback">
             Este campo es requerido.
         </div>
@@ -109,27 +109,24 @@
             <input required maxlength="25" style="padding-right: 30px;"
               class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
               <div class="invalid-feedback">
-                  Este campo es requerido.
+                  Ingrese un nombre.
               </div>
           </div>
 
           <!-- Form Group Descripcion del Aspecto -->
           <div class="form-group col-md-5">
             <label>Descripción del Aspecto</label>
-            <input required maxlength="50"  class="form-control"
+            <input  maxlength="50"  class="form-control"
               ng-model="aspecto.informacion" placeholder="Descripción..." />
-              <div class="invalid-feedback">
-                  Este campo es requerido.
-              </div>
           </div>
 
           <!-- Form Group Puntaje del Aspecto -->
           <div class="form-group col-md-1">
             <label>Puntaje</label>
-            <input required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
-              class="form-control" ng-model="aspecto.puntajeMax" />
+            <input disabled required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
+              class="form-control" ng-model="sumaInd(aspecto)"/>
               <div class="invalid-feedback">
-                  Este campo es requerido.
+                  Ingrese un puntaje.
               </div>
           </div>
 
@@ -166,18 +163,15 @@
                   <input required maxlength="25" class="form-control"
                     ng-model="indicador.descripcion" placeholder="Nombre..." />
                     <div class="invalid-feedback">
-                        Este campo es requerido.
+                        Ingrese un nombre.
                     </div>
                 </div>
 
                 <!-- Form group Descripcion del Indicador -->
                 <div class="form-group col-md-3">
                   <label>Descripción del Indicador</label>
-                  <input required maxlength="50"  class="form-control"
+                  <input maxlength="50"  class="form-control"
                     ng-model="indicador.informacion" placeholder="Descripción..." />
-                    <div class="invalid-feedback">
-                        Este campo es requerido.
-                    </div>
                 </div>
 
                 <!-- Form group Puntaje del Indicador -->
@@ -186,7 +180,7 @@
                   <input required type="number" min="0" max="20" 
                     class="form-control" ng-model="indicador.puntajeMax" />
                     <div class="invalid-feedback">
-                        Este campo es requerido.
+                        Ingrese un puntaje.
                     </div>
                 </div>
 
@@ -214,18 +208,15 @@
             <input required maxlength="25" style="padding-right: 30px;"
               class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
               <div class="invalid-feedback">
-                  Este campo es requerido.
+                  Ingrese un nombre.
               </div>
           </div>
 
           <!-- Form Group Descripcion del Aspecto -->
           <div class="form-group col-md-5">
             <label>Descripción del Aspecto</label>
-            <input required maxlength="50"  class="form-control"
+            <input maxlength="50"  class="form-control"
               ng-model="aspecto.informacion" placeholder="Descripción..." />
-              <div class="invalid-feedback">
-                  Este campo es requerido.
-              </div>
           </div>
 
           <!-- Form Group Puntaje del Aspecto -->
@@ -234,7 +225,7 @@
             <input required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
               class="form-control" ng-model="aspecto.puntajeMax" />
               <div class="invalid-feedback">
-                  Este campo es requerido.
+                  Ingrese un puntaje.
               </div>
           </div>
 
@@ -258,18 +249,15 @@
             <input required maxlength="25" style="padding-right: 30px;"
               class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
               <div class="invalid-feedback">
-                  Este campo es requerido.
+                  Ingrese un nombre
               </div>
           </div>
 
           <!-- Form Group Descripcion del Aspecto -->
           <div class="form-group col-md-5">
             <label>Descripción del Aspecto</label>
-            <input required maxlength="50"  class="form-control"
+            <input  maxlength="50"  class="form-control"
               ng-model="aspecto.informacion" placeholder="Descripción..." />
-              <div class="invalid-feedback">
-                  Este campo es requerido.
-              </div>
           </div>
 
           <!-- Form Group Botones del Aspecto -->

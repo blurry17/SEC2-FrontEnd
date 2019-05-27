@@ -32,6 +32,17 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     /* Funciones Rubrica */
 
+    /* Obteniendo el puntaje acumulado de los indicadores */
+
+    $scope.sumaInd = function(asp){
+        var sum = 0;
+        for (let i = 0; i < asp.listaIndicadores.length; i++) {
+            sum += parseInt(asp.listaIndicadores[i].puntajeMax);            
+        }
+        /* Asigno la suma al puntajeMax del aspecto */
+        $scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
+        return sum;
+    }
 
 
     $scope.btnCrearRubrica = function () {
@@ -82,6 +93,8 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         //$scope.mostrarCrearRubrica = true;    
         console.dir($scope.lstAspectos);
     }
+
+    
 
 
     /* Función crear rúbrica desde 0. Preguntar el tipo de rúbrica */
