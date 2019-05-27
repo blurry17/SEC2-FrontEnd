@@ -1,6 +1,5 @@
 ﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookies, $window, serviceCRUD) {
   $rootScope.showLayout = false;
-  var usuario = null;
   $scope.showAlert1 = false;
   $scope.showAlert2 = false;
 
@@ -10,7 +9,9 @@
       return;
     }
     $scope.showAlert1 = false;
+    $scope.showAlert2 = false;
 
+    
     var params = {
       email: $scope.email,
       clave: $scope.pass
@@ -27,8 +28,8 @@
       $scope.showAlert2 = false;
       
       location.href = indexURL + 'main';
-      //$rootScope.showLayout = true;
     })
+    
   }
 
   $scope.btnForgotPassword = function () {

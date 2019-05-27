@@ -95,12 +95,15 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             console.dir($scope.rubrica);
 
             $scope.rubrica.nombreRubrica = $scope.nomRubrica;
+            $scope.rubrica.idActividad = $scope.actividad.idActividad;
             
             serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
                 console.dir(response);
+                window.alert("Se guardó la Rúbrica!")
             })
 
-            window.alert("Se guardó la Rúbrica!")
+            
+        
         
     }
 

@@ -15,7 +15,7 @@
                 data : JSON.stringify(Params)
             })
         }
-//n
+
         var TypePostFile = function (Method, Params){
             return $http({
                 url: baseURL + Method,

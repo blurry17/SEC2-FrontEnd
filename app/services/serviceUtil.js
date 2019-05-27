@@ -15,6 +15,24 @@
             return [day, month, year].join('/');
         }
 
+        var getObjDate = function(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            var obj = {
+                datestr: [day, month, year].join('/'),
+                hora: '' + d.getHours(),
+                min: '' + d.getMinutes()
+            }
+
+            return obj;
+        }
+
         var yyyymmdd = function (date) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
@@ -31,9 +49,9 @@
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
                 year = d.getFullYear(),
-                hour = d.getHours(),
-                min = d.getMinutes(),
-                seg = d.getSeconds()
+                hour = '' + d.getHours(),
+                min = '' + d.getMinutes(),
+                seg = '' + d.getSeconds()
 
             if (month.length < 2) month = '0' + month;
             if (day.length < 2) day = '0' + day;
@@ -51,15 +69,28 @@
             return new Date(yyyy, mm - 1, dd);
         }
 
+        var SQLtoJSDate = function(datestring){
+            var yyyy = parseInt(datestring.substring(0, 4));
+            var mm = parseInt(datestring.substring(5, 7));
+            var dd = parseInt(datestring.substring(8, 10));
+            var hrs = parseInt(datestring.substring(11, 13));
+            var min = parseInt(datestring.substring(14, 16));
+            var seg = parseInt(datestring.substring(17, 19));
+
+            return new Date(yyyy, mm - 1, dd, hrs, min, seg);
+        }
+
         return {
             utilitario: utilitario,
             ddmmyyyy: ddmmyyyy,
             yyyymmdd: yyyymmdd,
             convertToDate: convertToDate,
-            formatSQL: formatSQL
+            formatSQL: formatSQL,
+            SQLtoJSDate: SQLtoJSDate,
+            getObjDate: getObjDate,
         }
 
     }
 
-    angular.module('ServiceUtil', []).factory("serviceUtil", serviceUtil)
+    angular.module('ServiceUtil', []).factory("serviceUtil", serviceUtil);
 })();

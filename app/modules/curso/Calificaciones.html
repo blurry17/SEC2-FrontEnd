@@ -10,35 +10,43 @@
 
     <div class="row d-flex align-items-end">
         <div class="form-group col-md-4">
-            <label style="font-size: 100%"><b>Alumno:</b></label>
-            <select class="form-control" ng-model="idalumno" ng-init="regAct.tipo = '0'">
+            <label style="font-weight: bold">Alumno</label>
+            <select ng-change="chckmarcado()" class="form-control" ng-model="idalumno" ng-init="regAct.tipo = '0'">
                 <option value="0">Seleccione</option>
                 <option ng-repeat="item in listaAl" value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
                 </option>
             </select>
-
             <!--checkbox-->
-
-
         </div>
-        <div>
-            <label><b>No asistió</b></label>
+        <div class="form-group col-md-2">
+            <label style="font-weight: bold">No asistió</label>
             <input ng-model="falta" ng-click="marcado" type="checkbox">
+        </div>
+        <div class="form-group col-md-3">
+            <div style="float: right">
+                <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
+                    Archivo</button>
+                <button type="button" class="btn btn-info" ng-click="btnEditarPuntaje()"><i
+                        class="fas fa-pencil-alt"></i></button>
+                <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+                    Resultados</button>
+            </div>
         </div>
     </div>
 
+    <!-- <div class="row">
+        <div class="form-group">
+            <div style="float: right">                
+                <button type="button" class="btn btn-info" ng-click="btnEditarPuntaje()"><i
+                        class="fas fa-pencil-alt"></i></button>
 
-    <br />
-    <div class="row">
-        <div style="float: right">
-            <!--ng-show= true cuando sea la vista del profe sino ng-show=false ya que el jp no puede validar dicha calificación-->
-            <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-pencil-alt"></i></button>
-
-            <button class="btn btn-success" type="submit" ng-show="true" ng-click="btnValidarPuntaje()"
-                ng-disabled="ActForm.$invalid">Validar Resultados</button>
+                <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+                    Resultados</button>
+            </div>
         </div>
+    </div> -->
 
-        <!--<div class="form-group col-md">
+    <!--<div class="form-group col-md">
                     <label class="vertical-center" style="font-size: 100%;padding-top:20px"><b>Archivos:</b></label>
                     <div class="card" style="width: 20rem;">
                         <div class="card-body">
@@ -58,7 +66,8 @@
                 </div>-->
 
 
-        <div class="form-group" style="float: right">
+    <!-- <div class="row">
+        <div class="col-md-5">
             <form method="post" enctype="multipart/form-data">
                 <div>
                     <button type="button" class="btn btn-info" ng-click=""><i
@@ -66,45 +75,44 @@
                 </div>
             </form>
         </div>
+    </div> -->
 
-    </div>
+    <div class="line"></div>
 
-
-
-    <div class="row" ng-repeat="aspecto in lstAspectos">
-        <input readonly style="font-size: 100%">{{aspecto.descripcion}}</input>
-        <div ng-show="aspecto.tipoClasificacion == 1" class="col-md-12">
-            <div ng-repeat="indicador in aspecto.listaIndicadores">
-                <div class="col-md-3">
-                    <label class="vertical-center" style="font-size: 100%">{{indicador.descripcion}}</label>
-                </div>
-                <div class="col-md-3">
-                    <label class="vertical-center" style="font-size: 100%">{{indicador.puntajeMax}}</label>
-                </div>
-                <div class="col-md-3">
-                    <input class="form-control" type="text" ng-model="indicador.puntajeAsignado" name="" value="">
-                </div>
-                <div class="col-md-3">
-                    <button ng-show="!texto" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
-                            class="fas fa-plus"></i></button>
-                    <div class="btn-group">
-                        <textarea ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
-                        <button ng-show="texto" type="button" class="btn btn-success"
-                            ng-click="btnAgregarComentario()"><i class="fas fa-check"></i></button>
-                    </div>
+    <div ng-repeat="aspecto in lstAspectos">
+        <h3>{{aspecto.descripcion}}</h3>
+        <div ng-show="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaIndicadores" class="row">
+            <div class="form-group col-sm-3">
+                <label>Descripción</label>
+                <input disabled type="text" class="form-control" ng-value="indicador.descripcion">
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Nota Máx.</label>
+                <input disabled type="text" class="form-control" style="width: 50px" ng-value="indicador.puntajeMax">
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Nota</label>
+                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
+                    ng-model="indicador.puntajeAsignado" maxlength="2">
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Comentarios</label>
+                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea ng-disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text"
+                        name="" value=""></textarea>
                 </div>
             </div>
         </div>
         <!-- <div ng-show="aspecto.tipoClasificacion == 2">
                 <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
                 <label class="vertical-center" style="font-size: 100%">{{aspecto.puntajeMax}}</label>
-                <input class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
-                <button ng-show="!texto" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
+                <input disabled="falta" class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
+                <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
                         class="fas fa-plus"></i></button>
                 <div class="btn-group">
-                    <textarea ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
-                    <button ng-show="texto" type="button" class="btn btn-success" ng-click="btnAgregarComentario()"><i
-                            class="fas fa-check"></i></button>
+                    <textarea disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text" name="" value=""></textarea>
                 </div>
 
             </div>
@@ -113,27 +121,53 @@
                 <label class="vertical-center" style="font-size: 100%">{{aspecto.informacion}}</label>
                 <label class="vertical-center" style="font-size: 100%"></label>Realizado</label>
                 <input type="checkbox">
+                <input disabled="falta" class="form-control" type="text" ng-model="aspecto.puntajeAsignado" name="" value="">
+                <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
+                        class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text" name="" value=""></textarea>
+                </div>
             </div> -->
     </div>
-    <tfoot>
-        <td colspan="3"><b>Nota Final:</b></td>
-        <input ng-model="puntajeFinal" type="text" class="form-control" readonly
-            value="">{{aspecto.indicador.puntaje_asignado}}
-        <button ng-show="!texto" type="button" class="btn btn-warning" ng-click="btnAgregarComentario()"><i
-                class="fas fa-plus"></i></button>
-        <div class="btn-group">
-            <textarea ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
+
+<div class="line"></div>
+
+    <div class="row">
+        <div class="form-group col-sm-1">
+            <label style="font-weight: bold">Nota Final</label>
+            <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
+                ng-model="indicador.puntajeAsignado" maxlength="2">
         </div>
-        <input type="text" class="form-control" name="" value="">
-    </tfoot>
+        <div class="form-group col-sm-3">
+            <button ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+            <div class="btn-group">
+                <textarea ng-show="texto" ng-show="!mas" class="form-control" type="text"></textarea>
+            </div>    
+        </div>
+    </div>
+
+    <!-- <div class="group">
+        <div class="col-md-5">
+            <tfoot>
+                <td colspan="3"><b>Nota Final:</b></td>
+                <input ng-model="puntajeFinal" type="text" class="form-control" readonly
+                    value="">{{aspecto.indicador.puntaje_asignado}}
+                <button ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
+                        value=""></textarea>
+                </div>
+            </tfoot>
+        </div>
+    </div> -->
+
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
-            ng-disabled="ActForm.$invalid">Guardar</button>
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()">Guardar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
     </div>
 </div>
-
-
 
 <script>
     function Download(url) {
