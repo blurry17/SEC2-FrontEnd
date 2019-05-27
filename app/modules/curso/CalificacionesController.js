@@ -5,6 +5,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
     $scope.listaAl = [];
+    $scope.falta = false;
+    $scope.profe = $scope.usuario.esProfesor;
 
    /*  $scope.sumaInd = function(asp){
         var sum = 0;
@@ -15,7 +17,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     }
  */
 
-    $scope.profe = $scope.usuario.esProfesor;
+    
 
     var params = {
         idActividad: $scope.actividad.idActividad
@@ -23,17 +25,16 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
         $scope.listaAl = res.data.lista;
-
     })
-
-    var file = null;
 
     $scope.irActividad = function () {
         $location.path("actividad")
     }
+
     $scope.irCurso = function () {
         $location.path("curso")
     }
+
     $scope.btnValidarPuntaje = function () {
         /* Preguntar si desea validar los puntajes una vez llenados */
         result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
@@ -89,7 +90,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 listaNotaAspectos: $scope.lstAspectos
             
             }
-        }
+        
         serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
 
         })
