@@ -41,18 +41,19 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.btnGuardarRubrica = function () {
         $("#formAct").addClass("was-validated");
         //validando que la rubrica tenga nombre
-        if($scope.nomRubrica){
             $scope.mostrarCrearRubrica = false;
             console.dir($scope.rubrica);
 
             $scope.rubrica.nombreRubrica = $scope.nomRubrica;
+            $scope.rubrica.idActividad = $scope.actividad.idActividad;
             
             serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
                 console.dir(response);
+                window.alert("Se guardó la Rúbrica!")
             })
 
-            window.alert("Se guardó la Rúbrica!")
-        }
+            
+        
         
     }
 
