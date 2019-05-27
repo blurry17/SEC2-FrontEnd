@@ -47,6 +47,10 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         params = {
             idActividad: $scope.actividad.idActividad,
         };
+        $scope.mostrarFila=false;
+        $scope.mostrarPreg=false;
+        $scope.agregar=false;
+        $scope.listaFam=[];
         serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
             console.dir(response.data);
             
@@ -75,9 +79,20 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             familia: "",
             listaPregunta: [],
         };
-        if($scope.listaFam.length<10){    
+        if($scope.listaFam.length<15){    
             $scope.listaFam.unshift(auxLista);
         }
+        $scope.listaFam.forEach(function(fam){
+            if(!fam.editar){
+                fam.editar=!(fam.editar);
+            }
+            fam.listaPregunta.forEach(function(preg){
+                if (!preg.editar){
+                    preg.editar = !(preg.editar);
+                }
+            })
+
+        })
     }
 
     $scope.showPreg = function (fam) {
@@ -85,7 +100,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         let auxPreg = {
             pregunta: "",
         };
-        if(fam.listaPregunta.length<5){
+        if(fam.listaPregunta.length<10){
             fam.listaPregunta.unshift(auxPreg);
             
         }
@@ -140,18 +155,22 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         let posPreg = $scope.listaFam[posFam].listaPregunta.indexOf(preg);
         fam.listaPregunta.splice(posPreg, 1);
     }
-    $scope.habilitarCampos = function (fam) {
+    $scope.habilitarCampos = function () {
         if(!$scope.agregar){
             $scope.agregar=!($scope.agregar);
         }
-        if(!fam.editar){
-            fam.editar=!(fam.editar);
-        }
-        fam.listaPregunta.forEach(function(preg){
-            if (!preg.editar){
-                preg.editar = !(preg.editar);
+        $scope.listaFam.forEach(function(fam){
+            if(!fam.editar){
+                fam.editar=!(fam.editar);
             }
+            fam.listaPregunta.forEach(function(preg){
+                if (!preg.editar){
+                    preg.editar = !(preg.editar);
+                }
+            })
+
         })
+        
     }
 
 
@@ -165,6 +184,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         console.dir(params)
         serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
             console.dir(response);
+            
 
         })
         //$("#mdCrearAutoEval").modal('hide');
@@ -192,4 +212,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
         $scope.eliminado=!($scope.eliminado);
     }
+
 })
+
