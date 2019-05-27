@@ -15,6 +15,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     }
  */
 
+    $scope.profe = $scope.usuario.esProfesor;
 
     var params = {
         idActividad: $scope.actividad.idActividad
@@ -49,46 +50,16 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
 
     serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-        console.dir(res.data)
-        
+        //console.dir(res.data)
         $scope.lstAspectos = res.data.listaAspectos;
-/* 
-        
-
-        var listaIn = [];
-        $scope.lstTabla = $scope.lstAspectos;
-        $scope.sumaIndicadores=0;
-
-        for (let i = 0; i < $scope.lstAspectos.length; i++) {
-
-            //$scope.tipoAspecto = $scope.lstAspectos[i].tipoClasificacion;
-
-          
-
-            var nombre = $scope.lstAspectos[i].descripcion;
-            listaIn = $scope.lstAspectos[i].listaIndicadores;
-            $scope.lstAspectos[i].nota=null;
-            $scope.lstAspectos[i].comentario=null;
-            $scope.sumaIndicadores=0;
-
-            for (let j = 0; j < listaIn.length; j++) {
-                listaIn[j].nota=null;
-                
-                listaIn[j].comentario=null;
-                var obj = {
-                    nombreAsp: nombre,
-                    indicador: listaIn[j],
-
-                }
-
-                $scope.lstTabla.push(obj);
-
-            }
-        } */
     })
 
     $scope.btnAgregarComentario = function () {
         $scope.texto = true;
+    }
+
+    $scope.chckmarcado = function () {
+        $scope.falta = false;
     }
 
     $scope.btnGuardarPuntaje =function(){
@@ -99,15 +70,29 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             idJp: $scope.usuario.idUser,
             nota: $scope.sumInd,
             flgFalta: $scope.falta ? 1 : 0,
-            //idRubrica: ,
+            idRubrica: $scope.actividad.idRubrica,
             listaNotaAspectos: $scope.lstAspectos 
         } 
 
         serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
             
-    
         })
 
+    }
+
+    $scope.btnEditarPuntaje=function(){
+        var params=
+            {
+                idActividad: $scope.actividad.idActividad,
+                idAlumno: $scope.idalumno,
+                nota:$scope.sumInd,
+                listaNotaAspectos: $scope.lstAspectos
+            
+            }
+        }
+        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+
+        })
     }
 
     $scope.btnclick = function () {

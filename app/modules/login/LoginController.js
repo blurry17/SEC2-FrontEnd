@@ -13,7 +13,7 @@
     }
     $scope.showAlert1 = false;
     $scope.showAlert2 = false;
-    
+
     /*
     var params = {
       email: $scope.email,
