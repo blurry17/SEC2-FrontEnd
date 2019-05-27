@@ -2,6 +2,8 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
+    $scope.actividad = $cookies.getObject('actividadActual');
+
 
     $scope.lstAluSinGrupos = [];
     $scope.lstNuevoGrupo = [];
