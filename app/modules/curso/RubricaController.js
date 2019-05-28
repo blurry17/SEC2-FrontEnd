@@ -118,7 +118,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             sum += parseInt(asp.listaIndicadores[i].puntajeMax);            
         }
         /* Asigno la suma al puntajeMax del aspecto */
-        $scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
+        //$scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
         return sum;
     }
 
@@ -152,11 +152,9 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
             /* Obtener la suma de los indicadores para mostrarlo*/
             $scope.lstAspectos.forEach(aspecto => {
-                $scope.puntajeAcumuladoRubricaVista = 0;
-                aspecto.listaIndicadores.forEach(indicador => {
-                    $scope.puntajeAcumuladoRubricaVista += indicador.puntajeMax
-                });
-                
+                if(aspecto.puntajeMax != null){
+                    $scope.puntajeAcumuladoRubricaVista = aspecto.puntajeMax
+                }
             });
 
         })
