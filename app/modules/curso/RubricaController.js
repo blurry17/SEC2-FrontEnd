@@ -89,9 +89,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         
     }
 
-
-
-
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
     $scope.rubrica = {
