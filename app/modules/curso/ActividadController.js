@@ -95,6 +95,11 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
     }
 
+    $scope.btnVerAutoEval2=function(){
+        $('#mdConfirmacionEliminacion').modal('hide');
+        $('#mdVerAuto').appendTo("body").modal('show');
+    }
+
     $scope.btnCoEvaluacion=function(){
         $scope.listaPregunta=[];
         $('#mdCrearCoEval').appendTo("body").modal('show');
