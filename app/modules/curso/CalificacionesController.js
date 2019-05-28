@@ -9,6 +9,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.profe = $scope.usuario.esProfesor;
     $scope.notaFinal = null;
 
+    console.dir($scope.actividad);
+
     /*  $scope.sumaInd = function(asp){
          var sum = 0;
          for (let i = 0; i < asp.listaIndicadores.length; i++) {
@@ -69,8 +71,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             listaNotaAspectos: $scope.lstAspectos
         }
 
-        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+        console.dir(params)
 
+        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+            console.dir(res);
         })
     }
 
@@ -121,6 +125,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     function ListarAlumnos(){
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
+            console.dir(res.data);
             $scope.listaAl = res.data.lista;
         })
     }
@@ -129,6 +134,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             $scope.lstAspectos = res.data.listaAspectos;
+            console.dir(res.data);
 
             for (let i = 0; i < $scope.lstAspectos.length; i++) {
                 $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
@@ -138,8 +144,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     $scope.lstAspectos[i].listaNotaIndicador[j].comentario = '';
                 }
             }
-
-            console.dir($scope.lstAspectos);
         })
     }
 

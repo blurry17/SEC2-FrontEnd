@@ -11,12 +11,11 @@
     <div class="row d-flex align-items-end">
         <div class="form-group col-md-4">
             <label style="font-weight: bold">Alumno</label>
-            <select ng-change="chckmarcado()" class="form-control" ng-model="idalumno" ng-init="idalumno = '0'">
+            <select ng-change="chckmarcado()" class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
                 <option value="0">Seleccione</option>
                 <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
                 </option>
             </select>
-            <!--checkbox-->
         </div>
         <div class="form-group col-md-2">
             <label style="font-weight: bold">No asistió</label>
@@ -81,7 +80,6 @@
 
     <div ng-repeat="aspecto in lstAspectos" style="width: 100%">
         <h3>{{aspecto.descripcion}}</h3>
-
         <div ng-show="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaNotaIndicador" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
@@ -98,17 +96,12 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-                <div class="btn-group">
-                    <textarea ng-model="indicador.comentario" ng-disabled="falta" ng-show="texto" ng-show="!mas"
-                        class="form-control" type="text"></textarea>
-                </div>
+                <textarea ng-model="indicador.comentario" ng-disabled="falta"
+                    class="form-control" type="text"></textarea>
             </div>
-
         </div>
 
-        <div ng-show="aspecto.tipoClasificacion == 1" class="row col-md-12">
+        <div ng-show="aspecto.tipoClasificacion == 1" class="row">
             <div class="form-group col-sm-2">
                 <label>Nota del aspecto</label>
                 <input type="text" class="form-control" ng-model="aspecto.nota" style="width: 50px">
@@ -137,12 +130,8 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-                <div class="btn-group">
-                    <textarea ng-model="indicador.comentario" ng-disabled="falta" ng-show="texto" ng-show="!mas"
-                        class="form-control" type="text"></textarea>
-                </div>
+                <textarea ng-model="indicador.comentario" ng-disabled="falta"
+                    class="form-control" type="text"></textarea>
             </div>
             <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
             <label class="vertical-center" style="font-size: 100%">{{aspecto.puntajeMax}}</label>
@@ -165,12 +154,10 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-                <div class="btn-group">
-                    <textarea ng-model="indicador.comentario" ng-disabled="falta" ng-show="texto" ng-show="!mas"
+                
+                    <textarea ng-model="indicador.comentario" ng-disabled="falta"
                         class="form-control" type="text"></textarea>
-                </div>
+                
             </div>
 
 
@@ -196,10 +183,9 @@
                 maxlength="2">
         </div>
         <div class="form-group col-sm-3">
-            <button ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+            <label style="font-weight: bold">Comentarios</label>
             <div class="btn-group">
-                <textarea ng-show="texto" ng-show="!mas" class="form-control" type="text"></textarea>
+                <textarea class="form-control" type="text"></textarea>
             </div>
         </div>
     </div>

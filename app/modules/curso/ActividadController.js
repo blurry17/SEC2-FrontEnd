@@ -5,6 +5,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
+    console.dir($scope.actividad);
 
     $scope.esIndividual = false;
     $scope.esGrupal = false;
@@ -49,7 +50,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         };
 
         serviceCRUD.TypePost("autoevaluacion/existencia", params).then(function (response) {
-            console.dir(response.data);
             if(response.data.message=="False"){
                 $scope.listaFam=[];
                 $('#mdCrearAutoEval').appendTo("body").modal('show');
@@ -218,9 +218,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 listaFamilia: $scope.listaFam,
             }
             $scope.guardado = !($scope.guardado);
-            console.dir(params)
             serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
-                console.dir(response);
+
             })
         }
         $("#mdCrearAutoEval").modal('hide');
@@ -236,9 +235,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 idActividad: $scope.actividad.idActividad,
                 listaFamilia: $scope.listaFam,
             }
-            console.dir(params);
             serviceCRUD.TypePost("auto-evaluacion/editar", params).then(function (response) {
-                console.dir(response);
             })
             $scope.editado = !($scope.editado);
         }
@@ -250,7 +247,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             idActividad:$scope.actividad.idActividad,
         }
         serviceCRUD.TypePost("auto-evaluacion/eliminar",params).then(function(response){
-            console.dir(response.data);
             $scope.ejemplo=response.data.listaFamilia;
         })
         $scope.eliminado=!($scope.eliminado);

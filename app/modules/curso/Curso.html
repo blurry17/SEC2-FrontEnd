@@ -55,7 +55,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" role="alert" ng-show="showAlert1">
-                    La fecha fin no puede ser menor a la fecha de inicio
+                    La fecha y hora final no puede ser menor a la fecha y hora de inicio
                 </div>
                 <form id="formAct" name="formAct" class="needs-validation" novalidate>
                     <div class="form-row">
@@ -75,8 +75,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Descripción</label>
-                        <input type="text" class="form-control" ng-model="regAct.descripcion" maxlength="50" required>
+                        <label>Indicaciones</label>
+                        <textarea class="form-control" ng-model="regAct.descripcion" maxlength="250" required></textarea>
                         <div class="invalid-feedback">
                             Este campo es requerido.
                         </div>
