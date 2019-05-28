@@ -49,24 +49,43 @@
       </div>
       <div>
 
-        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdError" tabindex="-1" role="dialog" data-backdrop="static"
-          aria-hidden="true">
+        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdError" tabindex="-1" role="dialog"
+          data-backdrop="static" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-body">
-                <form class="form-inlin justify-content-center">
-                <div class="form-group" style="text-align: center">
-                  <span><b> Rubrica ya existente </b></span>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
-                </div>
-              </form>
+                <form class="form-inlin justify-content-center form-group">
+                  <div class="form-group" style="text-align: center">
+                    <span><b> Autoevaluacion ya existente </b></span>
+                  </div>
+                  
+                  <div class="form-group">
+                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
+                      data-dismiss="modal">OK</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
-
+        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdNoHayRubrica" tabindex="-1" role="dialog"
+          data-backdrop="static" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form class="form-inlin justify-content-center">
+                  <div class="form-group" style="text-align: center">
+                    <span><b> No se encontró una autoevaluacion </b></span>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
+                      data-dismiss="modal">OK</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <br>
@@ -195,14 +214,7 @@
             <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()"
               ng-disabled="ActForm.$invalid">Guardar</button>
             <button class="btn btn-default" data-dismiss="modal">Cancelar</button><br><br>
-            <div ng-show="guardado" class="alert alert-success alert-dismissible fade show" role="alert">
-              <strong>Se guardó la autoevaluacion</strong>
-              <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalAuto()"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
 
-            </div>
         </form>
       </div>
 
@@ -300,22 +312,9 @@
       <div class="modal-footer">
         <button class="btn btn-primary" type="submit" ng-click="btnModificarAutoEval()"
           ng-disabled="ActForm.$invalid">Guardar</button>
-        <button class="btn btn-danger" type="submit" ng-click="btnEliminarAutoEval()">Eliminar</button>
+        <button class="btn btn-danger" type="submit" ng-click="abreModalEliminar()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button><br>
-        <div ng-show="editado" class="alert alert-info alert-dismissible fade show" role="alert">
-          <strong>Se modificó la autoevaluacion</strong>
-          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div ng-show="eliminado" class="alert alert-info alert-dismissible fade show" role="alert">
-          <strong>Se eliminó la autoevaluacion</strong>
-          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+       
       </div>
     </div>
   </div>
@@ -439,6 +438,80 @@
           ng-disabled="ActForm.$invalid">Guardar</button>
         <button class="btn btn-danger" type="submit" ng-click="btnEliminarCoEval()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modales de confirmacion de creacion, modificacion y eliminacion de autoevaluaciones-->
+<div class="modal fade modal-sm modal-dialog" id="mdConfirmacionCreacion" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Se Creó la AutoEvaluación Correctamente </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-sm modal-dialog" id="mdConfirmacionModificacion" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Se Modificó la AutoEvaluación Correctamente </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-sm modal-dialog" id="mdConfirmacionEliminacion" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inline justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> ¿Desea Eliminar la Autoevaluacion? </b></span>
+          </div>
+          <div class="form-group" style="display: block ;margin: 0 auto">
+            <button class="btn btn-success" ng-click="btnEliminarAutoEval()"  data-dismiss="modal">SI</button>
+            <button class="btn btn-danger" ng-click="btnVerAutoEval()" data-dismiss="modal">NO</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-sm modal-dialog" id="mdSeElimino" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Se Eliminó la AutoEvaluación Correctamente </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
