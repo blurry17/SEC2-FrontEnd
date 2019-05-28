@@ -6,12 +6,13 @@
     </ol>
   </nav><br />
 
-  <div class="form-group" style="padding-left: 15px; padding-bottom: 5px">
+  <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 30px">
 
     <div>
       <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i
           style="color: rgb(54, 105, 2);padding-left: 10px" class="fas fa-user"></i></label>
     </div>
+
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
       <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
@@ -46,54 +47,106 @@
               class="far fa-eye"></i>&nbspVer</a>
         </div>
       </div>
-    </div><br>
+      <div>
+
+        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdError" tabindex="-1" role="dialog"
+          data-backdrop="static" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form class="form-inlin justify-content-center form-group">
+                  <div class="form-group" style="text-align: center">
+                    <span><b> Autoevaluacion ya existente </b></span>
+                  </div>
+                  
+                  <div class="form-group">
+                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
+                      data-dismiss="modal">OK</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdNoHayRubrica" tabindex="-1" role="dialog"
+          data-backdrop="static" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form class="form-inlin justify-content-center">
+                  <div class="form-group" style="text-align: center">
+                    <span><b> No se encontró una autoevaluacion </b></span>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
+                      data-dismiss="modal">OK</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
 
   </div>
 
-  <div class="col-9">
-
-    <div class="card" style="background-color: rgb(230, 230, 230)">
-      <div class="card-body">
-        <h5 style="font-size: 100%; color: black" class="card-title"><b>Indicaciones:</b></h5>
-        <p style="font-size: 100%; color: black" class="card-text">Para este laboratorio se deberá subir el archivo
-          resuelto con el formato: codigo_apellido_nombre.</p>
-        <p style="font-size: 100%; color: black" class="card-text">Recuerde subir el documento a tiempo de lo contrario
-          no se calificará.</p>
+  <div class="row" style="padding-left: 15px">
+    <div class="form-group col-md-5">
+      <label style="font-weight: bold">Indicaciones</label>
+      <textarea class="form-control" readonly ng-model="actividad.descripcion"></textarea>
+    </div>
+    <div class="form-group col-md-5">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Fecha de inicio</label>
+          <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaInicio">
+        </div>
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Hora de inicio</label>
+          <input style="width: 100px" type="text" class="form-control" readonly ng-value="actividad.horaInicio + ':' + actividad.minInicio">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Fecha de fin</label>
+          <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaFin">
+        </div>
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Hora de fin</label>
+          <input style="width: 100px" type="text" class="form-control" readonly ng-value="actividad.horaFin + ':' + actividad.minFin">
+        </div>
       </div>
     </div>
   </div>
 
-  <br />
-  <div class="col-10">
-
+  <!-- <div class="col-10">
     <div class="row">
-      <div class="form-group col-md-4">
-        <label><b>Fecha de Entrega:</b></label>
-        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Fecha de inicio</label>
+        <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaInicio">
       </div>
 
-      <div class="form-group col-md-3">
-        <label><b>Hora de Entrega:</b></label>
-        <input style="width: 100px" type="text" class="form-control" readonly value="11:00 am">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Hora de inicio</label>
+        <input style="width: 100px" type="text" class="form-control" readonly ng-value="">
       </div>
     </div>
   </div>
 
   <div class="col-10">
     <div class="row">
-
-      <div class="form-group col-md-4">
-        <label><b>Fecha última mod.:</b></label>
-        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Fecha de fin</label>
+        <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaFin">
       </div>
-      <div class="form-group col-md-3">
-        <label><b>Hora última modificación:</b></label>
-        <input style="width: 100px" type="text" class="form-control" readonly value="10:57 am">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Hora de fin</label>
+        <input style="width: 100px" type="text" class="form-control" readonly ng-value="">
       </div>
     </div>
-  </div>
-
-  <hr />
+  </div> -->
 </div>
 
 
@@ -109,7 +162,7 @@
 
       <div class="modal-body">
 
-        <form name="AutoEvalForm" novalidate>
+        <form id="formAuto" name="AutoEvalForm" class="needs-validation" novalidate>
           <div class="col-12" style="padding-bottom: 15px">
             <span style="font-size: 20px;padding-right: 10px; padding-bottom: 10px"><b> Agregar Familia</b></span>
             <button class="btn btn-success" ng-click="showFila()" style="padding-bottom: 10px"><i
@@ -124,13 +177,16 @@
               <div class="card" style="background-color: rgb(230, 230, 230)">
                 <div class="card-body">
                   <div class="row">
-                    <div class="form-group col-md-3" style="padding-bottom: 5px">
+                    <div class="form-group col-md-5" style="padding-bottom: 5px">
 
-                      <input name="familia" placeholder="Familia" type="text" class="form-control"
-                        ng-model="fam.familia" ng-required="true">
-                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                      </span>
+                      <input pattern="^[a-z A-Z¿?áéíóú]+$" maxlength="25" name="familia" placeholder="Familia"
+                        type="text" class="form-control" ng-model="fam.familia" ng-required="true">
+                      <div class="invalid-feedback" style="padding-left: 5px">
+                        Debe ingresar caracteres alfabeticos
+                      </div>
+                      <div class="valid-feedback" style="padding-left: 5px">
+                        Correcto
+                      </div>
                     </div>
 
 
@@ -146,11 +202,14 @@
                     class="form-row col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="form-group col-md-10" style="padding-right: 20px">
-                      <input type="text" placeholder="Pregunta" name="pregunta" class="form-control"
-                        ng-model="preg.pregunta" ng-required="true">
-                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                      </span>
+                      <input pattern="^[a-z A-Z¿?áéíóú]+$" maxlength="80" type="text" placeholder="Pregunta"
+                        name="pregunta" class="form-control" ng-model="preg.pregunta" ng-required="true">
+                      <div class="invalid-feedback" style="padding-left: 5px">
+                        Debe ingresar caracteres alfabeticos
+                      </div>
+                      <div class="valid-feedback" style="padding-left: 5px">
+                        Correcto
+                      </div>
                     </div>
 
                     <div class="form-group col-2">
@@ -162,20 +221,15 @@
               </div>
             </div>
           </div>
+          <div class="modal-footer" style="align-self: flex-end">
+            <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()"
+              ng-disabled="ActForm.$invalid">Guardar</button>
+            <button class="btn btn-default" data-dismiss="modal">Cancelar</button><br><br>
+
         </form>
       </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEval()"
-          ng-disabled="ActForm.$invalid">Guardar</button>
-        <button class="btn btn-default " data-dismiss="modal">Cancelar</button><br><br>
-        <div ng-show="guardado" class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>Se guardó la autoevaluacion</strong>
-          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalAuto()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
+
     </div>
   </div>
 </div>
@@ -192,12 +246,19 @@
       </div>
 
       <div class="modal-body">
-        <form name="VerAutoEvalForm" novalidate>
+        <form id="formVerAuto" name="VerAutoEvalForm" class="needs-validation" novalidate>
 
+          <div class="col-12">
+            <div ng-show="!agregar" class="form-group col-3">
+              <span><br></span>
+              <button class="btn btn-primary" ng-click="habilitarCampos()">&nbspEditar <i class="fas fa-edit"
+                  style="padding-left: 10px"></i></button>
+            </div>
+            <div ng-show="agregar" class="col-11" style="padding-bottom: 15px">
+              <span style="font-size: 20px;padding-right: 10px;"><b> Agregar Familia</b></span>
+              <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
+            </div>
 
-          <div ng-show="agregar" class="col-12" style="padding-bottom: 15px">
-            <span style="font-size: 20px;padding-right: 10px;"><b> Agregar Familia</b></span>
-            <button class="btn btn-success" ng-click="showFila()"><i class="fas fa-plus"></i></button>
           </div>
 
           <div class="form-row" ng-repeat="fam in listaFam" style="margin: 15px; background-color: rgb(243, 241, 241)">
@@ -207,18 +268,16 @@
               <div class="card" style="background-color: rgb(230, 230, 230)">
                 <div class="card-body">
                   <div class="row">
-                    <div class="form-group col-md-4" style="padding-bottom: 10px">
+                    <div class="form-group col-md-5" style="padding-bottom: 10px">
                       <span>Familia</span>
-                      <input ng-disabled="!fam.editar" name="familia" type="text" class="form-control"
-                        ng-model="fam.familia" ng-required="true">
-                      <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                        <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                      </span>
-                    </div>
-                    <div class="form-group col-1">
-                      <span><br></span>
-                      <button class="btn btn-primary" ng-click="habilitarCampos(fam)"><i
-                          class="fas fa-edit"></i></button>
+                      <input pattern="^[a-z A-Z¿?áéíóú]+$" maxlength="25" ng-disabled="!fam.editar" name="familia"
+                        type="text" class="form-control" ng-model="fam.familia" ng-required="true">
+                      <div class="invalid-feedback" style="padding-left: 5px">
+                        Debe ingresar caracteres alfabeticos
+                      </div>
+                      <div class="valid-feedback" style="padding-left: 5px">
+                        Correcto
+                      </div>
                     </div>
                     <div ng-show="agregar" class="form-group col-3">
                       <br>
@@ -234,15 +293,18 @@
 
                       <div class="form-group col-md-9" style="padding-right: 20px">
                         <span>Pregunta</span>
-                        <input ng-disabled="!preg.editar" type="text" name="pregunta" class="form-control"
-                          ng-model="preg.pregunta" ng-required="true">
-                        <span ng-messages="ActForm.nombre.$error" ng-show="ActForm.nombre.$touched">
-                          <p class="error-msg" ng-message="required">Este campo es requerido</p>
-                        </span>
+                        <input pattern="^[a-z A-Z¿?áéíóú]+$" maxlength="80" ng-disabled="!preg.editar" type="text"
+                          name="pregunta" class="form-control" ng-model="preg.pregunta" ng-required="true">
+                        <div class="invalid-feedback" style="padding-left: 5px">
+                          Debe ingresar caracteres alfabeticos
+                        </div>
+                        <div class="valid-feedback" style="padding-left: 5px">
+                          Correcto
+                        </div>
                       </div>
                       <div ng-show="agregar" class="form-group col-3">
                         <br>
-                        <button class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i
+                        <button ng-disabled="!preg.editar" class="btn btn-danger" ng-click="deleteRow(fam,preg)"><i
                             class="fas fa-times"></i></button>
                       </div>
                     </div>
@@ -260,31 +322,15 @@
       <div class="modal-footer">
         <button class="btn btn-primary" type="submit" ng-click="btnModificarAutoEval()"
           ng-disabled="ActForm.$invalid">Guardar</button>
-        <button class="btn btn-danger" type="submit" ng-click="btnEliminarAutoEval()">Eliminar</button>
+        <button class="btn btn-danger" type="submit" ng-click="abreModalEliminar()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button><br>
-        <div ng-show="editado" class="alert alert-info alert-dismissible fade show" role="alert">
-          <strong>Se modificó la autoevaluacion</strong>
-          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div ng-show="eliminado" class="alert alert-info alert-dismissible fade show" role="alert">
-          <strong>Se eliminó la autoevaluacion</strong>
-          <button type="button" class="close" data-dismiss="alert" ng-click="btnCerrarModalVerAuto()"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
+       
       </div>
     </div>
   </div>
 </div>
 
-
-
 <!--A partir de aca se presentan a los 2 modales de co-evaluacion-->
-
 
 <div class="modal fade" id="mdCrearCoEval" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -399,6 +445,80 @@
           ng-disabled="ActForm.$invalid">Guardar</button>
         <button class="btn btn-danger" type="submit" ng-click="btnEliminarCoEval()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modales de confirmacion de creacion, modificacion y eliminacion de autoevaluaciones-->
+<div class="modal fade modal-sm modal-dialog" id="mdConfirmacionCreacion" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Se Creó la AutoEvaluación Correctamente </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-sm modal-dialog" id="mdConfirmacionModificacion" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Se Modificó la AutoEvaluación Correctamente </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-sm modal-dialog" id="mdConfirmacionEliminacion" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inline justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> ¿Desea Eliminar la Autoevaluacion? </b></span>
+          </div>
+          <div class="form-group" style="display: block ;margin: 0 auto">
+            <button class="btn btn-success" ng-click="btnEliminarAutoEval()"  data-dismiss="modal">SI</button>
+            <button class="btn btn-danger" ng-click="btnVerAutoEval()" data-dismiss="modal">NO</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-sm modal-dialog" id="mdSeElimino" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Se Eliminó la AutoEvaluación Correctamente </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

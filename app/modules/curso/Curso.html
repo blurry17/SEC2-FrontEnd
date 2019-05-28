@@ -55,7 +55,7 @@
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger" role="alert" ng-show="showAlert1">
-                    La fecha fin no puede ser menor a la fecha de inicio
+                    La fecha y hora final no puede ser menor a la fecha y hora de inicio
                 </div>
                 <form id="formAct" name="formAct" class="needs-validation" novalidate>
                     <div class="form-row">
@@ -75,8 +75,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Descripción</label>
-                        <input type="text" class="form-control" ng-model="regAct.desc" maxlength="50" required>
+                        <label>Indicaciones</label>
+                        <textarea class="form-control" ng-model="regAct.descripcion" maxlength="250" required></textarea>
                         <div class="invalid-feedback">
                             Este campo es requerido.
                         </div>
@@ -122,7 +122,7 @@
                         <div class="form-group col-md-3">
                             <label>Minuto</label>
                             <select class="form-control custom-select" ng-model="regAct.minInicio">
-                                <option value='00'>00</option>
+                                <option value='0'>00</option>
                                 <option value='15'>15</option>
                                 <option value='30'>30</option>
                                 <option value='45'>45</option>
@@ -169,7 +169,7 @@
                         <div class="form-group col-md-3">
                             <label>Minuto</label>
                             <select class="form-control custom-select" ng-model="regAct.minFin">
-                                <option value='00'>00</option>
+                                <option value='0'>00</option>
                                 <option value='15'>15</option>
                                 <option value='30'>30</option>
                                 <option value='45'>45</option>
@@ -179,7 +179,7 @@
                     <div>
                         <div class="form-group col-md-12">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" ng-model="regAct.entregable">
+                                <input class="form-check-input" type="checkbox" ng-model="regAct.flgEntregable">
                                 <label class="form-check-label">
                                     Tiene entregable
                                 </label>

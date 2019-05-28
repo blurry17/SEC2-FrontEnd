@@ -15,6 +15,24 @@
             return [day, month, year].join('/');
         }
 
+        var getObjDate = function(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+
+            var obj = {
+                datestr: [day, month, year].join('/'),
+                hora: '' + d.getHours(),
+                min: '' + d.getMinutes()
+            }
+
+            return obj;
+        }
+
         var yyyymmdd = function (date) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
@@ -68,10 +86,11 @@
             yyyymmdd: yyyymmdd,
             convertToDate: convertToDate,
             formatSQL: formatSQL,
-            SQLtoJSDate: SQLtoJSDate
+            SQLtoJSDate: SQLtoJSDate,
+            getObjDate: getObjDate,
         }
 
     }
 
-    angular.module('ServiceUtil', []).factory("serviceUtil", serviceUtil)
+    angular.module('ServiceUtil', []).factory("serviceUtil", serviceUtil);
 })();

@@ -1,12 +1,9 @@
 ﻿app.controller('LoginController', function ($rootScope, $scope, $location, $cookies, $window, serviceCRUD) {
   $rootScope.showLayout = false;
-  var usuario = null;
   $scope.showAlert1 = false;
   $scope.showAlert2 = false;
 
   $scope.btnLogin = function () {
-    location.href = indexURL + 'main';
-
     if (!$scope.email || !$scope.pass) {
       $scope.showAlert1 = true;
       return;
@@ -31,7 +28,6 @@
       $scope.showAlert2 = false;
       
       location.href = indexURL + 'main';
-      //$rootScope.showLayout = true;
     })
     
   }
