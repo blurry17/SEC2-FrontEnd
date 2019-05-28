@@ -11,7 +11,7 @@
     <div class="row d-flex align-items-end">
         <div class="form-group col-md-4">
             <label style="font-weight: bold">Alumno</label>
-            <select ng-change="chckmarcado()" class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
+            <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
                 <option value="0">Seleccione</option>
                 <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
                 </option>
@@ -76,10 +76,18 @@
         </div>
     </div> -->
 
-    <div class="line">
+    <div class="line"></div>
+
+    <div ng-repeat="aspecto in lstAspectos" style="width: 100%">
+        <h3>{{aspecto.descripcion}}</h3>
+        <div ng-show="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaNotaIndicador" class="row">
+            <div class="form-group col-sm-3">
+                <label>Descripción</label>
+                <input disabled type="text" class="form-control" ng-model="indicador.descripcion">
+            </div>
             <div class="form-group col-sm-1">
                 <label>Nota Máx.</label>
-                <input disabled type="text" class="form-control" style="width: 50px" ng-value="indicador.puntajeMax">
+                <input disabled type="text" class="form-control" style="width: 50px" ng-model="indicador.puntajeMax">
             </div>
             <div class="form-group col-sm-2">
                 <label>Nota</label>
@@ -111,11 +119,11 @@
         <div ng-show="aspecto.tipoClasificacion == 2" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
-                <input disabled type="text" class="form-control" ng-value="aspecto.descripcion">
+                <input disabled type="text" class="form-control" ng-model="aspecto.descripcion">
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota Máx.</label>
-                <input disabled type="text" class="form-control" style="width: 50px" ng-value="aspecto.puntajeMax">
+                <input disabled type="text" class="form-control" style="width: 50px" ng-model="aspecto.puntajeMax">
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota</label>
