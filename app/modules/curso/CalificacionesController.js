@@ -103,7 +103,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             listaNotaAspectos: $scope.lstAspectos
         }
 
-        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+        serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
 
             })
         

@@ -14,7 +14,6 @@
       <div class="form-group col-md-3">
         <label style="font-size: 120%"><b>Estadísticas de Evaluación</b></label>
         <table class="table ">
-          <!--<caption>List of users</caption>-->
           <tr>
             <th class="table-dark">Media:</th>
             <td>12.5%</td>
@@ -37,55 +36,32 @@
           </tr>
         </table>
       </div>
-      <div class="col-md-5" class="table-responsive">
-        <label style="font-size: 120%"><b>Ranking de los 5 mejores alumnos</b></label>
-        <table class="table table-hover">
-          <thead>
-            <tr class="table-info">
-              <th style="width: 10%">Código</th>
-              <th style="width: 30%">Nombres</th>
-              <th style="width: 10%">Nota</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>20157687</td>
-              <td>Dayana Burga Díaz</td>
-              <td>20</td>
-            </tr>
-            <tr>
-              <td>20146787</td>
-              <td>Wendy Torres Valencia</td>
-              <td>20</td>
-            </tr>
-            <tr>
-              <td>20132387</td>
-              <td>Arturo Galvez Díaz</td>
-              <td>18</td>
-            </tr>
-            <tr>
-              <td>20129885</td>
-              <td>Gabriel Mendoza Sanchez</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>20134567</td>
-              <td>Alex Sanchez Díaz</td>
-              <td>16</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="row">
-        <div class="form-group col-md">
-
+      
+      <div>
+          <div style="float: right" class="row form-group col-md-12" class="table-responsive">
+              <label style="font-size: 120%"><b>Ranking de los 5 mejores alumnos</b></label>
+              <table class="table table-hover">
+                <thead>
+                  <tr class="table-info">
+                    <th style="width: 10%">Código</th>
+                    <th style="width: 80%">Nombres</th>
+                    <th style="width: 10%">Nota</th>
+                  </tr>
+                </thead>
+                        <tbody>
+                            <tr ng-repeat="list in listaR" style="width: 100%">
+                                <td>{{list.codigo}}</td>
+                                <td>{{list.nombre}}</td>
+                                <td>{{list.nota}}</td>
+                              </tr>
+                        </tbody>
+                </table>
+          </div>    
         </div>
-        <!--<div style="float: right" id="barchart_materialR" style="width: 500px; height: 300px;"></div>-->
+        
+    </div>
 
-      </div>
-
-      <div class="col-md-5" class="table-responsive">
+    <div class="row" class="table-responsive">
         <div>
           <label style="font-size: 100%"><b>Elegir Grafico:</b></label>
           <select ng-change=TipoGrafico() class="form-control" ng-model="seleccion">
@@ -93,12 +69,9 @@
             <option value="gc">Gráfico Circular</option>
             <option value="gb">Gráfico de Barras</option>
           </select>
-
-          <div ng-show="gc" class="col-md-10 col-sm-12" id="piechart"
-            style="width: 900px; height: 400px; color: whitesmoke "></div>
-          <div ng-show="gb" id="barchart_material" style="width: 700px; height: 300px;"></div>
         </div>
+        <div ng-show="gc" class="col-md-10 col-sm-15" id="piechart" style="width: 500px; height: 300px; color: whitesmoke "></div>
+        <div ng-show="gb" class="col-md-10 col-sm-15" id="barchart_material" style="width: 500px; height: 300px;"></div>
       </div>
-    </div>
   </div>
 </div>
