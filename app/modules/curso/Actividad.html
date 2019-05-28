@@ -6,7 +6,7 @@
     </ol>
   </nav><br />
 
-  <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 5px">
+  <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 30px">
 
     <div>
       <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i
@@ -73,50 +73,61 @@
 
   </div>
 
-  <div class="col-9">
-
-    <div class="card" style="background-color: rgb(230, 230, 230)">
-      <div class="card-body">
-        <h5 style="font-size: 100%; color: black" class="card-title"><b>Indicaciones:</b></h5>
-        <p style="font-size: 100%; color: black" class="card-text">Para este laboratorio se deberá subir el archivo
-          resuelto con el formato: codigo_apellido_nombre.</p>
-        <p style="font-size: 100%; color: black" class="card-text">Recuerde subir el documento a tiempo de lo contrario
-          no se calificará.</p>
+  <div class="row" style="padding-left: 15px">
+    <div class="form-group col-md-5">
+      <label style="font-weight: bold">Indicaciones</label>
+      <textarea class="form-control" readonly ng-model="actividad.descripcion"></textarea>
+    </div>
+    <div class="form-group col-md-5">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Fecha de inicio</label>
+          <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaInicio">
+        </div>
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Hora de inicio</label>
+          <input style="width: 100px" type="text" class="form-control" readonly ng-value="actividad.horaInicio + ':' + actividad.minInicio">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Fecha de fin</label>
+          <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaFin">
+        </div>
+        <div class="form-group col-md-4">
+          <label style="font-weight: bold">Hora de fin</label>
+          <input style="width: 100px" type="text" class="form-control" readonly ng-value="actividad.horaFin + ':' + actividad.minFin">
+        </div>
       </div>
     </div>
   </div>
 
-  <br />
-  <div class="col-10">
-
+  <!-- <div class="col-10">
     <div class="row">
-      <div class="form-group col-md-4">
-        <label><b>Fecha de Entrega:</b></label>
-        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Fecha de inicio</label>
+        <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaInicio">
       </div>
 
-      <div class="form-group col-md-3">
-        <label><b>Hora de Entrega:</b></label>
-        <input style="width: 100px" type="text" class="form-control" readonly value="11:00 am">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Hora de inicio</label>
+        <input style="width: 100px" type="text" class="form-control" readonly ng-value="">
       </div>
     </div>
   </div>
 
   <div class="col-10">
     <div class="row">
-
-      <div class="form-group col-md-4">
-        <label><b>Fecha última mod.:</b></label>
-        <input type="text" class="form-control" readonly value="Sábado, 06 de abril del 2019">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Fecha de fin</label>
+        <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaFin">
       </div>
-      <div class="form-group col-md-3">
-        <label><b>Hora última modificación:</b></label>
-        <input style="width: 100px" type="text" class="form-control" readonly value="10:57 am">
+      <div class="form-group col-md-2">
+        <label style="font-weight: bold">Hora de fin</label>
+        <input style="width: 100px" type="text" class="form-control" readonly ng-value="">
       </div>
     </div>
-  </div>
-
-  <hr />
+  </div> -->
 </div>
 
 
@@ -209,7 +220,6 @@
 
     </div>
   </div>
-</div>
 </div>
 <!--ng-click="btnAutoEvaluacion()"-->
 
@@ -321,10 +331,7 @@
   </div>
 </div>
 
-
-
 <!--A partir de aca se presentan a los 2 modales de co-evaluacion-->
-
 
 <div class="modal fade" id="mdCrearCoEval" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
