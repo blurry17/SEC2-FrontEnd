@@ -27,7 +27,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
      }
 
     $scope.abreModalEliminar=function(){
-        $('#mdConfirmacionEliminacion').appendTo("#mdVerAuto").modal('show');
+        $('#mdVerAuto').modal('hide');
+        $('#mdConfirmacionEliminacion').appendTo("body").modal('show');
     }
 
     $scope.btnCalificaciones = function(){
@@ -223,12 +224,13 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 listaFamilia: $scope.listaFam,
             }
             $scope.guardado = !($scope.guardado);
+
             serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
 
             })
+            $("#mdConfirmacionCreacion").appendTo("body").modal('show');
+            $("#mdCrearAutoEval").modal('hide');
         }
-        $("#mdCrearAutoEval").modal('hide');
-        $("#mdConfirmacionCreacion").appendTo("body").modal('show');
     }
 
 
@@ -243,9 +245,9 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             serviceCRUD.TypePost("auto-evaluacion/editar", params).then(function (response) {
             })
             $scope.editado = !($scope.editado);
+            $("#mdVerAuto").modal('hide');
+            $("#mdConfirmacionModificacion").appendTo("body").modal('show');
         }
-        $("#mdVerAuto").modal('hide');
-        $("#mdConfirmacionModificacion").appendTo("body").modal('show');
     }
     $scope.btnEliminarAutoEval=function(){
         let params={
