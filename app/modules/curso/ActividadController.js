@@ -80,7 +80,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 $scope.listaFam=[];
                 serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
                     console.dir(response.data);
-                    
+        
                     $scope.listaFam=response.data.listaFamilia;
                     console.dir($scope.familia);
                 })
@@ -223,13 +223,34 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 idActividad: $scope.actividad.idActividad,
                 listaFamilia: $scope.listaFam,
             }
-            $scope.guardado = !($scope.guardado);
+            let encontrado=false;
+            let i=0;
+            let aux=$scope.listaFam;
+            
+            aux.forEach(function(fam){
+                let auxLista = aux;
+                auxLista.splice(i,1);
+                i++;
+                auxLista.forEach(function(fam1){
+                    if(fam==fam1){
+                        encontrado=true;   
+                    }
+                });
+            });
 
-            serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
+            if(!encontrado){
+                $scope.guardado = !($scope.guardado);
+    
+                serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
+    
+                })
+                $("#mdCrearAutoEval").modal('hide');
+                $("#mdConfirmacionCreacion").appendTo("body").modal('show');
 
-            })
-            $("#mdConfirmacionCreacion").appendTo("body").modal('show');
-            $("#mdCrearAutoEval").modal('hide');
+            }else{
+                $("#mdCrearAutoEval").modal('hide');
+                $("#mdFamiliaRepetida").appendTo("body").modal('show');
+            }
         }
     }
 
