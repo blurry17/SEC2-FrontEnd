@@ -25,6 +25,10 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.btnAgregarComentario= function() {
      }
 
+    $scope.abreModalEliminar=function(){
+        $('#mdConfirmacionEliminacion').appendTo("#mdVerAuto").modal('show');
+    }
+
     $scope.btnCalificaciones = function(){
         $location.path('calificaciones');
     }
@@ -66,18 +70,29 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         params = {
             idActividad: $scope.actividad.idActividad,
         };
-        $scope.mostrarFila=false;
-        $scope.mostrarPreg=false;
-        $scope.agregar=false;
-        $scope.listaFam=[];
-        serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
+        serviceCRUD.TypePost("autoevaluacion/existencia", params).then(function (response) {
             console.dir(response.data);
-            
-            $scope.listaFam=response.data.listaFamilia;
-            console.dir($scope.familia);
+            if(response.data.message=="True"){
+                $scope.mostrarFila=false;
+                $scope.mostrarPreg=false;
+                $scope.agregar=false;
+                $scope.listaFam=[];
+                serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
+                    console.dir(response.data);
+                    
+                    $scope.listaFam=response.data.listaFamilia;
+                    console.dir($scope.familia);
+                })
+                console.dir($scope.actividad);
+                $('#mdVerAuto').appendTo("body").modal('show');
+                
+                
+
+            }else{
+                $("#mdNoHayRubrica").appendTo("body").modal('show');
+                $scope.error=true;
+            }
         })
-        console.dir($scope.actividad);
-        $('#mdVerAuto').appendTo("body").modal('show');
     }
 
     $scope.btnCoEvaluacion=function(){
@@ -195,6 +210,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
     $scope.btnGuardarAutoEval = function () {
 
+        
         $("#formAuto").addClass("was-validated");
         if (formAuto.checkValidity()) {
             let params = {
@@ -207,7 +223,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 console.dir(response);
             })
         }
-        //$("#mdCrearAutoEval").modal('hide');
+        $("#mdCrearAutoEval").modal('hide');
+        $("#mdConfirmacionCreacion").appendTo("body").modal('show');
     }
 
 
@@ -225,6 +242,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             })
             $scope.editado = !($scope.editado);
         }
+        $("#mdVerAuto").modal('hide');
+        $("#mdConfirmacionModificacion").appendTo("body").modal('show');
     }
     $scope.btnEliminarAutoEval=function(){
         let params={
@@ -235,6 +254,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             $scope.ejemplo=response.data.listaFamilia;
         })
         $scope.eliminado=!($scope.eliminado);
+        $("#mdSeElimino").appendTo("body").modal('show');
     }
 
 })
