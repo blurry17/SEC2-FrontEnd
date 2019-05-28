@@ -1,3 +1,4 @@
+
 body {
     font-family: 'Nunito', sans-serif;
     color: rgb(63, 62, 61);
@@ -12,14 +13,14 @@ p {
     color: #999;
 }
 
-a,
+/* a,
 a:hover,
 a:focus {
     color: inherit;
     text-decoration:  none;
-    /*transition: all 0.3s;*/
-}
-
+    transition: all 0.3s;
+} */
+ 
 /* .navbar {
     padding: 15px 10px;
     background: #fff;

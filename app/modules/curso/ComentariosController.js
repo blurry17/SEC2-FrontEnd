@@ -6,16 +6,16 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     $scope.lstComentarios = [
         {
             idComentario: 1,
-            nomAlumno: "patty salinas",
-            codAlumno : "20140631",
+            nomAlumno: "Alumno 1",
+            codAlumno : "19964321",
             nomProfesor: "daniel alpiste",
             comentario: "hola profe xd",            
             respuesta: "ola"
         },
         {
             idComentario: 2,
-            nomAlumno: "elizabeth esparza",
-            codAlumno : "20135152",
+            nomAlumno: "Alumno 2",
+            codAlumno : "19975432",
             nomProfesor: "nicolas",
             comentario: "profe no me salio la 2 ayude pues",            
             respuesta: ""

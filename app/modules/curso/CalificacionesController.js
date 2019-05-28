@@ -5,73 +5,86 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.curso = $cookies.getObject("cursoActual")
     $scope.actividad = $cookies.getObject("actividadActual")
     $scope.listaAl = [];
+    $scope.falta = false;
+    $scope.profe = $scope.usuario.esProfesor;
+    $scope.notaFinal = null;
 
-    var params = {
-        idActividad: 1
-    }
+    /*  $scope.sumaInd = function(asp){
+         var sum = 0;
+         for (let i = 0; i < asp.listaIndicadores.length; i++) {
+             sum += parseInt(asp.listaIndicadores[i].puntajeAsignado);            
+         }
+         return sum;
+     }
+  */
 
-    serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
-        console.dir(res.data);
-        $scope.listaAl = res.data.lista;
-    })
-
-    var file = null;
+    $scope.rubrica = {
+        flgRubricaEspecial: 0,
+        idUsuarioCreador: $scope.usuario.idUser,
+        nombreRubrica: $scope.nomRubrica,
+        lstAspectos: []
+    }   
 
     $scope.irActividad = function () {
         $location.path("actividad")
     }
+
     $scope.irCurso = function () {
         $location.path("curso")
     }
+
     $scope.btnValidarPuntaje = function () {
         /* Preguntar si desea validar los puntajes una vez llenados */
         result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
 
     }
 
-
-    serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-        console.dir(res.data);
-        $scope.listaAspectos = res.data.lista_aspectos;
-        $scope.listaIndicadores = [];
-        $scope.lstTabla = [];
-
-        for (let i = 0; i < $scope.listaAspectos.length; i++) {
-            var nombre = $scope.listaAspectos[i].descripcion;
-            listaIndicadores = $scope.listaAspectos[i].lista_indicadores;
-
-            for (let j = 0; j < listaIndicadores.length; j++) {
-                var obj = {
-                    nombreAsp: nombre,
-                    indicador: listaIndicadores[j]
-                }
-
-                $scope.lstTabla.push(obj);
-
-            }
-        }
-
-        console.dir($scope.lstTabla);
-    })
-
-    $scope.btnGuardarPuntaje = function () {
-        result = window.confirm('¿Está seguro que desea Guardar?');
-    }
-
     $scope.btnAgregarComentario = function () {
         $scope.texto = true;
     }
-    $scope.btnAgregarComentario1 = function () {
-        $scope.texto1 = true;
+
+    $scope.chckmarcado = function () {
+        $scope.falta = false;
     }
-    $scope.btnAgregarComentario2 = function () {
-        $scope.texto2 = true;
+
+    $scope.btnGuardarPuntaje = function () {
+        result = window.confirm('¿Está seguro que desea Guardar?');
+
+        for (let i = 0; i < $scope.lstAspectos.length; i++) {
+            $scope.lstAspectos[i].nota = parseInt($scope.lstAspectos[i].nota);
+            if ($scope.lstAspectos[i].tipoClasificacion == 1){
+                for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
+                    $scope.lstAspectos[i].listaNotaIndicador[j].nota = parseInt($scope.lstAspectos[i].listaNotaIndicador[j].nota);                    
+                }
+            }            
+        }
+
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            idAlumno: $scope.idalumno,
+            idJp: $scope.usuario.idUser,
+            nota: parseInt($scope.notaFinal),
+            flgFalta: $scope.falta ? 1 : 0,
+            idRubrica: $scope.actividad.idRubrica,
+            listaNotaAspectos: $scope.lstAspectos
+        }
+
+        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+
+        })
     }
-    $scope.btnAgregarComentario3 = function () {
-        $scope.texto3 = true;
-    }
-    $scope.btnAgregarComentario4 = function () {
-        $scope.texto4 = true;
+
+    $scope.btnEditarPuntaje = function () {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            idAlumno: $scope.idalumno,
+            nota: parseInt($scope.notaFinal),
+            listaNotaAspectos: $scope.lstAspectos
+        }
+
+        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+
+        })
     }
 
     $scope.btnclick = function () {
@@ -91,7 +104,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             datos.append(name, file[i]);
         }
 
-        console.dir(serviceUtil.TypePostFile('entregable/entrega', datos));
 
         /* return $http({
             url: 'http://localhost:5000/api/entregable/entrega',
@@ -103,10 +115,38 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }).then(function(respuesta){console.dir(respuesta)}).catch(function(error){console.dir(error)}) */
     }
 
-
-
-
-
-    var url = 'https://paideia.pucp.edu.pe/cursos/mod/resource/view.php?id=381468';
+    //var url = 'https://paideia.pucp.edu.pe/cursos/mod/resource/view.php?id=381468';
     //document.getElementById('my_iframe').src = url;
+
+    function ListarAlumnos(){
+        var params = { idActividad: $scope.actividad.idActividad }
+        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
+            $scope.listaAl = res.data.lista;
+        })
+    }
+
+    function ObtenerRubrica(){
+        var params = { idActividad: $scope.actividad.idActividad }
+        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
+            $scope.lstAspectos = res.data.listaAspectos;
+
+            for (let i = 0; i < $scope.lstAspectos.length; i++) {
+                $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
+                $scope.lstAspectos[i].comentario = '';
+                delete $scope.lstAspectos[i].listaIndicadores;
+                for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
+                    $scope.lstAspectos[i].listaNotaIndicador[j].comentario = '';
+                }
+            }
+
+            console.dir($scope.lstAspectos);
+        })
+    }
+
+    function init() {
+        ListarAlumnos();
+        ObtenerRubrica();
+    }
+
+    init();
 })

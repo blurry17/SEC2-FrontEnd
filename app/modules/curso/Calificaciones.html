@@ -1,119 +1,231 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a ng-click="irCurso()"> {{curso.nombre}}</a></li>
-            <li class="breadcrumb-item"><a ng-click="irActividad()"> {{actividad.nombre}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Calificaciones</li>
+            <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+            <li class="breadcrumb-item"><a href="#!actividad"> {{actividad.nombre}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Grupos</li>
         </ol>
     </nav>
-    <br/>
-    <div class="form-group col-md-4">
-        <label style="font-size: 100%"><b>Alumno:</b></label>
-        <select class="form-control" ng-model="regAct.tipo" ng-init="regAct.tipo = '0'">
-            <option value="0">Seleccione</option>
-            <option ng-repeat="item in listaAl">{{item.codigoPUCP +" - "+ item.nombre}}</option>
-            
-        </select>
-        
+    <br />
+
+    <div class="row d-flex align-items-end">
+        <div class="form-group col-md-4">
+            <label style="font-weight: bold">Alumno</label>
+            <select ng-change="chckmarcado()" class="form-control" ng-model="idalumno" ng-init="idalumno = '0'">
+                <option value="0">Seleccione</option>
+                <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
+                </option>
+            </select>
+            <!--checkbox-->
+        </div>
+        <div class="form-group col-md-2">
+            <label style="font-weight: bold">No asistió</label>
+            <input ng-model="falta" ng-click="marcado" type="checkbox">
+        </div>
+        <div class="form-group col-md-3">
+            <div style="float: right">
+                <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
+                    Archivo</button>
+                <button type="button" class="btn btn-info" ng-click="btnEditarPuntaje()"><i
+                        class="fas fa-pencil-alt"></i></button>
+                <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+                    Resultados</button>
+            </div>
+        </div>
     </div>
-    <div style="float: right">
-            <!--ng-show= true cuando sea la vista del profe sino ng-show=false ya que el jp no puede validar dicha calificación-->
-            <button class="btn btn-outline-success" type="submit" ng-show="true" ng-click="btnValidarPuntaje()"
-                ng-disabled="ActForm.$invalid">Validar Resultados</button>
-    </div>
+
+    <!-- <div class="row">
+        <div class="form-group">
+            <div style="float: right">                
+                <button type="button" class="btn btn-info" ng-click="btnEditarPuntaje()"><i
+                        class="fas fa-pencil-alt"></i></button>
+
+                <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+                    Resultados</button>
+            </div>
+        </div>
+    </div> -->
 
     <!--<div class="form-group col-md">
-        <label class="vertical-center" style="font-size: 100%;padding-top:20px"><b>Archivos:</b></label>
-        <div class="card" style="width: 20rem;">
-            <div class="card-body">
-                <h1 class="card-title" style="font-size: 20%"></h1>20150666_Alvarez_fernando.zip&nbsp;<i
-                    class="fas fa-download"></i></h1>
-            </div>
-        </div>
-        <form method="post" enctype="multipart/form-data">
-            <div>
-                <label for="file">Choose file to upload</label>
-                <input type="file" id="file" name="file" multiple>
-            </div>
-            <div>
-                <button ng-click="btnclick()">Submit</button>
-            </div>
-        </form>
-    </div>-->
-
-
-    <div class="form-group col-md-8" style="float: right">
-        <form method="post" enctype="multipart/form-data">
-            <div>
-                <a class="btn btn-outline-primary" role="button" href="20153454_Perez_Juan.zip" download="20153454_Perez_Juan.zip">Descargar Archivo</a>
-            </div>
-        </form>
-    </div>
-    <br/>
-
-    <div class="col-md-12">
-        <br/>
-        <label class="vertical-center" style="font-size: 100%"><b>Rúbrica:</b></label>
-        <table class="table table-bordered">
-            <thead>
-          
-                <tr>
-                    <th>Aspecto</th>
-                    <th>Indicador</th>
-                    <th style="width: 5%" >Puntaje Max.</th>
-                    <th style="width: 7%">Puntaje</th>
-                    <th style="width: 20%">Comentarios</th>
-                </tr>
-
-            </thead>
-
-            <tbody>
-                <tr ng-repeat="aspecto in lstTabla">
-                    <td>{{aspecto.nombreAsp}}</td>
-                    <td>{{aspecto.indicador.descripcion}}</td>
-                    <td>{{aspecto.indicador.puntaje_max}}</td>
-                    <td><input class="form-control" type="text" ng-model="aspecto.indicador.puntaje_asignado" name="" value=""></td>
-                    <td>
-                        <button ng-show="!texto" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario()"><i
-                        class="fas fa-plus"></i></a></button>
-                        <div class="btn-group">
-                        <textarea  ng-show="texto" class="form-control" type="text" name="" value=""></textarea>
-                        <button  ng-show="texto" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario()"><i
-                            class="fas fa-check"></i></a></button>
+                    <label class="vertical-center" style="font-size: 100%;padding-top:20px"><b>Archivos:</b></label>
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <h1 class="card-title" style="font-size: 20%"></h1>20150666_Alvarez_fernando.zip&nbsp;<i
+                                class="fas fa-download"></i></h1>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        <div>
+                            <label for="file">Choose file to upload</label>
+                            <input type="file" id="file" name="file" multiple>
+                        </div>
+                        <div>
+                            <button ng-click="btnclick()">Submit</button>
+                        </div>
+                    </form>
+                </div>-->
 
-                
-                <tr>
-                    <td colspan="3"><b>Nota Final:</b></td>
-                    <td><input type="text" class="form-control" readonly value="">{{aspecto.indicador.puntaje_asignado}}</td>
-                    <td>
-                            <button ng-show="!texto4" type="button" class="btn btn-outline-warning" ng-click="btnAgregarComentario4()"><i
-                            class="fas fa-plus"></i></a></button>
-                            <div class="btn-group">
-                            <textarea  ng-show="texto4" class="form-control" type="text" name="" value=""></textarea>
-                            <button  ng-show="texto4" type="button" class="btn btn-outline-success" ng-click="btnAgregarComentario4()"><i
-                                class="fas fa-check"></i></a></button>
-                            </div>
-                        </td>
-                    <!--<td><input type="text"  class="form-control" name="" value=""></td>-->
-                    
-                </tr>
-            </tfoot>
 
-        </table>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()"
-                ng-disabled="ActForm.$invalid">Guardar</button>
-            <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+    <!-- <div class="row">
+        <div class="col-md-5">
+            <form method="post" enctype="multipart/form-data">
+                <div>
+                    <button type="button" class="btn btn-info" ng-click=""><i
+                            class="fas fa-download"></i>&nbsp;Descargar Archivo</button>
+                </div>
+            </form>
+        </div>
+    </div> -->
+
+    <div class="line"></div>
+
+    <div ng-repeat="aspecto in lstAspectos" style="width: 100%">
+        <h3>{{aspecto.descripcion}}</h3>
+
+        <div ng-show="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaNotaIndicador" class="row">
+            <div class="form-group col-sm-3">
+                <label>Descripción</label>
+                <input disabled type="text" class="form-control" ng-value="indicador.descripcion">
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Nota Máx.</label>
+                <input disabled type="text" class="form-control" style="width: 50px" ng-value="indicador.puntajeMax">
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Nota</label>
+                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
+                    ng-model="indicador.nota" maxlength="2">
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Comentarios</label>
+                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea ng-model="indicador.comentario" ng-disabled="falta" ng-show="texto" ng-show="!mas"
+                        class="form-control" type="text"></textarea>
+                </div>
+            </div>
+
         </div>
 
+        <div ng-show="aspecto.tipoClasificacion == 1" class="row col-md-12">
+            <div class="form-group col-sm-2">
+                <label>Nota del aspecto</label>
+                <input type="text" class="form-control" ng-model="aspecto.nota" style="width: 50px">
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Comentario del aspecto</label>
+                <textarea type="text" class="form-control" ng-model="aspecto.comentario"></textarea>
+            </div>
+            <!-- <input type="text" class="form-control" ng-model="aspecto.nota" style="display: inline-block; width: 50px">
+                                    <textarea type="text" class="form-control" ng-model="aspecto.comentario"> -->
+        </div>
+
+        <div ng-show="aspecto.tipoClasificacion == 2" class="row">
+            <div class="form-group col-sm-3">
+                <label>Descripción</label>
+                <input disabled type="text" class="form-control" ng-value="aspecto.descripcion">
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Nota Máx.</label>
+                <input disabled type="text" class="form-control" style="width: 50px" ng-value="aspecto.puntajeMax">
+            </div>
+            <div class="form-group col-sm-1">
+                <label>Nota</label>
+                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
+                    ng-model="indicador.nota" maxlength="2">
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Comentarios</label>
+                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea ng-model="indicador.comentario" ng-disabled="falta" ng-show="texto" ng-show="!mas"
+                        class="form-control" type="text"></textarea>
+                </div>
+            </div>
+            <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
+            <label class="vertical-center" style="font-size: 100%">{{aspecto.puntajeMax}}</label>
+            <input disabled="falta" class="form-control" type="text" ng-model="aspecto.nota" name="" value="">
+            <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+            <div class="btn-group">
+                <textarea disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
+                    value=""></textarea>
+            </div> -->
+        </div>
+        <div ng-show="aspecto.tipoClasificacion == 3" class="row">
+            <div class="form-group col-sm-3">
+                <label>Descripción</label>
+                <input disabled type="text" class="form-control" ng-value="aspecto.informacion">
+            </div>
+            <div class="form-group col-sm-1">
+                <label style="font-size: 100%">Realizado</label>
+                <input type="checkbox">
+            </div>
+            <div class="form-group col-sm-3">
+                <label>Comentarios</label>
+                <button ng-disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea ng-model="indicador.comentario" ng-disabled="falta" ng-show="texto" ng-show="!mas"
+                        class="form-control" type="text"></textarea>
+                </div>
+            </div>
+
+
+            <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.informacion}}</label>
+            <label class="vertical-center" style="font-size: 100%"></label>Realizado</label>
+            <input type="checkbox">
+            <input disabled="falta" class="form-control" type="text" ng-model="aspecto.nota" name="" value="">
+            <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+            <div class="btn-group">
+                <textarea disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
+                    value=""></textarea>
+            </div> -->
+        </div>
     </div>
-    <iframe id="my_iframe" style="display:none;"></iframe>
+
+    <div class="line"></div>
+
+    <div class="row">
+        <div class="form-group col-sm-1">
+            <label style="font-weight: bold">Nota Final</label>
+            <input ng-disabled="falta" class="form-control" type="text" style="width: 50px" ng-model="notaFinal"
+                maxlength="2">
+        </div>
+        <div class="form-group col-sm-3">
+            <button ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+            <div class="btn-group">
+                <textarea ng-show="texto" ng-show="!mas" class="form-control" type="text"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="group">
+        <div class="col-md-5">
+            <tfoot>
+                <td colspan="3"><b>Nota Final:</b></td>
+                <input ng-model="puntajeFinal" type="text" class="form-control" readonly
+                    value="">{{aspecto.indicador.puntaje_asignado}}
+                <button ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
+                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
+                <div class="btn-group">
+                    <textarea ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
+                        value=""></textarea>
+                </div>
+            </tfoot>
+        </div>
+    </div> -->
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()">Guardar</button>
+        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+    </div>
 </div>
+
 <script>
     function Download(url) {
         document.getElementById('my_iframe').src = url;
