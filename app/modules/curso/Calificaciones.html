@@ -11,17 +11,18 @@
     <div class="row d-flex align-items-end">
         <div class="form-group col-md-4">
             <label style="font-weight: bold">Alumno</label>
-            <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
+            <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
+                ng-init="idalumno = '0'">
                 <option value="0">Seleccione</option>
                 <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
                 </option>
             </select>
         </div>
-        <div class="form-group col-md-2">
+        <div ng-show="idalumno!='0'" class="form-group col-md-2">
             <label style="font-weight: bold">No asistió</label>
             <input ng-model="falta" ng-click="marcado" type="checkbox">
         </div>
-        <div class="form-group col-md-3">
+        <div ng-show="idalumno!='0'" class="form-group col-md-3">
             <div style="float: right">
                 <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
                     Archivo</button>
@@ -78,9 +79,9 @@
 
     <div class="line"></div>
 
-    <div ng-repeat="aspecto in lstAspectos" style="width: 100%">
+    <div ng-show="idalumno!='0'" ng-repeat="aspecto in lstAspectos" style="width: 100%">
         <h3>{{aspecto.descripcion}}</h3>
-        <div ng-show="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaNotaIndicador" class="row">
+        <div ng-if="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaNotaIndicador" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
                 <input disabled type="text" class="form-control" ng-model="indicador.descripcion">
@@ -91,30 +92,28 @@
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota</label>
-                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
+                <input id="uintTextBox" ng-disabled="falta" class="form-control" type="text" style="width: 50px"
                     ng-model="indicador.nota" maxlength="2">
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <textarea ng-model="indicador.comentario" ng-disabled="falta"
-                    class="form-control" type="text"></textarea>
+                <textarea ng-model="indicador.comentario" ng-disabled="falta" class="form-control"
+                    type="text"></textarea>
             </div>
         </div>
 
-        <div ng-show="aspecto.tipoClasificacion == 1" class="row">
+        <div ng-if="aspecto.tipoClasificacion == 1" class="row">
             <div class="form-group col-sm-2">
                 <label>Nota del aspecto</label>
-                <input type="text" class="form-control" ng-model="aspecto.nota" style="width: 50px">
+                <input readonly type="text" class="form-control" ng-value="sumaInd(aspecto)" style="width: 50px">
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentario del aspecto</label>
                 <textarea type="text" class="form-control" ng-model="aspecto.comentario"></textarea>
             </div>
-            <!-- <input type="text" class="form-control" ng-model="aspecto.nota" style="display: inline-block; width: 50px">
-                                    <textarea type="text" class="form-control" ng-model="aspecto.comentario"> -->
         </div>
 
-        <div ng-show="aspecto.tipoClasificacion == 2" class="row">
+        <div ng-if="aspecto.tipoClasificacion == 2" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
                 <input disabled type="text" class="form-control" ng-model="aspecto.descripcion">
@@ -125,90 +124,47 @@
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota</label>
-                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
-                    ng-model="indicador.nota" maxlength="2">
+                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px" ng-model="aspecto.nota"
+                    maxlength="2">
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <textarea ng-model="indicador.comentario" ng-disabled="falta"
-                    class="form-control" type="text"></textarea>
+                <textarea ng-model="aspecto.comentario" ng-disabled="falta" class="form-control" type="text"></textarea>
             </div>
-            <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
-            <label class="vertical-center" style="font-size: 100%">{{aspecto.puntajeMax}}</label>
-            <input disabled="falta" class="form-control" type="text" ng-model="aspecto.nota" name="" value="">
-            <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-            <div class="btn-group">
-                <textarea disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
-                    value=""></textarea>
-            </div> -->
         </div>
-        <div ng-show="aspecto.tipoClasificacion == 3" class="row">
+        <div ng-if="aspecto.tipoClasificacion == 3" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
-                <input disabled type="text" class="form-control" ng-value="aspecto.informacion">
+                <input disabled type="text" class="form-control" ng-model="aspecto.informacion">
             </div>
             <div class="form-group col-sm-1">
                 <label style="font-size: 100%">Realizado</label>
-                <input type="checkbox">
+                <input type="checkbox" ng-model="aspecto.nota">
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                
-                    <textarea ng-model="indicador.comentario" ng-disabled="falta"
-                        class="form-control" type="text"></textarea>
-                
+                <textarea ng-model="aspecto.comentario" ng-disabled="falta" class="form-control" type="text"></textarea>
             </div>
-
-
-            <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.informacion}}</label>
-            <label class="vertical-center" style="font-size: 100%"></label>Realizado</label>
-            <input type="checkbox">
-            <input disabled="falta" class="form-control" type="text" ng-model="aspecto.nota" name="" value="">
-            <button disabled="falta" ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-            <div class="btn-group">
-                <textarea disabled="falta" ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
-                    value=""></textarea>
-            </div> -->
         </div>
     </div>
 
     <div class="line"></div>
 
-    <div class="row">
+    <div ng-show="idalumno!='0'" class="row justify-content-between">
         <div class="form-group col-sm-1">
             <label style="font-weight: bold">Nota Final</label>
             <input ng-disabled="falta" class="form-control" type="text" style="width: 50px" ng-model="notaFinal"
                 maxlength="2">
         </div>
-        <div class="form-group col-sm-3">
+        <!-- <div class="form-group col-sm-3">
             <label style="font-weight: bold">Comentarios</label>
             <div class="btn-group">
                 <textarea class="form-control" type="text"></textarea>
             </div>
+        </div> -->
+        <div class="form-group col-sm-2">
+            <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()">Guardar</button>
         </div>
-    </div>
-
-    <!-- <div class="group">
-        <div class="col-md-5">
-            <tfoot>
-                <td colspan="3"><b>Nota Final:</b></td>
-                <input ng-model="puntajeFinal" type="text" class="form-control" readonly
-                    value="">{{aspecto.indicador.puntaje_asignado}}
-                <button ng-show="!texto" ng-show="mas" type="button" class="btn btn-primary"
-                    ng-click="btnAgregarComentario()"><i class="fas fa-plus"></i></button>
-                <div class="btn-group">
-                    <textarea ng-show="texto" ng-show="!mas" class="form-control" type="text" name=""
-                        value=""></textarea>
-                </div>
-            </tfoot>
-        </div>
-    </div> -->
-
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()">Guardar</button>
-        <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
     </div>
 </div>
 
@@ -216,4 +172,22 @@
     function Download(url) {
         document.getElementById('my_iframe').src = url;
     };
+    (function ($) {
+        $.fn.inputFilter = function (inputFilter) {
+            return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
+                if (inputFilter(this.value)) {
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    this.value = this.oldValue;
+                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                }
+            });
+        };
+    }(jQuery));
+
+    $("#uintTextBox").inputFilter(function(value) {
+        return /^\d*$/.test(value); 
+    });
 </script>

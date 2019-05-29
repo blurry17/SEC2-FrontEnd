@@ -56,6 +56,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         };
 
         serviceCRUD.TypePost("autoevaluacion/existencia", params).then(function (response) {
+            console.dir(response.data);
             if(response.data.message=="False"){
                 $scope.listaFam=[];
                 $('#mdCrearAutoEval').appendTo("body").modal('show');
@@ -77,19 +78,15 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             idActividad: $scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("autoevaluacion/existencia", params).then(function (response) {
-            console.dir(response.data);
             if(response.data.message=="True"){
                 $scope.mostrarFila=false;
                 $scope.mostrarPreg=false;
                 $scope.agregar=false;
                 $scope.listaFam=[];
                 serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
-                    console.dir(response.data);
         
                     $scope.listaFam=response.data.listaFamilia;
-                    console.dir($scope.familia);
                 })
-                console.dir($scope.actividad);
                 $('#mdVerAuto').appendTo("body").modal('show');
                 
                 
@@ -117,7 +114,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             idActividad:$scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("co-evaluacion/existencia", params).then(function (response) {
-            if(response.data.message=="True"){
+            if(response.data.message=="False"){
                
                 $('#mdCrearCoEval').appendTo("body").modal('show');
             }else{
@@ -135,7 +132,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
         serviceCRUD.TypePost("co-evaluacion/existencia", params).then(function (response) {
             console.dir(response.data);
-            if(response.data.message=="False"){
+            if(response.data.message=="True"){
                 $scope.mostrarFila=false;
                 $scope.mostrarPreg=false;
                 $scope.agregar=false;
@@ -265,25 +262,19 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
 
     $scope.btnGuardarAutoEval = function () {
-
-        
         $("#formAuto").addClass("was-validated");
         if (formAuto.checkValidity()) {
             let params = {
                 idActividad: $scope.actividad.idActividad,
                 listaFamilia: $scope.listaFam,
             }
-            
-            
-                $scope.guardado = !($scope.guardado);
-    
-                serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
-    
-                })
-                $("#mdCrearAutoEval").modal('hide');
-                $("#mdConfirmacionCreacion").appendTo("body").modal('show');
+            $scope.guardado = !($scope.guardado);
+            console.dir(params);
+            serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
 
-           
+            })
+            $("#mdCrearAutoEval").modal('hide');
+            $("#mdConfirmacionCreacion").appendTo("body").modal('show');
         }
     }
  
@@ -294,8 +285,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 idActividad: $scope.actividad.idActividad,
                 listaPreguntas: $scope.listaPregunta,
             }
-
-
+            
             $scope.guardado = !($scope.guardado);
 
             serviceCRUD.TypePost("co-evaluacion/crear_co_evaluacion", params).then(function (response) {
