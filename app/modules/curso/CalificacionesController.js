@@ -6,6 +6,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.actividad = $cookies.getObject("actividadActual")
     $scope.listaAl = [];
     $scope.falta = false;
+    $scope.idRub="";
     $scope.profe = $scope.usuario.esProfesor;
     $scope.notaFinal = null;
 
@@ -67,7 +68,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             idJp: $scope.usuario.idUser,
             nota: parseInt($scope.notaFinal),
             flgFalta: $scope.falta ? 1 : 0,
-            idRubrica: $scope.actividad.idRubrica,
+            idRubrica: $scope.idRub,
             listaNotaAspectos: $scope.lstAspectos
         }
 
@@ -135,7 +136,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             $scope.lstAspectos = res.data.listaAspectos;
             console.dir(res.data);
-
+            $scope.idRub=res.data.idRubrica;
             for (let i = 0; i < $scope.lstAspectos.length; i++) {
                 $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
                 $scope.lstAspectos[i].comentario = '';
