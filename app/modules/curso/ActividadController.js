@@ -56,6 +56,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         };
 
         serviceCRUD.TypePost("autoevaluacion/existencia", params).then(function (response) {
+            console.dir(response.data);
             if(response.data.message=="False"){
                 $scope.listaFam=[];
                 $('#mdCrearAutoEval').appendTo("body").modal('show');
@@ -112,14 +113,15 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     }
 
     $scope.btnCoEvaluacion=function(){
-        $scope.listaPregunta=[];
+        //$scope.listaPregunta=[];
         let params={
             idActividad:$scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("co-evaluacion/existencia", params).then(function (response) {
-            if(response.data.message=="True"){
-               
+            if(response.data.message=="False"){
+               $scope.listaPregunta=[];
                 $('#mdCrearCoEval').appendTo("body").modal('show');
+                console.dir(response.data);
             }else{
                 $("#mdErrorCoEval").appendTo("body").modal('show');
                 $scope.error=true;
@@ -135,7 +137,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
         serviceCRUD.TypePost("co-evaluacion/existencia", params).then(function (response) {
             console.dir(response.data);
-            if(response.data.message=="False"){
+            if(response.data.message=="True"){
                 $scope.mostrarFila=false;
                 $scope.mostrarPreg=false;
                 $scope.agregar=false;
@@ -278,7 +280,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 $scope.guardado = !($scope.guardado);
     
                 serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
-    
+                    console.dir(response.data);
                 })
                 $("#mdCrearAutoEval").modal('hide');
                 $("#mdConfirmacionCreacion").appendTo("body").modal('show');
@@ -299,7 +301,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             $scope.guardado = !($scope.guardado);
 
             serviceCRUD.TypePost("co-evaluacion/crear_co_evaluacion", params).then(function (response) {
-
+                console.dir($scope.listaPregunta);
             })
             $("#mdCrearCoEval").modal('hide');
             $("#mdConfirmacionCreacion").appendTo("body").modal('show');
