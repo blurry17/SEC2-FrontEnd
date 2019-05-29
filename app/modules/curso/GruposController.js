@@ -3,8 +3,6 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.actividad = $cookies.getObject('actividadActual');
-
-
     $scope.lstAluSinGrupos = [];
     $scope.lstNuevoGrupo = [];
     $scope.lstGrupos = [];
@@ -14,13 +12,29 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         nomGrupo: ''
     }
 
-    var params = {
-        idActividad: 1
+    
+
+    function mostrarGrupos() {
+        var params = { idActividad: $scope.actividad.idActividad };    
+        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
+            console.dir(res.data);
+            if(res.data == null){
+                $scope.creacionGrupos = true;
+            } else {
+                $scope.lstGrupos = res.data;
+                $scope.mostrarGrupos = true;
+            }
+        })
+    }
+
+
+    /* var params = {
+        idActividad: $scope.actividad.idActividad
     }
 
     serviceCRUD.TypePost('actividad/alumnos', params).then(function(res){
-        $scope.lstAluSinGrupos = res.data
-    })
+        $scope.lstAluSinGrupos = res.data;
+    }) */
 
     $scope.btnCrearGrupos = function() {
         $scope.creacionGrupos = true;
@@ -37,6 +51,9 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     }
 
     $scope.btnGuardarGrupo = function() {
+        $scope.showAlert1 = false;
+        $scope.showAlert2 = false;
+
         if (!$scope.Reg.nomGrupo){
             $scope.showAlert1 = true;
             return;
@@ -63,11 +80,26 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         for (let i = 0; i < gr.lstAlumnos.length; i++){
             $scope.lstAluSinGrupos.push(gr.lstAlumnos[i]);
         }
-
         $scope.lstGrupos.splice(i, 1);
     }
 
     $scope.verGrupo = function() {
 
     }
+
+    $scope.btnTerminar = function() {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            grupos: $scope.lstGrupos
+        }
+        serviceCRUD.TypePost('grupo/crear', params).then(function(res){
+            console.dir(res.data);
+        })
+    }
+
+    function init(){
+        mostrarGrupos();
+    }
+
+    init();
 })

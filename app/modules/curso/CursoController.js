@@ -6,6 +6,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.nuevo = true; // true->crear false->editar
     $scope.hoy = serviceUtil.yyyymmdd(new Date());
     $scope.showAlert1 = false;
+    $scope.lstGrupos = [];
 
     var idActEdit = null;
 
@@ -26,6 +27,15 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 res.data[i].minFin = dtFin.min;
             }
             $scope.lstActividad = res.data;
+        })
+    }
+
+    function ListarAgrupaciones() {
+        var params = { idhorario: $scope.curso.idhorario };
+        console.dir(params);
+        serviceCRUD.TypePost('grupo/listar-general', params).then(function (res) {
+            console.dir(res.data);
+            $scope.lstGrupos = res.data;
         })
     }
 
@@ -61,6 +71,15 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             minFin: '0'
         }
         $('#mdAgregarActividad').appendTo("body").modal('show');
+    }
+
+    $scope.btnAgregarAgrupacion = function () {
+        var params = { idActividad: $scope.actividad.idActividad }
+        serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
+            console.dir(res.data);
+            $scope.lstAluSinGrupos = res.data;
+        })
+        $('#mdAgregarAgrupacion').appendTo("body").modal('show');
     }
 
     $scope.btnGuardarActividad = function () {
@@ -179,6 +198,67 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $("#mdPublicarActividad").modal('hide');
     }
 
+    $scope.btnCrearGrupos = function() {
+        $scope.creacionGrupos = true;
+    }
+
+    $scope.agregarAlu = function(i, al) {
+        $scope.lstAluSinGrupos.splice(i, 1);
+        $scope.lstNuevoGrupo.push(al);
+    }
+
+    $scope.elimAlu = function(i, al) {
+        $scope.lstNuevoGrupo.splice(i, 1);
+        $scope.lstAluSinGrupos.push(al);        
+    }
+
+    $scope.btnGuardarGrupo = function() {
+        $scope.showAlert1 = false;
+        $scope.showAlert2 = false;
+
+        if (!$scope.Reg.nomGrupo){
+            $scope.showAlert1 = true;
+            return;
+        }
+        $scope.showAlert1 = false;
+
+        if ($scope.lstNuevoGrupo.length == 0){
+            $scope.showAlert2 = true;
+            return;
+        }
+        $scope.showAlert2 = false;
+
+        var gr = {
+            nombre: $scope.Reg.nomGrupo,
+            lstAlumnos: $scope.lstNuevoGrupo
+        }
+
+        $scope.lstGrupos.push(gr);
+        $scope.Reg.nomGrupo = '';
+        $scope.lstNuevoGrupo = [];
+    }
+
+    $scope.elimGrupo = function(i, gr) {
+        for (let i = 0; i < gr.lstAlumnos.length; i++){
+            $scope.lstAluSinGrupos.push(gr.lstAlumnos[i]);
+        }
+        $scope.lstGrupos.splice(i, 1);
+    }
+
+    $scope.verGrupo = function() {
+
+    }
+
+    $scope.btnTerminar = function() {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            grupos: $scope.lstGrupos
+        }
+        serviceCRUD.TypePost('grupo/crear', params).then(function(res){
+            console.dir(res.data);
+        })
+    }
+
     angular.element(document).ready(function () {
         $(function () {
             $('[data-toggle="tooltip"]').tooltip({
@@ -189,6 +269,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     function init() {
         ListarActividades();
+        ListarAgrupaciones();
     }
 
     init();
