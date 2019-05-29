@@ -17,15 +17,13 @@
 
       <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
       <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Rubrica</button>
-      <button ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos de
-        Trabajo</button>
+      <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos</button>
       <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
         style="margin: 2px;height: 32px;">Comentarios</button>
       <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Alertas</button>
       <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;height: 32px;">Estadísticas</button>
 
-      <div>
-
+      <div ng-if="actividad.tipo=='G'">
         <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-dark"
           style="margin: 2px;height: 32px;">Coevaluación</button>
         <div class="dropdown-menu">
