@@ -144,7 +144,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             idActividad: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            console.dir(res.data);
             $scope.lstAspectos = res.data.listaAspectos;
 
             /* Obtener la suma de los indicadores para mostrarlo*/
@@ -158,8 +157,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         
         $('#mdVistaPrevia').appendTo("body").modal('show');
         
-        //$scope.mostrarCrearRubrica = true;    
-        console.dir($scope.lstAspectos);
+        //$scope.mostrarCrearRubrica = true;
     }
 
     
