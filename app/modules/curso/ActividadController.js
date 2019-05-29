@@ -117,7 +117,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             idActividad:$scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("co-evaluacion/existencia", params).then(function (response) {
-            if(response.data.message=="False"){
+            if(response.data.message=="True"){
                
                 $('#mdCrearCoEval').appendTo("body").modal('show');
             }else{
@@ -135,7 +135,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
         serviceCRUD.TypePost("co-evaluacion/existencia", params).then(function (response) {
             console.dir(response.data);
-            if(response.data.message=="True"){
+            if(response.data.message=="False"){
                 $scope.mostrarFila=false;
                 $scope.mostrarPreg=false;
                 $scope.agregar=false;
@@ -273,22 +273,8 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 idActividad: $scope.actividad.idActividad,
                 listaFamilia: $scope.listaFam,
             }
-            let encontrado=false;
-            let i=0;
-            let aux=$scope.listaFam;
             
-            aux.forEach(function(fam){
-                let auxLista = aux;
-                auxLista.splice(i,1);
-                i++;
-                auxLista.forEach(function(fam1){
-                    if(fam==fam1){
-                        encontrado=true;   
-                    }
-                });
-            });
-
-            if(!encontrado){
+            
                 $scope.guardado = !($scope.guardado);
     
                 serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
@@ -297,10 +283,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 $("#mdCrearAutoEval").modal('hide');
                 $("#mdConfirmacionCreacion").appendTo("body").modal('show');
 
-            }else{
-                $("#mdCrearAutoEval").modal('hide');
-                $("#mdFamiliaRepetida").appendTo("body").modal('show');
-            }
+           
         }
     }
  
