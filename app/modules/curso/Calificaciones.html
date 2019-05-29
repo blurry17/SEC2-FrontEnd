@@ -89,15 +89,19 @@
                 <label>Nota Máx.</label>
                 <input disabled type="text" class="form-control" style="width: 50px" ng-model="indicador.puntajeMax">
             </div>
-            <div class="form-group col-sm-2">
+            <div class="form-group col-sm-1">
                 <label>Nota</label>
                 <input ng-disabled="falta" class="form-control" type="text" style="width: 50px"
                     ng-model="indicador.nota" maxlength="2">
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <textarea ng-model="indicador.comentario" ng-disabled="falta"
-                    class="form-control" type="text"></textarea>
+                <button  style="display: block" ng-show="!indicador.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(indicador)"><i
+                    class="fas fa-plus"></i></button>
+                <div>
+                    <textarea ng-show="indicador.puedeComentar" ng-model="indicador.comentario" 
+                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                </div>
             </div>
         </div>
 
@@ -105,12 +109,17 @@
             <div class="form-group col-sm-3" style="float: right" >
             </div>
             <div class="form-group col-sm-2">
-                <label >Nota del aspecto</label>
+                <label ><b>Nota del aspecto</b></label>
                 <input disabled type="text" type="text" class="form-control" ng-model="aspecto.nota" style="width: 50px">
             </div>
             <div class="form-group col-sm-3">
-                <label>Comentario del aspecto</label>
-                <textarea ng-disabled="falta" type="text" class="form-control" ng-model="aspecto.comentario"></textarea>
+                <label><b>Comentario del aspecto</b></label>
+                <button style="display: block" ng-show="!indicador.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(indicador)"><i
+                    class="fas fa-plus"></i></button>
+                <div>
+                    <textarea ng-show="indicador.puedeComentar"  ng-model="indicador.comentario" 
+                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                </div>
             </div>
             <!-- <input type="text" class="form-control" ng-model="aspecto.nota" style="display: inline-block; width: 50px">
                                     <textarea type="text" class="form-control" ng-model="aspecto.comentario"> -->
@@ -119,7 +128,7 @@
         <div ng-show="aspecto.tipoClasificacion == 2" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
-                <input disabled type="text" class="form-control" ng-model="aspecto.descripcion">
+                <input disabled type="text" class="form-control" ng-model="aspecto.informacion">
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota Máx.</label>
@@ -132,8 +141,12 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                <textarea ng-model="indicador.comentario" ng-disabled="falta"
-                    class="form-control" type="text"></textarea>
+                <button  ng-show="!aspecto.puedeComentar" style="float: right" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(aspecto)"><i
+                    class="fas fa-plus"></i></button>
+                <div>
+                    <textarea ng-show="aspecto.puedeComentar" ng-model="indicador.comentario" 
+                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                </div>
             </div>
             <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
             <label class="vertical-center" style="font-size: 100%">{{aspecto.puntajeMax}}</label>
@@ -156,9 +169,12 @@
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
-                
-                    <textarea ng-disabled="falta" ng-model="indicador.comentario" ng-disabled="falta"
-                        class="form-control" type="text"></textarea>
+                <button  ng-show="!aspecto.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(aspecto)"><i
+                    class="fas fa-plus"></i></button>
+                <div>
+                    <textarea ng-show="aspecto.puedeComentar"  ng-model="indicador.comentario" 
+                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                </div>
                 
             </div>
 
@@ -183,13 +199,16 @@
         </div>
         <div class="form-group col-sm-2">
             <label style="font-weight: bold">Nota Final</label>
-            <input disabled type="text" class="form-control" type="text" style="width: 50px" ng-model="notaFinal"
+            <input type="text" class="form-control" type="text" style="width: 50px" ng-model="notaFinal"
                 maxlength="2">
         </div>
         <div class="form-group col-sm-3">
-            <label>Comentarios</label>
-                
-            <textarea ng-model="indicador.comentario" ng-disabled="falta"class="form-control" type="text"></textarea>
+            <label style="font-weight: bold">Comentarios Finales</label>
+            <button style="display: block" ng-show="!indicador.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(indicador)"><i
+                class="fas fa-plus"></i></button>
+            <div>
+                <textarea ng-show="indicador.puedeComentar" ng-model="indicador.comentario" ng-disabled="falta" class="form-control" type="text"></textarea>
+            </div>
         </div>
     </div>
 

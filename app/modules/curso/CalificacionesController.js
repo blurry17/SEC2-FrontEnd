@@ -64,8 +64,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     }
 
-    $scope.btnAgregarComentario = function () {
-        $scope.texto = true;
+    $scope.btnAgregarComentario = function (x) {
+        x.puedeComentar=true;
     }
 
     $scope.chckmarcado = function () {
@@ -159,9 +159,11 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             for (let i = 0; i < $scope.lstAspectos.length; i++) {
                 $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
                 $scope.lstAspectos[i].comentario = '';
+                $scope.lstAspectos[i].puedeComentar=false;
                 delete $scope.lstAspectos[i].listaIndicadores;
                 for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
                     $scope.lstAspectos[i].listaNotaIndicador[j].comentario = '';
+                    $scope.lstAspectos[i].listaNotaIndicador[j].puedeComentar=false;
                 }
             }
         })
