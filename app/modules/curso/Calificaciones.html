@@ -26,8 +26,7 @@
             <div style="float: right">
                 <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
                     Archivo</button>
-                <button type="button" class="btn btn-info" ng-click="btnEditarPuntaje()"><i
-                        class="fas fa-pencil-alt"></i></button>
+                <button type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i class="fas fa-pen"></i>&nbsp;Editar</button>
                 <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
                     Resultados</button>
             </div>
@@ -80,7 +79,7 @@
     <div class="line"></div>
 
     <div ng-show="idalumno!='0'" ng-repeat="aspecto in lstAspectos" style="width: 100%">
-        <h3>{{aspecto.descripcion}}</h3>
+        <h3>{{($index + 1) + '. ' + aspecto.descripcion}}</h3>
         <div ng-if="aspecto.tipoClasificacion == 1" ng-repeat="indicador in aspecto.listaNotaIndicador" class="row">
             <div class="form-group col-sm-3">
                 <label>Descripción</label>
@@ -92,7 +91,7 @@
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota</label>
-                <input id="uintTextBox" ng-disabled="falta" class="form-control" type="text" style="width: 50px"
+                <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-disabled="flgCalificado" class="form-control" type="text" style="width: 50px"
                     ng-model="indicador.nota" maxlength="2">
             </div>
             <div class="form-group col-sm-3">
@@ -101,23 +100,24 @@
                     class="fas fa-plus"></i></button>
                 <div>
                     <textarea ng-show="indicador.puedeComentar" ng-model="indicador.comentario" 
-                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                    ng-disabled="flgCalificado" class="form-control" type="text"></textarea>
                 </div>
             </div>
         </div>
 
         <div ng-if="aspecto.tipoClasificacion == 1" class="row">
-            <div class="form-group col-sm-2">
-                <label>Nota del aspecto</label>
-                <input readonly type="text" class="form-control" ng-value="sumaInd(aspecto)" style="width: 50px">
+            <div class="col-md-4"></div>
+            <div class="form-group col-sm-1">
+                <label>Nota aspecto</label>
+                <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly type="text" class="form-control" ng-value="sumaInd(aspecto)" style="width: 50px">
             </div>
             <div class="form-group col-sm-3">
-                <label><b>Comentario del aspecto</b></label>
-                <button style="display: block" ng-show="!indicador.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(indicador)"><i
+                <label>Comentario del aspecto</label>
+                <button style="display: block" ng-show="!aspecto.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(aspecto)"><i
                     class="fas fa-plus"></i></button>
                 <div>
-                    <textarea ng-show="indicador.puedeComentar"  ng-model="indicador.comentario" 
-                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                    <textarea ng-show="aspecto.puedeComentar"  ng-model="aspecto.comentario" 
+                    ng-disabled="flgCalificado" class="form-control" type="text"></textarea>
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@
             </div>
             <div class="form-group col-sm-1">
                 <label>Nota</label>
-                <input ng-disabled="falta" class="form-control" type="text" style="width: 50px" ng-model="aspecto.nota"
+                <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-disabled="flgCalificado" class="form-control" type="text" style="width: 50px" ng-model="aspecto.nota"
                     maxlength="2">
             </div>
             <div class="form-group col-sm-3">
@@ -142,7 +142,7 @@
                     class="fas fa-plus"></i></button>
                 <div>
                     <textarea ng-show="aspecto.puedeComentar" ng-model="aspecto.comentario" 
-                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                    ng-disabled="flgCalificado" class="form-control" type="text"></textarea>
                 </div>
             </div>
             <!-- <label class="vertical-center" style="font-size: 100%">{{aspecto.descripcion}}</label>
@@ -160,17 +160,20 @@
                 <label>Descripción</label>
                 <input disabled type="text" class="form-control" ng-model="aspecto.informacion">
             </div>
+            <div class="col-sm-1">
+
+            </div>
             <div class="form-group col-sm-1">
                 <label style="font-size: 100%">Realizado</label>
-                <input type="checkbox" ng-model="aspecto.nota">
+                <input type="checkbox" ng-disabled="flgCalificado" ng-model="aspecto.nota">
             </div>
             <div class="form-group col-sm-3">
                 <label>Comentarios</label>
                 <button style="display: block" ng-show="!aspecto.puedeComentar" type="button" class="btn btn-warning" ng-click="btnAgregarComentario(aspecto)"><i
                     class="fas fa-plus"></i></button>
                 <div>
-                    <textarea ng-show="aspecto.puedeComentar"  ng-model="aspecto.comentario" 
-                    ng-disabled="falta" class="form-control" type="text"></textarea>
+                    <textarea ng-show="aspecto.puedeComentar" ng-model="aspecto.comentario" 
+                    ng-disabled="flgCalificado" class="form-control" type="text"></textarea>
                 </div>
                 
             </div>
@@ -182,7 +185,7 @@
     <div ng-show="idalumno!='0'" class="row justify-content-between">
         <div class="form-group col-sm-1">
             <label style="font-weight: bold">Nota Final</label>
-            <input type="text" class="form-control" type="text" style="width: 50px" ng-model="notaFinal"
+            <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" class="form-control" style="width: 50px" ng-disabled="flgCalificado" ng-model="notaFinal"
                 maxlength="2">
         </div>
         <!-- <div class="form-group col-sm-3">
@@ -192,31 +195,7 @@
             </div>
         </div> -->
         <div class="form-group col-sm-2">
-            <button class="btn btn-primary" type="submit" ng-click="btnGuardarPuntaje()">Guardar</button>
+            <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita" ng-click="btnGuardarPuntaje()">Guardar</button>
         </div>
     </div>
 </div>
-
-<script>
-    function Download(url) {
-        document.getElementById('my_iframe').src = url;
-    };
-    (function ($) {
-        $.fn.inputFilter = function (inputFilter) {
-            return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function () {
-                if (inputFilter(this.value)) {
-                    this.oldValue = this.value;
-                    this.oldSelectionStart = this.selectionStart;
-                    this.oldSelectionEnd = this.selectionEnd;
-                } else if (this.hasOwnProperty("oldValue")) {
-                    this.value = this.oldValue;
-                    this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-                }
-            });
-        };
-    }(jQuery));
-
-    $("#uintTextBox").inputFilter(function(value) {
-        return /^\d*$/.test(value); 
-    });
-</script>
