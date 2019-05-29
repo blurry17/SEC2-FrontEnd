@@ -12,21 +12,29 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         nomGrupo: ''
     }
 
-    var params = null;
+    
+
+    function mostrarGrupos() {
+        var params = { idActividad: $scope.actividad.idActividad };    
+        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
+            console.dir(res.data);
+            if(res.data == null){
+                $scope.creacionGrupos = true;
+            } else {
+                $scope.lstGrupos = res.data;
+                $scope.mostrarGrupos = true;
+            }
+        })
+    }
 
 
-    serviceCRUD.TypePost('actividad/alumno/entregable', params).then(function(res){
-
-    })
-
-
-    var params = {
+    /* var params = {
         idActividad: $scope.actividad.idActividad
     }
 
     serviceCRUD.TypePost('actividad/alumnos', params).then(function(res){
         $scope.lstAluSinGrupos = res.data;
-    })
+    }) */
 
     $scope.btnCrearGrupos = function() {
         $scope.creacionGrupos = true;
@@ -88,4 +96,10 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
             console.dir(res.data);
         })
     }
+
+    function init(){
+        mostrarGrupos();
+    }
+
+    init();
 })

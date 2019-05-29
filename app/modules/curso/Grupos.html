@@ -7,11 +7,6 @@
         </ol>
     </nav>
     <h1>Grupos</h1>
-
-    <div class="btn-group" role="group">
-        <button ng-click="btnCrearGrupos()" type="button" class="btn btn-success">Crear Grupos</button>
-    </div>
-
     <div class="row" ng-show="creacionGrupos">
         <div class="col-md-5">
             <div class="table-responsive">
@@ -95,6 +90,13 @@
             <div ng-show="!lstAluSinGrupos.length && !lstNuevoGrupo.length" style="text-align: center">
                 <button class="btn btn-success" ng-click="btnTerminar()">Terminar</button>
             </div>
+        </div>
+    </div>
+    <div class="row" ng-show="mostrarGrupos">
+        <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="grupo in lstGrupos">{{grupo.nombreGrupo}}</li>
+            </ul>
         </div>
     </div>
 </div>
