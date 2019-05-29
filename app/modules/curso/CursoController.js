@@ -84,12 +84,13 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     $scope.btnGuardarActividad = function () {
         $("#formAct").addClass("was-validated");
+        console.dir($scope.regAct);
         if ($scope.regAct.fechaInicio > $scope.regAct.fechaFin) {
             $("#formAct").removeClass("was-validated");
             $scope.showAlert1 = true;
             return;
         } else if (($scope.regAct.fechaInicio.getYear() == $scope.regAct.fechaFin.getYear() && $scope.regAct.fechaInicio.getMonth() == $scope.regAct.fechaFin.getMonth() && $scope.regAct.fechaInicio.getDate() == $scope.regAct.fechaFin.getDate()) &&
-            ($scope.regAct.horaInicio > $scope.regAct.horaFin || ($scope.regAct.horaInicio == $scope.regAct.horaFin && $scope.regAct.minInicio > $scope.regAct.minFin))) {
+            (parseInt($scope.regAct.horaInicio) > parseInt($scope.regAct.horaFin) || (parseInt($scope.regAct.horaInicio) == parseInt($scope.regAct.horaFin) && parseInt($scope.regAct.minInicio) > parseInt($scope.regAct.minFin)))) {
             $("#formAct").removeClass("was-validated");
             $scope.showAlert1 = true;
             return;

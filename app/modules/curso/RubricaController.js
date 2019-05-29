@@ -89,9 +89,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         
     }
 
-
-
-
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
     $scope.rubrica = {
@@ -118,7 +115,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             sum += parseInt(asp.listaIndicadores[i].puntajeMax);            
         }
         /* Asigno la suma al puntajeMax del aspecto */
-        $scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
+        //$scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
         return sum;
     }
 
@@ -147,24 +144,20 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             idActividad: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            console.dir(res.data);
             $scope.lstAspectos = res.data.listaAspectos;
 
             /* Obtener la suma de los indicadores para mostrarlo*/
             $scope.lstAspectos.forEach(aspecto => {
-                $scope.puntajeAcumuladoRubricaVista = 0;
-                aspecto.listaIndicadores.forEach(indicador => {
-                    $scope.puntajeAcumuladoRubricaVista += indicador.puntajeMax
-                });
-                
+                if(aspecto.puntajeMax != null){
+                    $scope.puntajeAcumuladoRubricaVista = aspecto.puntajeMax
+                }
             });
 
         })
         
         $('#mdVistaPrevia').appendTo("body").modal('show');
         
-        //$scope.mostrarCrearRubrica = true;    
-        console.dir($scope.lstAspectos);
+        //$scope.mostrarCrearRubrica = true;
     }
 
     
