@@ -48,8 +48,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         })
     }
 
-    $scope.btnValidarPuntaje = function () {
-        /* Preguntar si desea validar los puntajes una vez llenados */
+    /* $scope.btnValidarPuntaje = function () {
         result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
         $("#formAct").addClass("was-validated");
         if($scope.puntajeAsignado){
@@ -58,18 +57,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 idActividad: $scope.actividad.idActividad,
                 idAlumno: $scope.idalumno,
                 nota:$scope.sumInd,
-                listaNotaAspectos: $scope.lstAspectos
-            
-            }
-        
+                listaNotaAspectos: $scope.lstAspectos            
+            }        
             serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
-
             })
-
             window.alert("Las notas han sido validadas satisfactoriamente!")
         }
-
-    }
+    } */
 
     $scope.btnAgregarComentario = function (x) {
         x.puedeComentar=true;
