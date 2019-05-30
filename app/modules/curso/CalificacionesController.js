@@ -51,11 +51,28 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.btnValidarPuntaje = function () {
         /* Preguntar si desea validar los puntajes una vez llenados */
         result = window.confirm('¿Desea validar la calificación que dio el Jefe de Practica?');
+        $("#formAct").addClass("was-validated");
+        if($scope.puntajeAsignado){
+            var params=
+            {
+                idActividad: $scope.actividad.idActividad,
+                idAlumno: $scope.idalumno,
+                nota:$scope.sumInd,
+                listaNotaAspectos: $scope.lstAspectos
+            
+            }
+        
+            serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+
+            })
+
+            window.alert("Las notas han sido validadas satisfactoriamente!")
+        }
 
     }
 
-    $scope.btnAgregarComentario = function () {
-        $scope.texto = true;
+    $scope.btnAgregarComentario = function (x) {
+        x.puedeComentar=true;
     }
 
     $scope.chckmarcado = function () {
@@ -108,7 +125,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             listaNotaAspectos: $scope.lstAspectos
         }
 
-        serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
+        serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
 
         })
     } */
@@ -159,9 +176,11 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             for (let i = 0; i < $scope.lstAspectos.length; i++) {
                 $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
                 $scope.lstAspectos[i].comentario = '';
+                $scope.lstAspectos[i].puedeComentar=false;
                 delete $scope.lstAspectos[i].listaIndicadores;
                 for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
                     $scope.lstAspectos[i].listaNotaIndicador[j].comentario = '';
+                    $scope.lstAspectos[i].listaNotaIndicador[j].puedeComentar=false;
                 }
             }
         })
