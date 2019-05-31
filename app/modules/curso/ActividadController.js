@@ -5,6 +5,9 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
+    
+    if ($scope.actividad.minInicio == "0") $scope.actividad.minInicio = $scope.actividad.minInicio + "0";
+    if ($scope.actividad.minFin == "0") $scope.actividad.minFin = $scope.actividad.minFin + "0";
     console.dir($scope.actividad);
 
     $scope.esIndividual = false;
