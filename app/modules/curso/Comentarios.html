@@ -41,24 +41,45 @@
 
 <!-- Vista de alumno -->
 <div ng-show="!vistaProfesor">
-    <form>
-        <div class="d-flex justify-content-center align-self-center row">
-            <h1>Escriba un comentario...</h1>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center align-self-center row">
-            <div class="form-group col-md-5">
-                <textarea required ng-model="comentario.comentario" class="form-control" id="exampleFormControlTextarea1"
-                    rows="4" maxlength="200"></textarea>
+
+    <!-- Si el alumno aún no envía su comentario -->
+    <div ng-show="!envioComentario">
+        <form>
+            <div class="d-flex justify-content-center align-self-center row">
+                <h1>Escriba un comentario...</h1>
             </div>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center align-self-center row">
-            <button type="submit" class="btn btn-success" ng-click="btnGuardarComentario()">Enviar
-                Comentario</button>
-        </div>
+            <br>
+            <div class="d-flex justify-content-center align-self-center row">
+                <div class="form-group col-md-5">
+                    <textarea required ng-model="comentario.comentario" class="form-control"
+                        id="exampleFormControlTextarea1" rows="4" maxlength="200"></textarea>
+                </div>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center align-self-center row">
+                <button type="submit" class="btn btn-success" ng-click="btnGuardarComentario()">Enviar
+                    Comentario</button>
+            </div>
 
-    </form>
+        </form>
+    </div>
 
+    <!-- Si el alumno ya envió su comentario -->
+    <div ng-show="envioComentario">
+        <form>
+            <div class="d-flex justify-content-center align-self-center row">
+                <h1>Su comentario...</h1>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center align-self-center row">
+                <div class="form-group col-md-5">
+                    <!-- Mostrar el comentario realizado por el alumno -->
+                    <textarea disabled ng-model="comentario.comentario" class="form-control"
+                        id="exampleFormControlTextarea1" rows="4"></textarea>
+                </div>
+            </div>
+            <br>
+        </form>
+    </div>
 
 </div>

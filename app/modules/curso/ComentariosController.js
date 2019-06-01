@@ -5,6 +5,8 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     $scope.actividad = $cookies.getObject('actividadActual');
     $scope.idActividad = $scope.actividad.idActividad;
     $scope.vistaProfesor = usuario.profesor;
+    //Para saber si el alumno envió un comentario o no
+    $scope.envioComentario = false;
 
 
     $scope.comentario = {
