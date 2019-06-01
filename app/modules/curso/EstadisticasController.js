@@ -31,9 +31,9 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaPorcentajes() {
     serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
-      console.dir(res.data);
+      //console.dir(res.data);
       $scope.mediaS=res.data.media;
-      $scope.desvEstandar=res.data.desviacionEstandar;
+      $scope.desv=res.data.desciavionEstandar;
       $scope.porcentaje=res.data.porcentajeAprobados;
       $scope.notaMaxS=res.data.notaMax;
       $scope.notaMinS=res.data.notaMin;
@@ -42,40 +42,23 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   }
 
   tablaPorcentajes()
-
+  
   function tablaNotas(){
-    serviceCRUD.TypePost('',params).then(function(res){
-      $scope.listaN = res.data.listaNotas
-      /**
-       * {
-          "listaNotas": [
-              20,
-              15,
-              12
-          ],
-          "frecuencia": [
-              [
-                  20,
-                  1
-              ],
-              [
-                  15,
-                  1
-              ],
-              [
-                  12,
-                  1
-              ]
-          ],
-          "cantidadNotas": 3,
-          "cantidadFalta": 24,
-          "cantidadTotal": 27
+    serviceCRUD.TypePost('alumnos/notas',params).then(function(res){
+      console.dir(res.data);
+      $scope.listaN = res.data.listaNotas;
+      $scope.listaFrec=res.data.notaFrecuencia;
+      for (let i = 0; i < $scope.listaFrec.length; i++) {
+        $scope.listaFrec[i].nota=res.data.listaFrec[i].nota;
+        $scope.listaFrec[i].frecuencia=res.data.listaFrec[i].frecuencia;
       }
-       * 
-       */
+      $scope.cantidadN=res.data.cantidadNotas;
+      $scope.cantidadF=res.data.cantidadFalta;
+      $scope.cantidadT=res.data.cantidadTotal;
 
     })
   }
+  tablaNotas();
 
 
   function drawChartC() {
