@@ -5,6 +5,9 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso=$cookies.getObject("cursoActual")
     $scope.actividad=$cookies.getObject("actividadActual")
+    
+    if ($scope.actividad.minInicio == "0") $scope.actividad.minInicio = $scope.actividad.minInicio + "0";
+    if ($scope.actividad.minFin == "0") $scope.actividad.minFin = $scope.actividad.minFin + "0";
     console.dir($scope.actividad);
 
     $scope.esIndividual = false;
@@ -78,19 +81,15 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
             idActividad: $scope.actividad.idActividad,
         };
         serviceCRUD.TypePost("autoevaluacion/existencia", params).then(function (response) {
-            console.dir(response.data);
             if(response.data.message=="True"){
                 $scope.mostrarFila=false;
                 $scope.mostrarPreg=false;
                 $scope.agregar=false;
                 $scope.listaFam=[];
                 serviceCRUD.TypePost("auto-evaluacion/listarPreguntas", params).then(function (response) {
-                    console.dir(response.data);
         
                     $scope.listaFam=response.data.listaFamilia;
-                    console.dir($scope.familia);
                 })
-                console.dir($scope.actividad);
                 $('#mdVerAuto').appendTo("body").modal('show');
                 
                 
@@ -267,27 +266,27 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
 
     $scope.btnGuardarAutoEval = function () {
-
-        
         $("#formAuto").addClass("was-validated");
         if (formAuto.checkValidity()) {
             let params = {
                 idActividad: $scope.actividad.idActividad,
                 listaFamilia: $scope.listaFam,
             }
-            
-            
-                $scope.guardado = !($scope.guardado);
-    
-                serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
-                    console.dir(response.data);
-                })
-                $("#mdCrearAutoEval").modal('hide');
-                $("#mdConfirmacionCreacion").appendTo("body").modal('show');
 
-           
+
+            $scope.guardado = !($scope.guardado);
+
+            serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
+                console.dir(response.data);
+            })
+            $("#mdCrearAutoEval").modal('hide');
+            $("#mdConfirmacionCreacion").appendTo("body").modal('show');
+
         }
+        $("#mdCrearAutoEval").modal('hide');
+        $("#mdConfirmacionCreacion").appendTo("body").modal('show');
     }
+
  
     $scope.btnGuardarCoEval = function () {
         $("#formCoEval").addClass("was-validated");
@@ -296,8 +295,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
                 idActividad: $scope.actividad.idActividad,
                 listaPreguntas: $scope.listaPregunta,
             }
-
-
+            
             $scope.guardado = !($scope.guardado);
 
             serviceCRUD.TypePost("co-evaluacion/crear_co_evaluacion", params).then(function (response) {
@@ -363,4 +361,3 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     }
 
 })
-

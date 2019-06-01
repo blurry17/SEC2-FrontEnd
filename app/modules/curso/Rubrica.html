@@ -124,8 +124,8 @@
           <!-- Form Group Puntaje del Aspecto -->
           <div class="form-group col-md-1">
             <label>Puntaje</label>
-            <input disabled required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
-              class="form-control" ng-model="sumaInd(aspecto)"/>
+            <input disabled required type="text" style="border-width:2px !important;"
+              class="form-control" ng-value="sumaInd(aspecto)"/>
               <div class="invalid-feedback">
                   Ingrese un puntaje.
               </div>
@@ -178,8 +178,8 @@
                 <!-- Form group Puntaje del Indicador -->
                 <div class="form-group col-md-1">
                   <label>Puntaje</label>
-                  <input required type="number" min="0" max="20" 
-                    class="form-control" ng-model="indicador.puntajeMax" />
+                  <input required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    maxlength="2" class="form-control" ng-model="indicador.puntajeMax" />
                     <div class="invalid-feedback">
                         Ingrese un puntaje.
                     </div>
@@ -223,7 +223,7 @@
           <!-- Form Group Puntaje del Aspecto -->
           <div class="form-group col-md-1">
             <label>Puntaje</label>
-            <input required type="text" pattern="[0-9]" maxlength="2" style="border-width:2px !important;"
+            <input required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="2" style="border-width:2px !important;"
               class="form-control" ng-model="aspecto.puntajeMax"/>
               <div class="invalid-feedback">
                   Ingrese un puntaje.

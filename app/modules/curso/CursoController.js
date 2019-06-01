@@ -31,12 +31,12 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     function ListarAgrupaciones() {
-        var params = { idhorario: $scope.curso.idhorario };
+        /* var params = { idhorario: $scope.curso.idhorario };
         console.dir(params);
         serviceCRUD.TypePost('grupo/listar-general', params).then(function (res) {
             console.dir(res.data);
             $scope.lstGrupos = res.data;
-        })
+        }) */
     }
 
     $scope.regAct = {
@@ -126,6 +126,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 }
 
                 serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
+                    console.dir('cerrar modal');
                     $("#mdAgregarActividad").modal('hide');
                     ListarActividades();
                 })
