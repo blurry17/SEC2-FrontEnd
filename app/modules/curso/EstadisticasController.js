@@ -17,18 +17,66 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   $scope.gb = false;
   $scope.seleccion = 'g';
 
+  var params = { idActividad: $scope.actividad.idActividad }
   
 
   function listarRanking() {
-    var params = { idActividad: $scope.actividad.idActividad }
-    console.dir(params);
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
-      console.dir(res.data);
+      //console.dir(res.data);
       $scope.listaR = res.data.lista5Alumnos;
     })
   }
 
   listarRanking()
+
+  function tablaPorcentajes() {
+    serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
+      console.dir(res.data);
+      $scope.mediaS=res.data.media;
+      $scope.desvEstandar=res.data.desviacionEstandar;
+      $scope.porcentaje=res.data.porcentajeAprobados;
+      $scope.notaMaxS=res.data.notaMax;
+      $scope.notaMinS=res.data.notaMin;
+      $scope.numNotasS=res.data.numNotas;      
+    })
+  }
+
+  tablaPorcentajes()
+
+  function tablaNotas(){
+    serviceCRUD.TypePost('',params).then(function(res){
+      $scope.listaN = res.data.listaNotas
+      /**
+       * {
+          "listaNotas": [
+              20,
+              15,
+              12
+          ],
+          "frecuencia": [
+              [
+                  20,
+                  1
+              ],
+              [
+                  15,
+                  1
+              ],
+              [
+                  12,
+                  1
+              ]
+          ],
+          "cantidadNotas": 3,
+          "cantidadFalta": 24,
+          "cantidadTotal": 27
+      }
+       * 
+       */
+
+    })
+  }
+
 
   function drawChartC() {
     
