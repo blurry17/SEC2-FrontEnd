@@ -19,9 +19,12 @@
     <button ng-click="btnCrearRubrica()" class="btn btn-sm btn-primary">Crear Nueva Rúbrica</button>
   </div>
   <!-- Caso contrario, mostrar el boton Editar Rubrica -->
+  
+
   <div class="col-xs-4 col-lg-2 col-2">
     <button ng-show="hayRubrica" ng-click="btnEditarRubrica()" class="btn btn-sm btn-primary">Guardar cambios</button>
   </div>
+  
 
   <!-- Modal Elegir Tipo Aspecto -->
   <div class="modal fade" id="mdElegirTipoAspecto" tabindex="-1" role="dialog" data-backdrop="static"
@@ -50,6 +53,7 @@
   <div class=" col-xs-4 col-lg-2 col-2">
     <button class="btn btn-sm btn-success" ng-click="btnVerRubricaActual()">Ver Rúbrica</button>
   </div>
+
 
 
 </div>
@@ -107,7 +111,7 @@
               class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
               <div class="invalid-feedback">
                   Ingrese un nombre.
-              </div>
+              </div>  
           </div>
 
           <!-- Form Group Descripcion del Aspecto -->
@@ -120,8 +124,8 @@
           <!-- Form Group Puntaje del Aspecto -->
           <div class="form-group col-md-1">
             <label>Puntaje</label>
-            <input disabled required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
-              class="form-control" ng-model="sumaInd(aspecto)"/>
+            <input disabled required type="text" style="border-width:2px !important;"
+              class="form-control" ng-value="sumaInd(aspecto)"/>
               <div class="invalid-feedback">
                   Ingrese un puntaje.
               </div>
@@ -174,8 +178,8 @@
                 <!-- Form group Puntaje del Indicador -->
                 <div class="form-group col-md-1">
                   <label>Puntaje</label>
-                  <input required type="number" min="0" max="20" 
-                    class="form-control" ng-model="indicador.puntajeMax" />
+                  <input required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                    maxlength="2" class="form-control" ng-model="indicador.puntajeMax" />
                     <div class="invalid-feedback">
                         Ingrese un puntaje.
                     </div>
@@ -219,226 +223,8 @@
           <!-- Form Group Puntaje del Aspecto -->
           <div class="form-group col-md-1">
             <label>Puntaje</label>
-            <input required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
-              class="form-control" ng-model="aspecto.puntajeMax" />
-              <div class="invalid-feedback">
-                  Ingrese un puntaje.
-              </div>
-          </div>
-
-          <!-- Form Group Botones del Aspecto -->
-          <div class="form-group col-md-2 d-flex align-items-center justify-content-end">
-            <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-              title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></a></button>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- Si es el tipo 3 -->
-      <div ng-show="aspecto.tipoClasificacion == 3">
-        <div class="form-row" style="padding-left: 4%;">
-
-          <!-- Form Group Nombre Aspecto -->
-          <div class="form-group col-md-3">
-            <label>Nombre del Aspecto</label>
-            <input required maxlength="25" style="padding-right: 30px;"
-              class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
-              <div class="invalid-feedback">
-                  Ingrese un nombre
-              </div>
-          </div>
-
-          <!-- Form Group Descripcion del Aspecto -->
-          <div class="form-group col-md-5">
-            <label>Descripción del Aspecto</label>
-            <input  maxlength="50"  class="form-control"
-              ng-model="aspecto.informacion" placeholder="Descripción..." />
-          </div>
-
-          <!-- Form Group Botones del Aspecto -->
-          <div class="form-group col-md-3 d-flex align-items-center justify-content-end">
-            <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-              title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></a></button>
-          </div>
-
-        </div>
-
-      </div>
-
-      </div>
-    </div>
-
-  </form>
-</div>
-
-<!-- Si es el caso de Editar Rubrica -->
-<div ng-show="mostrarEditarRubrica">
-
-  <!-- InputNomRubrica + btnGuardarRubrica -->
-
-  <!-- Form de validacion -->
-  <form id="formAct" name="formAct" class="needs-validation" novalidate>
-    <div class="form-row">
-
-      <div class="form-group col-md-2">
-        <input required type="text" class="form-control" placeholder="Nombre de la Rúbrica" ng-model="nombreRubrica">
-        <div class="invalid-feedback">
-            Este campo es requerido.
-        </div>
-      </div>
-      <div class="col">
-        <button type="submit" class="btn btn-success" ng-click="btnGuardarRubrica()">Guardar Rúbrica</button>
-      </div>
-
-    </div>
-
-    <br>
-    <!-- Boton Agregar Aspecto -->
-    <div class="row">
-      <div class="col">
-        <span style="padding-right: 10px;">Agregar Aspecto</span>
-        <button type="button" class="btn btn-primary" ng-click="btnAgregarAspecto()"><i
-            class="fas fa-plus"></i></a></button>
-      </div>
-    </div>
-    <br>
-    
-
-    <!-- En este div se encuentran los aspectos -->
-    <!-- Cada uno puede ser de 3 tipos -->
-    <div>
-      <!-- Aspectos -->
-      <div ng-repeat="aspecto in rubrica.listaAspectos" class="border border-solid rounded"
-        style=" background-color: #e9ecef; margin-bottom: 10px;">
-        <br>
-
-      <!-- Debería mostrar un aspecto dependiendo de su tipoClasificacion -->
-      <div ng-show="aspecto.tipoClasificacion == 1">
-        <div class="form-row" style="padding-left: 4%;">
-
-          <!-- Form Group Nombre Aspecto -->
-          <div class="form-group col-md-3">
-            <label>Nombre del Aspecto</label>
-            <input required maxlength="25" style="padding-right: 30px;"
-              class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
-              <div class="invalid-feedback">
-                  Ingrese un nombre.
-              </div>
-          </div>
-
-          <!-- Form Group Descripcion del Aspecto -->
-          <div class="form-group col-md-5">
-            <label>Descripción del Aspecto</label>
-            <input  maxlength="50"  class="form-control"
-              ng-model="aspecto.informacion" placeholder="Descripción..." />
-          </div>
-
-          <!-- Form Group Puntaje del Aspecto -->
-          <div class="form-group col-md-1">
-            <label>Puntaje</label>
-            <input disabled required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
-              class="form-control" ng-model="sumaInd(aspecto)"/>
-              <div class="invalid-feedback">
-                  Ingrese un puntaje.
-              </div>
-          </div>
-
-          <!-- Form Group Botones del Aspecto -->
-          <div class="form-group col-md-2 d-flex align-items-end justify-content-between">
-            <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top"
-              title="Agregar Indicador" ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></a></button>
-            <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="top"
-              title="Ocultar Indicadores" ng-click="btnOcultarIndicadores(aspecto)"><i
-                class="fa fa-minus"></i></a></button>
-            <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-              title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></a></button>
-          </div>
-
-        </div>
-
-        <div ng-show="mostrarIndicadores">
-          <!-- Form Group Mostrar Indicadores -->
-          <div class="form-group mr-2" style="padding-left: 4%;">
-            <button type="button" class="btn btn-warning" ng-show="!aspecto.mostrar"
-              ng-click="btnMostrarAspecto(aspecto)">Mostrar Indicadores</a></button>
-          </div>
-
-          <!-- Indicadores -->
-          <!-- Solo debe mostrarse para el aspecto de tipo 1 (con indicadores) -->
-          <div style="overflow-y: scroll;overflow-x: hidden;max-height: 200px;">
-            <div style="margin-left: 10%" ng-repeat="indicador in aspecto.listaIndicadores" ng-show="aspecto.mostrar">
-
-              <div class="form-row">
-
-                <!-- Form Group Nombre del Indicador -->
-                <div class="form-group col-md-3">
-                  <label>Nombre del Indicador</label>
-                  <input required maxlength="25" class="form-control"
-                    ng-model="indicador.descripcion" placeholder="Nombre..." />
-                    <div class="invalid-feedback">
-                        Ingrese un nombre.
-                    </div>
-                </div>
-
-                <!-- Form group Descripcion del Indicador -->
-                <div class="form-group col-md-3">
-                  <label>Descripción del Indicador</label>
-                  <input maxlength="50"  class="form-control"
-                    ng-model="indicador.informacion" placeholder="Descripción..." />
-                </div>
-
-                <!-- Form group Puntaje del Indicador -->
-                <div class="form-group col-md-1">
-                  <label>Puntaje</label>
-                  <input required type="number" min="0" max="20" 
-                    class="form-control" ng-model="indicador.puntajeMax" />
-                    <div class="invalid-feedback">
-                        Ingrese un puntaje.
-                    </div>
-                </div>
-
-                <!-- Form Group Boton Eliminar Indicador -->
-                <div class="form-group col-md-3 d-flex align-items-end">
-                  <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-                    title="Eliminar Indicador" ng-click="btnQuitarIndicador(aspecto, indicador)"><i
-                      class="fas fa-times"></i></a></button>
-                </div>
-                <br>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Si es el tipo 2 -->
-      <div ng-show="aspecto.tipoClasificacion == 2">
-        <div class="form-row" style="padding-left: 4%;">
-
-          <!-- Form Group Nombre Aspecto -->
-          <div class="form-group col-md-3">
-            <label>Nombre del Aspecto</label>
-            <input required maxlength="25" style="padding-right: 30px;"
-              class="form-control" ng-model="aspecto.descripcion" placeholder="Nombre..." />
-              <div class="invalid-feedback">
-                  Ingrese un nombre.
-              </div>
-          </div>
-
-          <!-- Form Group Descripcion del Aspecto -->
-          <div class="form-group col-md-5">
-            <label>Descripción del Aspecto</label>
-            <input maxlength="50"  class="form-control"
-              ng-model="aspecto.informacion" placeholder="Descripción..." />
-          </div>
-
-          <!-- Form Group Puntaje del Aspecto -->
-          <div class="form-group col-md-1">
-            <label>Puntaje</label>
-            <input required type="number" min="0" max="20" maxlength="2" style="border-width:2px !important;"
-              class="form-control" ng-model="aspecto.puntajeMax" />
+            <input required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="2" style="border-width:2px !important;"
+              class="form-control" ng-model="aspecto.puntajeMax"/>
               <div class="invalid-feedback">
                   Ingrese un puntaje.
               </div>

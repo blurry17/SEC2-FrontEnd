@@ -48,32 +48,20 @@
     <h2>Grupos</h2>
 
     <div class="row justify-content-between">
+        <div>
+
+        </div>
         <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-            <button class="btn btn-success" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
-                actividad</button>
+            <button class="btn btn-success" ng-click="btnAgregarAgrupacion()"><i class="fas fa-plus"></i>&nbspAgregar
+                agrupación</button>
         </div>
     </div>
 
     <div class="row" style="padding-top: 15px">
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px" ng-repeat="act in lstActividad">
-            <div class="card text-center border-dark" style="border-width: 3px">
-                <div class="card-body">
-                    <h5 class="card-title">{{act.nombre}}&nbsp<i class="fas fa-user"></i></h5>
-                    <p class="card-text">{{act.desc}}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
-                    <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
-                    <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>
-                </ul>
-                <div class="card-body">
-                    <button id="btnVer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
-                        title="Ver" ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
-                    <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"
-                        ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>
-                </div>
-            </div>
-        </div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="grupo in lstGrupos">
+            </li>
+        </ul>
     </div>
 </div>
 <div class="modal fade" id="mdAgregarActividad" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
@@ -108,7 +96,8 @@
                     </div>
                     <div class="form-group">
                         <label>Indicaciones</label>
-                        <textarea class="form-control" ng-model="regAct.descripcion" maxlength="250" required></textarea>
+                        <textarea class="form-control" ng-model="regAct.descripcion" maxlength="250"
+                            required></textarea>
                         <div class="invalid-feedback">
                             Este campo es requerido.
                         </div>
@@ -236,6 +225,113 @@
                 <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()"
                     ng-show="!nuevo">Guardar</button>
                 <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdAgregarAgrupacion" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar agrupación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="btn-group" role="group">
+                    <button ng-click="btnCrearGrupos()" type="button" class="btn btn-success">Crear Grupos</button>
+                </div>
+                <div class="row" ng-show="creacionGrupos">
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="al in lstAluSinGrupos" style="cursor: pointer"
+                                        ng-click="agregarAlu($index,al)">
+                                        <td>{{al.codigoPUCP}}</td>
+                                        <td>{{al.nombre}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="text-align: center">
+                        <h1><i class="fas fa-arrow-right"></i></h1>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="al in lstNuevoGrupo">
+                                        <td>{{al.codigoPUCP}}</td>
+                                        <td>{{al.nombre}}</td>
+                                        <td>
+                                            <button class="btn btn-danger" ng-click="elimAlu($index,al)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="text-align: center">
+                            <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+                                Debe ingresar un nombre del grupo
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-show="showAlert2">
+                                Grupo vacío
+                            </div>
+                            <div class="form-group" style="display: inline-block">
+                                <input ng-model="Reg.nomGrupo" class="form-control" placeholder="Nombre del grupo">
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar
+                                grupo</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%">Grupo</th>
+                                        <th style="width: 20%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="grupo in lstGrupos">
+                                        <td>{{grupo.nombre}}</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" ng-click="verGrupo(grupo)">
+                                                <i class="fas fa-list-ul"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" ng-click="elimGrupo($index, grupo)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-show="!lstAluSinGrupos.length && !lstNuevoGrupo.length" style="text-align: center">
+                            <button class="btn btn-success" ng-click="btnTerminar()">Terminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

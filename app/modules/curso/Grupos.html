@@ -7,11 +7,6 @@
         </ol>
     </nav>
     <h1>Grupos</h1>
-
-    <div class="btn-group" role="group">
-        <button ng-click="btnCrearGrupos()" type="button" class="btn btn-success">Crear Grupos</button>
-    </div>
-
     <div class="row" ng-show="creacionGrupos">
         <div class="col-md-5">
             <div class="table-responsive">
@@ -94,6 +89,33 @@
             </div>
             <div ng-show="!lstAluSinGrupos.length && !lstNuevoGrupo.length" style="text-align: center">
                 <button class="btn btn-success" ng-click="btnTerminar()">Terminar</button>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="mostrarGrupos">
+        <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="grupo in lstGrupos">{{grupo.nombreGrupo}}<button style="float: right" class="btn btn-primary" ng-click="mostrarIntegrantes(grupo)"><i class="fas fa-bars"></i></button></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-md modal-dialog" id="mdVerGrupo" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label
+                    ng-repeat="al in lstVerGrupo">{{al.codigoPucp + ' - ' + al.nombre + ' ' + al.apellidoPaterno + ' ' + al.apellidoMaterno}}</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
