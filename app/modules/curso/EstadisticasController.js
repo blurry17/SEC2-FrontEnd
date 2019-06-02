@@ -33,7 +33,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
       //console.dir(res.data);
       $scope.mediaS=res.data.media;
-      $scope.desv=res.data.desciavionEstandar;
+      $scope.desv=res.data.desviacionsEstandar;
       $scope.porcentaje=res.data.porcentajeAprobados;
       $scope.notaMaxS=res.data.notaMax;
       $scope.notaMinS=res.data.notaMin;
@@ -67,8 +67,8 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $scope.gb = false;
     var data = google.visualization.arrayToDataTable([
       ['Task', 'Percent'],
-      ['Aprobados', 60],
-      ['Desaprobados', 40]
+      ['Aprobados', $scope.porcentaje],
+      ['Desaprobados', 100 - $scope.porcentaje]
     ]);
 
     var options = {
@@ -83,13 +83,17 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   function drawChartB() {
     $scope.gb = true;
     $scope.gc = false;
-    var data = google.visualization.arrayToDataTable([
-      ['Notas', 'Aprobados ', 'Desaprobados'],
-      ['0-5', 0, 3],
-      ['6-10', 0, 4],
-      ['11-15', 10, 0],
-      ['16-20', 3, 0]
-    ]);
+
+    var arregloFrec = [];
+    arregloFrec.push(['Notas','Frecuencia'])
+    for (let i = 0; i < $scope.listaFrec.length; i++) {
+       arregloFrec.push([$scope.listaFrec[i].nota,$scope.listaFrec[i].frecuencia])
+    } 
+
+    console.dir(arregloFrec);
+    var data = google.visualization.arrayToDataTable(arregloFrec);
+
+    
 
     var options = {
       chart: {
