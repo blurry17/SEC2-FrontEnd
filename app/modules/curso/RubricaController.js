@@ -18,8 +18,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     //Verificando que si hay una rubrica asignada
     //Se muestre al entrar a la rubrica
     function mostrarRubricaActual(){
-        console.dir($scope.actividad.idRubrica)
-        console.dir(JSON.stringify($scope.rubrica))
         if($scope.actividad.idRubrica != null){
             $scope.hayRubrica = true;
             var params = {
@@ -27,8 +25,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             }
             //Si hay un idRubrica, llamar al servicio
             serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-                console.dir(res.data);
-                console.dir("hay rubrica mostrandola...")
                 $scope.nomRubrica = res.data.nombreRubrica;
                 $scope.lstAspectos = res.data.listaAspectos;
                 $scope.rubrica.listaAspectos = res.data.listaAspectos;
@@ -49,10 +45,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         }
     }
 
-    //console.dir('Soy rubricaeditar' + $scope.rubricaEditar)
-
-
-
     $scope.btnEditarRubrica = function () {
         $("#formAct").addClass("was-validated");
         //validando que la rubrica tenga nombre
@@ -60,12 +52,8 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
             $scope.rubrica.nombreRubrica = $scope.nomRubrica;
             $scope.rubrica.idActividad = $scope.actividad.idActividad;
-            $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;
-            console.dir("json enviado de editar rubrica")
-            console.dir(JSON.stringify($scope.rubrica))
-            
+            $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;            
             serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
-                console.dir(response);
                 $scope.mostrarRubrica = false;
                 window.alert("Se guardaron los cambios!")
             })
@@ -75,22 +63,16 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $("#formAct").addClass("was-validated");
         //validando que la rubrica tenga nombre
             $scope.mostrarCrearRubrica = false;
-            console.dir($scope.rubrica);
-
             $scope.rubrica.nombreRubrica = $scope.nomRubrica;
             $scope.rubrica.idActividad = $scope.actividad.idActividad;
             
             serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
-                console.dir(response);
                 $scope.mostrarRubrica = false;
                 window.alert("Se guardó la Rúbrica!")
             })
 
         
     }
-
-
-
 
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
 
@@ -118,7 +100,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             sum += parseInt(asp.listaIndicadores[i].puntajeMax);            
         }
         /* Asigno la suma al puntajeMax del aspecto */
-        $scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
+        //$scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
         return sum;
     }
 
@@ -147,34 +129,27 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             idActividad: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            console.dir(res.data);
             $scope.lstAspectos = res.data.listaAspectos;
 
             /* Obtener la suma de los indicadores para mostrarlo*/
             $scope.lstAspectos.forEach(aspecto => {
-                $scope.puntajeAcumuladoRubricaVista = 0;
-                aspecto.listaIndicadores.forEach(indicador => {
-                    $scope.puntajeAcumuladoRubricaVista += indicador.puntajeMax
-                });
-                
+                if(aspecto.puntajeMax != null){
+                    $scope.puntajeAcumuladoRubricaVista = aspecto.puntajeMax
+                }
             });
 
         })
         
         $('#mdVistaPrevia').appendTo("body").modal('show');
         
-        //$scope.mostrarCrearRubrica = true;    
-        console.dir($scope.lstAspectos);
+        //$scope.mostrarCrearRubrica = true;
     }
 
     
 
 
     /* Función crear rúbrica desde 0. Preguntar el tipo de rúbrica */
-    $scope.btnAspectoConIndicadores = function () {
-        console.dir("Escogi el aspecto tipo 1")
-        console.dir("Se agrego un aspecto con indicadores...");
-                
+    $scope.btnAspectoConIndicadores = function () {                
         $scope.rubrica.listaAspectos.unshift({
             //datos del aspecto
             descripcion: '',
@@ -183,13 +158,10 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 1
-        });
-        
+        });        
     }
-    $scope.btnAspectoConPuntaje = function () {
-        console.dir("Escogi el aspecto tipo 2")
-        console.dir("Se agrego un aspecto con puntaje...");
-        
+
+    $scope.btnAspectoConPuntaje = function () {        
         $scope.rubrica.listaAspectos.unshift({
             //datos del aspecto
             descripcion: '',
@@ -201,10 +173,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         });
         
     }
-    $scope.btnAspectoSinPuntaje = function () {
-        console.dir("Escogi el aspecto tipo 3")
-        console.dir("Se agrego un aspecto sin puntaje...");
-         
+    $scope.btnAspectoSinPuntaje = function () {         
         $scope.rubrica.listaAspectos.unshift({
             //datos del aspecto
             descripcion: '',
@@ -213,8 +182,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 3
-        });
-        
+        });        
     }
 
     /* Funciones Aspectos */
@@ -227,7 +195,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         if (!aspecto.mostrar) {
             aspecto.mostrar = !(aspecto.mostrar);
         }
-
     }
 
     $scope.btnOcultarIndicadores = function (aspecto) {
@@ -252,7 +219,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                 puntajeMax: null,
                 tipo: 'NOTA'
             });
-            console.dir($scope.rubrica.listaAspectos)
         }
 
     }
@@ -261,13 +227,10 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         var pos = aspecto.listaIndicadores.indexOf(indicador)
         aspecto.listaIndicadores.splice(pos, 1)
     }
-    console.dir($scope.lstAspectos)
-
 
     function init() {
         mostrarRubricaActual();
     }
 
     init();
-
 })

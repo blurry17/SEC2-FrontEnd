@@ -3,24 +3,34 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.actividad = $cookies.getObject('actividadActual');
-
-
     $scope.lstAluSinGrupos = [];
     $scope.lstNuevoGrupo = [];
     $scope.lstGrupos = [];
+    $scope.lstVerGrupo = [];
     $scope.creacionGrupos = false;
     $scope.showAlert1 = false;
     $scope.Reg = {
         nomGrupo: ''
     }
 
-    var params = {
-        idActividad: 1
+    function mostrarGrupos() {
+        var params = { idActividad: $scope.actividad.idActividad };    
+        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
+            console.dir(res.data);
+            if(res.data.length == 0){
+                $scope.creacionGrupos = true;
+                var params = {
+                    idActividad: $scope.actividad.idActividad
+                }
+                serviceCRUD.TypePost('actividad/alumnos', params).then(function(res){
+                    $scope.lstAluSinGrupos = res.data;
+                })
+            } else {
+                $scope.lstGrupos = res.data;
+                $scope.mostrarGrupos = true;
+            }
+        })
     }
-
-    serviceCRUD.TypePost('actividad/alumnos', params).then(function(res){
-        $scope.lstAluSinGrupos = res.data
-    })
 
     $scope.btnCrearGrupos = function() {
         $scope.creacionGrupos = true;
@@ -37,6 +47,9 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     }
 
     $scope.btnGuardarGrupo = function() {
+        $scope.showAlert1 = false;
+        $scope.showAlert2 = false;
+
         if (!$scope.Reg.nomGrupo){
             $scope.showAlert1 = true;
             return;
@@ -63,11 +76,34 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         for (let i = 0; i < gr.lstAlumnos.length; i++){
             $scope.lstAluSinGrupos.push(gr.lstAlumnos[i]);
         }
-
         $scope.lstGrupos.splice(i, 1);
     }
 
-    $scope.verGrupo = function() {
-
+    $scope.mostrarIntegrantes = function(grupo) {
+        var params = {
+            idGrupo: grupo.idGrupo
+        }
+        serviceCRUD.TypePost('grupo/integrantes', params).then(function(res){
+            console.dir(res.data);
+            $scope.lstVerGrupo = res.data;
+            $('#mdVerGrupo').appendTo("body").modal('show');
+        })
     }
+
+    $scope.btnTerminar = function() {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            grupos: $scope.lstGrupos
+        }
+        serviceCRUD.TypePost('grupo/crear', params).then(function(res){
+            $scope.creacionGrupos = false;
+            mostrarGrupos();
+        })   
+    }
+
+    function init(){
+        mostrarGrupos();
+    }
+
+    init();
 })
