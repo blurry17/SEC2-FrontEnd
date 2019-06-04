@@ -25,7 +25,14 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.error=false;
     
     $scope.ejemplo=[];
-
+    $scope.regAlarma = {
+        asunto : '',
+        mensaje:'',
+        fechaEjecucion : new Date(),
+        horaInicio : '',
+        minInicio : '00',
+        nombre : ''
+    }
     $scope.btnAgregarComentario= function() {
      }
 
@@ -366,6 +373,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
     $scope.btnAlerta= function(){
         // se tiene q validar que ya exite una alarma...
+
         $("#mdCrearAlarma").appendTo("body").modal('show');
     }
     $scope.btnGuardarAlerta = function(){
@@ -374,14 +382,19 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         $scope.regAlarma.fechaEjecucion.setSeconds(0);
         $scope.regAlarma.fechaEjecucion.setMilliseconds(0);
         $scope.regAlarma.fechaEjecucion.setMinutes($scope.regAlarma.fechaEjecucion.getMinutes() - $scope.regAlarma.fechaEjecucion.getTimezoneOffset() + parseInt($scope.regAlarma.minInicio));
-        $scope.regAlarma.fechaEjecucion.setHours($scope.regAlarma.fechaEjecucion.getHours() + parseInt($scope.regAlarma.fechaEjecucion));        
+        $scope.regAlarma.fechaEjecucion.setHours($scope.regAlarma.fechaEjecucion.getHours() + parseInt($scope.regAlarma.horaInicio));        
 
         var params={
             idActividad: $scope.actividad.idActividad,
             asunto: $scope.regAlarma.asunto,
             mensaje: $scope.regAlarma.mensaje,
-            fechaEjecucion: $scope.regAlarma.fechaEjecucion
+            fechaEjecucion: $scope.regAlarma.fechaEjecucion,
+            nombre : $scope.regAlarma.nombre
         }
+
+        serviceCRUD.TypePost('actividad/alarma/crear',params).then(function(res){
+            $("#mdCrearAlarma").modal('hide');
+        })
     }
 
 })
