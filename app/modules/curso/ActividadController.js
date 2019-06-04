@@ -13,7 +13,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.esIndividual = false;
     $scope.esGrupal = false;
     $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
-
+    
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false;
     $scope.agregar=false;
@@ -225,6 +225,10 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.btnComentarios = function () {
         $location.path("comentarios")
     }
+
+    $scope.btnComentarios = function(){
+        $location.path("alarmas")
+    }
     
     $scope.deleteFam = function (fam) {
         let pos = $scope.listaFam.indexOf(fam);
@@ -358,6 +362,26 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
         $scope.eliminado=!($scope.eliminado);
         $("#mdSeElimino").appendTo("body").modal('show');
+    }
+
+    $scope.btnAlerta= function(){
+        // se tiene q validar que ya exite una alarma...
+        $("#mdCrearAlarma").appendTo("body").modal('show');
+    }
+    $scope.btnGuardarAlerta = function(){
+        $scope.regAlarma.fechaEjecucion.setMinutes(0);
+        $scope.regAlarma.fechaEjecucion.setHours(0);
+        $scope.regAlarma.fechaEjecucion.setSeconds(0);
+        $scope.regAlarma.fechaEjecucion.setMilliseconds(0);
+        $scope.regAlarma.fechaEjecucion.setMinutes($scope.regAlarma.fechaEjecucion.getMinutes() - $scope.regAlarma.fechaEjecucion.getTimezoneOffset() + parseInt($scope.regAlarma.minInicio));
+        $scope.regAlarma.fechaEjecucion.setHours($scope.regAlarma.fechaEjecucion.getHours() + parseInt($scope.regAlarma.fechaEjecucion));        
+
+        var params={
+            idActividad: $scope.actividad.idActividad,
+            asunto: $scope.regAlarma.asunto,
+            mensaje: $scope.regAlarma.mensaje,
+            fechaEjecucion: $scope.regAlarma.fechaEjecucion
+        }
     }
 
 })
