@@ -33,5 +33,6 @@
   }
 
   $scope.btnForgotPassword = function () {
+    $('#mdAdministrarUsuarios').appendTo("body").modal('show');
   }
 })
