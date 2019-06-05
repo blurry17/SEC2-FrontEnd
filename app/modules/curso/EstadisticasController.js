@@ -16,28 +16,57 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   $scope.gc = false;
   $scope.gb = false;
   $scope.seleccion = 'g';
-
   
 
+  var params = { idActividad: $scope.actividad.idActividad }
+
+
   function listarRanking() {
-    var params = { idActividad: $scope.actividad.idActividad }
-    console.dir(params);
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
-      console.dir(res.data);
+      //console.dir(res.data);
       $scope.listaR = res.data.lista5Alumnos;
     })
   }
 
-  listarRanking()
+  function tablaPorcentajes() {
+    serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
+      //console.dir(res.data);
+      $scope.mediaS = res.data.media;
+      $scope.desv = res.data.desviacionsEstandar;
+      $scope.porcentaje = res.data.porcentajeAprobados;
+      $scope.notaMaxS = res.data.notaMax;
+      $scope.notaMinS = res.data.notaMin;
+      $scope.numNotasS = res.data.numNotas;
+    })
+  }
+
+  function tablaNotas() {
+    serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
+      console.dir(res.data);
+      $scope.listaN = res.data.listaNotas;
+      $scope.listaFrec = res.data.notaFrecuencia;
+      for (let i = 0; i < $scope.listaFrec.length; i++) {
+        console.dir(i);
+        $scope.listaFrec[i].nota = res.data.listaFrec[i].nota;
+        $scope.listaFrec[i].frecuencia = res.data.listaFrec[i].frecuencia;
+      }
+      $scope.cantidadN = res.data.cantidadNotas;
+      $scope.cantidadF = res.data.cantidadFalta;
+      $scope.cantidadT = res.data.cantidadTotal;
+      //console.dir($scope.cantidadF);
+      console.dir(res.data.cantidadFalta);
+    })
+
+  }
 
   function drawChartC() {
-    
+
     $scope.gc = true;
     $scope.gb = false;
     var data = google.visualization.arrayToDataTable([
       ['Task', 'Percent'],
-      ['Aprobados', 60],
-      ['Desaprobados', 40]
+      ['Aprobados', $scope.porcentaje],
+      ['Desaprobados', 100 - $scope.porcentaje]
     ]);
 
     var options = {
@@ -52,17 +81,21 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   function drawChartB() {
     $scope.gb = true;
     $scope.gc = false;
-    var data = google.visualization.arrayToDataTable([
-      ['Notas', 'Aprobados ', 'Desaprobados'],
-      ['0-5', 0, 3],
-      ['6-10', 0, 4],
-      ['11-15', 10, 0],
-      ['16-20', 3, 0]
-    ]);
+
+    var arregloFrec = [];
+    arregloFrec.push(['Notas', 'Frecuencia'])
+    for (let i = 0; i < $scope.listaFrec.length; i++) {
+      arregloFrec.push([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia])
+    }
+
+    console.dir(arregloFrec);
+    var data = google.visualization.arrayToDataTable(arregloFrec);
+
+
 
     var options = {
       chart: {
-        title: 'Resultados:'
+        title: 'Estadisticas de notas'
       },
       bars: 'vertical' // Required for Material Bar Charts.
     };
@@ -84,4 +117,16 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
       $scope.gb = true;
     }
   }
+
+
+  function init() {
+    tablaPorcentajes()
+    tablaNotas();
+    listarRanking();
+  }
+
+init();
+
 })
+
+
