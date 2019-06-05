@@ -11,7 +11,9 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.mostrarCoeval = false;
     $scope.mostrarBtns = false;
     $scope.bloqEval = false;
+    $scope.edicion = false;
     $scope.rubrica = {
+        flgRubricaEspecial: 0,
         idActividad: $scope.actividad.idActividad,
         idUsuarioCreador: $scope.usuario.idUser,
         nombreRubrica: '',
@@ -55,14 +57,32 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.btnGuardarRubrica = function () {
         $("#formEva").addClass("was-validated");
         if (formEva.checkValidity()) {
-            console.dir('guardar');
+            console.dir('entra');
+            for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
+                    for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
+                        $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].grado = k + 1;                        
+                    }
+                }
+            }
+            if ($scope.edicion == true) {
+                console.dir('editar rubrica');
+                $scope.bloqEval = true;
+                $scope.edicion = false;
+                $scope.mostrarBtns = false;
+                $scope.mostrarBtnEditar = true;
+                serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (res) {
+                })
+            } else {
+                console.dir('crear rubrica');   
+                $scope.bloqEval = true;
+                $scope.mostrarBtns = false;
+                $scope.mostrarBtnEditar = true;
+                console.dir($scope.rubrica);
+                serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
+                })
+            }
             $scope.mostrarCrearRubrica = false;
-            console.dir($scope.rubrica);
-
-            /* serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
-                $scope.mostrarRubrica = false;
-                window.alert("Se guardó la Rúbrica!")
-            }) */
         }
     }
 
@@ -237,14 +257,35 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     }
 
     $scope.btnEdicion = function() {
-        $scope.bloqEval = false;
         $scope.edicion = true;
         $scope.mostrarBtnEditar = false;
-        $scope.mostrarBtns = true;
+        $scope.mostrarBtns = true;        
+        $scope.bloqEval = false;
+        $("#formEva").removeClass("was-validated");
+    }
+
+    $scope.obtenerAutoeval = function() {
+        var params = { idActividad: $scope.actividad.idActividad };
+        serviceCRUD.TypePost('auto-evaluacion/listarPreguntas', params).then(function(res){
+            if(res.data.succeed == false){
+                console.dir('no hay autoevaluacion');
+            }
+        })
+    }
+
+    $scope.obtenerCoeval = function() {
+        var params = { idActividad: $scope.actividad.idActividad };
+        serviceCRUD.TypePost('co-evaluacion/listarPreguntas', params).then(function(res){
+            if(res.data == null){
+                console.dir('no hay coevaluacion');
+            }
+        })
     }
 
     function init() {
         mostrarRubricaActual();
+        $scope.obtenerAutoeval();
+        $scope.obtenerCoeval();
     }
 
     init();

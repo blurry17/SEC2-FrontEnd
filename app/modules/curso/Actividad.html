@@ -15,50 +15,13 @@
 
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
-      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
-      <div>
-        <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-dark" 
-        style="margin: 2px;height: 32px;">Evaluaciones</button>
-        <div class="dropdown-menu">
-            <a class="dropdown-item" style="cursor:pointer" ng-click="btnRubrica()"><i
-                class="fas fa-pen"></i>&nbspEvaluación</a>
-            <a ng-if="actividad.tipo=='G'" class="dropdown-item" style="cursor:pointer" ng-click="btnRubrica()"><i
-                class="fas fa-pen"></i>&nbspCoevaluación</a>
-            <a class="dropdown-item" style="cursor:pointer" ng-click="btnRubrica()"><i
-                class="fas fa-pen"></i>&nbspAutoevaluación</a>
-          </div>
-      </div>
-      
+      <button ng-show="actividad.idRubrica != null" ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
+      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Hojas de evaluación</button>
       <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos</button>
       <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
         style="margin: 2px;height: 32px;">Comentarios</button>
       <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Alertas</button>
       <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;height: 32px;">Estadísticas</button>
-
-<!--
-      <div ng-if="actividad.tipo=='G'">
-        <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-dark"
-          style="margin: 2px;height: 32px;">Coevaluación</button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" style="cursor:pointer" ng-click="btnCoEvaluacion()"><i
-              class="fas fa-plus"></i>&nbspCrear</a>
-          <a class="dropdown-item" style="cursor:pointer" ng-click="btnVerCoEval()"><i
-              class="fas fa-eye"></i>&nbspVer</a>
-        </div>
-      </div>
-
-      <div>
-
-        <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-dark dropdown-toggle"
-          style="margin: 2px;height: 32px;">AutoEvaluacion</button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" style="cursor: pointer" ng-click="btnAutoEvaluacion()"><i
-              class="fas fa-plus"></i>&nbspCrear</a>
-          <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoEval()"><i
-              class="far fa-eye"></i>&nbspVer</a>
-        </div>
-      </div>
-      -->
       <div>
         <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdErrorCoEval" tabindex="-1" role="dialog"
           data-backdrop="static" aria-hidden="true">
