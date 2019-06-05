@@ -11,8 +11,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.notaFinal = null;
     $scope.flgCalificado = null;
     $scope.editar = null;
+    $scope.auxNotaNivel=0;
 
-    $scope.sumaInd = function (asp) {
+    /* $scope.sumaInd = function (asp) {
         if (asp.tipoClasificacion != 1) return null;
         var sum = 0;
         for (let i = 0; i < asp.listaNotaIndicador.length; i++) {
@@ -20,13 +21,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
         asp.nota = sum;
         return sum;
-    }
+    } */
 
     $scope.rubrica = {
         flgRubricaEspecial: 0,
         idUsuarioCreador: $scope.usuario.idUser,
         nombreRubrica: $scope.nomRubrica,
-        lstAspectos: []
+        lstAspectos: [],
     }
 
     $scope.btnEditar = function() {
@@ -81,12 +82,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     }
 
     $scope.btnGuardarPuntaje = function () {
+        /* 
         for (let i = 0; i < $scope.lstAspectos.length; i++) {
             if ($scope.lstAspectos[i].tipoClasificacion != 3) {
-                if ($scope.lstAspectos[i].nota == null || $scope.lstAspectos[i].nota == NaN){
-                    window.alert('Falta registrar la nota de un aspecto');
-                    return;
-                }
                 if ($scope.lstAspectos[i].tipoClasificacion == 1) {
                     for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
                         if ($scope.lstAspectos[i].listaNotaIndicador[j].nota == null || $scope.lstAspectos[i].listaNotaIndicador[j].nota == NaN){
@@ -97,20 +95,43 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 }
             }
         }
+        */
+       for (let i = 0; i < $scope.lstAspectos.length; i++) {
+        if ($scope.lstAspectos[i].tipoClasificacion != 3) {
+            if ($scope.lstAspectos[i].tipoClasificacion == 1) {
+                for (let j = 0; j < $scope.lstAspectos[i].listaIndicadores.length; j++) {
+                    for (let k = 0; k < $scope.lstAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
+                        if ($scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == null || $scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == NaN){
+                            window.alert('Falta registrar la nota de un nivel');
+                            return;
+                        }
+                    }
 
-        if ($scope.notaFinal == null || $scope.notaFinal == NaN) {
-            window.alert('Falta registrar la nota final');
-            return;
+                }
+            }
         }
+    }
 
         window.confirm('¿Está seguro que desea guardar?');
-
+/*  
         for (let i = 0; i < $scope.lstAspectos.length; i++) {
             if ($scope.lstAspectos[i].tipoClasificacion != 3) {
                 $scope.lstAspectos[i].nota = parseInt($scope.lstAspectos[i].nota);
                 if ($scope.lstAspectos[i].tipoClasificacion == 1) {
                     for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
                         $scope.lstAspectos[i].listaNotaIndicador[j].nota = parseInt($scope.lstAspectos[i].listaNotaIndicador[j].nota);
+                    }
+                }
+            }
+*/
+        for (let i = 0; i < $scope.lstAspectos.length; i++) {
+            if ($scope.lstAspectos[i].tipoClasificacion != 3) {
+                $scope.lstAspectos[i].nota = parseInt($scope.lstAspectos[i].nota);
+                if ($scope.lstAspectos[i].tipoClasificacion == 1) {
+                    for (let j = 0; j < $scope.lstAspectos[i].listaIndicadores.length; j++) {
+                        for (let k = 0; k < $scope.lstAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
+                            $scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje = parseInt($scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje);    
+                        }
                     }
                 }
             }
@@ -175,18 +196,24 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     function ListarAlumnos() {
         var params = { idActividad: $scope.actividad.idActividad }
-        serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
+        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
             $scope.listaAl = res.data.lista;
             console.dir(res.data);
         })
     }
 
+    $scope.elegirNivel=function(nivel){
+        $scope.auxNotaNivel=nivel.puntaje;
+    }
+
     function ObtenerRubrica() {
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            //$scope.lstAspectos = res.data.listaAspectos;
             
+            $scope.rubrica.lstAspectos = res.data.listaAspectos;
             console.dir(res.data);
+            
+            console.dir($scope.rubrica.lstAspectos);
             $scope.idRub = res.data.idRubrica;
             
             /* for (let i = 0; i < $scope.lstAspectos.length; i++) {
