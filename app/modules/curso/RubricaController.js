@@ -1,98 +1,92 @@
-
-app.controller('RubricaController',function($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD){ 
+app.controller('RubricaController',function($rootScope, $scope, $location, $cookies, serviceCRUD){ 
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $scope.actividad = $cookies.getObject('actividadActual');
     $rootScope.lstCursos = $cookies.getObject('cursos');
-
-    /* Variables */
     $scope.mostrarCrearRubrica = false;
     $scope.mostrarEditarRubrica = false;
     $scope.mostrarAspecto = true;
-    $scope.mostrarRubrica = false
-    $scope.mostrarIndicadores = true;
-    $scope.puntajeAcumuladoRubricaVista = 0;
-    $scope.hayRubrica = false;
-    //$scope.rubricaEditar = null;
+    $scope.mostrarRubrica = false;
+    $scope.mostrarAutoeval = false;
+    $scope.mostrarCoeval = false;
+    $scope.mostrarBtns = false;
+    $scope.bloqEval = false;
+    $scope.edicion = false;
+    $scope.rubrica = {
+        flgRubricaEspecial: 0,
+        idActividad: $scope.actividad.idActividad,
+        idUsuarioCreador: $scope.usuario.idUser,
+        nombreRubrica: '',
+        listaAspectos: [],
+        tipo: null
+    }
 
-    //Verificando que si hay una rubrica asignada
-    //Se muestre al entrar a la rubrica
-    function mostrarRubricaActual(){
-        if($scope.actividad.idRubrica != null){
-            $scope.hayRubrica = true;
-            var params = {
-                idActividad: $scope.actividad.idActividad
-            }
-            //Si hay un idRubrica, llamar al servicio
+    function mostrarRubricaActual() {
+        if ($scope.actividad.idRubrica != null) {
+            var params = { idActividad: $scope.actividad.idActividad }
             serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-                $scope.nomRubrica = res.data.nombreRubrica;
-                $scope.lstAspectos = res.data.listaAspectos;
-                $scope.rubrica.listaAspectos = res.data.listaAspectos;
-    
-                /* Obtener la suma de los indicadores para mostrarlo*/
-                $scope.lstAspectos.forEach(aspecto => {
-                    $scope.puntajeAcumuladoRubricaVista = 0;
-                    aspecto.listaIndicadores.forEach(indicador => {
-                        $scope.puntajeAcumuladoRubricaVista += indicador.puntajeMax
-                    });
-                    
-                });
+                $scope.rubrica = res.data;
+                for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+                    $scope.rubrica.listaAspectos[i].mostrar = true;
+                    for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
+                        $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
+                }
+                $scope.bloqEval = true;
+                $scope.mostrarBtnEditar = true;
+                $scope.mostrarBtns = false;
                 $scope.mostrarRubrica = true;
-    
             })
-
-
+        } else {
+            $scope.rubrica.nombreRubrica = '';
+            $scope.rubrica.listaAspectos = [];
         }
     }
 
     $scope.btnEditarRubrica = function () {
-        $("#formAct").addClass("was-validated");
-        //validando que la rubrica tenga nombre
-            $scope.mostrarCrearRubrica = false;
-
-            $scope.rubrica.nombreRubrica = $scope.nomRubrica;
-            $scope.rubrica.idActividad = $scope.actividad.idActividad;
-            $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;            
-            serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
-                $scope.mostrarRubrica = false;
-                window.alert("Se guardaron los cambios!")
-            })
+        $("#formEva").addClass("was-validated");
+        $scope.mostrarCrearRubrica = false;
+        $scope.rubrica.nombreRubrica = $scope.nomRubrica;
+        $scope.rubrica.idActividad = $scope.actividad.idActividad;
+        $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;
+        serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
+            $scope.mostrarRubrica = false;
+            window.alert("Se guardaron los cambios!")
+        })
     }
 
     $scope.btnGuardarRubrica = function () {
-        $("#formAct").addClass("was-validated");
-        //validando que la rubrica tenga nombre
+        $("#formEva").addClass("was-validated");
+        if (formEva.checkValidity()) {
+            console.dir('entra');
+            for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
+                    for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
+                        $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].grado = k + 1;                        
+                    }
+                }
+            }
+            if ($scope.edicion == true) {
+                console.dir('editar rubrica');
+                $scope.bloqEval = true;
+                $scope.edicion = false;
+                $scope.mostrarBtns = false;
+                $scope.mostrarBtnEditar = true;
+                serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (res) {
+                })
+            } else {
+                console.dir('crear rubrica');   
+                $scope.bloqEval = true;
+                $scope.mostrarBtns = false;
+                $scope.mostrarBtnEditar = true;
+                console.dir($scope.rubrica);
+                serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
+                })
+            }
             $scope.mostrarCrearRubrica = false;
-            $scope.rubrica.nombreRubrica = $scope.nomRubrica;
-            $scope.rubrica.idActividad = $scope.actividad.idActividad;
-            
-            serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (response) {
-                $scope.mostrarRubrica = false;
-                window.alert("Se guardó la Rúbrica!")
-            })
-
-        
+        }
     }
 
     $("[data-toggle=tooltipOcultarAspecto]").tooltip();
-
-    $scope.rubrica = {
-        flgRubricaEspecial: 0,
-        idUsuarioCreador: $scope.usuario.idUser,
-        nombreRubrica: $scope.nomRubrica,
-        listaAspectos: [],
-        idRubricaActual: null
-
-    }
-
-
-
-    /* Inicializando la lista de aspectos */
-    $scope.lstAspectos = []
-
-    /* Funciones Rubrica */
-
-    /* Obteniendo el puntaje acumulado de los indicadores */
 
     $scope.sumaInd = function(asp){
         var sum = 0;
@@ -106,8 +100,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
 
     $scope.btnCrearRubrica = function () {
-        //Preguntar si quiere crear una nueva rubrica
-        //Solamente si ya hay una rubrica creada
         if($scope.actividad.idRubrica != null){
             $scope.hayRubrica = true;
             var r = window.confirm("Esta actividad ya tiene una rúbrica. ¿Desea crear una nueva?");
@@ -120,74 +112,98 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         }
     }
 
+    $scope.btnCrearEvaluacion = function () {
+        if ($scope.actividad.idRubrica != null) {
+            var r = window.confirm("Esta actividad ya tiene una hoja de evaluación. ¿Desea crear una nueva?");
+            if (r) {
+                $scope.rubrica.nombreRubrica = '';
+                $scope.rubrica.listaAspectos = [];
+                $scope.rubrica.tipo = 4;
+                $scope.mostrarRubrica = true;
+                $scope.bloqEval = false;
+                $scope.edicion = false;
+                $scope.mostrarBtnEditar = false;
+                $scope.mostrarBtns = true;
+            }
+        } else {
+            $scope.rubrica.nombreRubrica = '';
+            $scope.rubrica.listaAspectos = [];
+            $scope.rubrica.tipo = 4;
+            $scope.mostrarRubrica = true;
+            $scope.bloqEval = false;
+            $scope.edicion = false;
+            $scope.mostrarBtnEditar = false;
+            $scope.mostrarBtns = true;
+        }
+    }
 
+    $scope.btnCrearAutoeval = function () {
+        $scope.rubrica.nombreRubrica = '';
+        $scope.rubrica.listaAspectos = [];
+        $scope.rubrica.tipo = 2;
+        $scope.mostrarRubrica = true;
+    }
+
+    $scope.btnCrearCoeval = function () {
+        $scope.rubrica.nombreRubrica = '';
+        $scope.rubrica.listaAspectos = [];
+        $scope.rubrica.tipo = 3;
+        $scope.mostrarRubrica = true;
+    }
 
     $scope.btnVerRubricaActual = function () {
-        //Falta: Validar que primero haya guardado la rúbrica
-
         var params = {
             idActividad: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             $scope.lstAspectos = res.data.listaAspectos;
-
-            /* Obtener la suma de los indicadores para mostrarlo*/
             $scope.lstAspectos.forEach(aspecto => {
                 if(aspecto.puntajeMax != null){
                     $scope.puntajeAcumuladoRubricaVista = aspecto.puntajeMax
                 }
             });
-
-        })
-        
+        })        
         $('#mdVistaPrevia').appendTo("body").modal('show');
-        
-        //$scope.mostrarCrearRubrica = true;
     }
 
-    
-
-
-    /* Función crear rúbrica desde 0. Preguntar el tipo de rúbrica */
-    $scope.btnAspectoConIndicadores = function () {                
+    $scope.btnAspectoConIndicadores = function () {
         $scope.rubrica.listaAspectos.unshift({
-            //datos del aspecto
             descripcion: '',
             informacion: '',
             puntajeMax: null,
+            flgGrupal: 0,
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 1
         });        
     }
 
-    $scope.btnAspectoConPuntaje = function () {        
+    $scope.btnAspectoConPuntaje = function () {
         $scope.rubrica.listaAspectos.unshift({
-            //datos del aspecto
             descripcion: '',
             informacion: '',
             puntajeMax: null,
+            flgGrupal: 0,
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 2
         });
         
     }
-    $scope.btnAspectoSinPuntaje = function () {         
+
+    $scope.btnAspectoSinPuntaje = function () {
         $scope.rubrica.listaAspectos.unshift({
-            //datos del aspecto
             descripcion: '',
             informacion: '',
             puntajeMax: null,
+            flgGrupal: 0,
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 3
         });        
     }
 
-    /* Funciones Aspectos */
     $scope.btnAgregarAspecto = function () {
-        //Preguntar de que tipo desea el aspecto
         $('#mdElegirTipoAspecto').appendTo("body").modal('show');
     }
 
@@ -198,9 +214,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     }
 
     $scope.btnOcultarIndicadores = function (aspecto) {
-        if (aspecto.mostrar) {
-            aspecto.mostrar = !(aspecto.mostrar);
-        }
+        aspecto.mostrar = !(aspecto.mostrar);
     }
 
     $scope.btnQuitarAspecto = function (aspecto) {
@@ -208,19 +222,15 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $scope.rubrica.listaAspectos.splice(pos, 1)
     }
 
-    /* Funciones Indicadores */
     $scope.btnAgregarIndicador = function (aspecto) {
-        //Verificando que el aspecto sea de tipo 1
         if (aspecto.tipoClasificacion == 1){
             aspecto.listaIndicadores.push({
-                /* datos del indicador */
                 descripcion: '',
                 informacion: '',
                 puntajeMax: null,
-                tipo: 'NOTA'
+                listaNiveles: []
             });
         }
-
     }
 
     $scope.btnQuitarIndicador = function (aspecto, indicador) {
@@ -228,8 +238,54 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         aspecto.listaIndicadores.splice(pos, 1)
     }
 
+    $scope.btnAgregarNivel = function(indicador) {
+        indicador.listaNiveles.push({
+            descripcion: '',
+            grado: '',
+            puntaje: 0
+        });
+    }
+
+    $scope.btnEliminarNivel = function(i, indicador) {
+        indicador.listaNiveles.splice(i, 1);
+    }
+
+    $scope.btnCancelar = function () {
+        $scope.mostrarRubrica = false;
+        if ($scope.edicion) $scope.edicion = false;
+        mostrarRubricaActual();
+    }
+
+    $scope.btnEdicion = function() {
+        $scope.edicion = true;
+        $scope.mostrarBtnEditar = false;
+        $scope.mostrarBtns = true;        
+        $scope.bloqEval = false;
+        $("#formEva").removeClass("was-validated");
+    }
+
+    $scope.obtenerAutoeval = function() {
+        var params = { idActividad: $scope.actividad.idActividad };
+        serviceCRUD.TypePost('auto-evaluacion/listarPreguntas', params).then(function(res){
+            if(res.data.succeed == false){
+                console.dir('no hay autoevaluacion');
+            }
+        })
+    }
+
+    $scope.obtenerCoeval = function() {
+        var params = { idActividad: $scope.actividad.idActividad };
+        serviceCRUD.TypePost('co-evaluacion/listarPreguntas', params).then(function(res){
+            if(res.data == null){
+                console.dir('no hay coevaluacion');
+            }
+        })
+    }
+
     function init() {
         mostrarRubricaActual();
+        $scope.obtenerAutoeval();
+        $scope.obtenerCoeval();
     }
 
     init();

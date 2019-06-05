@@ -7,11 +7,25 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.hoy = serviceUtil.yyyymmdd(new Date());
     $scope.showAlert1 = false;
     $scope.lstGrupos = [];
+    $scope.regAct = {
+        nombre: '',
+        descripcion: '',
+        tipo: 'I',
+        flgEntregable: true,
+        nota: null,
+        fechaInicio: new Date(),
+        fechaFin: new Date(),
+        flgConfianza: true,
+        horaInicio: '',
+        horaFin: '',
+        minInicio: '00',
+        minFin: '00'
+    }
 
     var idActEdit = null;
 
     function ListarActividades() {
-        var params = { idhorario: $scope.curso.idhorario };
+        var params = { idHorario: $scope.curso.idhorario };
         serviceCRUD.TypePost('actividad/lista', params).then(function (res) {
 
             for (let i = 0; i < res.data.length; i++) {
@@ -39,20 +53,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         }) */
     }
 
-    $scope.regAct = {
-        nombre: '',
-        descripcion: '',
-        tipo: 'I',
-        flgEntregable: true,
-        nota: null,
-        fechaInicio: new Date(),
-        fechaFin: new Date(),
-        flgConfianza: true,
-        horaInicio: '',
-        horaFin: '',
-        minInicio: '00',
-        minFin: '00'
-    }
+
 
     $scope.btnAgregarActividad = function () {
         $scope.nuevo = true;
@@ -122,11 +123,11 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     fechaFin: $scope.regAct.fechaFin,
                     flgEntregable: $scope.regAct.flgEntregable ? 1 : 0,
                     flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
-                    idUsuarioCreador: $scope.usuario.idUser
+                    idUsuarioCreador: $scope.usuario.idUser,
+                    flgMulticalificable: 0
                 }
-
+                console.dir(params);
                 serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
-                    console.dir('cerrar modal');
                     $("#mdAgregarActividad").modal('hide');
                     ListarActividades();
                 })

@@ -40,7 +40,7 @@ a:focus {
     width: 100%;
     height: 1px;
     border-bottom: 1px dashed #ddd;
-    margin: 20px 0;
+    margin: 5px 0;
 }
 
 .dropdown-toggle::after {
@@ -96,13 +96,10 @@ a:focus {
 } */
 
 .topbar{
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+    /*box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);*/
     color: white;
-    border-width: 1px;
-    border-bottom-style: solid;
-    border-color: #30323D;
     width: 100%;
-    background-color: #252932 !important
+    background-color: #272729 !important
 }
 
 .btn-menu{
@@ -119,7 +116,7 @@ a:focus {
 #sidebar {
     width: 250px;
     position: fixed;
-    top: 62px;
+    top: 54px;
     left: -250px;
     height: 100vh;
     z-index: 991;
