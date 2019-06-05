@@ -175,8 +175,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     function ListarAlumnos() {
         var params = { idActividad: $scope.actividad.idActividad }
-        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
+        serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
             $scope.listaAl = res.data.lista;
+            console.dir(res.data);
         })
     }
 
@@ -184,7 +185,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
             //$scope.lstAspectos = res.data.listaAspectos;
+            
+            console.dir(res.data);
             $scope.idRub = res.data.idRubrica;
+            
             /* for (let i = 0; i < $scope.lstAspectos.length; i++) {
                 $scope.lstAspectos[i].listaNotaIndicador = $scope.lstAspectos[i].listaIndicadores;
                 $scope.lstAspectos[i].comentario = '';

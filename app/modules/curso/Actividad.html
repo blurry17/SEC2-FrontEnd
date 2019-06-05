@@ -16,13 +16,26 @@
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
       <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
-      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Rubrica</button>
+      <div>
+        <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-dark" 
+        style="margin: 2px;height: 32px;">Evaluaciones</button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" style="cursor:pointer" ng-click="btnRubrica()"><i
+                class="fas fa-pen"></i>&nbspEvaluación</a>
+            <a ng-if="actividad.tipo=='G'" class="dropdown-item" style="cursor:pointer" ng-click="btnRubrica()"><i
+                class="fas fa-pen"></i>&nbspCoevaluación</a>
+            <a class="dropdown-item" style="cursor:pointer" ng-click="btnRubrica()"><i
+                class="fas fa-pen"></i>&nbspAutoevaluación</a>
+          </div>
+      </div>
+      
       <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos</button>
       <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
         style="margin: 2px;height: 32px;">Comentarios</button>
       <button type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Alertas</button>
       <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;height: 32px;">Estadísticas</button>
 
+<!--
       <div ng-if="actividad.tipo=='G'">
         <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button" class="btn btn-dark"
           style="margin: 2px;height: 32px;">Coevaluación</button>
@@ -45,6 +58,7 @@
               class="far fa-eye"></i>&nbspVer</a>
         </div>
       </div>
+      -->
       <div>
         <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdErrorCoEval" tabindex="-1" role="dialog"
           data-backdrop="static" aria-hidden="true">
@@ -131,7 +145,7 @@
   <div class="row" style="padding-left: 15px">
     <div class="form-group col-md-5">
       <label style="font-weight: bold">Indicaciones</label>
-      <textarea class="form-control" readonly ng-model="actividad.descripcion"></textarea>
+      <textarea style="resize: none" class="form-control" readonly ng-model="actividad.descripcion"></textarea>
     </div>
     <div class="form-group col-md-5">
       <div class="row">
