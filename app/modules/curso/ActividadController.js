@@ -13,7 +13,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.esIndividual = false;
     $scope.esGrupal = false;
     $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
-    
+    $scope.listaAlarmas= [];
     $scope.mostrarFila=false;
     $scope.mostrarPreg=false;
     $scope.agregar=false;
@@ -373,7 +373,14 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
 
     $scope.btnAlerta= function(){
         // se tiene q validar que ya exite una alarma...
-
+        $scope.regAlarma = {
+            asunto : '',
+            mensaje:'',
+            fechaEjecucion : new Date(),
+            horaInicio : '',
+            minInicio : '00',
+            nombre : ''
+        }
         $("#mdCrearAlarma").appendTo("body").modal('show');
     }
     $scope.btnGuardarAlerta = function(){
@@ -397,4 +404,25 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
     }
 
+    $scope.btnlistarAlarmas = function(){
+        var params= {
+            idActividad: $scope.actividad.idActividad
+        }
+        serviceCRUD.TypePost('alarma/listar',params).then(function(res){
+            console.dir(res);
+            $scope.listaAlarmas = res.data;
+        })
+    }
+    $scope.btnVerAlerta = function(p){
+        var objFecha = serviceUtil.getObjDate(p.fechaEjecucion);
+        $scope.regAlarma = {
+            asunto : p.asunto,
+            mensaje: p.mensaje,
+            fechaEjecucion : objFecha.datestr,
+            horaInicio : objFecha.hora,
+            minInicio : objFecha.min,
+            nombre : p.nombre
+        }
+        $("#mdCrearAlarma").appendTo("body").modal('show')
+    }
 })
