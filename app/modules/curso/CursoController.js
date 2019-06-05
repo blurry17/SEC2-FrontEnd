@@ -123,11 +123,11 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     fechaFin: $scope.regAct.fechaFin,
                     flgEntregable: $scope.regAct.flgEntregable ? 1 : 0,
                     flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
-                    idUsuarioCreador: $scope.usuario.idUser
+                    idUsuarioCreador: $scope.usuario.idUser,
+                    flgMulticalificable: 0
                 }
-
+                console.dir(params);
                 serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
-                    console.dir('cerrar modal');
                     $("#mdAgregarActividad").modal('hide');
                     ListarActividades();
                 })

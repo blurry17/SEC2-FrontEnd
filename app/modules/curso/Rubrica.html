@@ -23,15 +23,17 @@
 
     </div>
     <div class="col-md-2">
-      <button class="btn btn-sm btn-info"><i class="fas fa-eye"></i>&nbsp;Ver hojas actuales</button>
+      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        class="btn btn-sm btn-info dropdown-toggle"><i class="fas fa-eye"></i>&nbsp;Ver hojas actuales</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerEvaluacion()">Evaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoeval()">Autoevaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerCoeval()">Coevaluación</a>
+      </div>
     </div>
     <div class="col-md-2">
       <button class="btn btn-sm btn-primary"><i class="fas fa-file-alt"></i>&nbsp;Usar hoja del curso</button>
     </div>
-    <!-- <div class="col-xs-4 col-lg-2 col-2">
-      <button ng-show="true" ng-click="btnEditarRubrica()" class="btn btn-sm btn-primary"><i
-          class="fas fa-save"></i>&nbsp;Guardar cambios</button>
-    </div> -->
   </div>
   <div class="line"></div>
   <div class="row" ng-show="mostrarRubrica">
@@ -41,7 +43,7 @@
     <div class="col-md-12">
       <form id="formEva" name="formEva" class="needs-validation" novalidate>
         <div class="form-row">
-          <div class="form-group col-md-2">
+          <div class="form-group col-md-3">
             <input ng-disabled="bloqEval" required type="text" class="form-control" placeholder="Nombre de la evaluación"
               ng-model="rubrica.nombreRubrica">
             <div class="invalid-feedback">
@@ -86,7 +88,7 @@
                 <div class="form-group col-md-1">
                   <label>Puntaje</label>
                   <input ng-disabled="bloqEval" ng-model="aspecto.puntajeMax" required type="text" class="form-control" style="width: 60px"
-                    maxlength="2" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                    maxlength="2" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
                   <div class="invalid-feedback">
                     Ingrese un puntaje.
                   </div>
@@ -146,7 +148,7 @@
                     </div>
                     <div class="form-group col-md-1">
                       <label>Puntaje</label>
-                      <input ng-disabled="bloqEval" required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                         maxlength="2" class="form-control" style="width: 60px" ng-model="nivel.puntaje" />
                       <div class="invalid-feedback">
                         Ingrese un puntaje.
@@ -175,7 +177,7 @@
                 </div>
                 <div class="form-group col-md-1">
                   <label>Puntaje</label>
-                  <input ng-disabled="bloqEval" required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                     maxlength="2" style="width: 60px" class="form-control" ng-model="aspecto.puntajeMax" />
                   <div class="invalid-feedback">
                     Ingrese un puntaje.
