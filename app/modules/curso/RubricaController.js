@@ -3,10 +3,11 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     if ($scope.usuario == undefined) $location.path('/');
     $scope.actividad = $cookies.getObject('actividadActual');
     $rootScope.lstCursos = $cookies.getObject('cursos');
+    $("[data-toggle=tooltipOcultarAspecto]").tooltip();
     $scope.mostrarCrearRubrica = false;
     $scope.mostrarEditarRubrica = false;
     $scope.mostrarAspecto = true;
-    $scope.mostrarRubrica = false;
+    $scope.mostrarEv = false;
     $scope.mostrarAutoeval = false;
     $scope.mostrarCoeval = false;
     $scope.mostrarBtns = false;
@@ -20,26 +21,28 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         listaAspectos: [],
         tipo: null
     }
+    var ev = [0,0,0,0,0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval
 
-    function mostrarRubricaActual() {
-        if ($scope.actividad.idRubrica != null) {
-            var params = { idActividad: $scope.actividad.idActividad }
-            serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-                $scope.rubrica = res.data;
-                for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
-                    $scope.rubrica.listaAspectos[i].mostrar = true;
-                    for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
-                        $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
-                }
-                $scope.bloqEval = true;
-                $scope.mostrarBtnEditar = true;
-                $scope.mostrarBtns = false;
-                $scope.mostrarRubrica = true;
-            })
-        } else {
-            $scope.rubrica.nombreRubrica = '';
-            $scope.rubrica.listaAspectos = [];
+    $scope.btnObtenerEval = function(tipo) {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            tipo: tipo
         }
+        serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
+            console.dir(res.data);
+            if (res.data.succeed == false) return;
+            ev[tipo] = 1;
+            $scope.rubrica = res.data;
+            for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+                $scope.rubrica.listaAspectos[i].mostrar = true;
+                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
+                    $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
+            }
+            $scope.bloqEval = true;
+            $scope.mostrarBtnEditar = true;
+            $scope.mostrarBtns = false;
+            $scope.mostrarEv = true;
+        })
     }
 
     $scope.btnEditarRubrica = function () {
@@ -49,7 +52,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $scope.rubrica.idActividad = $scope.actividad.idActividad;
         $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;
         serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
-            $scope.mostrarRubrica = false;
+            $scope.mostrarEv = false;
             window.alert("Se guardaron los cambios!")
         })
     }
@@ -57,7 +60,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.btnGuardarRubrica = function () {
         $("#formEva").addClass("was-validated");
         if (formEva.checkValidity()) {
-            console.dir('entra');
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
                 for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
                     for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
@@ -66,60 +68,42 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                 }
             }
             if ($scope.edicion == true) {
-                console.dir('editar rubrica');
                 $scope.bloqEval = true;
                 $scope.edicion = false;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
                 serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (res) {
                 })
-            } else {
-                console.dir('crear rubrica');   
+            } else { 
                 $scope.bloqEval = true;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
                 console.dir($scope.rubrica);
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
+
                 })
             }
             $scope.mostrarCrearRubrica = false;
         }
     }
 
-    $("[data-toggle=tooltipOcultarAspecto]").tooltip();
-
-    $scope.sumaInd = function(asp){
+    /* $scope.sumaInd = function(asp){
         var sum = 0;
         for (let i = 0; i < asp.listaIndicadores.length; i++) {
             sum += parseInt(asp.listaIndicadores[i].puntajeMax);            
         }
-        /* Asigno la suma al puntajeMax del aspecto */
         //$scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
         return sum;
-    }
+    } */
 
-
-    $scope.btnCrearRubrica = function () {
-        if($scope.actividad.idRubrica != null){
-            $scope.hayRubrica = true;
-            var r = window.confirm("Esta actividad ya tiene una rúbrica. ¿Desea crear una nueva?");
-            if (r){
-                $scope.mostrarRubrica = true;
-            }
-        }
-        if($scope.actividad.idRubrica == null){
-            $scope.mostrarRubrica = true;
-        }
-    }
-
-    $scope.btnCrearEvaluacion = function () {
-        if ($scope.actividad.idRubrica != null) {
+    $scope.btnCrearEval = function (tipo) {
+        if (ev[tipo]) {
             var r = window.confirm("Esta actividad ya tiene una hoja de evaluación. ¿Desea crear una nueva?");
             if (r) {
                 $scope.rubrica.nombreRubrica = '';
                 $scope.rubrica.listaAspectos = [];
-                $scope.rubrica.tipo = 4;
-                $scope.mostrarRubrica = true;
+                $scope.rubrica.tipo = tipo;
+                $scope.mostrarEv = true;
                 $scope.bloqEval = false;
                 $scope.edicion = false;
                 $scope.mostrarBtnEditar = false;
@@ -128,27 +112,13 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         } else {
             $scope.rubrica.nombreRubrica = '';
             $scope.rubrica.listaAspectos = [];
-            $scope.rubrica.tipo = 4;
-            $scope.mostrarRubrica = true;
+            $scope.rubrica.tipo = tipo;
+            $scope.mostrarEv = true;
             $scope.bloqEval = false;
             $scope.edicion = false;
             $scope.mostrarBtnEditar = false;
             $scope.mostrarBtns = true;
         }
-    }
-
-    $scope.btnCrearAutoeval = function () {
-        $scope.rubrica.nombreRubrica = '';
-        $scope.rubrica.listaAspectos = [];
-        $scope.rubrica.tipo = 2;
-        $scope.mostrarRubrica = true;
-    }
-
-    $scope.btnCrearCoeval = function () {
-        $scope.rubrica.nombreRubrica = '';
-        $scope.rubrica.listaAspectos = [];
-        $scope.rubrica.tipo = 3;
-        $scope.mostrarRubrica = true;
     }
 
     $scope.btnVerRubricaActual = function () {
@@ -251,9 +221,9 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     }
 
     $scope.btnCancelar = function () {
-        $scope.mostrarRubrica = false;
+        $scope.mostrarEv = false;
         if ($scope.edicion) $scope.edicion = false;
-        mostrarRubricaActual();
+        obtenerEval();
     }
 
     $scope.btnEdicion = function() {
@@ -264,28 +234,8 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $("#formEva").removeClass("was-validated");
     }
 
-    $scope.obtenerAutoeval = function() {
-        var params = { idActividad: $scope.actividad.idActividad };
-        serviceCRUD.TypePost('auto-evaluacion/listarPreguntas', params).then(function(res){
-            if(res.data.succeed == false){
-                console.dir('no hay autoevaluacion');
-            }
-        })
-    }
-
-    $scope.obtenerCoeval = function() {
-        var params = { idActividad: $scope.actividad.idActividad };
-        serviceCRUD.TypePost('co-evaluacion/listarPreguntas', params).then(function(res){
-            if(res.data == null){
-                console.dir('no hay coevaluacion');
-            }
-        })
-    }
-
     function init() {
-        mostrarRubricaActual();
-        $scope.obtenerAutoeval();
-        $scope.obtenerCoeval();
+        $scope.btnObtenerEval(4);
     }
 
     init();

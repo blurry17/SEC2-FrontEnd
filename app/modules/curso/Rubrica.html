@@ -16,9 +16,9 @@
         class="btn btn-sm btn-success dropdown-toggle"><i class="fas fa-plus"></i>&nbsp;Nueva
         evaluación</button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEvaluacion()">Evaluación</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearAutoeval()">Autoevaluación</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearCoeval()">Coevaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(4)">Evaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(2)">Autoevaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(3)">Coevaluación</a>
       </div>
 
     </div>
@@ -26,9 +26,9 @@
       <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
         class="btn btn-sm btn-info dropdown-toggle"><i class="fas fa-eye"></i>&nbsp;Ver hojas actuales</button>
       <div class="dropdown-menu">
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerEvaluacion()">Evaluación</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerAutoeval()">Autoevaluación</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnVerCoeval()">Coevaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(4)">Evaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(2)">Autoevaluación</a>
+        <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(3)">Coevaluación</a>
       </div>
     </div>
     <div class="col-md-2">
@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="line"></div>
-  <div class="row" ng-show="mostrarRubrica">
+  <div class="row" ng-show="mostrarEv">
     <div class="col-md-12">
       <h3>Evaluación</h3>
     </div>
