@@ -44,27 +44,29 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
         })
     }
 
+    function mostrarComentarios(){
+        var params = { idActividad: $scope.actividad.idActividad }
+        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
+            $scope.rubrica = res.data;
+            for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+                $scope.rubrica.listaAspectos[i].mostrar = true;
+                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
+                    $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
+            }
+            $scope.bloqEval = true;
+            $scope.mostrarBtnEditar = true;
+            $scope.mostrarBtns = false;
+            $scope.mostrarRubrica = true;
+        })
+    }
+
     /* Esto no debe estar hardcodeado. Falta el servicio de listar comentariosXactividad */
-    $scope.lstComentarios = [
-        {
-            //Este comentario como ya tiene respuesta
-            //Deberia mostrarse sin poder editar
-            idAlumno: 1,
-            nomAlumno: "Alumno 1",
-            codAlumno: "19964321",
-            nomProfesor: "Ernesto Torres",
-            comentario: "hola profe xd",
-            respuesta: "ola"
-        },
-        {
-            //Este comentario como ya tiene respuesta
-            //Deberia mostrarse para editar
-            idAlumno: 2,
-            nomAlumno: "Alumno 2",
-            codAlumno: "19975432",
-            nomProfesor: "Ernesto Torres",
-            comentario: "profe no me salio la 2 ayude pues",
-            respuesta: ""
-        }
-    ]
+    $scope.lstComentarios = []
+
+    function init() {
+        if (usuario.profesor == 1)
+            mostrarComentarios();
+    }
+
+    init();
 })
