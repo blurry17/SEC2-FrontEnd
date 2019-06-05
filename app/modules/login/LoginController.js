@@ -35,4 +35,8 @@
   $scope.btnForgotPassword = function () {
     $('#mdAdministrarUsuarios').appendTo("body").modal('show');
   }
+
+  $scope.btnBuscarUsuario = function () {
+    $('#mdBuscarUsuarios').appendTo("body").modal ('show');
+  }
 })

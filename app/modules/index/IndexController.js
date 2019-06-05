@@ -21,4 +21,12 @@
         $cookies.remove('usuario');
         $location.path('/')
     }
+
+
+    $scope.mostrarAdministrarUsuarios = function(){
+        $('#mdAdministrarUsuarios').appendTo("body").modal('show');
+
+    }
+
+
 })

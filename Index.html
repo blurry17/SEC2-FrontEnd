@@ -68,6 +68,16 @@
           <li class="menu-item">
             <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
           </li>
+          <!--Menú Administración-->
+
+          <li class="active">
+              <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle menu-item"><i class="fas fa-tasks"></i>&nbspAdministración</a>
+              <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li ng-click="mostrarAdministrarUsuarios()"><a
+                  class="submenu-item">Personas</a></li>
+              </ul>
+          </li>
         </ul>
 
         <!-- <ul class="list-unstyled CTAs">
@@ -96,6 +106,8 @@
     document.write("<script type='text/javascript' src='app/modules/curso/EstadisticasController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
+    
+    document.write("<script type='text/javascript' src='app/modules/curso/AdministrarUsuarios.js?v=" + Date.now() + "'><\/script>");
   </script>
 
 
@@ -130,3 +142,98 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<!-- Modal Administrar Usuarios -->
+<div class="modal fade" id="mdAdministrarUsuarios" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Administrar Usuarios </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <!--
+        Criterios de Búsqueda
+      -->
+
+      <div class="modal-body">
+          
+          
+          <form>
+                <!-- Pedir Primer y Segundo Apellido-->
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputApellido1">Primer Apellido</label>
+                    <input type="text" class="form-control" id="inputApellido1" placeholder="">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputApellido2">Segundo Apellido</label>
+                    <input type="text" class="form-control" id="inputApellido2" placeholder="">
+                  </div>
+                </div>
+                <!--Pedir Nombres-->
+                <div class="form-group">
+                  <label for="inputNombres">Nombres</label>
+                  <input type="text" class="form-control" id="inputNombres" placeholder="">
+                </div>
+                <!--Pedir Código PUCP, Email-PUCP-->
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCodigo">Código</label>
+                    <input type="text" class="form-control" id="inputCodigo" placeholder="">
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail">Email PUCP</label>
+                    <input type="eamil" class="form-control" id="inputEmail" placeholder="">
+                  </div>
+                </div>
+                <!--Ver si es usuario Activo o Inactivo-->
+                <!--
+                <div class="form-group">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                        <label class="form-check-label" for="inlineCheckbox1">Activo</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option2">
+                          <label class="form-check-label" for="inlineCheckbox1">Inactivo</label>
+                        </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Buscar</button>
+                -->
+                <!-- Boton Buscar-->
+                
+                <button class="btn btn-primary" ng-click="btnBuscarUsuario()">Buscar</button>
+
+                
+          </form>
+         
+        
+      </div>
+      
+
+      <!--
+        Botones Buscar y salir
+      -->
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Terminar</button>
+      </div>
+    </div>
+  </div>
+</div>
