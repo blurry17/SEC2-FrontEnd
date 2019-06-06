@@ -49,7 +49,11 @@ app.config(function ($routeProvider, $httpProvider) {
             templateUrl: 'app/modules/curso/Comentarios.html?v=' + Date.now(),
             controller: 'ComentariosController'
         }) 
-
+        
+        .when('/alarmas',{
+            templateUrl: 'app/modules/curso/Alarmas.html?v=' + Date.now(),
+            controller: 'AlarmasController'
+        })
         .otherwise({
             redirectTo: '/main'
         });
