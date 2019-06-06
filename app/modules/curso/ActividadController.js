@@ -190,6 +190,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
         })
         $scope.eliminado=!($scope.eliminado);
         $("#mdSeElimino").appendTo("body").modal('show');
+        
     }
 
     $scope.btnEliminarCoEval=function(){
@@ -205,6 +206,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
 
     $scope.btnAlerta= function(){
         // se tiene q validar que ya exite una alarma...
+        $scope.nuevaAlarma =true;
         $scope.regAlarma = {
             asunto : '',
             mensaje:'',
@@ -291,5 +293,6 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
 
             $('#mdCrearAlarma').modal('hide');
         })
+        $scope.nuevaAlarma = true;
     }
 })
