@@ -233,10 +233,6 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.btnComentarios = function () {
         $location.path("comentarios")
     }
-
-    $scope.btnComentarios = function(){
-        $location.path("alarmas")
-    }
     
     $scope.deleteFam = function (fam) {
         let pos = $scope.listaFam.indexOf(fam);
