@@ -59,14 +59,19 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.btnGuardarRubrica = function () {
         $("#formEva").addClass("was-validated");
+        console.dir(formEva.checkValidity());
         if (formEva.checkValidity()) {
+            console.dir('1')
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+                console.dir('shiny')
                 for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
                     for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
                         $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].grado = k + 1;                        
                     }
                 }
             }
+            console.dir('2')
+            $scope.rubrica.idActividad = $scope.actividad.idActividad;
             if ($scope.edicion == true) {
                 $scope.bloqEval = true;
                 $scope.edicion = false;
@@ -74,7 +79,8 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                 $scope.mostrarBtnEditar = true;
                 serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (res) {
                 })
-            } else { 
+            } else {
+                console.dir('entra aqui');
                 $scope.bloqEval = true;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
@@ -98,7 +104,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.btnCrearEval = function (tipo) {
         if (ev[tipo]) {
-            var r = window.confirm("Esta actividad ya tiene una hoja de evaluación. ¿Desea crear una nueva?");
+            var r = window.confirm("Ya existe una evalución de este tipo. ¿Desea crear una nueva?");
             if (r) {
                 $scope.rubrica.nombreRubrica = '';
                 $scope.rubrica.listaAspectos = [];
