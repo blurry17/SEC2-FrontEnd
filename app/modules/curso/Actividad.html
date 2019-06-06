@@ -733,9 +733,10 @@
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" type="submit" ng-click="btnGuardarAlerta()"
-          ng-show="nuevo">Crear</button>
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAlerta()"
-          ng-show="!nuevo">Guardar</button>
+          ng-show="nuevaAlarma">Crear</button>
+        <button class="btn btn-primary" type="submit" ng-click="btnEditarAlerta()"
+          ng-show="!nuevaAlarma">Guardar</button>
+        <button class = "btn btn-danger"  ng-show="!nuevaAlarma" type = "submit" ng-click="btnEliminarAlerta()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
     </div>    

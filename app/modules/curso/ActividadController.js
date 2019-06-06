@@ -23,9 +23,10 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
     $scope.eliminado=false;
     $scope.listaPregunta=[];
     $scope.error=false;
-    
+    $scope.nuevaAlarma = true;
     $scope.ejemplo=[];
     $scope.regAlarma = {
+        idAlarma: 0, 
         asunto : '',
         mensaje:'',
         fechaEjecucion : new Date(),
@@ -384,6 +385,7 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         $("#mdCrearAlarma").appendTo("body").modal('show');
     }
     $scope.btnGuardarAlerta = function(){
+        $scope.nuevaAlarma =true;
         $scope.regAlarma.fechaEjecucion.setMinutes(0);
         $scope.regAlarma.fechaEjecucion.setHours(0);
         $scope.regAlarma.fechaEjecucion.setSeconds(0);
@@ -414,15 +416,49 @@ app.controller('ActividadController',function($rootScope, $scope, $location, $co
         })
     }
     $scope.btnVerAlerta = function(p){
+        $scope.nuevaAlarma = false;
         var objFecha = serviceUtil.getObjDate(p.fechaEjecucion);
         $scope.regAlarma = {
+            idAlarma : p.idAlarma,
             asunto : p.asunto,
             mensaje: p.mensaje,
-            fechaEjecucion : objFecha.datestr,
+            fechaEjecucion : serviceUtil.convertToDate(objFecha.datestr) ,
             horaInicio : objFecha.hora,
             minInicio : objFecha.min,
             nombre : p.nombre
         }
+        console.dir($scope.regAlarma);
         $("#mdCrearAlarma").appendTo("body").modal('show')
+    }
+
+    $scope.btnEditarAlerta = function(){
+        $scope.regAlarma.fechaEjecucion.setMinutes(0);
+        $scope.regAlarma.fechaEjecucion.setHours(0);
+        $scope.regAlarma.fechaEjecucion.setSeconds(0);
+        $scope.regAlarma.fechaEjecucion.setMilliseconds(0);
+        $scope.regAlarma.fechaEjecucion.setMinutes($scope.regAlarma.fechaEjecucion.getMinutes() - $scope.regAlarma.fechaEjecucion.getTimezoneOffset() + parseInt($scope.regAlarma.minInicio));
+        $scope.regAlarma.fechaEjecucion.setHours($scope.regAlarma.fechaEjecucion.getHours() + parseInt($scope.regAlarma.horaInicio));        
+    
+        var params={
+            idAlarma : $scope.regAlarma.idAlarma,
+            nombre : $scope.regAlarma.nombre,
+            mensaje : $scope.regAlarma.mensaje,
+            asunto : $scope.regAlarma.asunto,
+            fechaEjecucion : $scope.regAlarma.fechaEjecucion
+        }
+        console.dir(params);
+        serviceCRUD.TypePost('alarma/editar',params).then(function(res){
+            console.dir(res);
+            $("#mdCrearAlarma").modal('hide');
+        })
+    }
+    $scope.btnEliminarAlerta = function(){
+        var params={
+            idAlarma : $scope.regAlarma.idAlarma
+        }
+        serviceCRUD.TypePost('alarma/eliminar',params).then(function(res){
+
+            $('#mdCrearAlarma').modal('hide');
+        })
     }
 })
