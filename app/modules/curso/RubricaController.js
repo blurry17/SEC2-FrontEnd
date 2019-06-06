@@ -121,21 +121,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         }
     }
 
-    $scope.btnVerRubricaActual = function () {
-        var params = {
-            idActividad: $scope.actividad.idActividad
-        }
-        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            $scope.lstAspectos = res.data.listaAspectos;
-            $scope.lstAspectos.forEach(aspecto => {
-                if(aspecto.puntajeMax != null){
-                    $scope.puntajeAcumuladoRubricaVista = aspecto.puntajeMax
-                }
-            });
-        })        
-        $('#mdVistaPrevia').appendTo("body").modal('show');
-    }
-
     $scope.btnAspectoConIndicadores = function () {
         $scope.rubrica.listaAspectos.unshift({
             descripcion: '',
