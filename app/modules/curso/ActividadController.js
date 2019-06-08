@@ -8,6 +8,8 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     $scope.esIndividual = false;
     $scope.esGrupal = false;
     $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
+    $scope.esProfesor = $scope.usuario.profesor;
+
 
     if ($scope.actividad.minInicio == "0") $scope.actividad.minInicio = $scope.actividad.minInicio + "0";
     if ($scope.actividad.minFin == "0") $scope.actividad.minFin = $scope.actividad.minFin + "0";
