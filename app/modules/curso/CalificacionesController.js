@@ -228,7 +228,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
     $scope.elegirNivel = function (nivel,indicador,aspecto){
         indicador.nota = nivel.puntaje;
-        aspecto.nota=indicador.nota;
+        aspecto.nota=0;
+        for(let i=0;i<aspecto.listaNotaIndicador.length;i++){
+            aspecto.nota+=aspecto.listaNotaIndicador[i].nota;
+
+        }
+
     }
 
     function ObtenerRubrica() {

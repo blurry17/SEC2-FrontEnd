@@ -12,6 +12,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $location.path("curso")
   }
 
+  $scope.listaFrec=[];
   $scope.gc = false;
   $scope.gb = false;
   $scope.seleccion = 'g';
@@ -41,18 +42,16 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaNotas() {
     serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
+      console.dir("VER ACA");
       console.dir(res.data);
       $scope.listaN = res.data.listaNotas;
       $scope.listaFrec = res.data.notaFrecuencia;
-      for (let i = 0; i < $scope.listaFrec.length; i++) {
-        console.dir(i);
-        $scope.listaFrec[i].nota = res.data.listaFrec[i].nota;
-        $scope.listaFrec[i].frecuencia = res.data.listaFrec[i].frecuencia;
-      }
+     
       $scope.cantidadN = res.data.cantidadNotas;
       $scope.cantidadF = res.data.cantidadFalta;
       $scope.cantidadT = res.data.cantidadTotal;
       //console.dir($scope.cantidadF);
+      console.dir("CANTIDAD FALTAS:");
       console.dir(res.data.cantidadFalta);
     })
 
