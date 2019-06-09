@@ -21,7 +21,7 @@
       <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
         style="margin: 2px;height: 32px;">Comentarios</button>
 
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
+      <button ng-show="usuario.profesor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
         style="margin: 2px;height: 32px;" ng-click="btnlistarAlarmas()" > Alertas </button>
         <div class="dropdown-menu" >
           <a class="dropdown-item"  style="cursor:pointer" ng-click="btnAlerta()"><i

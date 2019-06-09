@@ -215,6 +215,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     }
     $scope.btnGuardarAlerta = function(){
         $scope.nuevaAlarma =true;
+
         $scope.regAlarma.fechaEjecucion.setMinutes(0);
         $scope.regAlarma.fechaEjecucion.setHours(0);
         $scope.regAlarma.fechaEjecucion.setSeconds(0);
