@@ -91,17 +91,40 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     console.dir(arregloFrec);
     var data = google.visualization.arrayToDataTable(arregloFrec);
 
+    var view = new google.visualization.DataView(data);
+    view.setColumns([0,1,
+      {
+        calc: function (dt, row) {
+          if ((dt.getValue(row, 1) >= 0) && (dt.getValue(row, 1) <= 10)) {
+            return 'green';
+            } else {
+            return 'blue';
+          }
+        },
+        type: 'string',
+        role: 'style'
+      },
+      {
+        calc: 'stringify',
+        sourceColumn: 1,
+        type: 'string',
+        role: 'annotation'
+      }
+    ]
 
+    );
 
     var options = {
       chart: {
         title: 'Estadisticas de notas'
       },
-      bars: 'vertical' // Required for Material Bar Charts.
+      bars: 'vertical',
+      colors: [ '#ec8f6e', '#f3b49f', '#f6c7b6'],
+       // Required for Material Bar Charts.
     };
 
     var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-    chart.draw(data, google.charts.Bar.convertOptions(options));
+    chart.draw(view, google.charts.Bar.convertOptions(options));
   }
 
   $scope.TipoGrafico = function () {
