@@ -35,7 +35,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         $scope.flgCalificado = false;
         $scope.editar = true;
     }
-
+//sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
         if ($scope.idalumno == '0') return;
         $scope.editar = false;
@@ -45,7 +45,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             tipo: 4,
             idCalificador: $scope.usuario.idUser
         }
-
         serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
             $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
             $scope.notaFinal = res.data.calificacion.nota;
@@ -224,7 +223,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
             $scope.listaAl = res.data.lista;
-            console.dir(res.data);
         })
     }
 
