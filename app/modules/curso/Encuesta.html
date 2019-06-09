@@ -8,9 +8,33 @@
   </nav>
   <br />
    
-  <div ng-show="vistaAlumno">
-    
-
+  <div>
+    <div class="row">
+      <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
+            style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+        <div ng-if="aspecto.tipoClasificacion == 2">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-lg-2">
+              <label>Nombre del Aspecto</label>
+              <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+              <div class="invalid-feedback">
+                Ingrese un nombre.
+              </div>
+            </div>
+            <div class="form-group col-md-5 col-lg-4">
+              <label>Descripción</label>
+              <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+            </div>
+            <div class="form-group col-md-1">
+              <label>Puntaje</label>
+              <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                maxlength="2" style="width: 60px" class="form-control" ng-model="aspecto.puntajeMax" />
+              <div class="invalid-feedback">
+                Ingrese un puntaje.
+              </div>
+            </div>
+          </div>
+        </div>
 
   </div>
 
