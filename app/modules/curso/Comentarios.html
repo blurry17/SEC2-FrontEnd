@@ -25,7 +25,7 @@
 
                 <div class="form-group col-md-5">
                     <label ng-model="comentario.nomProfesor" for="exampleFormControlTextarea1">Su respuesta:</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" maxlength="200"></textarea>
+                    <textarea class="form-control" ng-model="respuesta.respuesta" id="exampleFormControlTextarea1" rows="3" maxlength="200"></textarea>
                 </div>
                 <div class="form-group col-md-2 d-flex justify-content-center align-self-center">
                     <button type="button" class="btn btn-success" ng-click="btnGuardarRespuesta(comentario)">Guardar
@@ -43,7 +43,7 @@
 <div ng-show="!vistaProfesor">
 
     <!-- Si el alumno aún no envía su comentario -->
-    <div ng-show="!envioComentario">
+    <div ng-show="!envioComentario && mostrarPantalla">
         <form>
             <div class="d-flex justify-content-center align-self-center row">
                 <h1>Escriba un comentario...</h1>
@@ -65,21 +65,26 @@
     </div>
 
     <!-- Si el alumno ya envió su comentario -->
-    <div ng-show="envioComentario">
-        <form>
+    <div ng-show="envioComentario && mostrarPantalla">
             <div class="d-flex justify-content-center align-self-center row">
-                <h1>Su comentario...</h1>
-            </div>
-            <br>
-            <div class="d-flex justify-content-center align-self-center row">
-                <div class="form-group col-md-5">
-                    <!-- Mostrar el comentario realizado por el alumno -->
-                    <textarea disabled ng-model="comentario.comentario" class="form-control"
-                        id="exampleFormControlTextarea1" rows="4"></textarea>
+                    <h1>Respuesta del profesor</h1>
                 </div>
+        <div class="row d-flex justify-content-between">
+
+            <div class="form-group col-md-5">
+                <label for="exampleFormControlTextarea1">Su comentario</label>
+                <textarea readonly ng-model="verRespuestaProf.comentario" class="form-control"
+                    id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
-            <br>
-        </form>
+
+
+            <div class="form-group col-md-5">
+                <label for="exampleFormControlTextarea1">Respondido por: {{verRespuestaProf.nomProfesor}}</label>
+                <textarea readonly class="form-control" ng-model="verRespuestaProf.respuesta" id="exampleFormControlTextarea1" rows="3" maxlength="200"></textarea>
+            </div> 
+
+
+        </div>
     </div>
 
 </div>

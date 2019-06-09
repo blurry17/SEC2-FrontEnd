@@ -8,6 +8,8 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     //Para saber si el alumno envió un comentario o no
     $scope.envioComentario = false;
     $scope.lstComentarios = []
+    $scope.verRespuestaProf = null;
+    $scope.mostrarPantalla = false;
 
     $scope.comentario = {
         idActividad: $scope.idActividad,
@@ -46,22 +48,28 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
         })
     }
 
-    function mostrarComentarios(){
-        var params = { idActividad: $scope.actividad.idActividad }
 
+    function obtenerComentarios(){
+        var params = { idActividad: $scope.actividad.idActividad }
+        console.dir($scope.actividad.idActividad)
         serviceCRUD.TypePost('actividad/listar_comentarios', params).then(function (res) {
-            console.dir('comentariosss')
-            console.dir(res.data)
-            $scope.lstComentarios = res.data;
-            
+            $scope.lstComentarios = res.data.listaComentarios;
+        if(!usuario.profesor){
+            for (let i = 0; i < $scope.lstComentarios.length; i++) {
+                if($scope.lstComentarios[i].codAlumno == usuario.codigoPUCP){
+                    $scope.envioComentario = true;
+                    
+                    $scope.verRespuestaProf = $scope.lstComentarios[i];
+                    console.dir($scope.verRespuestaProf)
+                }
+            }
+            $scope.mostrarPantalla = true;
+        }
         })
     }
 
-    
-
     function init() {
-        if (usuario.profesor == 1)
-            mostrarComentarios();
+        obtenerComentarios();
     }
 
     init();
