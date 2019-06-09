@@ -50,6 +50,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
             $scope.notaFinal = res.data.calificacion.nota;
             $scope.flgCalificado = res.data.flgCalificado;
+            $scope.falta=res.data.calificacion.flgFalta==1;
             console.dir("Estos es la respuesta");
             console.dir(res.data);
             console.dir("Esta es la rubrica");
@@ -83,8 +84,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         x.puedeComentar = true;
     }
 
-    $scope.chckmarcado = function () {
-        $scope.falta = false;
+    $scope.marcado = function () {
+        $scope.falta = true;
     }
 
     $scope.btnGuardarPuntaje = function () {
@@ -149,18 +150,19 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             }
         }
         
-        var params = {
-            idActividad: $scope.actividad.idActividad,
-            idAlumno: $scope.idalumno,
-            idJp: $scope.usuario.idUser,
-            nota: parseInt($scope.notaFinal),
-            flgFalta: $scope.falta ? 1 : 0,
-            idRubrica: $scope.idRub,
-            listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
-            flgCompleto:1,
-        }
+        
         console.dir('3');
         if ($scope.editar == false) {
+            var params = {
+                idActividad: $scope.actividad.idActividad,
+                idAlumno: $scope.idalumno,
+                idJp: $scope.usuario.idUser,
+                nota: parseInt($scope.notaFinal),
+                flgFalta: $scope.falta ? 1 : 0,
+                idRubrica: $scope.idRub,
+                listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
+                flgCompleto:1,
+            }
             console.dir('entra a caificar');
             serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
@@ -169,7 +171,19 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 $scope.ObtenerNotas();
             })
         } else {
+            var params = {
+                idActividad: $scope.actividad.idActividad,
+                idAlumno: $scope.idalumno,
+                idJpN: $scope.usuario.idUser,
+                idJpAnt:$scope.usuario.idUser,
+                nota: parseInt($scope.notaFinal),
+                flgFalta: $scope.falta ? 1 : 0,
+                idRubrica: $scope.idRub,
+                listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
+                flgCompleto:1,
+            }
             console.dir('entra a editar');
+            console.dir(params);
             serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;

@@ -20,7 +20,7 @@
         </div>
         <div ng-show="idalumno!='0'" class="form-group col-md-2">
             <label style="font-weight: bold">No asistió</label>
-            <input ng-model="falta" ng-click="marcado" type="checkbox">
+            <input  ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox" >
         </div>
         <div ng-show="idalumno!='0'" class="form-group col-md-3">
             <div style="float: right">
@@ -131,7 +131,7 @@
                                         <div class="col-2">
                                             <label><br><br></label>
                                             <div class="form-check">
-                                                <input ng-click="elegirNivel(nivel,indicador,aspecto)"
+                                                <input height="15px" width="15px" ng-disabled="flgCalificado" ng-click="elegirNivel(nivel,indicador,aspecto)"
                                                     class="form-check-input position-static" type="radio"
                                                     name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
                                             </div>
