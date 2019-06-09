@@ -18,7 +18,7 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(4)">Evaluación</a>
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(2)">Autoevaluación</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(3)">Coevaluación</a>
+        <a ng-if="actividad.tipo == 'G'" class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(3)">Coevaluación</a>
       </div>
     </div>
     <div class="col-md-2">
@@ -27,7 +27,7 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(4)">Evaluación</a>
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(2)">Autoevaluación</a>
-        <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(3)">Coevaluación</a>
+        <a ng-if="actividad.tipo == 'G'" class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(3)">Coevaluación</a>
       </div>
     </div>
     <div class="col-md-2">
