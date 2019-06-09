@@ -9,7 +9,9 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     $scope.envioComentario = false;
     $scope.lstComentarios = []
     $scope.verRespuestaProf = null;
-    $scope.mostrarPantalla = false;
+    $scope.mostrarPantallaComenta = false;
+    $scope.mostrarPantallaNoComenta = false;
+    $scope.noPuedeComentarAun = false;
 
     $scope.comentario = {
         idActividad: $scope.idActividad,
@@ -33,7 +35,7 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
 
     $scope.respuesta = {
         idActividad: $scope.idActividad,
-        idAlumno : null,
+        idAlumno: null,
         idProfesor: usuario.idUser,
         respuesta: ""
     }
@@ -49,22 +51,37 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     }
 
 
-    function obtenerComentarios(){
+    function obtenerComentarios() {
         var params = { idActividad: $scope.actividad.idActividad }
         console.dir($scope.actividad.idActividad)
         serviceCRUD.TypePost('actividad/listar_comentarios', params).then(function (res) {
             $scope.lstComentarios = res.data.listaComentarios;
-        if(!usuario.profesor){
-            for (let i = 0; i < $scope.lstComentarios.length; i++) {
-                if($scope.lstComentarios[i].codAlumno == usuario.codigoPUCP){
-                    $scope.envioComentario = true;
-                    
-                    $scope.verRespuestaProf = $scope.lstComentarios[i];
-                    console.dir($scope.verRespuestaProf)
+            if (!usuario.profesor) {
+                for (let i = 0; i < $scope.lstComentarios.length; i++) {
+                    if ($scope.lstComentarios[i].codAlumno == usuario.codigoPUCP) {
+                        $scope.envioComentario = true;
+                        $scope.verRespuestaProf = $scope.lstComentarios[i];
+                        console.dir($scope.verRespuestaProf)
+                    }
                 }
+                var params2 = {
+                    idAlumno: usuario.idUser,
+                    idActividad: $scope.actividad.idActividad,
+                    tipo: 4,
+                    idCalificador: 1
+                }
+                if ($scope.envioComentario == false) {
+                    serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params2).then(function (res2) {
+                        console.dir(res2.data.flgCalificado)
+                        if(!res2.data.flgCalificado){
+                            $scope.noPuedeComentarAun = true;
+                            $scope.mostrarPantallaNoComenta = true;
+                        }
+                        $scope.mostrarPantallaComenta = true;
+                    })  
+                }
+                
             }
-            $scope.mostrarPantalla = true;
-        }
         })
     }
 
