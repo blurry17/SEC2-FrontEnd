@@ -12,7 +12,6 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $location.path("curso")
   }
 
-
   $scope.gc = false;
   $scope.gb = false;
   $scope.seleccion = 'g';
@@ -83,7 +82,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $scope.gc = false;
 
     var arregloFrec = [];
-    arregloFrec.push(['Notas', 'Frecuencia'])
+    arregloFrec.push(['Notas', 'Cantidad de Alumnos'])
     for (let i = 0; i < $scope.listaFrec.length; i++) {
       arregloFrec.push([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia])
     }
