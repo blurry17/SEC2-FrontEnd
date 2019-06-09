@@ -72,11 +72,11 @@
         <div class="row">
           <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
             style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
-            <div ng-show="aspecto.tipoClasificacion == 1">
+            <div ng-if="aspecto.tipoClasificacion == 1">
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
                   <label>Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre.
                   </div>
@@ -162,7 +162,7 @@
                 </div>
               </div>
             </div>
-            <div ng-show="aspecto.tipoClasificacion == 2">
+            <div ng-if="aspecto.tipoClasificacion == 2">
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
                   <label>Nombre del Aspecto</label>
@@ -190,18 +190,18 @@
                 </div>
               </div>
             </div>
-            <div ng-show="aspecto.tipoClasificacion == 3">
+            <div ng-if="aspecto.tipoClasificacion == 3">
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
                   <label>Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion">
+                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre
                   </div>
                 </div>
                 <div class="form-group col-md-5 col-lg-4">
                   <label>Descripción</label>
-                  <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                  <input ng-disabled="bloqEval" type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
                 </div>
                 <div class="form-group col-md-1 d-flex align-items-end">
                   <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"

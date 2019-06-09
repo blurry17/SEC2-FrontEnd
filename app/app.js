@@ -39,6 +39,11 @@ app.config(function ($routeProvider, $httpProvider) {
             templateUrl: 'app/modules/curso/Estadisticas.html?v=' + Date.now(),
             controller: 'EstadisticasController'
         })
+
+        .when('/encuesta', {
+            templateUrl: 'app/modules/curso/Encuesta.html?v=' + Date.now(),
+            controller: 'EncuestaController'
+        })
         
         .when('/grupos', {
             templateUrl: 'app/modules/curso/Grupos.html?v=' + Date.now(),
