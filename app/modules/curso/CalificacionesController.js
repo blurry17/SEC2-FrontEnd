@@ -34,7 +34,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         $scope.flgCalificado = false;
         $scope.editar = true;
     }
-
+//sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
         if ($scope.idalumno == '0') return;
         $scope.editar = false;
@@ -44,10 +44,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             tipo: 4,
             idCalificador: $scope.usuario.idUser
         }
-
         serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
-            $scope.lstAspectos = res.data.listaNotaAspectos;
-            $scope.notaFinal = res.data.nota;
+            console.dir(res.data);
+            $scope.lstAspectos = res.data.calificacion.listaNotaAspectos;
+            $scope.notaFinal = res.data.calificacion.nota;
             $scope.flgCalificado = res.data.flgCalificado;
 
             for (let i = 0; i < $scope.lstAspectos.length; i++) {
@@ -101,9 +101,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         for (let i = 0; i < $scope.lstAspectos.length; i++) {
             if ($scope.lstAspectos[i].tipoClasificacion != 3) {
                 if ($scope.lstAspectos[i].tipoClasificacion == 1) {
-                    for (let j = 0; j < $scope.lstAspectos[i].listaIndicadores.length; j++) {
-                        for (let k = 0; k < $scope.lstAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
-                            if ($scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == null || $scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == NaN) {
+                    for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
+                        for (let k = 0; k < $scope.lstAspectos[i].listaNotaIndicador[j].listaNiveles.length; k++) {
+                            if ($scope.lstAspectos[i].listaNotaIndicador[j].listaNiveles[k].puntaje == null || $scope.lstAspectos[i].listaNotaIndicador[j].listaNiveles[k].puntaje == NaN) {
                                 window.alert('Falta registrar la nota de un nivel');
                                 return;
                             }
@@ -126,14 +126,14 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                         }
                     }
         */
-       console.dir('2');
         for (let i = 0; i < $scope.lstAspectos.length; i++) {
             if ($scope.lstAspectos[i].tipoClasificacion != 3) {
-                $scope.lstAspectos[i].nota = parseInt($scope.lstAspectos[i].nota);
+             //   $scope.lstAspectos[i].nota = 4;
                 if ($scope.lstAspectos[i].tipoClasificacion == 1) {
-                    for (let j = 0; j < $scope.lstAspectos[i].listaIndicadores.length; j++) {
-                        for (let k = 0; k < $scope.lstAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
-                            $scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje = parseInt($scope.lstAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje);
+                    for (let j = 0; j < $scope.lstAspectos[i].listaNotaIndicador.length; j++) {
+                       // $scope.lstAspectos[i].listaNotaIndicador[j].nota = 3;
+                        for (let k = 0; k < $scope.lstAspectos[i].listaNotaIndicador[j].listaNiveles.length; k++) {
+                            $scope.lstAspectos[i].listaNotaIndicador[j].listaNiveles[k].puntaje = parseInt($scope.lstAspectos[i].listaNotaIndicador[j].listaNiveles[k].puntaje);
                         }
                     }
                 }
@@ -150,11 +150,11 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             nota: parseInt($scope.notaFinal),
             flgFalta: $scope.falta ? 1 : 0,
             idRubrica: $scope.idRub,
-            listaNotaAspectos: $scope.lstAspectos
+            listaNotaAspectos: $scope.lstAspectos,
+            flgCompleto: 0
         }
-        console.dir('3');
+        console.dir(params);
         if ($scope.editar == false) {
-            console.dir('entra a caificar');
             serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
                 for (let i = 0; i < $scope.lstAspectos.length; i++) {
                     if ($scope.lstAspectos[i].tipoClasificacion == 3) $scope.lstAspectos[i].nota = $scope.lstAspectos[i].nota == 1;
@@ -162,7 +162,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 $scope.ObtenerNotas();
             })
         } else {
-            console.dir('entra a editar');
             serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
                 for (let i = 0; i < $scope.lstAspectos.length; i++) {
                     if ($scope.lstAspectos[i].tipoClasificacion == 3) $scope.lstAspectos[i].nota = $scope.lstAspectos[i].nota == 1;
@@ -203,12 +202,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
             $scope.listaAl = res.data.lista;
-            console.dir(res.data);
         })
     }
 
-    $scope.elegirNivel = function (nivel) {
-        $scope.auxNotaNivel = nivel.puntaje;
+    $scope.elegirNivel = function (nivel, aspecto,inde) {
+        aspecto.nota = nivel.puntaje;
+       // let pos=$scope.lstAspectos.indexOf(aspecto);
+        $scope.lstAspectos[inde].nota=nivel.puntaje;
+        console.dir('HOLAAAA');
+        console.dir($scope.lstAspectos);
     }
 
     function ObtenerRubrica() {
@@ -217,11 +219,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             tipo: 4,
         }
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-
-            $scope.rubrica.lstAspectos = res.data.listaAspectos;
             console.dir(res.data);
-
-            console.dir($scope.rubrica.lstAspectos);
+            $scope.rubrica.lstAspectos = res.data.listaAspectos;
             $scope.idRub = res.data.idRubrica;
 
             /* for (let i = 0; i < $scope.lstAspectos.length; i++) {

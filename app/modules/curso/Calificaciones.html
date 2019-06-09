@@ -131,7 +131,7 @@
                                         <div class="col-2">
                                             <label><br><br></label>
                                             <div class="form-check">
-                                                <input ng-click="elegirNivel(nivel)"
+                                                <input ng-click="elegirNivel(nivel, aspecto, $index)"
                                                     class="form-check-input position-static" type="radio"
                                                     name="blankRadio" id="blankRadio1" value="option1" aria-label="...">
                                             </div>
@@ -154,7 +154,7 @@
                                     <div style="float: right">
                                         <label>Nota aspecto</label>
                                         <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" readonly
-                                            type="text" class="form-control" ng-value="auxNotaNivel" style="width: 50px">
+                                            type="text" class="form-control" ng-model="aspecto.nota" style="width: 50px">
                                     </div>
                                 </div>
 
