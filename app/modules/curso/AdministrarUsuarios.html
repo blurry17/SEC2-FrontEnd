@@ -1,0 +1,38 @@
+<div>
+
+
+    <!--Menú de navegación-->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Administrar usuarios</li>
+        </ol>
+    </nav>
+
+    <!-- Tabla con Lista de Alumnos-->
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope = "col">#</th>
+                <th scope = "col">Rol</th>
+                <th scope = "col">Código</th>
+                <th scope = "col">Nombre</th>
+                <th scope = "col">Especilidad</th>
+                <th scope = "col">Email</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="item in listaAl" ng-value="item.idAlumno">
+            <tr>
+                <th scope="row">1</th>
+                <td>ALUMNO MATRIC.</td>
+                <td>{{item.codigoPUCP}}</td>
+                <td>{{item.nombre}}</td>
+                <TD>INGENIERÍA INFORMÁTICA</TD>
+                <td>luis.mesajil@pucp.pe</td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+</div>

@@ -67,8 +67,19 @@
           <li class="menu-item">
             <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
           </li>
-        </ul>
 
+          <!--Sub-menú Administración-->
+
+          <li class="active">
+              <a data-target="#homeSubmenu_administrar" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle menu-item"><i class="fas fa-tasks"></i>&nbspAdministración</a>
+              <ul class="collapse list-unstyled" id="homeSubmenu_administrar">
+                <!--Sub-item Administración usuarios-->
+                <li ng-click="mostrarAdministrarUsuarios()"><a
+                  class="submenu-item">Personas</a></li>
+              </ul>
+          </li>
+        </ul>
         <!-- <ul class="list-unstyled CTAs">
           <li>
             <a rel="noopener noreferrer" target="_blank" href="https://www.pucp.edu.pe/">PUCP</a>
@@ -98,6 +109,7 @@
     //document.write("<script type='text/javascript' src='app/actividad/alumnos_destaca.js?v=" + Date.now() + "'><\/script>");
     //document.write("<script type='text/javascript' src='app/actividad/estadistica.js?v=" + Date.now() + "'><\/script>");
     //document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/AdministrarUsuariosController.js?v=" + Date.now() + "'><\/script>");
 
   </script>
 
