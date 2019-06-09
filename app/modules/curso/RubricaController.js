@@ -3,7 +3,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     if ($scope.usuario == undefined) $location.path('/');
     $scope.actividad = $cookies.getObject('actividadActual');
     $rootScope.lstCursos = $cookies.getObject('cursos');
-    $("[data-toggle=tooltipOcultarAspecto]").tooltip();
     $scope.mostrarCrearRubrica = false;
     $scope.mostrarEditarRubrica = false;
     $scope.mostrarAspecto = true;
@@ -13,6 +12,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.mostrarBtns = false;
     $scope.bloqEval = false;
     $scope.edicion = false;
+    $scope.titleEval = null;
     $scope.rubrica = {
         flgRubricaEspecial: 0,
         idActividad: $scope.actividad.idActividad,
@@ -21,15 +21,20 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         listaAspectos: [],
         tipo: null
     }
-    var ev = [0,0,0,0,0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval
+    var ev = [0,0,0,0,0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval    
 
     $scope.btnObtenerEval = function(tipo) {
+        $scope.mostrarEv = false;
         var params = {
             idActividad: $scope.actividad.idActividad,
             tipo: tipo
         }
+
+        if (tipo == 4) $scope.titleEval = 'Evaluación';
+        else if (tipo == 3) $scope.titleEval = 'Coevaluación';
+        else if (tipo == 2) $scope.titleEval = 'Autoevaluación';
+
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-            console.dir(res.data);
             if (res.data.succeed == false) return;
             ev[tipo] = 1;
             $scope.rubrica = res.data;
@@ -45,18 +50,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         })
     }
 
-    $scope.btnEditarRubrica = function () {
-        $("#formEva").addClass("was-validated");
-        $scope.mostrarCrearRubrica = false;
-        $scope.rubrica.nombreRubrica = $scope.nomRubrica;
-        $scope.rubrica.idActividad = $scope.actividad.idActividad;
-        $scope.rubrica.idRubricaActual = $scope.actividad.idRubrica;
-        serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (response) {
-            $scope.mostrarEv = false;
-            window.alert("Se guardaron los cambios!")
-        })
-    }
-
     $scope.btnGuardarRubrica = function () {
         $("#formEva").addClass("was-validated");
         if (formEva.checkValidity()) {
@@ -67,18 +60,18 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                     }
                 }
             }
+            $scope.rubrica.idActividad = $scope.actividad.idActividad;
             if ($scope.edicion == true) {
                 $scope.bloqEval = true;
                 $scope.edicion = false;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
-                serviceCRUD.TypePost('actividad/editar_rubrica', $scope.rubrica).then(function (res) {
+                serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
                 })
-            } else { 
+            } else {
                 $scope.bloqEval = true;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
-                console.dir($scope.rubrica);
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
 
                 })
@@ -97,8 +90,9 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     } */
 
     $scope.btnCrearEval = function (tipo) {
+        $("#formEva").removeClass("was-validated");
         if (ev[tipo]) {
-            var r = window.confirm("Esta actividad ya tiene una hoja de evaluación. ¿Desea crear una nueva?");
+            var r = window.confirm("Ya existe una evalución de este tipo. ¿Desea crear una nueva?");
             if (r) {
                 $scope.rubrica.nombreRubrica = '';
                 $scope.rubrica.listaAspectos = [];
@@ -119,21 +113,9 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             $scope.mostrarBtnEditar = false;
             $scope.mostrarBtns = true;
         }
-    }
-
-    $scope.btnVerRubricaActual = function () {
-        var params = {
-            idActividad: $scope.actividad.idActividad
-        }
-        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            $scope.lstAspectos = res.data.listaAspectos;
-            $scope.lstAspectos.forEach(aspecto => {
-                if(aspecto.puntajeMax != null){
-                    $scope.puntajeAcumuladoRubricaVista = aspecto.puntajeMax
-                }
-            });
-        })        
-        $('#mdVistaPrevia').appendTo("body").modal('show');
+        if (tipo == 4) $scope.titleEval = 'Evaluación';
+        else if (tipo == 3) $scope.titleEval = 'Coevaluación';
+        else if (tipo == 2) $scope.titleEval = 'Autoevaluación';
     }
 
     $scope.btnAspectoConIndicadores = function () {
@@ -158,7 +140,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             mostrar: true,
             tipoClasificacion: 2
         });
-        
     }
 
     $scope.btnAspectoSinPuntaje = function () {
@@ -185,6 +166,10 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.btnOcultarIndicadores = function (aspecto) {
         aspecto.mostrar = !(aspecto.mostrar);
+    }
+
+    $scope.btnOcultarNiveles = function (indicador) {
+        indicador.mostrar = !(indicador.mostrar);
     }
 
     $scope.btnQuitarAspecto = function (aspecto) {
@@ -223,7 +208,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     $scope.btnCancelar = function () {
         $scope.mostrarEv = false;
         if ($scope.edicion) $scope.edicion = false;
-        obtenerEval();
+        $scope.btnObtenerEval(4);
     }
 
     $scope.btnEdicion = function() {

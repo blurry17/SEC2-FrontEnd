@@ -20,7 +20,6 @@
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(2)">Autoevaluación</a>
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(3)">Coevaluación</a>
       </div>
-
     </div>
     <div class="col-md-2">
       <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -38,7 +37,7 @@
   <div class="line"></div>
   <div class="row" ng-show="mostrarEv">
     <div class="col-md-12">
-      <h3>Evaluación</h3>
+      <h3>{{titleEval}}</h3>
     </div>
     <div class="col-md-12">
       <form id="formEva" name="formEva" class="needs-validation" novalidate>
@@ -72,22 +71,22 @@
         <div class="row">
           <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
             style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
-            <div ng-show="aspecto.tipoClasificacion == 1">
+            <div ng-if="aspecto.tipoClasificacion == 1">
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
-                  <label>Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                  <label class="negrita">Nombre del Aspecto</label>
+                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre.
                   </div>
                 </div>
                 <div class="form-group col-md-5 col-lg-4">
-                  <label>Descripción</label>
+                  <label class="negrita">Descripción</label>
                   <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
                 </div>
                 <div class="form-group col-md-1">
-                  <label>Puntaje</label>
-                  <input ng-disabled="bloqEval" ng-model="aspecto.puntajeMax" required type="text" class="form-control" style="width: 60px"
+                  <label class="negrita">Puntaje</label>
+                  <input ng-disabled="bloqEval" ng-model="aspecto.puntajeMax" required type="text" class="form-control" style="width: 70px"
                     maxlength="2" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
                   <div class="invalid-feedback">
                     Ingrese un puntaje.
@@ -98,7 +97,7 @@
                     ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></button>
                   <button type="button" data-toggle="button" aria-pressed="false" autocomplete="off"
                     class="btn btn-info" title="Indicadores" ng-click="btnOcultarIndicadores(aspecto)"><i
-                      class="fa fa-list"></i></button>
+                      class="fas fa-chevron-down"></i></button>
                   <button type="button" class="btn btn-danger" title="Eliminar Aspecto"
                     ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></button>
                 </div>
@@ -106,20 +105,20 @@
               <div ng-repeat="indicador in aspecto.listaIndicadores" ng-show="aspecto.mostrar" style="padding-left: 2%">
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
-                    <label>Nombre del indicador</label>
+                    <label class="negrita">Nombre del indicador</label>
                     <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="indicador.descripcion" />
                     <div class="invalid-feedback">
                       Ingrese un nombre.
                     </div>
                   </div>
                   <div class="form-group col-md-5 col-lg-4">
-                    <label>Descripción</label>
+                    <label class="negrita">Descripción</label>
                     <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="indicador.informacion" />
                   </div>
                   <!-- <div class="form-group col-md-1">
                       <label>Puntaje</label>
                       <input required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="2"
-                        class="form-control" style="width: 60px" ng-model="indicador.puntajeMax" />
+                        class="form-control" style="width: 70px" ng-model="indicador.puntajeMax" />
                       <div class="invalid-feedback">
                         Ingrese un puntaje.
                       </div>
@@ -128,28 +127,28 @@
                     <button type="button" class="btn btn-primary" title="Agregar nivel"
                       ng-click="btnAgregarNivel(indicador)"><i class="fa fa-plus"></i></button>
                     <button data-toggle="button" aria-pressed="false" autocomplete="off" type="button"
-                      class="btn btn-info" title="Niveles" ng-click="btnOcultarNiveles(aspecto)"><i
-                        class="fa fa-list"></i></button>
+                      class="btn btn-info" title="Niveles" ng-click="btnOcultarNiveles(indicador)"><i
+                        class="fas fa-chevron-down"></i></button>
                     <button type="button" class="btn btn-danger" title="Eliminar"
                       ng-click="btnQuitarIndicador(aspecto, indicador)"><i class="fas fa-times"></i></button>
                   </div>
                 </div>
-                <div ng-repeat="nivel in indicador.listaNiveles" style="padding-left: 4%">
+                <div ng-show="indicador.mostrar" ng-repeat="nivel in indicador.listaNiveles" style="padding-left: 4%">
                   <div class="form-row">
                     <div class="form-group col-md-1">
-                      <label>{{'Nivel ' + ($index + 1)}}</label>
+                      <label class="negrita">{{'Nivel ' + ($index + 1)}}</label>
                       <div class="invalid-feedback">
                         Ingrese un nombre.
                       </div>
                     </div>
                     <div class="form-group col-md-4 col-lg-4">
-                      <label>Descripción</label>
+                      <label class="negrita">Descripción</label>
                       <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200" class="form-control"></textarea>
                     </div>
                     <div class="form-group col-md-1">
-                      <label>Puntaje</label>
+                      <label class="negrita">Puntaje</label>
                       <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                        maxlength="2" class="form-control" style="width: 60px" ng-model="nivel.puntaje" />
+                        maxlength="2" class="form-control" style="width: 70px" ng-model="nivel.puntaje" />
                       <div class="invalid-feedback">
                         Ingrese un puntaje.
                       </div>
@@ -162,48 +161,48 @@
                 </div>
               </div>
             </div>
-            <div ng-show="aspecto.tipoClasificacion == 2">
+            <div ng-if="aspecto.tipoClasificacion == 2">
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
-                  <label>Nombre del Aspecto</label>
+                  <label class="negrita">Nombre del Aspecto</label>
                   <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre.
                   </div>
                 </div>
                 <div class="form-group col-md-5 col-lg-4">
-                  <label>Descripción</label>
+                  <label class="negrita">Descripción</label>
                   <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
                 </div>
                 <div class="form-group col-md-1">
-                  <label>Puntaje</label>
+                  <label class="negrita">Puntaje</label>
                   <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                    maxlength="2" style="width: 60px" class="form-control" ng-model="aspecto.puntajeMax" />
+                    maxlength="2" style="width: 70px" class="form-control" ng-model="aspecto.puntajeMax" />
                   <div class="invalid-feedback">
                     Ingrese un puntaje.
                   </div>
                 </div>
-                <div class="form-group col-md-1 d-flex align-items-end">
+                <div ng-show="mostrarBtns" class="form-group col-md-1 d-flex align-items-end">
                   <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
                     title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i
                       class="fas fa-times"></i></button>
                 </div>
               </div>
             </div>
-            <div ng-show="aspecto.tipoClasificacion == 3">
+            <div ng-if="aspecto.tipoClasificacion == 3">
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
-                  <label>Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion">
+                  <label class="negrita">Nombre del Aspecto</label>
+                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre
                   </div>
                 </div>
                 <div class="form-group col-md-5 col-lg-4">
-                  <label>Descripción</label>
-                  <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                  <label class="negrita">Descripción</label>
+                  <input ng-disabled="bloqEval" type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
                 </div>
-                <div class="form-group col-md-1 d-flex align-items-end">
+                <div ng-show="mostrarBtns" class="form-group col-md-1 d-flex align-items-end">
                   <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
                     title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i
                       class="fas fa-times"></i></button>

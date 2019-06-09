@@ -243,3 +243,7 @@ a.article:hover {
     right: 0;
     z-index: 990;
 }
+
+.negrita {
+    font-weight: bold
+}
