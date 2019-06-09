@@ -12,18 +12,18 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $location.path("curso")
   }
 
-
+  $scope.listaFrec=[];
   $scope.gc = false;
   $scope.gb = false;
   $scope.seleccion = 'g';
   
 
-  var params = { idActividad: $scope.actividad.idActividad }
-
+  var params = { idActividad: $scope.actividad.idActividad}
+  console.dir(params.idActividad);
 
   function listarRanking() {
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
-      //console.dir(res.data);
+      console.dir(res.data);
       $scope.listaR = res.data.lista5Alumnos;
     })
   }
@@ -32,7 +32,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
       //console.dir(res.data);
       $scope.mediaS = res.data.media;
-      $scope.desv = res.data.desviacionsEstandar;
+      $scope.desv = res.data.desviacionEstandar;
       $scope.porcentaje = res.data.porcentajeAprobados;
       $scope.notaMaxS = res.data.notaMax;
       $scope.notaMinS = res.data.notaMin;
@@ -42,18 +42,16 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaNotas() {
     serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
+      console.dir("VER ACA");
       console.dir(res.data);
       $scope.listaN = res.data.listaNotas;
       $scope.listaFrec = res.data.notaFrecuencia;
-      for (let i = 0; i < $scope.listaFrec.length; i++) {
-        console.dir(i);
-        $scope.listaFrec[i].nota = res.data.listaFrec[i].nota;
-        $scope.listaFrec[i].frecuencia = res.data.listaFrec[i].frecuencia;
-      }
+     
       $scope.cantidadN = res.data.cantidadNotas;
       $scope.cantidadF = res.data.cantidadFalta;
       $scope.cantidadT = res.data.cantidadTotal;
       //console.dir($scope.cantidadF);
+      console.dir("CANTIDAD FALTAS:");
       console.dir(res.data.cantidadFalta);
     })
 
@@ -83,7 +81,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $scope.gc = false;
 
     var arregloFrec = [];
-    arregloFrec.push(['Notas', 'Frecuencia'])
+    arregloFrec.push(['Notas', 'Cantidad de Alumnos'])
     for (let i = 0; i < $scope.listaFrec.length; i++) {
       arregloFrec.push([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia])
     }
