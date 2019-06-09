@@ -7,7 +7,7 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     $scope.vistaProfesor = usuario.profesor;
     //Para saber si el alumno envió un comentario o no
     $scope.envioComentario = false;
-
+    $scope.lstComentarios = []
 
     $scope.comentario = {
         idActividad: $scope.idActividad,
@@ -20,10 +20,12 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
         serviceCRUD.TypePost('actividad/ingresar_comentario_alumno', $scope.comentario).then(function (response) {
             console.dir($scope.comentario.comentario);
             console.dir(response);
+            /* 
             if (response.data.error == 1)
                 window.alert(response.data.mensaje + '.\n' + "Por favor, inténtelo nuevamente");
             else
                 window.alert("Se guardó el comentario!")
+            */
         })
     }
 
@@ -46,22 +48,16 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
 
     function mostrarComentarios(){
         var params = { idActividad: $scope.actividad.idActividad }
-        serviceCRUD.TypePost('actividad/obtener_rubrica_idactividad', params).then(function (res) {
-            $scope.rubrica = res.data;
-            for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
-                $scope.rubrica.listaAspectos[i].mostrar = true;
-                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
-                    $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
-            }
-            $scope.bloqEval = true;
-            $scope.mostrarBtnEditar = true;
-            $scope.mostrarBtns = false;
-            $scope.mostrarRubrica = true;
+
+        serviceCRUD.TypePost('actividad/listar_comentarios', params).then(function (res) {
+            console.dir('comentariosss')
+            console.dir(res.data)
+            $scope.lstComentarios = res.data;
+            
         })
     }
 
-    /* Esto no debe estar hardcodeado. Falta el servicio de listar comentariosXactividad */
-    $scope.lstComentarios = []
+    
 
     function init() {
         if (usuario.profesor == 1)
