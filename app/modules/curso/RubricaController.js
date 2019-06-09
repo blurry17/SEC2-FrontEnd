@@ -24,6 +24,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     var ev = [0,0,0,0,0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval    
 
     $scope.btnObtenerEval = function(tipo) {
+        $scope.mostrarEv = false;
         var params = {
             idActividad: $scope.actividad.idActividad,
             tipo: tipo
@@ -32,7 +33,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         if (tipo == 4) $scope.titleEval = 'Evaluación';
         else if (tipo == 3) $scope.titleEval = 'Coevaluación';
         else if (tipo == 2) $scope.titleEval = 'Autoevaluación';
-
 
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
             if (res.data.succeed == false) return;
@@ -140,7 +140,6 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             mostrar: true,
             tipoClasificacion: 2
         });
-        
     }
 
     $scope.btnAspectoSinPuntaje = function () {
