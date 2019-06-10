@@ -35,7 +35,10 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         else if (tipo == 2) $scope.titleEval = 'Autoevaluación';
 
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-            if (res.data.succeed == false) return;
+            if (res.data.succeed == false){
+                window.alert('No existe esta evaluación');
+                return;
+            }
             ev[tipo] = 1;
             $scope.rubrica = res.data;
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
@@ -44,6 +47,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                     $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
             }
             $scope.bloqEval = true;
+            $scope.edicion = false;
             $scope.mostrarBtnEditar = true;
             $scope.mostrarBtns = false;
             $scope.mostrarEv = true;
@@ -73,21 +77,11 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
-
                 })
             }
             $scope.mostrarCrearRubrica = false;
         }
     }
-
-    /* $scope.sumaInd = function(asp){
-        var sum = 0;
-        for (let i = 0; i < asp.listaIndicadores.length; i++) {
-            sum += parseInt(asp.listaIndicadores[i].puntajeMax);            
-        }
-        //$scope.rubrica.listaAspectos[$scope.rubrica.listaAspectos.indexOf(asp)].puntajeMax = sum;
-        return sum;
-    } */
 
     $scope.btnCrearEval = function (tipo) {
         $("#formEva").removeClass("was-validated");
@@ -219,8 +213,31 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $("#formEva").removeClass("was-validated");
     }
 
+    function existeOtrasEval(){
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            tipo: 2
+        }
+        serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
+            if (res.data.succeed == false) return;
+            ev[2] = 1;
+        })
+
+        if ($scope.actividad.tipo == 'G'){
+            var params = {
+                idActividad: $scope.actividad.idActividad,
+                tipo: 3
+            }
+            serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
+                if (res.data.succeed == false) return;
+                ev[3] = 1;
+            })
+        }
+    }
+
     function init() {
         $scope.btnObtenerEval(4);
+        existeOtrasEval();
     }
 
     init();
