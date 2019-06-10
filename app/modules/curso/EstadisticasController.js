@@ -19,11 +19,11 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   
 
   var params = { idActividad: $scope.actividad.idActividad}
-  console.dir(params.idActividad);
+  //console.dir(params.idActividad);
 
   function listarRanking() {
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
-      console.dir(res.data);
+      //console.dir(res.data);
       $scope.listaR = res.data.lista5Alumnos;
     })
   }
