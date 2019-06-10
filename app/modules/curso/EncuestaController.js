@@ -18,7 +18,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
      
     var ev = [0,0,0,0,0];// chequea si tiene rubrica del curso, autoeval, coeval y eval
-    $scope.btnautoevaluacion = function (tipo) {
+    $scope.btnEvaluacion = function (tipo) {
         var params = {
             idActividad: $scope.actividad.idActividad,
             tipo: tipo
@@ -35,6 +35,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             }
         })
     }
+
     /**
      function obtenerEvaluacion(tipo) {  
         var params = {
