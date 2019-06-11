@@ -29,7 +29,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaPorcentajes() {
     serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
-      //console.dir(res.data);
+      console.dir(res.data);
       $scope.mediaS = res.data.media;
       $scope.desv = res.data.desviacionEstandar;
       $scope.porcentaje = res.data.porcentajeAprobados;
@@ -83,47 +83,34 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
     var arregloFrec = [];
     arregloFrec.push(['Notas', 'Cantidad de Alumnos'])
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'Notas');
+    data.addColumn('number', 'Cantidad de Alumnos');
+    data.addColumn({type: 'string', role: 'style'});
     for (let i = 0; i < $scope.listaFrec.length; i++) {
-      arregloFrec.push([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia])
+      var auxnota =$scope.listaFrec[i].nota;
+      
+      var colorNota ;
+      if  ( auxnota <= 10) colorNota = 'color: red' ;
+      else colorNota = 'color: blue'; 
+      data.addRow([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia,colorNota])
     }
 
-    console.dir(arregloFrec);
-    var data = google.visualization.arrayToDataTable(arregloFrec);
-
-    var view = new google.visualization.DataView(data);
-    view.setColumns([0,1,
-      {
-        calc: function (dt, row) {
-          if ((dt.getValue(row, 1) >= 0) && (dt.getValue(row, 1) <= 10)) {
-            return 'green';
-            } else {
-            return 'blue';
-          }
-        },
-        type: 'string',
-        role: 'style'
-      },
-      {
-        calc: 'stringify',
-        sourceColumn: 1,
-        type: 'string',
-        role: 'annotation'
-      }
-    ]
-
-    );
-
+    //console.dir(arregloFrec);
+    
     var options = {
       chart: {
         title: 'Estadisticas de notas'
       },
       bars: 'vertical',
-      colors: [ '#ec8f6e', '#f3b49f', '#f6c7b6'],
+      backgroundColor: '#E4E4E4',  
+      opacity : 0.7
        // Required for Material Bar Charts.
     };
 
-    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-    chart.draw(view, google.charts.Bar.convertOptions(options));
+    //var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('barchart_material'));
+    chart.draw(data, options);
   }
 
   $scope.TipoGrafico = function () {
@@ -133,8 +120,8 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
       google.charts.load('current', { 'packages': ['corechart'] });
       google.charts.setOnLoadCallback(drawChartC);
     } else if ($scope.seleccion == 'gb') {
-      google.charts.load('current', { 'packages': ['bar'] });
-      google.charts.setOnLoadCallback(drawChartB);
+      google.charts.load('visualization','current', { 'packages': ['corechart'] ,callback : drawChartB}); // corechart
+      //google.charts.setOnLoadCallback(drawChartB);
       $scope.gc = false;
       $scope.gb = true;
     }

@@ -663,7 +663,7 @@
           <div class="form-row">
               <div class="form-group col-md-5">
                   <label>Fecha ejecucion</label>
-                  <input type="date" min="{{hoy}}"  max="2019-06-20" class="form-control" ng-model="regAlarma.fechaEjecucion"
+                  <input type="date" min="{{hoy}}" max="{{fechaMaxActividad}}" class="form-control" ng-model="regAlarma.fechaEjecucion"
                       required>
                   <div class="invalid-feedback">
                       Este campo es requerido.
