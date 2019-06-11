@@ -9,160 +9,206 @@
   <br />
 
   <div>
-    <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>ENCUESTA</b></label>
+    <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>Evaluación del entregable</b></label>
   </div>
   <div style="margin-top: 14px; margin-left: 30px">
     <div>
-        <div class="row" >
-            <label class="vertical-center" style="margin-top: 14px;font-size: 90%"><b>AUTOEVALUACIÓN</b></label>
-            <div class="form-group col-md-2">
-                <button ng-click="btnEvaluacion(2)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                class="btn btn-sm btn-info dropdown-toggle"><i class="fas fa-eye"></i>&nbsp;</button>
-            </div>   
-        </div>
-
         <div class="row">
-            <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
-                  style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
-              <div ng-if="aspecto.tipoClasificacion == 2">
-                <div class="form-row">
-                  <div class="form-group col-md-3 col-lg-2">
-                    <label>Nombre del Aspecto</label>
-                    <input disabled required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
-                    <div class="invalid-feedback">
-                      Ingrese un nombre.
-                    </div>
-                  </div>
-                  <div class="form-group col-md-5 col-lg-4">
-                    <label>Descripción</label>
-                    <input disabled maxlength="50" class="form-control" ng-model="aspecto.informacion" />
-                  </div>
-                  <div class="form-group col-md-1">
-                    <label>Puntaje</label>
-                    <input disabled required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                      maxlength="2" style="width: 60px" class="form-control" ng-model="aspecto.puntajeMax" />
-                    <div class="invalid-feedback">
-                      Ingrese un puntaje.
-                    </div>
-                  </div>
-                  <div class="form-group col-md-2">
-                      <label>Puntaje Asignado</label>
-                      <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                        maxlength="2" style="width: 60px" class="form-control"  />
-                      <div class="invalid-feedback">
-                        Ingrese un puntaje.
+            <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Autoevaluación</b></label>
+          <div class="form-group col-md-2">
+             <button ng-click="btnEvaluacion(2)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                class="btn btn-sm btn-info dropdown-toggle"><i class="fas fa-eye"></i>&nbsp;</button>
+          </div>   
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                  <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
+                    style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+                    <div ng-if="aspecto.tipoClasificacion == 2">
+                      <div class="form-row">
+                        <div class="form-group col-md-3 col-lg-2">
+                          <label class="negrita">Nombre del Aspecto</label>
+                          <input disabled required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                          <div class="invalid-feedback">
+                            Ingrese un nombre.
+                          </div>
+                        </div>
+                        <div class="form-group col-md-5 col-lg-4">
+                          <label class="negrita">Descripción</label>
+                          <input disabled maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                        </div>
+                        <div class="form-group col-md-1">
+                          <label class="negrita">Puntaje</label>
+                          <input disabled required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                            maxlength="2" style="width: 70px" class="form-control" ng-model="aspecto.puntajeMax" />
+                          <div class="invalid-feedback">
+                            Ingrese un puntaje.
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="negrita">Puntaje Asignado</label>
+                            <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                              maxlength="2" style="width: 70px" class="form-control" />
+                            <div class="invalid-feedback">
+                              Ingrese un puntaje.
+                            </div>
+                          </div>
                       </div>
+                    </div>
+                    <!-- <div ng-if="aspecto.tipoClasificacion == 3">
+                      <div class="form-row">
+                        <div class="form-group col-md-3 col-lg-2">
+                          <label class="negrita">Nombre del Aspecto</label>
+                          <input disabled type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                          <div class="invalid-feedback">
+                            Ingrese un nombre
+                          </div>
+                        </div>
+                        <div class="form-group col-md-5 col-lg-4">
+                          <label class="negrita">Descripción</label>
+                          <input disabled type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                        </div>
+                        <div class="form-group col-md-5 col-lg-4">
+                            <label class="negrita">Comentario sobre desempeño</label>
+                            <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200" class="form-control"></textarea>
+                            <div class="invalid-feedback">
+                              Ingrese un puntaje.
+                            </div>
+                          </div>
+                        
+                      </div>
+                    </div>
+                    -->
+                    
                   </div>
                 </div>
               </div>
-              
-              <!--
-                <div ng-if="aspecto.tipoClasificacion == 3">
-                  <div class="form-row">
-                    
-                    <div ngclick="coe" class="form-group col-md-3 col-lg-2">
-                      <label>Nombre del Aspecto</label>
-                      <input disabled type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
-                      <div class="invalid-feedback">
-                        Ingrese un nombre
-                      </div>
-                    </div>
-                    <div class="form-group col-md-5 col-lg-4">
-                      <label>Descripción</label>
-                      <input disabled type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label>Puntaje Asignado</label>
-                      <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                        maxlength="2" style="width: 60px" class="form-control"  />
-                      <div class="invalid-feedback">
-                        Ingrese un puntaje.
-                      </div>
-                  </div>
-                  </div>
-              </div>
-
-              -->
-            </div>
         </div>
     </div>
     <div>
       <div class="row">
-        <label class="vertical-center" style="margin-top: 14px;font-size: 90%"><b>COEVALUACIÓN</b></label>
+        <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Coevaluación</b></label>
         <div class="form-group col-md-2">
             <button ng-click="btnEvaluacion(3)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             class="btn btn-sm btn-info dropdown-toggle"><i class="fas fa-eye"></i>&nbsp;</button>
         </div>
+        
+      </div>
+      <div class="form-group col-md-4">
+          <label style="font-weight: bold">Alumno</label>
+          <select ng-change="ListarGrupo()" class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
+              <option value="0">Seleccione</option>
+              <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
+              </option>
+          </select>
       </div>
       <div class="row">
-          <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
-                style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
-            <div ng-if="aspecto.tipoClasificacion == 3">
-              <div class="form-row">
-                <div class="form-group col-md-3 col-lg-2">
-                  <label>Nombre del Aspecto</label>
-                  <input disabled required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
-                  <div class="invalid-feedback">
-                    Ingrese un nombre.
-                  </div>
-                </div>
-                <div class="form-group col-md-5 col-lg-4">
-                  <label>Descripción</label>
-                  <input disabled maxlength="50" class="form-control" ng-model="aspecto.informacion" />
-                </div>
-                <div class="form-group col-md-1">
-                  <label>Puntaje</label>
-                  <input disabled required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                    maxlength="2" style="width: 60px" class="form-control" ng-model="aspecto.puntajeMax" />
-                  <div class="invalid-feedback">
-                    Ingrese un puntaje.
-                  </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <label>Puntaje Asignado</label>
-                    <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                      maxlength="2" style="width: 60px" class="form-control"  />
-                    <div class="invalid-feedback">
-                      Ingrese un puntaje.
+          <div class="col-md-12">
+              <div class="row">
+                <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
+                  style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+                  <!-- <div ng-if="aspecto.tipoClasificacion == 2">
+                    <div class="form-row">
+                      <div class="form-group col-md-3 col-lg-2">
+                        <label class="negrita">Nombre del Aspecto</label>
+                        <input disabled required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                        <div class="invalid-feedback">
+                          Ingrese un nombre.
+                        </div>
+                      </div>
+                      <div class="form-group col-md-5 col-lg-4">
+                        <label class="negrita">Descripción</label>
+                        <input disabled maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                      </div>
+                      <div class="form-group col-md-1">
+                        <label class="negrita">Puntaje</label>
+                        <input disabled required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                          maxlength="2" style="width: 70px" class="form-control" ng-model="aspecto.puntajeMax" />
+                        <div class="invalid-feedback">
+                          Ingrese un puntaje.
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                          <label class="negrita">Puntaje Asignado</label>
+                          <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                            maxlength="2" style="width: 70px" class="form-control" />
+                          <div class="invalid-feedback">
+                            Ingrese un puntaje.
+                          </div>
+                        </div>
                     </div>
+                  </div>
+                  -->
+                  <div ng-if="aspecto.tipoClasificacion == 3">
+                    <div class="form-row">
+                      <div class="form-group col-md-3 col-lg-2">
+                        <label class="negrita">Nombre del Aspecto</label>
+                        <input disabled type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                        <div class="invalid-feedback">
+                          Ingrese un nombre
+                        </div>
+                      </div>
+                      <div class="form-group col-md-5 col-lg-4">
+                        <label class="negrita">Descripción</label>
+                        <input disabled type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                      </div>
+                      <div class="form-group col-md-5 col-lg-4">
+                          <label class="negrita">Comentario sobre desempeño</label>
+                          <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200" class="form-control"></textarea>
+                          <div class="invalid-feedback">
+                            Ingrese un puntaje.
+                          </div>
+                        </div>
+                      
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            
-            
-              <div ng-if="aspecto.tipoClasificacion == 3">
-                <div class="form-row">
-                  
-                  <div ngclick="coe" class="form-group col-md-3 col-lg-2">
-                    <label>Nombre del Aspecto</label>
-                    <input disabled type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
-                    <div class="invalid-feedback">
-                      Ingrese un nombre
-                    </div>
-                  </div>
-                  <div class="form-group col-md-5 col-lg-4">
-                    <label>Descripción</label>
-                    <input disabled type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label>Puntaje Asignado</label>
-                    <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                      maxlength="2" style="width: 60px" class="form-control"  />
-                    <div class="invalid-feedback">
-                      Ingrese un puntaje.
-                    </div>
-                </div>
-                </div>
-            </div>
-          </div>
       </div>
   
     </div>
-    <div>
-      <!-- aqui poner las horas de esfuerzo-->
+  </br></br> 
+   
+  </div>
+  <div class="row">
+      <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de Esfuerzo</b></label>
+      <div class="form-group col-md-2">
+          <button ng-click="btnEvaluacion(3)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          class="btn btn-sm btn-warning dropdown-toggle"><i class="fas fa-plus"></i>&nbsp;</button>
+      </div>
+      
     </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar</button>
-    </div>
-  </div>    
+  
+  <div class="form-row">
+          <div class="form-group col-md-5 col-lg-4">
+            <label class="negrita">Descripción del esfuerzo</label>
+            <input  maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+          </div>
+          <div class="form-group col-md-2">
+            <label class="negrita">Horas Estimadas</label>
+            <input ng-model="aspecto.puntajeMax" required type="text" class="form-control" style="width: 70px"
+              maxlength="2" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+            <div class="invalid-feedback">
+              Ingrese un puntaje.
+            </div>
+          </div>
+          <div class="form-group col-md-1">
+              <label class="negrita">Horas Real</label>
+              <input ng-model="aspecto.puntajeMax" required type="text" class="form-control" style="width: 70px"
+                maxlength="2" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+              <div class="invalid-feedback">
+                Ingrese un puntaje.
+              </div>
+          </div>
+  </div>
+
+  </div>
+  
+</div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar</button>
+</div>
+
 </div>

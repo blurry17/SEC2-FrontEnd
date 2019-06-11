@@ -62,6 +62,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     $scope.btnEstadisticas = function () {
         $location.path("estadisticas")
     }
+    
     $scope.btnEncuesta = function () {
         $location.path("encuesta")
     }
