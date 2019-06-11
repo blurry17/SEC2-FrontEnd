@@ -10,6 +10,9 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     $scope.esGrupal = false;
     $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
     $scope.hoy = serviceUtil.yyyymmdd(new Date());
+    $scope.esProfesor = $scope.usuario.profesor;
+
+
     if ($scope.actividad.minInicio == "0") $scope.actividad.minInicio = $scope.actividad.minInicio + "0";
     if ($scope.actividad.minFin == "0") $scope.actividad.minFin = $scope.actividad.minFin + "0";
     $scope.listaAlarmas= [];
