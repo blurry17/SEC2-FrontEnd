@@ -118,7 +118,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             }
         }
 
-        window.confirm('¿Está seguro que desea guardar?');
+        let r=window.confirm('¿Está seguro que desea guardar?');
         /*  
                 for (let i = 0; i < $scope.listaNotaAspectos.length; i++) {
                     if ($scope.listaNotaAspectos[i].tipoClasificacion != 3) {
@@ -130,6 +130,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                         }
                     }
         */
+       if(r){
        console.dir('2');
         for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
             if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion != 3) {
@@ -190,6 +191,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 $scope.ObtenerNotas();
             })
         }
+    }
     }
 
     $scope.btnclick = function () {
