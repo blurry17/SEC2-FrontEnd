@@ -1,10 +1,10 @@
 app.controller('EncuestaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
-    var usuario = $cookies.getObject('usuario');
-    
+    $scope.usuario = $cookies.getObject('usuario');
+
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
-    $scope.vistaAlumno = usuario.alumno;
+    $scope.vistaAlumno = $scope.usuario.alumno;
     
     /**
      $scope.btnGuardarEncuesta = function () {
@@ -47,12 +47,27 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         })
     }
 
-    $scope.ListarGrupo = function () { 
+    $scope.listarGrupo = function () { 
         //PEDIR SERVICIO
         //Listar a sus compañeros de grupo
+        //id usuario, id actividad
+        let params={
+            idUsuario:$scope.usuario.idUser,
+            idActividad:$scope.actividad.idActividad,
+        }
+        serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).then(function(res) {
+            console.dir("ESTOOOOO")
+            console.dir(res.data);
+        })
     }
 
     $scope.btnAgregarEsfuerzo = function () {
         
     }
+
+    function init() {
+        $scope.listarGrupo();
+    }
+
+    init();
 })
