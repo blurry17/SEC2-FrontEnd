@@ -78,9 +78,7 @@
                           </div>
                         
                       </div>
-                    </div>
-                    
-                    
+                    </div>              
                   </div>
                 </div>
               </div>
@@ -89,8 +87,8 @@
           <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar y Enviar</button>
         </div>
     </div>
-    <div>
-      <div class="row">
+    <div> 
+      <div class="row" ng-show="esActGrupal>
         <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Coevaluación</b></label>
         <div class="form-group col-md-2">
             <button ng-click="btnEvaluacion(3)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -102,8 +100,7 @@
           <label style="font-weight: bold">Alumno</label>
           <select ng-change="btnListarGrupo()"  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
               <option value="0">Seleccione</option>
-              
-              <option ng-repeat="item in listaAl" ng-value="item.idUsuario">{{item.codigoPucp +" - "+ item.nombre}}
+              <option ng-repeat="item in listaAl" ng-value="item.idalumno">{{item.codigoPucp +" - "+ item.nombre}}
               </option>
           </select>
       </div>
@@ -180,13 +177,8 @@
    
   </div>
   <div class="row">
-      <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de Esfuerzo</b></label>
-      <div class="form-group col-md-2">
-          <button ng-click="btnEvaluacion(3)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          class="btn btn-sm btn-warning dropdown-toggle"><i class="fas fa-plus"></i>&nbsp;</button>
-      </div>
-      
-    </div>
+      <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de Esfuerzo</b></label>    
+  </div>
   
   <div class="form-row">
           <div class="form-group col-md-5 col-lg-4">

@@ -6,7 +6,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.actividad = $cookies.getObject("actividadActual");
     $scope.vistaAlumno =$scope.usuario ;
     $scope.listaAl = null;
-    console.dir($scope.usuario );
+    $scope.esActGrupal = false;
+    //console.dir($scope.usuario );
 
     /**
      $scope.btnGuardarEncuesta = function () {
@@ -18,6 +19,12 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         })
     }
      */
+
+    if($scope.actividad.tipo == "G") {
+        $scope.esActGrupal = true;
+    }else {
+        $scope.esActGrupal = false;
+    }
     
     $scope.btnListarGrupo = function() {
         console.dir("hola");
@@ -30,8 +37,28 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             $scope.listaAl = res.data.lista;
         })
     }
-     
-    var ev = [0,0,0,0,0];// chequea si tiene rubrica del curso, autoeval, coeval y eval
+
+    $scope.btnEvaluacionE = function (tipo) {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            idUsuario:$scope.usuario.idUser, 
+            tipo: tipo
+        } 
+        
+        serviceCRUD.TypePost('actividad/obtener_calificacion_otra_rubrica', params).then(function (res) {
+            $scope.rubrica = res.data;
+            if(tipo == 2){
+                $scope.rubricaAuto = $scope.rubrica;
+                $scope.rubricaCoauto = null; 
+            }else{
+                $scope.rubricaAuto = null;
+                $scope.rubricaCoauto = $scope.rubrica;
+                
+            }
+            console.dir(res);
+        })
+    }
+    
     $scope.btnEvaluacion = function (tipo) {
         var params = {
             idActividad: $scope.actividad.idActividad,
@@ -39,16 +66,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         } 
         
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-            //console.dir(res.data);
-            //if (res.data.succeed == false) return;
-            //ev[tipo] = 1;
-            
             $scope.rubrica = res.data;
-            /*for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
-                $scope.rubrica.listaAspectos[i].mostrar = true;
-                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
-                    $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
-            }*/
             if(tipo == 2){
                 $scope.rubricaAuto = $scope.rubrica;
                 $scope.rubricaCoauto = null; 
