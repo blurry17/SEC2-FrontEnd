@@ -5,9 +5,11 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
+    $scope.fechaMaxActividad =$scope.actividad.fechaFin.slice(6,10)+"-"+$scope.actividad.fechaFin.slice(3,5)+"-"+$scope.actividad.fechaFin.slice(0,2); 
     $scope.esIndividual = false;
     $scope.esGrupal = false;
     $scope.actividad.tipo == 'I' ? $scope.esIndividual = true : $scope.esGrupal = true;
+    $scope.hoy = serviceUtil.yyyymmdd(new Date());
     $scope.esProfesor = $scope.usuario.profesor;
 
 
@@ -221,6 +223,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     }
     $scope.btnGuardarAlerta = function(){
         $scope.nuevaAlarma =true;
+
         $scope.regAlarma.fechaEjecucion.setMinutes(0);
         $scope.regAlarma.fechaEjecucion.setHours(0);
         $scope.regAlarma.fechaEjecucion.setSeconds(0);
@@ -252,6 +255,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     }
     $scope.btnVerAlerta = function(p){
         $scope.nuevaAlarma = false;
+        //console.dir($scope.fechaMaxActividad);
         var objFecha = serviceUtil.getObjDate(p.fechaEjecucion);
         $scope.regAlarma = {
             idAlarma : p.idAlarma,

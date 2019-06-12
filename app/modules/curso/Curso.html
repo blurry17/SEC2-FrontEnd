@@ -45,16 +45,21 @@
     </div>
 
     <div class="line"></div>
-    <h2>Grupos</h2>
+    <div class="row">
+        <h2 style="margin:15px;" class ="col-1"> Grupos </h2> 
+        <button id="btnVerAgrupaciones" style="margin-left:15px; margin-top:14px; background-color:#388697; height:43px;" class = "btn btn-info" ng-click="btnMostrarAgrupaciones()" ><i class="fas fa-eye"></i> &nbspMostrar</button>
+    </div>
+    
 
     <div class="row justify-content-between">
         <div>
-
+     
         </div>
         <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
             <button class="btn btn-success" ng-click="btnAgregarAgrupacion()"><i class="fas fa-plus"></i>&nbspAgregar
                 agrupación</button>
         </div>
+        
     </div>
 
     <div class="row" style="padding-top: 15px">
@@ -255,7 +260,7 @@
                                 <tbody>
                                     <tr ng-repeat="al in lstAluSinGrupos" style="cursor: pointer"
                                         ng-click="agregarAlu($index,al)">
-                                        <td>{{al.codigoPUCP}}</td>
+                                        <td>{{al.codigoPucp}}</td>
                                         <td>{{al.nombre}}</td>
                                     </tr>
                                 </tbody>
@@ -277,7 +282,7 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="al in lstNuevoGrupo">
-                                        <td>{{al.codigoPUCP}}</td>
+                                        <td>{{al.codigoPucp}}</td>
                                         <td>{{al.nombre}}</td>
                                         <td>
                                             <button class="btn btn-danger" ng-click="elimAlu($index,al)">
@@ -336,3 +341,5 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="mdAdvertenciaAgrupaciones"></div>

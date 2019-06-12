@@ -21,7 +21,7 @@
       <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
         style="margin: 2px;height: 32px;">Comentarios</button>
 
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
+      <button ng-show="usuario.profesor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
         style="margin: 2px;height: 32px;" ng-click="btnlistarAlarmas()" > Alertas </button>
         <div class="dropdown-menu" >
           <a class="dropdown-item"  style="cursor:pointer" ng-click="btnAlerta()"><i
@@ -663,7 +663,7 @@
           <div class="form-row">
               <div class="form-group col-md-5">
                   <label>Fecha ejecucion</label>
-                  <input type="date" min="{{hoy}}"  max="2019-06-20" class="form-control" ng-model="regAlarma.fechaEjecucion"
+                  <input type="date" min="{{hoy}}" max="{{fechaMaxActividad}}" class="form-control" ng-model="regAlarma.fechaEjecucion"
                       required>
                   <div class="invalid-feedback">
                       Este campo es requerido.
@@ -720,4 +720,10 @@
       </div>
     </div>    
   </div>
+
+</div>
+
+<div class="modal fade" id = "mdAlertaAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+
+
 </div>
