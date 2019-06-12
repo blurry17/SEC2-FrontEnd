@@ -12,14 +12,14 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $location.path("curso")
   }
 
-
+  $scope.listaFrec=[];
   $scope.gc = false;
   $scope.gb = false;
   $scope.seleccion = 'g';
   
 
-  var params = { idActividad: $scope.actividad.idActividad }
-
+  var params = { idActividad: $scope.actividad.idActividad}
+  //console.dir(params.idActividad);
 
   function listarRanking() {
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
@@ -30,9 +30,9 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaPorcentajes() {
     serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
-      //console.dir(res.data);
+      console.dir(res.data);
       $scope.mediaS = res.data.media;
-      $scope.desv = res.data.desviacionsEstandar;
+      $scope.desv = res.data.desviacionEstandar;
       $scope.porcentaje = res.data.porcentajeAprobados;
       $scope.notaMaxS = res.data.notaMax;
       $scope.notaMinS = res.data.notaMin;
@@ -42,18 +42,16 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaNotas() {
     serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
+      console.dir("VER ACA");
       console.dir(res.data);
       $scope.listaN = res.data.listaNotas;
       $scope.listaFrec = res.data.notaFrecuencia;
-      for (let i = 0; i < $scope.listaFrec.length; i++) {
-        console.dir(i);
-        $scope.listaFrec[i].nota = res.data.listaFrec[i].nota;
-        $scope.listaFrec[i].frecuencia = res.data.listaFrec[i].frecuencia;
-      }
+     
       $scope.cantidadN = res.data.cantidadNotas;
       $scope.cantidadF = res.data.cantidadFalta;
       $scope.cantidadT = res.data.cantidadTotal;
       //console.dir($scope.cantidadF);
+      console.dir("CANTIDAD FALTAS:");
       console.dir(res.data.cantidadFalta);
     })
 
@@ -83,25 +81,35 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $scope.gc = false;
 
     var arregloFrec = [];
-    arregloFrec.push(['Notas', 'Frecuencia'])
+    arregloFrec.push(['Notas', 'Cantidad de Alumnos'])
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'Notas');
+    data.addColumn('number', 'Cantidad de Alumnos');
+    data.addColumn({type: 'string', role: 'style'});
     for (let i = 0; i < $scope.listaFrec.length; i++) {
-      arregloFrec.push([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia])
+      var auxnota =$scope.listaFrec[i].nota;
+      
+      var colorNota ;
+      if  ( auxnota <= 10) colorNota = 'color: red' ;
+      else colorNota = 'color: blue'; 
+      data.addRow([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia,colorNota])
     }
 
-    console.dir(arregloFrec);
-    var data = google.visualization.arrayToDataTable(arregloFrec);
-
-
-
+    //console.dir(arregloFrec);
+    
     var options = {
       chart: {
         title: 'Estadisticas de notas'
       },
-      bars: 'vertical' // Required for Material Bar Charts.
+      bars: 'vertical',
+      backgroundColor: '#E4E4E4',  
+      opacity : 0.7
+       // Required for Material Bar Charts.
     };
 
-    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-    chart.draw(data, google.charts.Bar.convertOptions(options));
+    //var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('barchart_material'));
+    chart.draw(data, options);
   }
 
   $scope.TipoGrafico = function () {
@@ -111,8 +119,8 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
       google.charts.load('current', { 'packages': ['corechart'] });
       google.charts.setOnLoadCallback(drawChartC);
     } else if ($scope.seleccion == 'gb') {
-      google.charts.load('current', { 'packages': ['bar'] });
-      google.charts.setOnLoadCallback(drawChartB);
+      google.charts.load('visualization','current', { 'packages': ['corechart'] ,callback : drawChartB}); // corechart
+      //google.charts.setOnLoadCallback(drawChartB);
       $scope.gc = false;
       $scope.gb = true;
     }
