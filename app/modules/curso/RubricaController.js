@@ -62,6 +62,23 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             return;
         }
 
+        for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+            if ($scope.rubrica.listaAspectos[i].tipoClasificacion != 3 && $scope.rubrica.listaAspectos[i].puntajeMax == '--') {
+                $("#formEva").removeClass("was-validated");
+                window.alert('El puntaje de un aspecto tiene formato incorrecto');
+                return;
+            } 
+            for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
+                for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
+                    if ($scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == '--') {
+                        $("#formEva").removeClass("was-validated");
+                        window.alert('El puntaje de un nivel tiene formato incorrecto');
+                        return;
+                    }       
+                }
+            }
+        }
+
         if (formEva.checkValidity()) {
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
                 for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
@@ -179,6 +196,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.btnAgregarIndicador = function (aspecto) {
         if (aspecto.tipoClasificacion == 1){
+            aspecto.mostrar = true;
             aspecto.listaIndicadores.push({
                 descripcion: '',
                 informacion: '',
@@ -194,6 +212,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     }
 
     $scope.btnAgregarNivel = function(indicador) {
+        indicador.mostrar = true;
         indicador.listaNiveles.push({
             descripcion: '',
             grado: '',

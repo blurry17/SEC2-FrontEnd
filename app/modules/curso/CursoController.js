@@ -18,6 +18,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         fechaInicio: new Date(),
         fechaFin: new Date(),
         flgConfianza: true,
+        flgMulticalificable: false,
         horaInicio: '',
         horaFin: '',
         minInicio: '00',
@@ -63,6 +64,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             tipo: 'I',
             flgEntregable: true,
             flgConfianza: true,
+            flgMulticalificable: false,
             fechaInicio: new Date(),
             fechaFin: new Date(),
             horaInicio: '8',
@@ -126,15 +128,16 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     flgEntregable: $scope.regAct.flgEntregable ? 1 : 0,
                     flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
                     idUsuarioCreador: $scope.usuario.idUser,
-                    flgMulticalificable: 0
+                    flgMulticalificable: $scope.regAct.flgMulticalificable ? 1 : 0
                 }
 
                 $scope.busy = true;
-                serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
+                console.dir(params);
+                /* serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
                     ListarActividades();
                     $("#mdAgregarActividad").modal('hide');
                     $scope.busy = false;
-                })
+                }) */
 
             }
         } else {
@@ -163,7 +166,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     flgEntregable: $scope.regAct.flgEntregable ? 1 : 0,
                     flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
                     idUsuarioCreador: $scope.usuario.idUser,
-                    flgMulticalificable: 0
+                    flgMulticalificable: $scope.regAct.flgMulticalificable ? 1 : 0
                 }
 
                 $scope.busy = true;
@@ -196,7 +199,8 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             fechaFin: serviceUtil.convertToDate(act.fechaFin),
             horaFin: act.horaFin,
             minFin: act.minFin,
-            flgConfianza: !!act.flgConfianza
+            flgConfianza: !!act.flgConfianza,
+            flgMulticalificable: !!act.flgMulticalificable
         }
         idActEdit = act.idActividad;
         $('#mdAgregarActividad').appendTo("body").modal('show');

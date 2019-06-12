@@ -16,7 +16,6 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     function mostrarGrupos() {
         var params = { idActividad: $scope.actividad.idActividad };    
         serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
-            console.dir(res.data);
             if(res.data.length == 0){
                 $scope.creacionGrupos = true;
                 var params = {
@@ -84,8 +83,7 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
             idGrupo: grupo.idGrupo
         }
         serviceCRUD.TypePost('grupo/integrantes', params).then(function(res){
-            console.dir(res.data);
-            $scope.lstVerGrupo = res.data;
+            $scope.lstVerGrupo = res.data;+
             $('#mdVerGrupo').appendTo("body").modal('show');
         })
     }
