@@ -27,7 +27,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         $scope.flgCalificado = false;
         $scope.editar = true;
     }
-//sacar de frende de lista aspectos
+    //sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
         if($scope.actividad.tipo == "I"){
             if ($scope.idalumno == '0') return;
@@ -39,6 +39,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 idCalificador: $scope.usuario.idUser
             }
             serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
+                console.dir(res.data);
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
                 $scope.flgCalificado = res.data.flgCalificado;
@@ -132,6 +133,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                     flgCompleto:1,
                 }
+                console.dir(params);
                 serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -171,6 +173,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                     flgCompleto:1,
                 }
+                console.dir(JSON.stringify(params));
                 serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -262,9 +265,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
 
             $scope.rubrica.listaNotaAspectos = res.data.listaAspectos;
-
-            //console.dir(res.data.nombreRubrica);
-            //$scope.idRub = res.data.idRubrica;
+            $scope.idRub = res.data.idRubrica;
             //$scope.rubrica.nombreRubrica=res.data.nombreRubrica
 
         })

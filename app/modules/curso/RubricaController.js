@@ -93,12 +93,14 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                 $scope.edicion = false;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
+                console.dir($scope.rubrica);
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
                 })
             } else {
                 $scope.bloqEval = true;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
+                console.dir($scope.rubrica);
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
                 })
             }
