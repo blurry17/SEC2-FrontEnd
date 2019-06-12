@@ -102,7 +102,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             }
         }
 
-        window.confirm('¿Está seguro que desea guardar?');
+        let r=window.confirm('¿Está seguro que desea guardar?');
+        
+       if(r){
+       console.dir('2');
         for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
             if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion != 3) {
                 $scope.rubrica.listaNotaAspectos[i].nota = parseInt($scope.rubrica.listaNotaAspectos[i].nota);
@@ -203,6 +206,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
 
         }
+    }
     }
 
     $scope.btnclick = function () {
