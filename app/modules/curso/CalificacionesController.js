@@ -16,11 +16,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.editar = null;
     $scope.auxNotaNivel = 0;
     $scope.nomRubrica="";
-
-    console.dir('Estoy dentro de calificar')
-    console.dir($scope.actividad)
-
-
     $scope.rubrica = {
         flgRubricaEspecial: 0,
         idUsuarioCreador: $scope.usuario.idUser,
@@ -48,10 +43,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 $scope.notaFinal = res.data.calificacion.nota;
                 $scope.flgCalificado = res.data.flgCalificado;
                 $scope.falta=res.data.calificacion.flgFalta==1;
-                console.dir("Estos es la respuesta");
-                console.dir(res.data);
-                console.dir("Esta es la rubrica");
-                console.dir($scope.rubrica);
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
                         $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -71,14 +62,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
                 $scope.flgCalificado = res.data.flgCalificado;
-                console.dir('Soy el flgCalificado de grupos');
-                console.dir($scope.flgCalificado)
                 $scope.falta=res.data.calificacion.flgFalta==1;
-                console.dir('Obtengo la nota del grupo')
-                console.dir("Estos es la respuesta");
-                console.dir(res.data);
-                console.dir("Esta es la rubrica");
-                console.dir($scope.rubrica);
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
                         $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -118,8 +102,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
 
         window.confirm('¿Está seguro que desea guardar?');
-
-       console.dir('2');
         for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
             if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion != 3) {
                 $scope.rubrica.listaNotaAspectos[i].nota = parseInt($scope.rubrica.listaNotaAspectos[i].nota);
@@ -138,8 +120,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             }
         }
         
-        
-        console.dir('3');
         if ($scope.editar == false) {
             if($scope.actividad.tipo == "I"){
                 var params = {
@@ -152,7 +132,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                     flgCompleto:1,
                 }
-                console.dir('entra a calificar');
                 serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -172,7 +151,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                     flgCompleto:1,
                 }
-                console.dir('entra a calificar grupo');
                 serviceCRUD.TypePost('actividad/alumnos/calificar_grupo', params).then(function (res) {
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -193,8 +171,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                     flgCompleto:1,
                 }
-                console.dir('entra a editar');
-                console.dir(params);
                 serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -214,8 +190,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                     flgCompleto:1,
                 }
-                console.dir('entra a editar grupos');
-                console.dir(params);
                 serviceCRUD.TypePost('actividad/alumnos/editar_nota_grupo', params).then(function (res) {
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
@@ -252,11 +226,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         //Si es una actividad grupal
         if($scope.actividad.tipo == "G") {
             $scope.esActIndividual = false;
-            console.dir('Actividad grupal!')
             var params = { idActividad: $scope.actividad.idActividad }
             serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
                 $scope.listaGrupal = res.data;
-                console.dir($scope.listaGrupal)
             })
             $scope.mostrar = true;
         }
@@ -290,7 +262,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
 
             $scope.rubrica.listaNotaAspectos = res.data.listaAspectos;
-            console.dir(res.data);
 
             //console.dir(res.data.nombreRubrica);
             //$scope.idRub = res.data.idRubrica;
