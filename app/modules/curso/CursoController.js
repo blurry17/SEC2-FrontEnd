@@ -132,12 +132,11 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 }
 
                 $scope.busy = true;
-                console.dir(params);
-                /* serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
+                serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
                     ListarActividades();
                     $("#mdAgregarActividad").modal('hide');
                     $scope.busy = false;
-                }) */
+                })
 
             }
         } else {
