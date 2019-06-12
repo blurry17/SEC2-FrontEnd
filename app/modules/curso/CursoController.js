@@ -21,7 +21,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         minInicio: '00',
         minFin: '00'
     }
-
+    $scope.lstNuevoGrupo = [];
     var idActEdit = null;
 
     function ListarActividades() {
@@ -75,7 +75,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     $scope.btnAgregarAgrupacion = function () {
-        var params = { idActividad: $scope.actividad.idActividad }
+        var params = { idHorario:  $scope.curso.idhorario }
         serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
             console.dir(res.data);
             $scope.lstAluSinGrupos = res.data;
@@ -276,4 +276,20 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     init();
+
+    $scope.btnMostrarAgrupaciones = function(){
+        var params ={
+            idHorario: $scope.curso.idhorario
+        }
+        
+        serviceCRUD.TypePost('grupo/listar-general', params).then(function(res){
+            console.dir(res.data);
+            if (res.length == null){
+                
+            }else{
+               
+            }
+        }) 
+
+    }
 })

@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-                  <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
+                  <div ng-repeat="aspecto in rubricaAuto.listaAspectos" class="col-md-12 border border-solid rounded"
                     style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
                     <div ng-if="aspecto.tipoClasificacion == 2">
                       <div class="form-row">
@@ -56,7 +56,7 @@
                           </div>
                       </div>
                     </div>
-                    <!-- <div ng-if="aspecto.tipoClasificacion == 3">
+                    <div ng-if="aspecto.tipoClasificacion == 3">
                       <div class="form-row">
                         <div class="form-group col-md-3 col-lg-2">
                           <label class="negrita">Nombre del Aspecto</label>
@@ -79,11 +79,14 @@
                         
                       </div>
                     </div>
-                    -->
+                    
                     
                   </div>
                 </div>
               </div>
+        </div>
+        <div class="modal-footer" ng-show = "rubricaAuto != null">
+          <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar y Enviar</button>
         </div>
     </div>
     <div>
@@ -95,9 +98,9 @@
         </div>
         
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-4" ng-show = "rubricaCoauto != null">
           <label style="font-weight: bold">Alumno</label>
-          <select ng-change="ListarGrupo()" class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
+          <select ng-change="ListarGrupo()"  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
               <option value="0">Seleccione</option>
               <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
               </option>
@@ -106,25 +109,25 @@
       <div class="row">
           <div class="col-md-12">
               <div class="row">
-                <div ng-repeat="aspecto in rubrica.listaAspectos" class="col-md-12 border border-solid rounded"
+                <div ng-repeat="asp in rubricaCoauto.listaAspectos" class="col-md-12 border border-solid rounded"
                   style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
-                  <!-- <div ng-if="aspecto.tipoClasificacion == 2">
+                   <div ng-if="asp.tipoClasificacion == 2">
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
                         <label class="negrita">Nombre del Aspecto</label>
-                        <input disabled required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                        <input disabled required maxlength="25" class="form-control" ng-model="asp.descripcion" />
                         <div class="invalid-feedback">
                           Ingrese un nombre.
                         </div>
                       </div>
                       <div class="form-group col-md-5 col-lg-4">
                         <label class="negrita">Descripción</label>
-                        <input disabled maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                        <input disabled maxlength="50" class="form-control" ng-model="asp.informacion" />
                       </div>
                       <div class="form-group col-md-1">
                         <label class="negrita">Puntaje</label>
                         <input disabled required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                          maxlength="2" style="width: 70px" class="form-control" ng-model="aspecto.puntajeMax" />
+                          maxlength="2" style="width: 70px" class="form-control" ng-model="asp.puntajeMax" />
                         <div class="invalid-feedback">
                           Ingrese un puntaje.
                         </div>
@@ -139,19 +142,19 @@
                         </div>
                     </div>
                   </div>
-                  -->
-                  <div ng-if="aspecto.tipoClasificacion == 3">
+                  
+                  <div ng-if="asp.tipoClasificacion == 3">
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
                         <label class="negrita">Nombre del Aspecto</label>
-                        <input disabled type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                        <input disabled type="text" required maxlength="25" class="form-control" ng-model="asp.descripcion" />
                         <div class="invalid-feedback">
                           Ingrese un nombre
                         </div>
                       </div>
                       <div class="form-group col-md-5 col-lg-4">
                         <label class="negrita">Descripción</label>
-                        <input disabled type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                        <input disabled type="text" maxlength="50" class="form-control" ng-model="asp.informacion" />
                       </div>
                       <div class="form-group col-md-5 col-lg-4">
                           <label class="negrita">Comentario sobre desempeño</label>
@@ -167,6 +170,9 @@
               </div>
             </div>
       </div>
+    <div class="modal-footer" ng-show = "rubricaCoauto != null">
+      <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar y Enviar</button>
+    </div>
   
     </div>
   </br></br> 

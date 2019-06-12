@@ -5,7 +5,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
     $scope.vistaAlumno = usuario.alumno;
-
+    
     /**
      $scope.btnGuardarEncuesta = function () {
         $("#formEva").addClass("was-validated");
@@ -25,15 +25,24 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             tipo: tipo
         } 
+        
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-            //console.dir(res.data);
+            console.dir(res.data);
             //if (res.data.succeed == false) return;
             ev[tipo] = 1;
+            
             $scope.rubrica = res.data;
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
                 $scope.rubrica.listaAspectos[i].mostrar = true;
                 for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
                     $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
+            }
+            if(tipo == 2){
+                $scope.rubricaAuto = $scope.rubrica;
+                $scope.rubricaCoauto = null; 
+            }else{
+                $scope.rubricaAuto = null;
+                $scope.rubricaCoauto = $scope.rubrica;
             }
         })
     }
