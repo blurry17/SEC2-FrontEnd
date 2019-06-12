@@ -6,7 +6,6 @@
       <li class="breadcrumb-item active" aria-current="page">Rúbrica</li>
     </ol>
   </nav>
-
   <div class="row">
     <div class="col-xs-12 col-sm-7 col-md-5 col-lg-3">
       <h3 style="font-weight: bold">Hojas de evaluación</h3>
@@ -43,7 +42,7 @@
       <form id="formEva" name="formEva" class="needs-validation" novalidate>
         <div class="form-row">
           <div class="form-group col-md-3">
-            <input ng-disabled="bloqEval" required type="text" class="form-control" placeholder="Nombre de la evaluación"
+            <input ng-disabled="bloqEval" required type="text" maxlength="20" class="form-control" placeholder="Nombre de la evaluación"
               ng-model="rubrica.nombreRubrica">
             <div class="invalid-feedback">
               Este campo es requerido.
@@ -54,7 +53,7 @@
                 class="fas fa-save"></i>&nbsp;Guardar</button>
           </div>
           <div class="col-md-1" ng-show="mostrarBtns">
-            <button class="btn btn-sm btn-danger"  ng-click="btnCancelar()"><i
+            <button class="btn btn-sm btn-danger" ng-click="btnCancelar()"><i
                 class="fas fa-times"></i>&nbsp;Cancelar</button>
           </div>
           <div class="col-md-1" ng-show="mostrarBtnEditar">
@@ -215,7 +214,6 @@
     </div>
   </div>
 </div>
-
 <div class="modal fade" id="mdElegirTipoAspecto" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -236,48 +234,3 @@
     </div>
   </div>
 </div>
-
-<!-- Vista Previa de la Rúbrica -->
-<!-- <div class="modal fade" id="mdVistaPrevia" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Vista previa de la Rúbrica</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div ng-repeat="aspecto in lstAspectos">
-          <label>{{aspecto.descripcion + ' - ' + aspecto.informacion}}</label>
-          <table class="table table-sm">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Nro</th>
-                <th scope="col">Indicador</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Puntaje Asignado</th>
-              </tr>
-            </thead>
-            <tbody ng-repeat="indicador in aspecto.listaIndicadores">
-              <tr>
-                <th scope="row">{{$index + 1}}</th>
-                <td>{{indicador.descripcion}}</td>
-                <td>{{indicador.informacion}}</td>
-                <td>{{indicador.puntajeMax}}</td>
-              </tr>          
-            </tbody>
-            <tfoot>
-              <th scope="row" colspan="2"></th>
-              <td>Puntaje Obtenido: </td>
-              <td>{{puntajeAcumuladoRubricaVista}}</td>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div> -->

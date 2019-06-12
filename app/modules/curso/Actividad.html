@@ -9,19 +9,19 @@
   <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 30px">
 
     <div>
-      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b> <i
+      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>{{actividad.nombre}}</b><i
           style="color: rgb(54, 105, 2);padding-left: 10px" class="fas fa-user"></i></label>
     </div>
 
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
-      <button ng-show="actividad.idRubrica != null && esProfesor" ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
+      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;height: 32px;">Calificar</button>
       <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;height: 32px;">Hojas de evaluación</button>
       <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;height: 32px;">Grupos</button>
       <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
         style="margin: 2px;height: 32px;">Comentarios</button>
 
-      <button data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
+      <button ng-show="usuario.profesor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
         style="margin: 2px;height: 32px;" ng-click="btnlistarAlarmas()" > Alertas </button>
         <div class="dropdown-menu" >
           <a class="dropdown-item"  style="cursor:pointer" ng-click="btnAlerta()"><i
@@ -118,11 +118,11 @@
   </div>
 
   <div class="row" style="padding-left: 15px">
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-6 col-lg-5">
       <label style="font-weight: bold">Indicaciones</label>
-      <textarea style="resize: none" class="form-control" readonly ng-model="actividad.descripcion"></textarea>
+      <textarea class="form-control" readonly ng-model="actividad.descripcion"></textarea>
     </div>
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-6 col-lg-5">
       <div class="row">
         <div class="form-group col-md-4">
           <label style="font-weight: bold">Fecha de inicio</label>
@@ -663,7 +663,7 @@
           <div class="form-row">
               <div class="form-group col-md-5">
                   <label>Fecha ejecucion</label>
-                  <input type="date" min="{{hoy}}"  max="2019-06-20" class="form-control" ng-model="regAlarma.fechaEjecucion"
+                  <input type="date" min="{{hoy}}" max="{{fechaMaxActividad}}" class="form-control" ng-model="regAlarma.fechaEjecucion"
                       required>
                   <div class="invalid-feedback">
                       Este campo es requerido.
@@ -720,4 +720,10 @@
       </div>
     </div>    
   </div>
+
+</div>
+
+<div class="modal fade" id = "mdAlertaAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+
+
 </div>

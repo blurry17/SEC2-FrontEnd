@@ -16,7 +16,6 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     function mostrarGrupos() {
         var params = { idActividad: $scope.actividad.idActividad };    
         serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
-            console.dir(res.data);
             if(res.data.length == 0){
                 $scope.creacionGrupos = true;
                 var params = {
@@ -56,7 +55,7 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         }
         $scope.showAlert1 = false;
 
-        if ($scope.lstNuevoGrupo.length == 0){
+        if ($scope.lstNuevoGrupo.length < 2){
             $scope.showAlert2 = true;
             return;
         }
@@ -84,7 +83,6 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
             idGrupo: grupo.idGrupo
         }
         serviceCRUD.TypePost('grupo/integrantes', params).then(function(res){
-            console.dir(res.data);
             $scope.lstVerGrupo = res.data;
             $('#mdVerGrupo').appendTo("body").modal('show');
         })
@@ -99,6 +97,11 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
             $scope.creacionGrupos = false;
             mostrarGrupos();
         })   
+    }
+
+    $scope.btnVerGrupoPre = function(grupo) {
+        $scope.lstVerGrupo = grupo.lstAlumnos;
+        $('#mdVerGrupo').appendTo("body").modal('show');
     }
 
     function init(){

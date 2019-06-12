@@ -5,7 +5,9 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.nuevo = true; // true->crear false->editar
     $scope.hoy = serviceUtil.yyyymmdd(new Date());
+    $scope.busy = false;
     $scope.showAlert1 = false;
+    $scope.showAlert2 = false;
     $scope.lstGrupos = [];
     $scope.regAct = {
         nombre: '',
@@ -16,18 +18,18 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         fechaInicio: new Date(),
         fechaFin: new Date(),
         flgConfianza: true,
+        flgMulticalificable: false,
         horaInicio: '',
         horaFin: '',
         minInicio: '00',
         minFin: '00'
     }
-
+    $scope.lstNuevoGrupo = [];
     var idActEdit = null;
 
     function ListarActividades() {
         var params = { idHorario: $scope.curso.idhorario };
         serviceCRUD.TypePost('actividad/lista', params).then(function (res) {
-
             for (let i = 0; i < res.data.length; i++) {
                 var dtIni = serviceUtil.getObjDate(res.data[i].fechaInicio);
                 var dtFin = serviceUtil.getObjDate(res.data[i].fechaFin);
@@ -46,9 +48,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     function ListarAgrupaciones() {
         /* var params = { idhorario: $scope.curso.idhorario };
-        console.dir(params);
         serviceCRUD.TypePost('grupo/listar-general', params).then(function (res) {
-            console.dir(res.data);
             $scope.lstGrupos = res.data;
         }) */
     }
@@ -64,6 +64,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             tipo: 'I',
             flgEntregable: true,
             flgConfianza: true,
+            flgMulticalificable: false,
             fechaInicio: new Date(),
             fechaFin: new Date(),
             horaInicio: '8',
@@ -75,9 +76,8 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     $scope.btnAgregarAgrupacion = function () {
-        var params = { idActividad: $scope.actividad.idActividad }
+        var params = { idHorario:  $scope.curso.idhorario }
         serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
-            console.dir(res.data);
             $scope.lstAluSinGrupos = res.data;
         })
         $('#mdAgregarAgrupacion').appendTo("body").modal('show');
@@ -85,19 +85,23 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     $scope.btnGuardarActividad = function () {
         $("#formAct").addClass("was-validated");
-        console.dir($scope.regAct);
         if ($scope.regAct.fechaInicio > $scope.regAct.fechaFin) {
             $("#formAct").removeClass("was-validated");
             $scope.showAlert1 = true;
             return;
         } else if (($scope.regAct.fechaInicio.getYear() == $scope.regAct.fechaFin.getYear() && $scope.regAct.fechaInicio.getMonth() == $scope.regAct.fechaFin.getMonth() && $scope.regAct.fechaInicio.getDate() == $scope.regAct.fechaFin.getDate()) &&
-            (parseInt($scope.regAct.horaInicio) > parseInt($scope.regAct.horaFin) || (parseInt($scope.regAct.horaInicio) == parseInt($scope.regAct.horaFin) && parseInt($scope.regAct.minInicio) > parseInt($scope.regAct.minFin)))) {
+            (parseInt($scope.regAct.horaInicio) >= parseInt($scope.regAct.horaFin) || (parseInt($scope.regAct.horaInicio) == parseInt($scope.regAct.horaFin) && parseInt($scope.regAct.minInicio) >= parseInt($scope.regAct.minFin)))) {
             $("#formAct").removeClass("was-validated");
             $scope.showAlert1 = true;
+            return;
+        } else if (!$scope.regAct.nombre || !$scope.regAct.descripcion) {
+            $("#formAct").removeClass("was-validated");
+            $scope.showAlert2 = true;
             return;
         }
 
         $scope.showAlert1 = false;
+        $scope.showAlert2 = false;
         if ($scope.nuevo) {
             if (formAct.checkValidity()) {
                 $scope.regAct.fechaInicio.setMinutes(0);
@@ -116,21 +120,24 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
                 var params = {
                     idHorario: $scope.curso.idhorario,
-                    nombre: $scope.regAct.nombre,
+                    nombre: $scope.regAct.nombre.trim(),
                     tipo: $scope.regAct.tipo,
-                    descripcion: $scope.regAct.descripcion,
+                    descripcion: $scope.regAct.descripcion.trim(),
                     fechaInicio: $scope.regAct.fechaInicio,
                     fechaFin: $scope.regAct.fechaFin,
                     flgEntregable: $scope.regAct.flgEntregable ? 1 : 0,
                     flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
                     idUsuarioCreador: $scope.usuario.idUser,
-                    flgMulticalificable: 0
+                    flgMulticalificable: $scope.regAct.flgMulticalificable ? 1 : 0
                 }
-                console.dir(params);
+
+                $scope.busy = true;
                 serviceCRUD.TypePost('actividad/crear_actividad', params).then(function (res) {
-                    $("#mdAgregarActividad").modal('hide');
                     ListarActividades();
+                    $("#mdAgregarActividad").modal('hide');
+                    $scope.busy = false;
                 })
+
             }
         } else {
             if (formAct.checkValidity()) {
@@ -156,12 +163,16 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     fechaInicio: $scope.regAct.fechaInicio,
                     fechaFinal: $scope.regAct.fechaFin,
                     flgEntregable: $scope.regAct.flgEntregable ? 1 : 0,
-                    flgConfianza: $scope.regAct.flgConfianza ? 1 : 0
+                    flgConfianza: $scope.regAct.flgConfianza ? 1 : 0,
+                    idUsuarioCreador: $scope.usuario.idUser,
+                    flgMulticalificable: $scope.regAct.flgMulticalificable ? 1 : 0
                 }
 
+                $scope.busy = true;
                 serviceCRUD.TypePost('actividad/editar_actividad', params).then(function (res) {
-                    $("#mdAgregarActividad").modal('hide');
                     ListarActividades();
+                    $("#mdAgregarActividad").modal('hide');
+                    $scope.busy = false;
                 })
             }
         }
@@ -187,7 +198,8 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             fechaFin: serviceUtil.convertToDate(act.fechaFin),
             horaFin: act.horaFin,
             minFin: act.minFin,
-            flgConfianza: !!act.flgConfianza
+            flgConfianza: !!act.flgConfianza,
+            flgMulticalificable: !!act.flgMulticalificable
         }
         idActEdit = act.idActividad;
         $('#mdAgregarActividad').appendTo("body").modal('show');
@@ -201,31 +213,31 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $("#mdPublicarActividad").modal('hide');
     }
 
-    $scope.btnCrearGrupos = function() {
+    $scope.btnCrearGrupos = function () {
         $scope.creacionGrupos = true;
     }
 
-    $scope.agregarAlu = function(i, al) {
+    $scope.agregarAlu = function (i, al) {
         $scope.lstAluSinGrupos.splice(i, 1);
         $scope.lstNuevoGrupo.push(al);
     }
 
-    $scope.elimAlu = function(i, al) {
+    $scope.elimAlu = function (i, al) {
         $scope.lstNuevoGrupo.splice(i, 1);
-        $scope.lstAluSinGrupos.push(al);        
+        $scope.lstAluSinGrupos.push(al);
     }
 
-    $scope.btnGuardarGrupo = function() {
+    $scope.btnGuardarGrupo = function () {
         $scope.showAlert1 = false;
         $scope.showAlert2 = false;
 
-        if (!$scope.Reg.nomGrupo){
+        if (!$scope.Reg.nomGrupo) {
             $scope.showAlert1 = true;
             return;
         }
         $scope.showAlert1 = false;
 
-        if ($scope.lstNuevoGrupo.length == 0){
+        if ($scope.lstNuevoGrupo.length == 0) {
             $scope.showAlert2 = true;
             return;
         }
@@ -241,34 +253,35 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $scope.lstNuevoGrupo = [];
     }
 
-    $scope.elimGrupo = function(i, gr) {
-        for (let i = 0; i < gr.lstAlumnos.length; i++){
+    $scope.elimGrupo = function (i, gr) {
+        for (let i = 0; i < gr.lstAlumnos.length; i++) {
             $scope.lstAluSinGrupos.push(gr.lstAlumnos[i]);
         }
         $scope.lstGrupos.splice(i, 1);
     }
 
-    $scope.verGrupo = function() {
+    $scope.verGrupo = function () {
 
     }
 
-    $scope.btnTerminar = function() {
+    $scope.btnTerminar = function () {
         var params = {
             idActividad: $scope.actividad.idActividad,
             grupos: $scope.lstGrupos
         }
-        serviceCRUD.TypePost('grupo/crear', params).then(function(res){
-            console.dir(res.data);
+        serviceCRUD.TypePost('grupo/crear', params).then(function (res) {
         })
     }
 
-    angular.element(document).ready(function () {
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip({
-                trigger: 'hover'
-            });
-        })
-    });
+    $scope.enCurso = function (act) {
+        return (serviceUtil.convertToDate(act.fechaFin) > (new Date()).addDays(-1));
+    }
+
+    Date.prototype.addDays = function (days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
 
     function init() {
         ListarActividades();
@@ -276,4 +289,20 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     init();
+
+    $scope.btnMostrarAgrupaciones = function(){
+        var params ={
+            idHorario: $scope.curso.idhorario
+        }
+        
+        serviceCRUD.TypePost('grupo/listar-general', params).then(function(res){
+            console.dir(res.data);
+            if (res.length == null){
+                
+            }else{
+               
+            }
+        }) 
+
+    }
 })
