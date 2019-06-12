@@ -42,7 +42,7 @@
       <form id="formEva" name="formEva" class="needs-validation" novalidate>
         <div class="form-row">
           <div class="form-group col-md-3">
-            <input ng-disabled="bloqEval" required type="text" class="form-control" placeholder="Nombre de la evaluación"
+            <input ng-disabled="bloqEval" required type="text" maxlength="20" class="form-control" placeholder="Nombre de la evaluación"
               ng-model="rubrica.nombreRubrica">
             <div class="invalid-feedback">
               Este campo es requerido.
@@ -53,7 +53,7 @@
                 class="fas fa-save"></i>&nbsp;Guardar</button>
           </div>
           <div class="col-md-1" ng-show="mostrarBtns">
-            <button class="btn btn-sm btn-danger"  ng-click="btnCancelar()"><i
+            <button class="btn btn-sm btn-danger" ng-click="btnCancelar()"><i
                 class="fas fa-times"></i>&nbsp;Cancelar</button>
           </div>
           <div class="col-md-1" ng-show="mostrarBtnEditar">

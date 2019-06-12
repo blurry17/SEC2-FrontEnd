@@ -56,6 +56,12 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
 
     $scope.btnGuardarRubrica = function () {
         $("#formEva").addClass("was-validated");
+        if ($scope.rubrica.listaAspectos.length == 0) {
+            $("#formEva").removeClass("was-validated");
+            window.alert('No se agregó ninguna pregunta');
+            return;
+        }
+
         if (formEva.checkValidity()) {
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
                 for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
