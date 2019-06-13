@@ -3,13 +3,13 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
             <li class="breadcrumb-item"><a href="#!actividad"> {{actividad.nombre}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Grupos</li>
-        </ol>
+            <li class="breadcrumb-item active" aria-current="page">Calificar</li>
+        </ol>   
     </nav>
     <br />
 
     <div class="row d-flex align-items-end">
-        <div class="form-group col-md-4">
+        <div ng-show = "!usuario.alumno" class="form-group col-md-4">
             <label style="font-weight: bold">Alumno</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
                 ng-init="idalumno = '0'">
@@ -18,7 +18,7 @@
                 </option>
             </select>
         </div>
-        <div ng-show="idalumno!='0'" class="form-group col-md-2">
+        <div ng-show="idalumno!='0' || !usuario.alumno" class="form-group col-md-2">
             <label style="font-weight: bold">No asistió</label>
             <input  ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox" >
         </div>
@@ -26,9 +26,9 @@
             <div style="float: right">
                 <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
                     Archivo</button>
-                <button type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i
+                <button ng-show = "!usuario.alumno" type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i
                         class="fas fa-pen"></i>&nbsp;Editar</button>
-                <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+                <button ng-show="!usuario.alumno" class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
                     Resultados</button>
             </div>
         </div>
@@ -79,7 +79,7 @@
 
     <div class="line"></div>
     <form>
-        <div ng-show="idalumno!='0'" class="card" style="background-color: rgb(230, 230, 230)">
+        <div ng-show="idalumno!='0' || usuario.alumno" class="card" style="background-color: rgb(230, 230, 230)">
             <div class="card-body">
                 <h2>Aspecto</h2>
                 <div ng-repeat="aspecto in rubrica.listaNotaAspectos" style="width: 100%">
@@ -237,7 +237,7 @@
 
     <div class="line"></div>
 
-    <div ng-show="idalumno!='0'" class="row justify-content-between">
+    <div ng-show="idalumno!='0' || usuario.alumno" class="row justify-content-between">
         <div class="form-group col-sm-1">
             <label style="font-weight: bold">Nota Final</label>
             <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" class="form-control"

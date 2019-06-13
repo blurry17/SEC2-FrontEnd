@@ -35,9 +35,19 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         $scope.flgCalificado = false;
         $scope.editar = true;
     }
+
+
+    //console.dir($scope.idalumno);
 //sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
-        if ($scope.idalumno == '0') return;
+        if($scope.usuario.alumno==1){
+            $scope.idalumno=$scope.usuario.idUser;
+        }
+        else if ($scope.idalumno == '0'){
+            console.dir($scope.idalumno);
+            return;
+        }
+
         $scope.editar = false;
         var params = {
             idAlumno: $scope.idalumno,
@@ -45,10 +55,11 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             tipo: 4,
             idCalificador: $scope.usuario.idUser
         }
+        //console.dir(JSON.stringify(params));
         serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
             $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
             $scope.notaFinal = res.data.calificacion.nota;
-            $scope.flgCalificado = res.data.flgCalificado;
+            $scope.flgCalificado = $scope.usuario.alumno==1 ? true : res.data.flgCalificado;
             $scope.falta=res.data.calificacion.flgFalta==1;
             console.dir("Estos es la respuesta");
             console.dir(res.data);
@@ -266,6 +277,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     function init() {
         ListarAlumnos();
         ObtenerRubrica();
+        if($scope.usuario.alumno) $scope.ObtenerNotas();
     }
 
     init();
