@@ -5,7 +5,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
     $scope.vistaAlumno = $scope.usuario.alumno;
-    
+    $scope.listaAl=[];
     /**
      $scope.btnGuardarEncuesta = function () {
         $("#formEva").addClass("was-validated");
@@ -58,6 +58,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).then(function(res) {
             console.dir("ESTOOOOO")
             console.dir(res.data);
+            $scope.listaAl=res.data;
         })
     }
 
