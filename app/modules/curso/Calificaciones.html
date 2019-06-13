@@ -46,7 +46,7 @@
     
 
     <div class="line"></div>
-    <form>
+    <form id="formCal" name="formCal" class="needs-validation" novalidate>
         <div ng-show="idalumno!='0' || idgrupo!='0'" class="card" style="background-color: rgb(102, 163, 148)">
             <div class="card-body">
 
@@ -122,7 +122,8 @@
                                             <label style="color: rgb(5, 5, 5)"><b> Nota aspecto</b></label>
                                             <input onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                                 readonly type="text" class="form-control" ng-model="aspecto.nota"
-                                                style="width: 50px">
+                                                style="width: 50px" required>
+
                                         </div>
                                     </div>
 
@@ -143,7 +144,7 @@
                                     <label style="color: rgb(5, 5, 5)"><b> Nota</b></label>
                                     <input onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                         ng-disabled="flgCalificado" class="form-control" type="text" style="width: 50px"
-                                        ng-model="aspecto.nota" maxlength="2">
+                                        ng-model="aspecto.nota" maxlength="2" required >
                                 </div>
                                 <div class="form-group col-sm-3">
                                     <label style="color: rgb(5, 5, 5)"><b> Comentarios</b></label>
@@ -168,7 +169,7 @@
                                     <label style="font-size: 100% ;color: rgb(5, 5, 5)"><b>Realizado </b> </label>
                                     <div style="padding-left: 18px;padding-top: 5px">
                                         <input style="height: 25px;width: 25px" type="checkbox"
-                                            ng-disabled="flgCalificado" ng-model="aspecto.nota">
+                                            ng-disabled="flgCalificado" ng-model="aspecto.nota" required>
                                     </div>
 
                                 </div>
@@ -190,24 +191,41 @@
                 </div>
             </div>
         </div>
-    </form>
-
-    <div class="line"></div>
-
-    <div ng-show="idalumno!='0' || idgrupo!='0'" class="row justify-content-between">
-        <div class="col-2"></div>
-        <div class="form-group col-2">
-            <label style="font-weight: bold;font-size: 1.7em ;color: rgb(5, 5, 5)">Nota Final</label>
-            <div style="padding-left: 25px">
-                <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" class="form-control"
-                    style="width: 60px; height: 50px; font-size: 1.3em;" ng-disabled="flgCalificado"
-                    ng-model="notaFinal" maxlength="2">
-            </div>
-        </div>
-
+        
+        <div class="line"></div>
+        
+        <div ng-show="idalumno!='0' || idgrupo!='0'" class="row justify-content-between">
+            <div class="col-2"></div>
+            <div class="form-group col-2">
+                <label style="font-weight: bold;font-size: 1.7em ;color: rgb(5, 5, 5)">Nota Final</label>
+                <div style="padding-left: 25px">
+                        <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text" class="form-control"
+                        style="width: 60px; height: 50px; font-size: 1.3em;" ng-disabled="flgCalificado"
+                        ng-model="notaFinal" maxlength="2" required>
+                    </div>
+                </div>
+                
+            </form>
         <div class="form-group col-sm-2">
             <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita"
                 ng-click="btnGuardarPuntaje()">Guardar</button>
         </div>
     </div>
+</div>
+<div class="modal fade modal-sm modal-dialog" id="mdCompletar" tabindex="-1" role="dialog"
+  data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form class="form-inlin justify-content-center">
+          <div class="form-group" style="text-align: center">
+            <span><b> Debe Llenar Todos los Campos </b></span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" style="display: block ;margin: 0 auto" data-dismiss="modal">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
