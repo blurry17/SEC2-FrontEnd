@@ -56,9 +56,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             var params = {
                 idActividad: $scope.actividad.idActividad,
                 idGrupo: $scope.idgrupo,
-                idJp: $scope.usuario.idUser
+                idJp: $scope.usuario.idUser,
+                idRubrica:$scope.idRub,
             }
+            console.dir(params);
             serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo', params).then(function (res) {
+                console.dir("ESTO ES LA RUB GRUPO")
+                console.dir(res.data);
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
                 $scope.flgCalificado = res.data.flgCalificado;
@@ -100,7 +104,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 }
             }
         }
-
+        if(formCal.checkValidity()){
         let r=window.confirm('¿Está seguro que desea guardar?');
         
        if(r){
@@ -203,6 +207,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
 
 
         }
+    }}else{
+        $('#mdCompletar').appendTo("body").modal('show');
     }
     }
 
@@ -268,8 +274,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             $scope.rubrica.listaNotaAspectos = res.data.listaAspectos;
 
             //console.dir(res.data.nombreRubrica);
-            //$scope.idRub = res.data.idRubrica;
-            //$scope.rubrica.nombreRubrica=res.data.nombreRubrica
+            $scope.idRub = res.data.idRubrica;
+            $scope.rubrica.nombreRubrica=res.data.nombreRubrica
 
         })
     }
