@@ -220,7 +220,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.btnclick = function () {
         file = document.getElementById('file').files;
         var datos = new FormData();
-        var hoy = new Date();
 
         datos.append('idActividad', $scope.actividad.idActividad);
         datos.append('idUsuario', $scope.usuario.idUser);
@@ -254,8 +253,26 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     function descargarEntregables(idEntregable) {
         var params = { idEntregable: idEntregable }
         serviceCRUD.TypePost('entregable/descarga', params).then(function (res) {
-            console.dir(res);
+            console.dir(res.data.url);
+            Download(res.data.url);
+
+            //download(res.data.url);
+            //downloadURI((res.data.url).toString(), 'archivo');
         })
+    }
+
+    function Download(url) {
+        document.getElementById('my_iframe').src = url;
+    };
+
+    function downloadURI(uri, name) {
+        var link = document.createElement("a");
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
     }
 
     function ListarAlumnos() {
