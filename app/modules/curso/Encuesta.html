@@ -89,7 +89,7 @@
           <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar y Enviar</button>
         </div>
     </div>
-    <div>
+    <div ng-show="actividad.tipo=='G'">
       <div class="row">
         <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Coevaluación</b></label>
         <div class="form-group col-md-2">
@@ -100,10 +100,9 @@
       </div>
       <div class="form-group col-md-4" ng-show = "rubricaCoauto != null">
           <label style="font-weight: bold">Alumno</label>
-          <select ng-change="btnListarGrupo()"  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
+          <select ng-change=""  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
               <option value="0">Seleccione</option>
-              
-              <option ng-repeat="item in listaAl" ng-value="item.idUsuario">{{item.codigoPucp +" - "+ item.nombre}}
+              <option ng-repeat="item in listaAl" ng-value="item.idUsuario">{{item.codigoPucp +" - "+ item.nombre +" "+item.apellidoPaterno+" "+item.apellidoMaterno}}
               </option>
           </select>
       </div>
@@ -181,6 +180,8 @@
   </div>
   <div class="row">
       <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de Esfuerzo</b></label>
+     
+      
     </div>
   
   <div class="form-row">

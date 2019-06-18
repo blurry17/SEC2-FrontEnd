@@ -54,10 +54,10 @@
             </div>
             <div style="text-align: center">
                 <div class="alert alert-danger" role="alert" ng-show="showAlert1">
-                    Debe ingresar un nombre del grupo
+                    Debe ingresar un nombre de grupo
                 </div>
                 <div class="alert alert-danger" role="alert" ng-show="showAlert2">
-                    Grupo vacío
+                    Debe elegir al menos 2 alumnos
                 </div>
                 <div class="form-group" style="display: inline-block">
                     <input ng-model="Reg.nomGrupo" class="form-control" placeholder="Nombre del grupo">
@@ -76,7 +76,7 @@
                         <tr ng-repeat="grupo in lstGrupos">
                             <td>{{grupo.nombre}}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary" ng-click="verGrupo(grupo)">
+                                <button class="btn btn-sm btn-primary" ng-click="btnVerGrupoPre(grupo)">
                                     <i class="fas fa-list-ul"></i>
                                 </button>
                                 <button class="btn btn-sm btn-danger" ng-click="elimGrupo($index, grupo)">
@@ -111,8 +111,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <label
-                    ng-repeat="al in lstVerGrupo">{{al.codigoPucp + ' - ' + al.nombre + ' ' + al.apellidoPaterno + ' ' + al.apellidoMaterno}}</label>
+                <h6
+                    ng-repeat="al in lstVerGrupo">{{al.codigoPucp + ' - ' + al.nombre + ' ' + al.apellidoPaterno + ' ' + al.apellidoMaterno}}</h6>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
