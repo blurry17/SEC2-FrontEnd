@@ -2,8 +2,9 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   $scope.usuario = $cookies.getObject('usuario');
   if ($scope.usuario == undefined) $location.path('/');
   $rootScope.lstCursos = $cookies.getObject('cursos');
-  $scope.curso = $cookies.getObject("cursoActual")
-  $scope.actividad = $cookies.getObject("actividadActual")
+  $scope.curso = $cookies.getObject("cursoActual");
+  $scope.actividad = $cookies.getObject("actividadActual");
+  $scope.esProfesor = $scope.usuario.profesor;
 
   $scope.irActividad = function () {
     $location.path("actividad")
@@ -19,8 +20,6 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   
 
   var params = { idActividad: $scope.actividad.idActividad}
-  //console.dir(params.idActividad);
-
   function listarRanking() {
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
       //console.dir(res.data);

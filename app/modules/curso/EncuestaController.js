@@ -6,16 +6,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.actividad = $cookies.getObject("actividadActual");
     $scope.vistaAlumno = $scope.usuario.alumno;
     $scope.listaAl=[];
-    /**
-     $scope.btnGuardarEncuesta = function () {
-        $("#formEva").addClass("was-validated");
-        
-        serviceCRUD.TypePost('actividad/', $scope.rubrica).then(function (response) {
-            
-            window.alert("Se guardaron los cambios!")
-        })
-    }
-     */
     
     $scope.btnListarGrupo = function() {
         console.dir("hola");
@@ -37,16 +27,11 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         } 
         
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-            //console.dir(res.data);
-            //if (res.data.succeed == false) return;
-            //ev[tipo] = 1;
-            
+            if (res.data.succeed == false){
+                window.alert('No existe esta evaluación');
+                return;
+            }
             $scope.rubrica = res.data;
-            /*for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
-                $scope.rubrica.listaAspectos[i].mostrar = true;
-                for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++)
-                    $scope.rubrica.listaAspectos[i].listaIndicadores[j].mostrar = true;
-            }*/
             if(tipo == 2){
                 $scope.rubricaAuto = $scope.rubrica;
                 $scope.rubricaCoauto = null; 
@@ -59,20 +44,35 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.listarGrupo = function () { 
-        //PEDIR SERVICIO
-        //Listar a sus compañeros de grupo
-        //id usuario, id actividad
         let params={
             idUsuario:$scope.usuario.idUser,
             idActividad:$scope.actividad.idActividad,
         }
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).then(function(res) {
-            console.dir("ESTOOOOO")
-            console.dir(res.data);
+            //console.dir("ESTOOOOO")
+            //console.dir(res.data);
             $scope.listaAl=res.data;
         })
     }
 
+    
+    $scope.btnGuardarEvaluacion = function (tipo) {
+        //console.dir("guardar")
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            //flgRubricaEspecial:$scope.actividad,
+            //IdUsuarioCreador : ,
+            //nombreRubrica : ,
+            tipo :tipo,
+            listaAspectos:$scope.listaAl,
+
+        }
+        serviceCRUD.TypePost('actividad/crear_rubrica', params).then(function(res) {
+            
+            $scope.listaAl=res.data;
+        })
+        
+    }
     
     $scope.btnAgregarEsfuerzo = function () {
         
