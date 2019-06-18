@@ -78,9 +78,7 @@
                           </div>
                         
                       </div>
-                    </div>
-                    
-                    
+                    </div>              
                   </div>
                 </div>
               </div>
@@ -89,8 +87,13 @@
           <button class="btn btn-primary" type="submit" ng-click="btnGuardarEvaluacion(2)">Guardar</button>
         </div>
     </div>
+<<<<<<< HEAD
     <div ng-show="actividad.tipo=='G'">
       <div class="row">
+=======
+    <div> 
+      <div class="row" ng-show="esActGrupal>
+>>>>>>> f6c25fda5b04894ee9405109013103003f12cb8e
         <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Coevaluación</b></label>
         <div class="form-group col-md-2">
             <button ng-click="btnEvaluacion(3)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -102,7 +105,7 @@
           <label style="font-weight: bold">Alumno</label>
           <select ng-change=""  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
               <option value="0">Seleccione</option>
-              <option ng-repeat="item in listaAl" ng-value="item.idUsuario">{{item.codigoPucp +" - "+ item.nombre +" "+item.apellidoPaterno+" "+item.apellidoMaterno}}
+              <option ng-repeat="item in listaAl" ng-value="item.idalumno">{{item.codigoPucp +" - "+ item.nombre}}
               </option>
           </select>
       </div>
@@ -179,10 +182,8 @@
    
   </div>
   <div class="row">
-      <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de Esfuerzo</b></label>
-     
-      
-    </div>
+      <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de Esfuerzo</b></label>    
+  </div>
   
   <div class="form-row">
           <div class="form-group col-md-5 col-lg-4">
