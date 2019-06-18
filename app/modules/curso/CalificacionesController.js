@@ -22,6 +22,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         nombreRubrica: $scope.nomRubrica,
         listaNotaAspectos: [],
     }
+    $scope.archivos = null;
 
     $scope.btnEditar = function () {
         $scope.flgCalificado = false;
@@ -221,11 +222,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var datos = new FormData();
         var hoy = new Date();
 
-        datos.append("idActividad", 1);
-        datos.append('idUsuario', 1);
+        datos.append('idActividad', $scope.actividad.idActividad);
+        datos.append('idUsuario', $scope.usuario.idUser);
         datos.append('tipo', 1);
         datos.append('cantidadFiles', file.length)
-        //datos.append('fechaEntrega', serviceUtil.ddmmyyyy(hoy));
         datos.append('url', '');
 
         for (var i = 0; i < file.length; i++) {
@@ -233,16 +233,29 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             datos.append(name, file[i]);
         }
 
-        console.dir(serviceUtil.TypePostFile('entregable/entrega', datos));
+        serviceCRUD.TypePostFile('entregable/entrega', datos).then(function (res) {
+            console.dir(res);
+        })
+    }
 
-        /* return $http({
-            url: 'http://localhost:5000/api/entregable/entrega',
-            method: 'POST',
-            data: datos,
-            headers: { 'Content-Type': undefined },
-            //prevents serializing datos.  don't do it.
-            transformRequest: angular.identity
-        }).then(function(respuesta){console.dir(respuesta)}).catch(function(error){console.dir(error)}) */
+    function mostrarEntregables() {
+        var params = {
+            idActividad: $scope.actividad.idActividad,
+            idUsuario: $scope.usuario.idUser
+        }
+        serviceCRUD.TypePost('entregables/lista', params).then(function (res) {
+            console.dir(res);
+            $scope.archivos = res.data;
+            descargarEntregables($scope.archivos[0].idEntregable);
+            descargarEntregables($scope.archivos[1].idEntregable);
+        })
+    }
+
+    function descargarEntregables(idEntregable) {
+        var params = { idEntregable: idEntregable }
+        serviceCRUD.TypePost('entregable/descarga', params).then(function (res) {
+            console.dir(res);
+        })
     }
 
     function ListarAlumnos() {
@@ -289,6 +302,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     function init() {
         ListarAlumnos();
         ObtenerRubrica();
+        if ($scope.usuario.alumno) mostrarEntregables();
     }
 
     init();
