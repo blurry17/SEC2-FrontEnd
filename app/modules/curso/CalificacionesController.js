@@ -10,7 +10,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.mostrar = false;
     $scope.falta = false;
     $scope.idRub = null;
-    $scope.profe = $scope.usuario.esProfesor;
+    $scope.profe = $scope.usuario.profesor;
     $scope.notaFinal = null;
     $scope.flgCalificado = null;
     $scope.editar = null;
@@ -33,6 +33,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         if ($scope.actividad.tipo == "I") {
             if ($scope.idalumno == '0') return;
             $scope.editar = false;
+            mostrarEntregables($scope.idalumno);
             var params = {
                 idAlumno: $scope.idalumno,
                 idActividad: $scope.actividad.idActividad,
@@ -40,7 +41,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 idCalificador: $scope.usuario.idUser
             }
             serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
-                console.dir(res.data);
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
                 $scope.flgCalificado = res.data.flgCalificado;
@@ -217,7 +217,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
     }
 
-    $scope.btnclick = function () {
+    $scope.btnSubir = function () {
         file = document.getElementById('file').files;
         var datos = new FormData();
 
@@ -237,16 +237,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         })
     }
 
-    function mostrarEntregables() {
+    function mostrarEntregables(idAl) {
         var params = {
             idActividad: $scope.actividad.idActividad,
-            idUsuario: $scope.usuario.idUser
+            idUsuario: idAl
         }
         serviceCRUD.TypePost('entregables/lista', params).then(function (res) {
-            console.dir(res);
             $scope.archivos = res.data;
-            descargarEntregables($scope.archivos[0].idEntregable);
-            descargarEntregables($scope.archivos[1].idEntregable);
         })
     }
 
@@ -254,25 +251,18 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         var params = { idEntregable: idEntregable }
         serviceCRUD.TypePost('entregable/descarga', params).then(function (res) {
             console.dir(res.data.url);
-            Download(res.data.url);
+            //Download(res.data.url);
 
             //download(res.data.url);
             //downloadURI((res.data.url).toString(), 'archivo');
         })
     }
 
-    function Download(url) {
-        document.getElementById('my_iframe').src = url;
-    };
-
-    function downloadURI(uri, name) {
-        var link = document.createElement("a");
-        link.download = name;
-        link.href = uri;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        delete link;
+    $scope.descargarArchivo = function (arch) {
+        var params = { idEntregable: arch.idEntregable }
+        serviceCRUD.TypePost('entregable/descarga', params).then(function (res) {
+            document.getElementById('my_iframe').src = res.data.url;
+        })
     }
 
     function ListarAlumnos() {
@@ -289,6 +279,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             $scope.esActIndividual = true;
             var params = { idActividad: $scope.actividad.idActividad }
             serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
+                console.dir(res.data);
                 $scope.listaAl = res.data.lista;
             })
             $scope.mostrar = true;
@@ -319,7 +310,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     function init() {
         ListarAlumnos();
         ObtenerRubrica();
-        if ($scope.usuario.alumno) mostrarEntregables();
+        if ($scope.usuario.alumno) mostrarEntregables($scope.usuario.idUser);
     }
 
     init();
