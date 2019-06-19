@@ -94,21 +94,22 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         })
     }
 
-    
     $scope.btnGuardarEvaluacion = function (tipo) {
         //console.dir("guardar")
         let params={
-            idActividad:$scope.actividad.idActividad,
-            //flgRubricaEspecial:$scope.actividad,
-            //IdUsuarioCreador : ,
-            //nombreRubrica : ,
-            tipo :tipo,
-            listaAspectos:$scope.listaAl,
-
+            flgRubricaEspecial: 0,
+            idActividad: $scope.actividad.idActividad,
+            idUsuarioCreador: $scope.usuario.idUser,
+            nombreRubrica: '',
+            listaAspectos: [],
+            tipo: null
+            
         }
+
         serviceCRUD.TypePost('actividad/crear_rubrica', params).then(function(res) {
             
-            $scope.listaAl=res.data;
+            //$scope.listaAl=res.data;
+            console.dir(res.data);
         })
         
     }
