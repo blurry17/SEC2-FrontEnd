@@ -23,9 +23,7 @@
                 data: Params,
                 headers: { 'Content-Type': undefined },
                 transformRequest: angular.identity
-            }).then(function (response) {
-                return response;
-            });
+            })
         }
 
         return {
