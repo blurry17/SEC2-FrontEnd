@@ -1,6 +1,7 @@
 app.controller('EncuestaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
     $scope.usuario = $cookies.getObject('usuario');
 
+    $scope.idalumno=null;
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
@@ -60,6 +61,20 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             console.dir(res.data);
             $scope.listaAl=res.data;
         })
+    }
+
+    $scope.btnGuardarCo=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            idAlumno:$scope.idalumno,
+            idCalificador:$scope.usuario.idUser,
+            nota:0,
+            flgFalta:0,
+            listaNotaAspectos:[
+
+            ],
+            flgCompleto:0,
+        }
     }
 
     $scope.btnAgregarEsfuerzo = function () {

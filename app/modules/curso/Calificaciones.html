@@ -61,10 +61,11 @@
 
     <div class="line"></div>
     <form id="formCal" name="formCal" class="needs-validation" novalidate>
-        <div ng-show="idalumno!='0' || idgrupo!='0'" class="card" style="background-color: rgb(102, 163, 148)">
+        <div ng-show="idalumno!='0' || idgrupo!='0'" class="card" style="background-color: rgb(135, 177, 166)">
             <div class="card-body">
 
                 <div ng-repeat="aspecto in rubrica.listaNotaAspectos" style="width: 100%">
+                
                     <h3 style="color: rgb(5, 5, 105)"><b> Aspecto</b> </h3>
                     <div class="col-12">
                         <h5 style="color: rgb(5, 5, 5)"><b> {{($index + 1) + '. ' + aspecto.descripcion}} </b></h4>
