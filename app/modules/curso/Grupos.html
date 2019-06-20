@@ -1,7 +1,7 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+            <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
             <li class="breadcrumb-item"><a href="#!actividad"> {{actividad.nombre}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Grupos</li>
         </ol>
@@ -95,7 +95,9 @@
     <div class="row" ng-show="mostrarGrupos">
         <div class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="grupo in lstGrupos">{{grupo.nombreGrupo}}<button style="float: right" class="btn btn-primary" ng-click="mostrarIntegrantes(grupo)"><i class="fas fa-bars"></i></button></li>
+                <li class="list-group-item" ng-repeat="grupo in lstGrupos">{{grupo.nombreGrupo}}<button
+                        style="float: right" class="btn btn-primary" ng-click="mostrarIntegrantes(grupo)"><i
+                            class="fas fa-bars"></i></button></li>
             </ul>
         </div>
     </div>
@@ -111,8 +113,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h6
-                    ng-repeat="al in lstVerGrupo">{{al.codigoPucp + ' - ' + al.nombre + ' ' + al.apellidoPaterno + ' ' + al.apellidoMaterno}}</h6>
+                <h6 ng-repeat="al in lstVerGrupo">
+                    {{al.codigoPucp + ' - ' + al.nombre + ' ' + al.apellidoPaterno + ' ' + al.apellidoMaterno}}</h6>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>

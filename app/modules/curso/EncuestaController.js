@@ -5,7 +5,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
-    $scope.vistaAlumno =$scope.usuario ;
+    $scope.vistaAlumno =$scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
     //console.dir($scope.usuario );
@@ -129,18 +129,19 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.btnGuardarEvaluacion = function (tipo) {
-        //console.dir("guardar")
+        console.dir("guardar")
         let params={
-            flgRubricaEspecial: 0,
             idActividad: $scope.actividad.idActividad,
-            idUsuarioCreador: $scope.usuario.idUser,
-            nombreRubrica: '',
+            idAlumno: $scope.usuario.alumno,
+            nota: 12,
+            idRubrica: 1,
+            flgFalta:0,
             listaAspectos: [],
-            tipo: null
+            flgCompleto: 0
             
         }
 
-        serviceCRUD.TypePost('actividad/crear_rubrica', params).then(function(res) {
+        serviceCRUD.TypePost('actividad/calificar_autoevaluacion', params).then(function(res) {
             
             //$scope.listaAl=res.data;
             console.dir(res.data);

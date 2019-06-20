@@ -2,8 +2,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
-    $scope.curso = $cookies.getObject("cursoActual")
-    $scope.actividad = $cookies.getObject("actividadActual")
+    $scope.curso = $cookies.getObject("cursoActual");
+    $scope.actividad = $cookies.getObject("actividadActual");
     $scope.listaAl = [];
     $scope.listaGrupal = [];
     $scope.esActIndividual = false;

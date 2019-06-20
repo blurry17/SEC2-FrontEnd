@@ -9,27 +9,32 @@
   <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 30px">
 
     <div>
-      <label class="vertical-center" style="margin-top: 14px;font-size: 250%"><b>{{actividad.nombre.toUpperCase()}}</b><i
+      <label class="vertical-center" style="margin-top: 14px;font-size: 210%"><b>{{actividad.nombre.toUpperCase()}}</b><i
           style="color: rgb(54, 105, 2);padding-left: 25px;" class="fas fa-user"></i></label>
     </div>
 
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
-      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;">Calificar</button>
-      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;">Hojas de evaluación</button>
-      <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark" style="margin: 2px;">Grupos</button>
-      <button ng-click="btnComentarios()" type="button" class="btn btn-dark"
-        style="margin: 2px;">Comentarios</button>
+      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;"><i
+          class="fas fa-check"></i>&nbsp;Calificaciones</button>
+      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;"><i
+          class="fas fa-scroll"></i>&nbsp;Hojas de
+        evaluación</button>
+      <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark"
+        style="margin: 2px;height: 32px;"><i class="fas fa-users"></i>&nbsp;Grupos</button>
+      <button ng-click="btnComentarios()" type="button" class="btn btn-dark" style="margin: 2px;"><i
+          class="fas fa-comments"></i>&nbsp;Comentarios</button>
 
-      <button ng-show="usuario.profesor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownMenuButton" type="button" class="btn btn-dark" 
-        style="margin: 2px;" ng-click="btnlistarAlarmas()" > Alertas </button>
-        <div class="dropdown-menu" >
-          <a class="dropdown-item"  style="cursor:pointer" ng-click="btnAlerta()"><i
-            class="fas fa-plus"></i> &nbsp;Crear </a>
-          <div class= "dropdown-divider"></div>
-          <a class="dropdown-item" style="cursor:pointer" ng-repeat = "p in listaAlarmas"
-            ng-click="btnVerAlerta(p)"><i class="fas fa-bell"></i> &nbsp;{{p.nombre}}
-          </a>
+      <button ng-show="usuario.profesor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        id="dropdownMenuButton" type="button" class="btn btn-dark" style="margin: 2px"
+        ng-click="btnlistarAlarmas()"><i class="fas fa-bell"></i>&nbsp;Alertas</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" style="cursor:pointer" ng-click="btnAlerta()"><i class="fas fa-plus"></i>&nbsp;Crear
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" style="cursor:pointer" ng-repeat="p in listaAlarmas" ng-click="btnVerAlerta(p)"><i
+            class="fas fa-bell"></i> &nbsp;{{p.nombre}}
+        </a>
       </div>
       <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;">Estadísticas</button>
       <button ng-show="usuario.alumno" ng-click="btnEncuesta()" class="btn btn-dark" style="margin: 2px;">Encuestas</button>
@@ -385,8 +390,8 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
-                      <input pattern="^[a-z A-Z¿?áéíóúñ]+$" maxlength="80" style="vertical-align: middle" name="pregunta"
-                        placeholder="Pregunta" type="text" class="form-control" ng-model="preg.pregunta"
+                      <input pattern="^[a-z A-Z¿?áéíóúñ]+$" maxlength="80" style="vertical-align: middle"
+                        name="pregunta" placeholder="Pregunta" type="text" class="form-control" ng-model="preg.pregunta"
                         ng-required="true">
                       <div class="invalid-feedback" style="padding-left: 5px">
                         Debe ingresar caracteres alfabeticos
@@ -435,11 +440,11 @@
 
       <div class="modal-body">
         <form id="formVerCo" name="VerCoEvalForm" class="needs-validation" novalidate>
-            <div ng-show="!agregar" class="form-group col-3">
-                <span><br></span>
-                <button class="btn btn-primary" ng-click="habilitarCampos()">&nbspEditar <i class="fas fa-edit"
-                    style="padding-left: 10px"></i></button>
-              </div>
+          <div ng-show="!agregar" class="form-group col-3">
+            <span><br></span>
+            <button class="btn btn-primary" ng-click="habilitarCampos()">&nbspEditar <i class="fas fa-edit"
+                style="padding-left: 10px"></i></button>
+          </div>
           <div ng-show="agregar" class="col-12" style="padding-bottom: 15px">
             <span style="font-size: 20px;padding-right: 10px; padding-bottom: 10px">Agregar Pregunta</span>
             <button class="btn btn-success" ng-click="showPregunta()" style="padding-bottom: 10px"><i
@@ -455,9 +460,9 @@
                   <div class="row">
                     <div class="form-group col-md-9" style="padding-bottom: 10px">
 
-                      <input pattern="^[a-z A-Z¿?áéíóúñ]+$" maxlength="80" style="vertical-align: middle" name="pregunta"
-                        placeholder="Pregunta" type="text" class="form-control" ng-disabled="!agregar" ng-model="preg.pregunta"
-                        ng-required="true">
+                      <input pattern="^[a-z A-Z¿?áéíóúñ]+$" maxlength="80" style="vertical-align: middle"
+                        name="pregunta" placeholder="Pregunta" type="text" class="form-control" ng-disabled="!agregar"
+                        ng-model="preg.pregunta" ng-required="true">
                       <div class="invalid-feedback" style="padding-left: 5px">
                         Debe ingresar caracteres alfabeticos
                       </div>
@@ -467,8 +472,8 @@
                     </div>
 
                     <div ng-show="agregar" class="form-group col-3">
-                      
-                      
+
+
                       <button class="btn btn-danger" ng-click="deletePregunta(preg)"><i
                           class="fas fa-times"></i></button>
                     </div>
@@ -481,12 +486,12 @@
 
 
           </div>
-              <div class="modal-footer">
-                <button class="btn btn-primary" type="submit" ng-click="btnModificarCoEval()"
-                  ng-disabled="ActForm.$invalid">Guardar</button>
-                <button class="btn btn-danger" type="submit" ng-click="btnAbreModalEliminar()">Eliminar</button>
-                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
-              </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" ng-click="btnModificarCoEval()"
+              ng-disabled="ActForm.$invalid">Guardar</button>
+            <button class="btn btn-danger" type="submit" ng-click="btnAbreModalEliminar()">Eliminar</button>
+            <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+          </div>
         </form>
       </div>
 
@@ -606,11 +611,11 @@
   </div>
 </div>
 
-<div class = "modal fade modal-sm modal-dialog" id="mdAlarma" tabindex = "-1" role = "dialog" data-backdrop = "static"
-  aria-hidden = "true">
-  <div class = "modal-dialog modal-sm" role="document">
-    <div class = "modal-header">
-      <button type= "button" class = "close" data-dismiss="modal">
+<div class="modal fade modal-sm modal-dialog" id="mdAlarma" tabindex="-1" role="dialog" data-backdrop="static"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">
         &times;
       </button>
     </div>
@@ -625,105 +630,106 @@
           </div>
         </form>
       </div>
-    </div>    
+    </div>
   </div>
 </div>
 
 
-<div class = "modal fade" id="mdCrearAlarma" tabindex = "-1"  role="dialog"  data-backdrop = "static" aria-hidden = "true">
-  <div class = "modal-dialog" >  
+<div class="modal fade" id="mdCrearAlarma" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class= "modal-header">
+      <div class="modal-header">
         <h5 class="modal-title">Crear Alerta</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        
+
       </div>
       <div class="modal-body">
         <form id="formAlert" name="formAlert">
           <div class="class form-row">
             <label class="col-md-8">Nombre de la Alerta: </label>
-            <div class="col-md-8">  
+            <div class="col-md-8">
               <input type="text" maxlength="15" class="form-control" ng-model="regAlarma.nombre">
-            </div> 
-          </div>
-          <div class="form-row">
-            <label class="col-md-8">Asunto: </label>
-            <div class="col-md-8">  
-              <input type="text"  class="form-control" ng-model="regAlarma.asunto">
-            </div>    
-          </div> 
-          <div class="form-row">
-            <label class="col-md-8">Mensaje: </label>
-            <div class="col-md-12">  
-                <textarea  style="resize:none" class="form-control" rows="8" ng-model="regAlarma.mensaje"></textarea>
             </div>
           </div>
           <div class="form-row">
-              <div class="form-group col-md-5">
-                  <label>Fecha ejecucion</label>
-                  <input type="date" min="{{hoy}}" max="{{fechaMaxActividad}}" class="form-control" ng-model="regAlarma.fechaEjecucion"
-                      required>
-                  <div class="invalid-feedback">
-                      Este campo es requerido.
-                  </div>
+            <label class="col-md-8">Asunto: </label>
+            <div class="col-md-8">
+              <input type="text" class="form-control" ng-model="regAlarma.asunto">
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="col-md-8">Mensaje: </label>
+            <div class="col-md-12">
+              <textarea maxlength="100" style="resize:none" class="form-control" rows="8"
+                ng-model="regAlarma.mensaje"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-5">
+              <label>Fecha ejecucion</label>
+              <input type="date" min="{{hoy}}" max="{{fechaMaxActividad}}" class="form-control"
+                ng-model="regAlarma.fechaEjecucion" required>
+              <div class="invalid-feedback">
+                Este campo es requerido.
               </div>
-              <div class="form-group col-md-3">
-                  <label>Hora</label>
-                  <select class="form-control custom-select" ng-model="regAlarma.horaInicio">
-                      <option value='0'>0</option>
-                      <option value='1'>1</option>
-                      <option value='2'>2</option>
-                      <option value='3'>3</option>
-                      <option value='4'>4</option>
-                      <option value='5'>5</option>
-                      <option value='6'>6</option>
-                      <option value='7'>7</option>
-                      <option value='8'>8</option>
-                      <option value='9'>9</option>
-                      <option value='10'>10</option>
-                      <option value='11'>11</option>
-                      <option value='12'>12</option>
-                      <option value='13'>13</option>
-                      <option value='14'>14</option>
-                      <option value='15'>15</option>
-                      <option value='16'>16</option>
-                      <option value='17'>17</option>
-                      <option value='18'>18</option>
-                      <option value='19'>19</option>
-                      <option value='20'>20</option>
-                      <option value='21'>21</option>
-                      <option value='22'>22</option>
-                      <option value='23'>23</option>
-                  </select>
-              </div>
-              <div class="form-group col-md-3">
-                  <label>Minuto</label>
-                  <select class="form-control custom-select" ng-model="regAlarma.minInicio">
-                      <option value='0'>00</option>
-                      <option value='15'>15</option>
-                      <option value='30'>30</option>
-                      <option value='45'>45</option>
-                  </select>
-              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label>Hora</label>
+              <select class="form-control custom-select" ng-model="regAlarma.horaInicio">
+                <option value='0'>0</option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option value='5'>5</option>
+                <option value='6'>6</option>
+                <option value='7'>7</option>
+                <option value='8'>8</option>
+                <option value='9'>9</option>
+                <option value='10'>10</option>
+                <option value='11'>11</option>
+                <option value='12'>12</option>
+                <option value='13'>13</option>
+                <option value='14'>14</option>
+                <option value='15'>15</option>
+                <option value='16'>16</option>
+                <option value='17'>17</option>
+                <option value='18'>18</option>
+                <option value='19'>19</option>
+                <option value='20'>20</option>
+                <option value='21'>21</option>
+                <option value='22'>22</option>
+                <option value='23'>23</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label>Minuto</label>
+              <select class="form-control custom-select" ng-model="regAlarma.minInicio">
+                <option value='0'>00</option>
+                <option value='15'>15</option>
+                <option value='30'>30</option>
+                <option value='45'>45</option>
+              </select>
+            </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAlerta()"
-          ng-show="nuevaAlarma">Crear</button>
+        <button class="btn btn-primary" type="submit" ng-click="btnGuardarAlerta()" ng-show="nuevaAlarma">Crear</button>
         <button class="btn btn-primary" type="submit" ng-click="btnEditarAlerta()"
           ng-show="!nuevaAlarma">Guardar</button>
-        <button class = "btn btn-danger"  ng-show="!nuevaAlarma" type = "submit" ng-click="btnEliminarAlerta()">Eliminar</button>
+        <button class="btn btn-danger" ng-show="!nuevaAlarma" type="submit"
+          ng-click="btnEliminarAlerta()">Eliminar</button>
         <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
       </div>
-    </div>    
+    </div>
   </div>
 
 </div>
 
-<div class="modal fade" id = "mdAlertaAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+<div class="modal fade" id="mdAlertaAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
 
 
 </div>

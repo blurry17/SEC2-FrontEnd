@@ -1,7 +1,7 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+            <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
             <li class="breadcrumb-item"><a href="#!actividad"> {{actividad.nombre}}</a></li>
             <li class="breadcrumb-item active" aria-current="page">Calificaciones</li>
         </ol>
@@ -32,12 +32,16 @@
             <input ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox">
         </div>
         <div class="col-md-12" ng-id="usuario.alumno">
+            <div>
+                <h5>Entregables</h5>
+            </div>
             <div ng-repeat="arch in archivos">
                 <a href="" ng-click="descargarArchivo(arch)">{{arch.nombreArchivo}}</a>
             </div>
         </div>
         <div class="form-group col-md-6 row" ng-if="usuario.alumno">
             <div class="col-md-6 form-group">
+
                 <label for="file">Elegir archivo(s)</label>
                 <input type="file" class="form-control-file" id="file" name="file" multiple>
             </div>
