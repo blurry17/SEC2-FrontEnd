@@ -40,9 +40,9 @@
             style="font-size: 100%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp;<i class="fas fa-user-circle"
               style="font-size: 150%"></i></label>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbspMi Perfil</a>
+            <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbsp;Mi Perfil</a>
             <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i
-                class="fas fa-sign-out-alt"></i>&nbspCerrar Sesión</a>
+                class="fas fa-sign-out-alt"></i>&nbsp;Cerrar Sesión</a>
           </div>
         </div>
       </nav>
@@ -56,22 +56,26 @@
           </li>
           <li class="active">
             <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
-              class="dropdown-toggle menu-item"><i class="fas fa-book"></i>&nbspCursos</a>
+              class="dropdown-toggle menu-item"><i class="fas fa-book"></i>&nbsp;Cursos</a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
               <li ng-click="mostrarCurso(curso)" ng-repeat="curso in lstCursos"><a
                   class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
             </ul>
           </li>
+          <li class="active">
+            <a data-target="#cargamenus" data-toggle="collapse" aria-expanded="false"
+              class="dropdown-toggle menu-item"><i class="fas fa-file-excel"></i>&nbsp;Carga Masiva</a>
+            <ul class="collapse list-unstyled" id="cargamenus">
+              <li><a class="submenu-item">Alumnos por horario</a></li>
+              <li><a class="submenu-item">Cursos</a></li>
+              <li><a class="submenu-item">Profesores</a></li>
+              <li><a class="submenu-item">Jefes de práctica</a></li>
+            </ul>
+          </li>
           <li class="menu-item">
-            <a><i class="fas fa-history"></i>&nbspInformación Histórica</a>
+            <a><i class="fas fa-history"></i>&nbsp;Información Histórica</a>
           </li>
         </ul>
-
-        <!-- <ul class="list-unstyled CTAs">
-          <li>
-            <a rel="noopener noreferrer" target="_blank" href="https://www.pucp.edu.pe/">PUCP</a>
-          </li>
-        </ul> -->
       </nav>
     </div>
 

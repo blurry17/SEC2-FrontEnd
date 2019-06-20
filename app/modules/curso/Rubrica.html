@@ -1,7 +1,7 @@
 <div>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+      <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
       <li class="breadcrumb-item"><a href="#!actividad">{{actividad.nombre}}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Rúbrica</li>
     </ol>
@@ -17,7 +17,8 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(4)">Evaluación</a>
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(2)">Autoevaluación</a>
-        <a ng-if="actividad.tipo == 'G'" class="dropdown-item" style="cursor: pointer" ng-click="btnCrearEval(3)">Coevaluación</a>
+        <a ng-if="actividad.tipo == 'G'" class="dropdown-item" style="cursor: pointer"
+          ng-click="btnCrearEval(3)">Coevaluación</a>
       </div>
     </div>
     <div class="col-md-2">
@@ -26,7 +27,8 @@
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(4)">Evaluación</a>
         <a class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(2)">Autoevaluación</a>
-        <a ng-if="actividad.tipo == 'G'" class="dropdown-item" style="cursor: pointer" ng-click="btnObtenerEval(3)">Coevaluación</a>
+        <a ng-if="actividad.tipo == 'G'" class="dropdown-item" style="cursor: pointer"
+          ng-click="btnObtenerEval(3)">Coevaluación</a>
       </div>
     </div>
     <div class="col-md-2">
@@ -42,14 +44,14 @@
       <form id="formEva" name="formEva" class="needs-validation" novalidate>
         <div class="form-row">
           <div class="form-group col-md-3">
-            <input ng-disabled="bloqEval" required type="text" maxlength="20" class="form-control" placeholder="Nombre de la evaluación"
-              ng-model="rubrica.nombreRubrica">
+            <input ng-disabled="bloqEval" required type="text" maxlength="20" class="form-control"
+              placeholder="Nombre de la evaluación" ng-model="rubrica.nombreRubrica">
             <div class="invalid-feedback">
               Este campo es requerido.
             </div>
           </div>
           <div class="col-md-1" ng-show="mostrarBtns">
-            <button type="submit" class="btn btn-sm btn-primary"  ng-click="btnGuardarRubrica()"><i
+            <button type="submit" class="btn btn-sm btn-primary" ng-click="btnGuardarRubrica()"><i
                 class="fas fa-save"></i>&nbsp;Guardar</button>
           </div>
           <div class="col-md-1" ng-show="mostrarBtns">
@@ -57,9 +59,9 @@
                 class="fas fa-times"></i>&nbsp;Cancelar</button>
           </div>
           <div class="col-md-1" ng-show="mostrarBtnEditar">
-              <button class="btn btn-sm btn-secondary"  ng-click="btnEdicion()"><i
-                  class="fas fa-pen"></i>&nbsp;Editar</button>
-            </div>
+            <button class="btn btn-sm btn-secondary" ng-click="btnEdicion()"><i
+                class="fas fa-pen"></i>&nbsp;Editar</button>
+          </div>
         </div>
         <div class="row" ng-show="mostrarBtns">
           <div class="col-md-12 form-group">
@@ -74,7 +76,8 @@
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
                   <label class="negrita">Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control"
+                    ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre.
                   </div>
@@ -85,8 +88,9 @@
                 </div>
                 <div class="form-group col-md-1">
                   <label class="negrita">Puntaje</label>
-                  <input ng-disabled="bloqEval" ng-model="aspecto.puntajeMax" required type="text" class="form-control" style="width: 70px"
-                    maxlength="2" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                  <input ng-disabled="bloqEval" ng-model="aspecto.puntajeMax" required type="text" class="form-control"
+                    style="width: 70px" maxlength="2"
+                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
                   <div class="invalid-feedback">
                     Ingrese un puntaje.
                   </div>
@@ -105,14 +109,16 @@
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
                     <label class="negrita">Nombre del indicador</label>
-                    <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="indicador.descripcion" />
+                    <input ng-disabled="bloqEval" required maxlength="25" class="form-control"
+                      ng-model="indicador.descripcion" />
                     <div class="invalid-feedback">
                       Ingrese un nombre.
                     </div>
                   </div>
                   <div class="form-group col-md-5 col-lg-4">
                     <label class="negrita">Descripción</label>
-                    <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="indicador.informacion" />
+                    <input ng-disabled="bloqEval" maxlength="50" class="form-control"
+                      ng-model="indicador.informacion" />
                   </div>
                   <!-- <div class="form-group col-md-1">
                       <label>Puntaje</label>
@@ -142,11 +148,13 @@
                     </div>
                     <div class="form-group col-md-4 col-lg-4">
                       <label class="negrita">Descripción</label>
-                      <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200" class="form-control"></textarea>
+                      <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200"
+                        class="form-control"></textarea>
                     </div>
                     <div class="form-group col-md-1">
                       <label class="negrita">Puntaje</label>
-                      <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                      <input ng-disabled="bloqEval" required type="text"
+                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                         maxlength="2" class="form-control" style="width: 70px" ng-model="nivel.puntaje" />
                       <div class="invalid-feedback">
                         Ingrese un puntaje.
@@ -164,7 +172,8 @@
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
                   <label class="negrita">Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                  <input ng-disabled="bloqEval" required maxlength="25" class="form-control"
+                    ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre.
                   </div>
@@ -175,7 +184,8 @@
                 </div>
                 <div class="form-group col-md-1">
                   <label class="negrita">Puntaje</label>
-                  <input ng-disabled="bloqEval" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                  <input ng-disabled="bloqEval" required type="text"
+                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                     maxlength="2" style="width: 70px" class="form-control" ng-model="aspecto.puntajeMax" />
                   <div class="invalid-feedback">
                     Ingrese un puntaje.
@@ -183,8 +193,7 @@
                 </div>
                 <div ng-show="mostrarBtns" class="form-group col-md-1 d-flex align-items-end">
                   <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-                    title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i
-                      class="fas fa-times"></i></button>
+                    title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></button>
                 </div>
               </div>
             </div>
@@ -192,19 +201,20 @@
               <div class="form-row">
                 <div class="form-group col-md-3 col-lg-2">
                   <label class="negrita">Nombre del Aspecto</label>
-                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
+                  <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control"
+                    ng-model="aspecto.descripcion" />
                   <div class="invalid-feedback">
                     Ingrese un nombre
                   </div>
                 </div>
                 <div class="form-group col-md-5 col-lg-4">
                   <label class="negrita">Descripción</label>
-                  <input ng-disabled="bloqEval" type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                  <input ng-disabled="bloqEval" type="text" maxlength="50" class="form-control"
+                    ng-model="aspecto.informacion" />
                 </div>
                 <div ng-show="mostrarBtns" class="form-group col-md-1 d-flex align-items-end">
                   <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-                    title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i
-                      class="fas fa-times"></i></button>
+                    title="Eliminar Aspecto" ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></button>
                 </div>
               </div>
             </div>
