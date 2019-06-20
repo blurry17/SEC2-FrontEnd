@@ -1,6 +1,7 @@
 app.controller('EncuestaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
     $scope.usuario = $cookies.getObject('usuario');
 
+    $scope.idalumno=null;
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
@@ -71,6 +72,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 return;
             }
             $scope.rubrica = res.data;
+            console.dir($scope.rubrica);
             if(tipo == 2){
                 $scope.rubricaAuto = $scope.rubrica;
                 $scope.rubricaCoauto = null; 
@@ -88,9 +90,41 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad:$scope.actividad.idActividad,
         }
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).then(function(res) {
-            //console.dir("ESTOOOOO")
-            //console.dir(res.data);
+            console.dir("ESTOOOOO")
+            console.dir(res.data);
             $scope.listaAl=res.data;
+        })
+    }
+
+    $scope.obtenerCo=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            idCalificado:$scope.idalumno,
+            idCalificador:$scope.usuario.idUser,
+
+        }
+        console.dir('este es el yeison');
+        console.dir(params);
+        serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
+            console.dir('LA RES');
+            console.dir(res.data);
+        })
+    }
+
+    $scope.btnGuardarCo=function(){
+        let params={
+            idActividad:$scope.actividad.idActividad,
+            idAlumno:$scope.idalumno,
+            idCalificador:$scope.usuario.idUser,
+            nota:0,
+            flgFalta:0,
+            listaNotaAspectos:$scope.rubrica.listaAspectos,
+            flgCompleto:0,
+        }
+        console.dir('LEEEE ESTO');
+        console.dir(params);
+        serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion',params).then(function(res){
+
         })
     }
 

@@ -98,9 +98,9 @@
       </div>
       <div class="form-group col-md-4" ng-show = "rubricaCoauto != null">
           <label style="font-weight: bold">Alumno</label>
-          <select ng-change=""  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
+          <select ng-change="obtenerCo()"  class="form-control custom-select" ng-model="idalumno" ng-init="idalumno = '0'">
               <option value="0">Seleccione</option>
-              <option ng-repeat="item in listaAl" ng-value="item.idalumno">{{item.codigoPucp +" - "+ item.nombre}}
+              <option ng-repeat="item in listaAl" ng-value="item.idUsuario">{{item.codigoPucp +" - "+ item.nombre}}
               </option>
           </select>
       </div>
@@ -169,7 +169,7 @@
             </div>
       </div>
     <div class="modal-footer" ng-show = "rubricaCoauto != null">
-      <button class="btn btn-primary" type="submit" ng-click="btnGuardarEncuesta()">Guardar y Enviar</button>
+      <button class="btn btn-primary" type="submit" ng-click="btnGuardarCo()">Guardar y Enviar</button>
     </div>
   
     </div>
