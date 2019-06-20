@@ -45,7 +45,7 @@
     <div class="line"></div>
     <div class="row">
         <h2 style="margin:15px;" class ="col-1"> Grupos </h2> 
-        <button id="btnVerAgrupaciones" style="margin-left:15px; margin-top:14px; background-color:#388697; height:43px;" class = "btn btn-info" ng-click="btnMostrarAgrupaciones()" ><i class="fas fa-eye"></i> &nbspMostrar</button>
+        <!--<button id="btnVerAgrupaciones" style="margin-left:15px; margin-top:14px; background-color:#388697; height:43px;" class = "btn btn-info" ng-click="btnMostrarAgrupaciones()" ><i class="fas fa-eye"></i> &nbspMostrar</button>-->
     </div>
     
 
@@ -54,17 +54,33 @@
      
         </div>
         <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-            <button class="btn btn-success" ng-click="btnAgregarAgrupacion()"><i class="fas fa-plus"></i>&nbspAgregar
+            <button class="btn btn-success" ng-click="btnAgregarAgrupacion()" ng-show = "!existeAgrupaciones"><i class="fas fa-plus"></i>&nbspAgregar
                 agrupación</button>
         </div>
         
     </div>
 
     <div class="row" style="padding-top: 15px">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="grupo in lstGrupos">
-            </li>
-        </ul>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px" ng-repeat="grupo in lstAgrupaciones">
+                    <div class="card text-center border-dark" style="border-width: 3px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{grupo.nombre}}&nbsp<i class="fas fa-users"></i></h5>
+                            
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <label ng-repeat = "alumno in grupo.lstIntegrantes">{{alumno.codigoPucp}} - {{alumno.nombre}}</label>
+                            <!--<li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
+                            <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
+                            <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>-->
+                        </ul>
+                        <div class="card-body">
+                            <!--<button id="btnVer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
+                                title="Ver" ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"
+                                ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>-->
+                        </div>
+                    </div>
+            </div>
     </div>
 </div>
 <div class="modal fade" id="mdAgregarActividad" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
@@ -249,14 +265,14 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Agregar agrupación</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title"  >Agregar agrupación</h5>
+                <button type="button"  class="close" ng-click="btnNocrearGrupos()" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="btn-group" role="group">
-                    <button ng-click="btnCrearGrupos()" type="button" class="btn btn-success">Crear Grupos</button>
+                    <button ng-click="btnCrearGrupos()" style="margin-bottom: 20px" type="button" class="btn btn-success">Crear Grupos</button>
                 </div>
                 <div class="row" ng-show="creacionGrupos">
                     <div class="col-md-5">
@@ -269,8 +285,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="al in lstAluSinGrupos" style="cursor: pointer"
-                                        ng-click="agregarAlu($index,al)">
+                                    <tr ng-repeat="al in lstAluSinGrupos" style="cursor: pointer" ng-click="agregarAlu($index,al)">
                                         <td>{{al.codigoPucp}}</td>
                                         <td>{{al.nombre}}</td>
                                     </tr>
@@ -309,13 +324,12 @@
                                 Debe ingresar un nombre del grupo
                             </div>
                             <div class="alert alert-danger" role="alert" ng-show="showAlert2">
-                                Grupo vacío
+                                Grupo Invalido
                             </div>
                             <div class="form-group" style="display: inline-block">
                                 <input ng-model="Reg.nomGrupo" class="form-control" placeholder="Nombre del grupo">
                             </div>
-                            <button type="submit" class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar
-                                grupo</button>
+                            <button type="submit" class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar grupo</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-condensed table-hover">
@@ -327,11 +341,17 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="grupo in lstGrupos">
-                                        <td>{{grupo.nombre}}</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary" ng-click="verGrupo(grupo)">
-                                                <i class="fas fa-list-ul"></i>
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#lst{{grupo.lstAlumnos[0].codigoPucp}}" aria-expanded="false" aria-controls="collapseExample">
+                                                {{grupo.nombre}}
                                             </button>
+                                            <div class="collapse" id="lst{{grupo.lstAlumnos[0].codigoPucp}}">
+                                                <div class="card card-body">
+                                                     <label ng-repeat="al8 in grupo.lstAlumnos">{{al8.codigoPucp +' - '+ al8.nombre + ' ' +al8.apellidoPaterno}} </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
                                             <button class="btn btn-sm btn-danger" ng-click="elimGrupo($index, grupo)">
                                                 <i class="fas fa-times"></i>
                                             </button>
@@ -344,10 +364,29 @@
                             <button class="btn btn-success" ng-click="btnTerminar()">Terminar</button>
                         </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-default" ng-click ="btnNocrearGrupos()" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-md modal-dialog" id="mdVerAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label ng-repeat="a4 in lstVerAgrupacion.lstAlumnos">{{a4.codigoPucp}}</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
