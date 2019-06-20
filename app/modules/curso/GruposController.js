@@ -2,6 +2,7 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
+    $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject('actividadActual');
     $scope.lstAluSinGrupos = [];
     $scope.lstNuevoGrupo = [];
@@ -14,14 +15,14 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
     }
 
     function mostrarGrupos() {
-        var params = { idActividad: $scope.actividad.idActividad };    
-        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function(res){
-            if(res.data.length == 0){
+        var params = { idActividad: $scope.actividad.idActividad };
+        serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
+            if (res.data.length == 0) {
                 $scope.creacionGrupos = true;
                 var params = {
                     idActividad: $scope.actividad.idActividad
                 }
-                serviceCRUD.TypePost('actividad/alumnos', params).then(function(res){
+                serviceCRUD.TypePost('actividad/alumnos', params).then(function (res) {
                     $scope.lstAluSinGrupos = res.data;
                 })
             } else {
@@ -31,31 +32,31 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         })
     }
 
-    $scope.btnCrearGrupos = function() {
+    $scope.btnCrearGrupos = function () {
         $scope.creacionGrupos = true;
     }
 
-    $scope.agregarAlu = function(i, al) {
+    $scope.agregarAlu = function (i, al) {
         $scope.lstAluSinGrupos.splice(i, 1);
         $scope.lstNuevoGrupo.push(al);
     }
 
-    $scope.elimAlu = function(i, al) {
+    $scope.elimAlu = function (i, al) {
         $scope.lstNuevoGrupo.splice(i, 1);
-        $scope.lstAluSinGrupos.push(al);        
+        $scope.lstAluSinGrupos.push(al);
     }
 
-    $scope.btnGuardarGrupo = function() {
+    $scope.btnGuardarGrupo = function () {
         $scope.showAlert1 = false;
         $scope.showAlert2 = false;
 
-        if (!$scope.Reg.nomGrupo){
+        if (!$scope.Reg.nomGrupo) {
             $scope.showAlert1 = true;
             return;
         }
         $scope.showAlert1 = false;
 
-        if ($scope.lstNuevoGrupo.length < 2){
+        if ($scope.lstNuevoGrupo.length < 2) {
             $scope.showAlert2 = true;
             return;
         }
@@ -71,40 +72,40 @@ app.controller('GruposController', function ($rootScope, $scope, $location, $coo
         $scope.lstNuevoGrupo = [];
     }
 
-    $scope.elimGrupo = function(i, gr) {
-        for (let i = 0; i < gr.lstAlumnos.length; i++){
+    $scope.elimGrupo = function (i, gr) {
+        for (let i = 0; i < gr.lstAlumnos.length; i++) {
             $scope.lstAluSinGrupos.push(gr.lstAlumnos[i]);
         }
         $scope.lstGrupos.splice(i, 1);
     }
 
-    $scope.mostrarIntegrantes = function(grupo) {
+    $scope.mostrarIntegrantes = function (grupo) {
         var params = {
             idGrupo: grupo.idGrupo
         }
-        serviceCRUD.TypePost('grupo/integrantes', params).then(function(res){
+        serviceCRUD.TypePost('grupo/integrantes', params).then(function (res) {
             $scope.lstVerGrupo = res.data;
             $('#mdVerGrupo').appendTo("body").modal('show');
         })
     }
 
-    $scope.btnTerminar = function() {
+    $scope.btnTerminar = function () {
         var params = {
             idActividad: $scope.actividad.idActividad,
             grupos: $scope.lstGrupos
         }
-        serviceCRUD.TypePost('grupo/crear', params).then(function(res){
+        serviceCRUD.TypePost('grupo/crear', params).then(function (res) {
             $scope.creacionGrupos = false;
             mostrarGrupos();
-        })   
+        })
     }
 
-    $scope.btnVerGrupoPre = function(grupo) {
+    $scope.btnVerGrupoPre = function (grupo) {
         $scope.lstVerGrupo = grupo.lstAlumnos;
         $('#mdVerGrupo').appendTo("body").modal('show');
     }
 
-    function init(){
+    function init() {
         mostrarGrupos();
     }
 
