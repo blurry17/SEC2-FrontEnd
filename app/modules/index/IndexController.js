@@ -3,22 +3,28 @@
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.showLayout = true;
 
-    $scope.mostrarCurso = function(curso){
+    $scope.mostrarCurso = function (curso) {
         $cookies.putObject('cursoActual', curso);
 
-        if(window.location.href == (indexURL + 'curso')){
+        if (window.location.href == (indexURL + 'curso')) {
             location.reload()
-        }else{
+        } else {
             $('#sidebar').removeClass('active');
             $('.overlay').removeClass('active');
             $location.path('curso')
         }
     }
 
-    $scope.btnLogout = function(){
+    $scope.btnMant = function () {
+        $('#sidebar').removeClass('active');
+        $('.overlay').removeClass('active');
+        $location.path('mantenimiento');
+    }
+
+    $scope.btnLogout = function () {
         $('#sidebar').removeClass('active');
         $('.overlay').removeClass('active');
         $cookies.remove('usuario');
         $location.path('/')
-    }   
+    }
 })

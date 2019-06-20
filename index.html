@@ -72,6 +72,9 @@
               <li><a class="submenu-item">Jefes de práctica</a></li>
             </ul>
           </li>
+          <li class="menu-item" ng-show="usuario.superUsuario" ng-click="btnMant()">
+            <a><i class="fas fa-cogs"></i>&nbsp;Mantenimiento</a>
+          </li>
           <li class="menu-item">
             <a><i class="fas fa-history"></i>&nbsp;Información Histórica</a>
           </li>
@@ -98,6 +101,7 @@
     document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/EncuestaController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/MantenimientoController.js?v=" + Date.now() + "'><\/script>");
 
   </script>
 

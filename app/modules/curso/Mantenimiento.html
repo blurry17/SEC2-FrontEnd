@@ -1,0 +1,57 @@
+<div class="accordion" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Mantenimiento de semestres
+                </button>
+            </h2>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="col-md-12">
+                    <h3>Semestre actual: {{semActual}}</h3>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btm-sm btn-danger">Terminar
+                        semestre</button>
+                    <button class="btn btm-sm btn-success">Crear semestre</button>
+                    <button class="btn btm-sm btn-primary">Activar semestre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Mantenimiento de especialidades por semestre
+                </button>
+            </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Especialidad</th>
+                                <th scope="col"><input type="checkbox" ng-model="checkeados"
+                                        ng-change="changeCheckAll()">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="esp in especialidades">
+                                <td>{{esp.nombre}}</td>
+                                <td><input type="checkbox" ng-model="esp.checked" ng-change="changeCheck()"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
