@@ -1,7 +1,8 @@
-app.controller('RubricaController',function($rootScope, $scope, $location, $cookies, serviceCRUD){ 
+app.controller('RubricaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
     if ($scope.usuario == undefined) $location.path('/');
     $scope.actividad = $cookies.getObject('actividadActual');
+    $scope.curso = $cookies.getObject("cursoActual");
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.mostrarCrearRubrica = false;
     $scope.mostrarEditarRubrica = false;
@@ -21,9 +22,9 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         listaAspectos: [],
         tipo: null
     }
-    var ev = [0,0,0,0,0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval    
+    var ev = [0, 0, 0, 0, 0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval    
 
-    $scope.btnObtenerEval = function(tipo) {
+    $scope.btnObtenerEval = function (tipo) {
         $scope.mostrarEv = false;
         var params = {
             idActividad: $scope.actividad.idActividad,
@@ -35,7 +36,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         else if (tipo == 2) $scope.titleEval = 'Autoevaluación';
 
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
-            if (res.data.succeed == false){
+            if (res.data.succeed == false) {
                 window.alert('No existe esta evaluación');
                 return;
             }
@@ -67,14 +68,14 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
                 $("#formEva").removeClass("was-validated");
                 window.alert('El puntaje de un aspecto tiene formato incorrecto');
                 return;
-            } 
+            }
             for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
                 for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
                     if ($scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == '--') {
                         $("#formEva").removeClass("was-validated");
                         window.alert('El puntaje de un nivel tiene formato incorrecto');
                         return;
-                    }       
+                    }
                 }
             }
         }
@@ -83,7 +84,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
                 for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
                     for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
-                        $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].grado = k + 1;                        
+                        $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].grado = k + 1;
                     }
                 }
             }
@@ -146,7 +147,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 1
-        });        
+        });
     }
 
     $scope.btnAspectoConPuntaje = function () {
@@ -170,7 +171,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             listaIndicadores: [],
             mostrar: true,
             tipoClasificacion: 3
-        });        
+        });
     }
 
     $scope.btnAgregarAspecto = function () {
@@ -197,7 +198,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
     }
 
     $scope.btnAgregarIndicador = function (aspecto) {
-        if (aspecto.tipoClasificacion == 1){
+        if (aspecto.tipoClasificacion == 1) {
             aspecto.mostrar = true;
             aspecto.listaIndicadores.push({
                 descripcion: '',
@@ -213,7 +214,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         aspecto.listaIndicadores.splice(pos, 1)
     }
 
-    $scope.btnAgregarNivel = function(indicador) {
+    $scope.btnAgregarNivel = function (indicador) {
         indicador.mostrar = true;
         indicador.listaNiveles.push({
             descripcion: '',
@@ -222,7 +223,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         });
     }
 
-    $scope.btnEliminarNivel = function(i, indicador) {
+    $scope.btnEliminarNivel = function (i, indicador) {
         indicador.listaNiveles.splice(i, 1);
     }
 
@@ -232,15 +233,15 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
         $scope.btnObtenerEval(4);
     }
 
-    $scope.btnEdicion = function() {
+    $scope.btnEdicion = function () {
         $scope.edicion = true;
         $scope.mostrarBtnEditar = false;
-        $scope.mostrarBtns = true;        
+        $scope.mostrarBtns = true;
         $scope.bloqEval = false;
         $("#formEva").removeClass("was-validated");
     }
 
-    function existeOtrasEval(){
+    function existeOtrasEval() {
         var params = {
             idActividad: $scope.actividad.idActividad,
             tipo: 2
@@ -250,7 +251,7 @@ app.controller('RubricaController',function($rootScope, $scope, $location, $cook
             ev[2] = 1;
         })
 
-        if ($scope.actividad.tipo == 'G'){
+        if ($scope.actividad.tipo == 'G') {
             var params = {
                 idActividad: $scope.actividad.idActividad,
                 tipo: 3

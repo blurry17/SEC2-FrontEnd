@@ -1,15 +1,15 @@
 <div>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#!curso">Curso</a></li>
+            <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
             <li class="breadcrumb-item"><a href="#!actividad"> {{actividad.nombre}}</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Grupos</li>
+            <li class="breadcrumb-item active" aria-current="page">Calificaciones</li>
         </ol>
     </nav>
     <br />
 
     <div class="row d-flex align-items-end">
-        <div ng-show="esActIndividual && mostrar" class="form-group col-md-4">
+        <div ng-show="esActIndividual && mostrar && usuario.profesor" class="form-group col-md-4">
             <label style="font-weight: bold">Alumno</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
                 ng-init="idalumno = '0'">
@@ -18,7 +18,7 @@
                 </option>
             </select>
         </div>
-        <div ng-show="!esActIndividual && mostrar" class="form-group col-md-4">
+        <div ng-show="!esActIndividual && mostrar && usuario.profesor" class="form-group col-md-4">
             <label style="font-weight: bold">Grupo</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idgrupo"
                 ng-init="idgrupo = '0'">
@@ -31,15 +31,24 @@
             <label style="font-weight: bold">No asistió</label>
             <input ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox">
         </div>
-        <form method="post" enctype="multipart/form-data">
+        <div class="col-md-12" ng-id="usuario.alumno">
             <div>
-                <label for="file">Choose file to upload</label>
-                <input type="file" id="file" name="file" multiple>
+                <h5>Entregables</h5>
             </div>
-            <div>
-                <button ng-click="btnclick()">Submit</button>
+            <div ng-repeat="arch in archivos">
+                <a href="" ng-click="descargarArchivo(arch)">{{arch.nombreArchivo}}</a>
             </div>
-        </form>
+        </div>
+        <div class="form-group col-md-6 row" ng-if="usuario.alumno">
+            <div class="col-md-6 form-group">
+
+                <label for="file">Elegir archivo(s)</label>
+                <input type="file" class="form-control-file" id="file" name="file" multiple>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-primary" ng-click="btnSubir()"><i class="fas fa-upload"></i>&nbsp;Subir</button>
+            </div>
+        </div>
         <div ng-show="idalumno!='0' || idgrupo!='0'" class="form-group col-md-3">
             <div style="float: right">
                 <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
@@ -219,6 +228,11 @@
         <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita"
             ng-click="btnGuardarPuntaje()">Guardar</button>
     </div>
+    <script>
+        $(document).ready(function () {
+            bsCustomFileInput.init()
+        })
+    </script>
 </div>
 </div>
 <div class="modal fade modal-sm modal-dialog" id="mdCompletar" tabindex="-1" role="dialog" data-backdrop="static"
@@ -239,3 +253,4 @@
         </div>
     </div>
 </div>
+<iframe id="my_iframe" style="display:none;"></iframe>
