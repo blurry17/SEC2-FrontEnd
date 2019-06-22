@@ -31,7 +31,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     //sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
         if ($scope.actividad.tipo == "I") {
-            if ($scope.idalumno == '0') return;
+            console.dir($scope.usuario);
+            if($scope.usuario.alumno==1){
+                $scope.idalumno=$scope.usuario.idUser;
+                console.dir($scope.idalumno);
+            }
+            else if ($scope.idalumno == '0') return;
             $scope.editar = false;
             mostrarEntregables($scope.idalumno);
             var params = {
@@ -41,9 +46,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 idCalificador: $scope.usuario.idUser
             }
             serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
+                console.dir(res.data);
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
-                $scope.flgCalificado = res.data.flgCalificado;
+                $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
                 $scope.falta = res.data.calificacion.flgFalta == 1;
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
@@ -310,7 +316,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     function init() {
         ListarAlumnos();
         ObtenerRubrica();
-        if ($scope.usuario.alumno) mostrarEntregables($scope.usuario.idUser);
+        if ($scope.usuario.alumno) {
+            $scope.ObtenerNotas();
+            mostrarEntregables($scope.usuario.idUser);
+        }
     }
 
     init();
