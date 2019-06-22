@@ -1,7 +1,7 @@
 app.controller('ComentariosController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
     var usuario = $cookies.getObject('usuario');
-    console.dir(usuario);
     $rootScope.lstCursos = $cookies.getObject('cursos');
+    $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject('actividadActual');
     $scope.idActividad = $scope.actividad.idActividad;
     $scope.vistaProfesor = usuario.profesor;
@@ -73,14 +73,14 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
                 if ($scope.envioComentario == false) {
                     serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params2).then(function (res2) {
                         console.dir(res2.data.flgCalificado)
-                        if(!res2.data.flgCalificado){
+                        if (!res2.data.flgCalificado) {
                             $scope.noPuedeComentarAun = true;
                             $scope.mostrarPantallaNoComenta = true;
                         }
                         $scope.mostrarPantallaComenta = true;
-                    })  
+                    })
                 }
-                
+
             }
         })
     }

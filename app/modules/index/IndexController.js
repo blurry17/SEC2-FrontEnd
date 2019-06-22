@@ -20,5 +20,5 @@
         $('.overlay').removeClass('active');
         $cookies.remove('usuario');
         $location.path('/')
-    }
+    }   
 })
