@@ -109,30 +109,13 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
         console.dir('este es el yeison');
         console.dir(params);
-<<<<<<< HEAD
-        serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
-            $scope.rubricaCoauto=res.data;
-=======
         serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion', params).then(function (res) {
->>>>>>> 893610606e07da72a5e5db62389aa94a2bc5b56f
             console.dir('LA RES');
             console.dir(res.data);
             
         })
     }
 
-<<<<<<< HEAD
-    $scope.btnGuardarCo=function(){
-        let params={
-            idActividad:$scope.actividad.idActividad,
-            idAlumno:$scope.idalumno,
-            idCalificador:$scope.usuario.idUser,
-            nota:0,
-            idRubrica:$scope.idRub,
-            flgFalta:0,
-            listaNotaAspectos:$scope.rubricaCoauto.listaNotaAspectos,
-            flgCompleto:0,
-=======
     $scope.btnGuardarCo = function () {
         let params = {
             idActividad: $scope.actividad.idActividad,
@@ -142,7 +125,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             flgFalta: 0,
             listaNotaAspectos: $scope.rubrica.listaAspectos,
             flgCompleto: 0,
->>>>>>> 893610606e07da72a5e5db62389aa94a2bc5b56f
         }
         console.dir('LEEEE ESTO');
         console.dir(params);
