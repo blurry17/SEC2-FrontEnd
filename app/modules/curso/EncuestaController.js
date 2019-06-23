@@ -8,6 +8,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.vistaAlumno =$scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
+    $scope.idRub=0;
     //console.dir($scope.usuario );
 
     /**
@@ -56,6 +57,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 $scope.rubricaCoauto = $scope.rubrica;
                 
             }
+            console.dir('Esta es la rubricaCoAuto');
             console.dir(res);
         })
     }
@@ -72,6 +74,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 return;
             }
             $scope.rubrica = res.data;
+            $scope.idRub=res.data.idRubrica;
+            console.dir('Leer la rubricaa');
             console.dir($scope.rubrica);
             if(tipo == 2){
                 $scope.rubricaAuto = $scope.rubrica;
@@ -106,8 +110,10 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         console.dir('este es el yeison');
         console.dir(params);
         serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
+            $scope.rubricaCoauto=res.data;
             console.dir('LA RES');
             console.dir(res.data);
+            
         })
     }
 
@@ -117,8 +123,9 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idAlumno:$scope.idalumno,
             idCalificador:$scope.usuario.idUser,
             nota:0,
+            idRubrica:$scope.idRub,
             flgFalta:0,
-            listaNotaAspectos:$scope.rubrica.listaAspectos,
+            listaNotaAspectos:$scope.rubricaCoauto.listaNotaAspectos,
             flgCompleto:0,
         }
         console.dir('LEEEE ESTO');
