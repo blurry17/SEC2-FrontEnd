@@ -37,7 +37,7 @@
 
         <div class="dropdown">
           <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
-            style="font-size: 100%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp;<i class="fas fa-user-circle"
+            style="font-size: 100%; cursor: pointer; margin: 0px">{{username}}&nbsp;<i class="fas fa-user-circle"
               style="font-size: 150%"></i></label>
           <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbsp;Mi Perfil</a>
@@ -66,10 +66,9 @@
             <a data-target="#cargamenus" data-toggle="collapse" aria-expanded="false"
               class="dropdown-toggle menu-item"><i class="fas fa-file-excel"></i>&nbsp;Carga Masiva</a>
             <ul class="collapse list-unstyled" id="cargamenus">
-              <li><a class="submenu-item">Alumnos por horario</a></li>
-              <li><a class="submenu-item">Cursos</a></li>
-              <li><a class="submenu-item">Profesores</a></li>
-              <li><a class="submenu-item">Jefes de práctica</a></li>
+              <!-- <li><a class="submenu-item">Alumnos por horario</a></li> -->
+              <li ng-click="btnCargaCursos()"><a class="submenu-item">Cursos</a></li>
+              <li ng-click="btnCargaProfes()"><a class="submenu-item">Profesores/JP</a></li>
             </ul>
           </li>
           <li class="menu-item" ng-show="usuario.superUsuario" ng-click="btnMant()">
@@ -146,6 +145,32 @@
       }
     });
   </script>
+
+  <div class="modal fade" id="mdCargaCursos" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de cursos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            Seleccione un archivo excel para realizar la carga masiva.
+          </div>
+          <div>
+            <input type="file" class="form-control-file" id="file" name="file">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 
 </html>

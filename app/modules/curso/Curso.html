@@ -1,5 +1,6 @@
 <div>
     <h3 style="font-weight: bold">{{curso.codigo + ' ' + curso.nombre + ' [H' + curso.horario + ']'}}</h3>
+    <button class="btn btn-info" ng-if="usuario.profesor"><i class="fas fa-file-excel"></i>&nbsp;Cargar alumnos</button>
     <div class="line"></div>
     <h4>Actividades</h4>
 
@@ -383,25 +384,24 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade modal-md modal-dialog" id="mdVerAgrupaciones" tabindex="-1" role="dialog"
-        data-backdrop="static" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Ver grupo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <label ng-repeat="a4 in lstVerAgrupacion.lstAlumnos">{{a4.codigoPucp}}</label>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                </div>
+</div>
+<div class="modal fade modal-md modal-dialog" id="mdVerAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label ng-repeat="a4 in lstVerAgrupacion.lstAlumnos">{{a4.codigoPucp}}</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="mdAdvertenciaAgrupaciones"></div>
+</div>
+<div class="modal fade" id="mdAdvertenciaAgrupaciones"></div>

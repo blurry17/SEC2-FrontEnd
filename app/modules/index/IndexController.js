@@ -27,4 +27,9 @@
         $cookies.remove('usuario');
         $location.path('/')
     }
+
+    $scope.btnCargaCursos = function () {
+        $('#mdCargaCursos').appendTo("body").modal('show');
+    }
+
 })

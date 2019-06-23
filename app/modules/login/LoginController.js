@@ -22,6 +22,7 @@
         return;
       }
       var usuario = res.data;
+      $rootScope.username = res.data.nombre
       $cookies.putObject('usuario', usuario);
       $scope.showAlert2 = false;
       location.href = indexURL + 'main';

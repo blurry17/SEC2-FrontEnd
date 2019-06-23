@@ -1,4 +1,5 @@
 app.controller('MantenimientoController', function ($rootScope, $cookies, serviceCRUD, $scope, $location) {
+    $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.semActual = '2019-1';
     $scope.especialidades = [
         {
@@ -30,7 +31,26 @@ app.controller('MantenimientoController', function ($rootScope, $cookies, servic
         }
     }
 
-    $scope.changeCheck = function () {
+    $scope.changeCheck = function (checked) {
+        if (!checked) {
+            $scope.checkeados = false;
+        } else {
+            for (let i = 0; i < $scope.especialidades.length; i++) {
+                if (!$scope.especialidades[i].checked) return;
+            }
+            $scope.checkeados = true;
+        }
+    }
 
+    $scope.btnCrearSem = function () {
+        $('#mdCrearSemestre').appendTo("body").modal('show');
+    }
+
+    $scope.btnActSem = function () {
+        $('#mdActivarSemestre').appendTo("body").modal('show');
+    }
+
+    $scope.btnTermSem = function () {
+        $('#mdTerminarSemestre').appendTo("body").modal('show');
     }
 })
