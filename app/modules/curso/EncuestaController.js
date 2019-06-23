@@ -178,8 +178,9 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
     //Como alumno: Registrar Horas
     $scope.btnRegistrarHoras = function (){
-
+        console.dir('regEsfuerzoHoras cuando presiono el boton')
         console.dir($scope.regEsfuerzoHoras)
+        
         serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
             console.dir(res)
         })
@@ -189,12 +190,18 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     function obtenerRegistroHorasXAlumno(){
         var params = {
             tipo: 1,
-            idActividadUHorario: $scope.curso.idhorario,
-            idAlumno: 1
+            idActividadUHorario: $scope.actividad.idActividad,
+            idAlumno: $scope.usuario.idUser
         }
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
             console.dir('viendo el registro de horas de un alumno')
             console.dir(res)
+            $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+            $scope.regEsfuerzoHoras.tipo = res.data.tipo;
+            $scope.regEsfuerzoHoras.idUsuarioCreador = res.data.idUsuarioCreador
+            $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+            console.dir('este es el regesfuerzohoras cuando lo llamo')
+            console.dir($scope.regEsfuerzoHoras)
         })
     }
 
@@ -263,9 +270,13 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     function init() {
+        if($scope.esProfesor){
+            obtenerRegistroHorasSoloCategorias();
+        }
         $scope.listarGrupo();
-        console.dir('liste grupos gaa')
-        obtenerRegistroHorasSoloCategorias();
+        
+        
+        obtenerRegistroHorasXAlumno();
     }
 
     init();
