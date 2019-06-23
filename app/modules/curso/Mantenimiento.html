@@ -1,0 +1,141 @@
+<div class="accordionb " id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Mantenimiento de semestres
+                </button>
+            </h2>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body row">
+                <div class="col-md-12">
+                    <h3>Semestre actual: {{semActual}}</h3>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btm-sm btn-success" ng-click="btnCrearSem()"><i
+                            class="fas fa-calendar-plus"></i>&nbsp;Crear
+                        semestre</button>
+                    <button class="btn btm-sm btn-primary" ng-click="btnActSem()"><i
+                            class="fas fa-calendar-check"></i>&nbsp;Activar
+                        semestre</button>
+                    <button class="btn btm-sm btn-danger" ng-click="btnTermSem()"><i
+                            class="fas fa-calendar-times"></i>&nbsp;Terminar
+                        semestre</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2>
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Mantenimiento de especialidades por semestre
+                </button>
+            </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body row">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Especialidad</th>
+                                <th scope="col">
+                                    <input type="checkbox" ng-model="checkeados" ng-change="changeCheckAll()">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="esp in especialidades">
+                                <td>{{esp.nombre}}</td>
+                                <td><input type="checkbox" ng-model="esp.checked" ng-change="changeCheck(esp.checked)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Agregar al semestre actual</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdCrearSemestre" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Crear semestre</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formAct" name="formAct" class="needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" maxlength="20" required>
+                            <div class="invalid-feedback">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="">Crear</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdActivarSemestre" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Activar semestre</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <label>Semestre</label>
+                    <select class="custom-select">
+                        <option value="0">Seleccione</option>
+                        <option ng-value="" ng-repeat="sem in semestres">{{sem}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="">Activar</button>
+                <button class="btn btn-default" type="submit" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdTerminarSemestre" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Terminar semestre actual</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    ¿Está seguro que desea terminar el semestre actual?
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="">Confirmar</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

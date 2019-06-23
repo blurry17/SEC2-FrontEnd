@@ -1,5 +1,6 @@
 app.controller('CursoController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
+    $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
@@ -9,7 +10,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.showAlert1 = false;
     $scope.showAlert2 = false;
     $scope.lstGrupos = [];
-    $scope.lstVerAgrupacion= [];
+    $scope.lstVerAgrupacion = [];
     $scope.regAct = {
         nombre: '',
         descripcion: '',
@@ -26,7 +27,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         minFin: '00'
     }
     $scope.lstNuevoGrupo = [];
-    
+
     var idActEdit = null;
 
     function ListarActividades() {
@@ -55,21 +56,21 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         }) */
     }
 
-    function hayAgrupaciones(){
+    function hayAgrupaciones() {
         var params = {
-            idHorario : $scope.curso.idhorario
+            idHorario: $scope.curso.idhorario
         }
-        serviceCRUD.TypePost('existencia/agrupaciones', params).then(function(res){
+        serviceCRUD.TypePost('existencia/agrupaciones', params).then(function (res) {
             console.dir(res);
-            if (res.data.message == false){
+            if (res.data.message == false) {
                 $scope.existeAgrupaciones = false;
-                $scope.lstAgrupaciones= [];
-                
-            }else{
+                $scope.lstAgrupaciones = [];
+
+            } else {
                 $scope.existeAgrupaciones = true;
-                
-                serviceCRUD.TypePost('grupo/listar-general',params).then(function(res2){
-                    $scope.lstAgrupaciones =res2.data;
+
+                serviceCRUD.TypePost('grupo/listar-general', params).then(function (res2) {
+                    $scope.lstAgrupaciones = res2.data;
                     //console.dir(res2);
                     //console.dir($scope.lstAgrupaciones);
                 })
@@ -98,7 +99,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     $scope.btnAgregarAgrupacion = function () {
-        var params = { idHorario:  $scope.curso.idhorario }
+        var params = { idHorario: $scope.curso.idhorario }
         serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
             $scope.lstAluSinGrupos = res.data;
         })
@@ -238,7 +239,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.btnCrearGrupos = function () {
         $scope.creacionGrupos = true;
     }
-    $scope.btnNocrearGrupos = function(){
+    $scope.btnNocrearGrupos = function () {
         $scope.creacionGrupos = false;
         //$scope.lstAluSinGrupos = [];
         $scope.lstNuevoGrupo = [];
@@ -265,7 +266,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         }
         $scope.showAlert1 = false;
 
-        if ($scope.lstNuevoGrupo.length == 0 || $scope.lstNuevoGrupo.length==1 ){
+        if ($scope.lstNuevoGrupo.length == 0 || $scope.lstNuevoGrupo.length == 1) {
             $scope.showAlert2 = true;
             return;
         }
@@ -288,7 +289,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $scope.lstGrupos.splice(i, 1);
     }
 
-    $scope.verGrupo = function(grupo) {
+    $scope.verGrupo = function (grupo) {
         $scope.lstVerAgrupacion = grupo;
         console.dir($scope.lstVerAgrupacion);
         $('#mdVerAgrupaciones').appendTo("body").modal('show');
@@ -300,8 +301,8 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             grupos: $scope.lstGrupos
         }
         //console.dir(params);
-        
-        serviceCRUD.TypePost('grupo/crear-general', params).then(function(res){
+
+        serviceCRUD.TypePost('grupo/crear-general', params).then(function (res) {
             console.dir(res.data);
         })
         $("#mdAgregarAgrupacion").modal('hide');
@@ -325,19 +326,19 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     init();
 
-    $scope.btnMostrarAgrupaciones = function(){
-        var params ={
+    $scope.btnMostrarAgrupaciones = function () {
+        var params = {
             idHorario: $scope.curso.idhorario
         }
-        
-        serviceCRUD.TypePost('grupo/listar-general', params).then(function(res){
+
+        serviceCRUD.TypePost('grupo/listar-general', params).then(function (res) {
             console.dir(res.data);
-            if (res.length == null){
-                
-            }else{
-               
+            if (res.length == null) {
+
+            } else {
+
             }
-        }) 
+        })
 
     }
 })
