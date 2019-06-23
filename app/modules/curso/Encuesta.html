@@ -187,29 +187,89 @@
 
   <!-- Vista de profesor -->
   <div ng-show="esProfesor">
-    <div class="row">
-      <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Crear Registro de
-          Esfuerzo</b></label>
-      <button type="button" class="btn btn-success" ng-click="btnCrearRegistroHoras()"><i
-          class="fas fa-plus"></i>&nbsp;Guardar Registro</button>
-    </div>
-    <div class="col-md-12 form-group">
-      <button type="button" class="btn btn-success" ng-click="btnAgregarCategoria()"><i
-          class="fas fa-plus"></i>&nbsp;</button>
+    <!-- Si existe el registro de horas del alumno, mostrarlo -->
+        <div ng-show="hayRegHorasActividad">
+            <div class="row">
+                <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de horas del alumno</b></label>
+              </div>
+              <div class="form-group col-md-4">
+                  <label style="font-weight: bold">Alumno</label>
+                  <select ng-change="obtenerRegistroHorasXAlumno()" class="form-control custom-select" ng-model="idalumno"
+                      ng-init="idalumno = '0'">
+                      <option value="0">Seleccione</option>
+                      <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.idAlumno +" - "+ item.nombre}}
+                      </option>
+                  </select>
+              </div>
+          
+              <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                  <div class="form-row">
+                    <div class="form-group col-md-5 col-lg-4">
+                      <label class="negrita">Categorías</label>
+                      <input maxlength="50" class="form-control" ng-model="categoria.descripcion" />
+                    </div>
+                  </div>
+                  <div ng-repeat="respuesta in categoria.listaRespuestas">
+                    <div class="form-row">
+                      <div class="form-group col-md-2" style="width: 70px">
+                        <input maxlength="50" class="form-control" ng-model="respuesta.descripcion" />
+                      </div>
+                      <div class="form-group col-md-2">
+            
+                        <label class="negrita">Horas Estimadas</label>
+                        <input ng-model="respuesta.horasPlanificadas" required type="text" class="form-control" style="width: 70px"
+                          maxlength="2"
+                          onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                        <div class="invalid-feedback">
+                          Ingrese un puntaje.
+                        </div>
+                      </div>
+                      <div class="form-group col-md-1">
+                        <label class="negrita">Horas Real</label>
+                        <input ng-model="respuesta.horasReales" required type="text" class="form-control" style="width: 70px"
+                          maxlength="2"
+                          onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                        <div class="invalid-feedback">
+                          Ingrese un puntaje.
+                        </div>
+                      </div>
+                      <div class=" form-group btn-group d-flex align-items-end">
+                          <button type="button" class="btn btn-danger" title="Quitar Respuesta"
+                            ng-click="btnQuitarRespuesta(categoria, respuesta)"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+            
+                  </div>
+            
+                </div>
+        </div>
+    <!-- Si no existe el registro de horas de la actividad, el profesor crea las categorias -->
+    <div ng-show="!hayRegHorasActividad">
+        <div class="row">
+            <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Crear Registro de
+                Esfuerzo</b></label>
+            <button type="button" class="btn btn-success" ng-click="btnCrearRegistroHoras()"><i
+                class="fas fa-plus"></i>&nbsp;Guardar Registro</button>
+          </div>
+          <div class="col-md-12 form-group">
+            <button type="button" class="btn btn-success" ng-click="btnAgregarCategoria()"><i
+                class="fas fa-plus"></i>&nbsp;</button>
+          </div>
+      
+          <div ng-repeat="categoria in regEsfuerzo.listaCategorias">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label class="negrita">Descripción del esfuerzo</label>
+                <input maxlength="50" class="form-control" ng-model="categoria.descripcion" />
+              </div>
+              <div class=" form-group btn-group d-flex align-items-end">
+                <button type="button" class="btn btn-danger" title="Quitar Categoría"
+                  ng-click="btnQuitarCategoria(categoria)"><i class="fas fa-times"></i></button>
+              </div>
+            </div>
+          </div>
     </div>
 
-    <div ng-repeat="categoria in regEsfuerzo.listaCategorias">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label class="negrita">Descripción del esfuerzo</label>
-          <input maxlength="50" class="form-control" ng-model="categoria.descripcion" />
-        </div>
-        <div class=" form-group btn-group d-flex align-items-end">
-          <button type="button" class="btn btn-danger" title="Quitar Categoría"
-            ng-click="btnQuitarCategoria(categoria)"><i class="fas fa-times"></i></button>
-        </div>
-      </div>
-    </div>
   </div>
 
 
