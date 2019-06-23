@@ -1,5 +1,6 @@
 app.controller('MantenimientoController', function ($rootScope, $cookies, serviceCRUD, $scope, $location) {
     $rootScope.lstCursos = $cookies.getObject('cursos');
+    $rootScope.user = $scope.usuario;
     $scope.semActual = '2019-1';
     $scope.especialidades = [
         {
