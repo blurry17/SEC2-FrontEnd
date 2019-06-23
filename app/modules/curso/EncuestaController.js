@@ -1,13 +1,31 @@
 app.controller('EncuestaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
     $scope.usuario = $cookies.getObject('usuario');
-
+    $scope.esProfesor = $scope.usuario.profesor;
     $scope.idalumno=null;
     if ($scope.usuario == undefined) $location.path('/');
+    console.dir($scope.usuario)
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
+    console.dir($scope.curso)
     $scope.vistaAlumno =$scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
+    $scope.idActividadUHorario = null;
+    //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
+    $scope.regEsfuerzo = {
+        tipo: 1,
+        idActividadUHorario: $scope.actividad.idActividad,
+        idUsuarioCreador: $scope.usuario.idUser,
+        listaCategorias: []
+    };
+
+    $scope.regEsfuerzoHoras = {
+        idRegistroEsfuerzo: $scope.regEsfuerzo.idRegistroEsfuerzo,
+        idAlumno: $scope.usuario.idUser,
+        listaCategorias: $scope.regEsfuerzo.listaCategorias
+    }
+
+
     //console.dir($scope.usuario );
 
     /**
@@ -149,12 +167,105 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         
     }
     
-    $scope.btnAgregarEsfuerzo = function () {
+    //Como profesor: Crear Registro Horas
+    $scope.btnCrearRegistroHoras = function () {
+        console.dir($scope.regEsfuerzo)
+        console.dir(JSON.stringify($scope.regEsfuerzo))
+        serviceCRUD.TypePost('registro_horas/crear_registro_horas', $scope.regEsfuerzo).then(function (res) {
+            console.dir(res)
+        })
+    }
+
+    //Como alumno: Registrar Horas
+    $scope.btnRegistrarHoras = function (){
+
+        console.dir($scope.regEsfuerzoHoras)
+        serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
+            console.dir(res)
+        })
+    }
+
+    //Como profesor y alumno: Obtener registro horas x alumno
+    function obtenerRegistroHorasXAlumno(){
+        var params = {
+            tipo: 1,
+            idActividadUHorario: $scope.curso.idhorario,
+            idAlumno: 1
+        }
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
+            console.dir('viendo el registro de horas de un alumno')
+            console.dir(res)
+        })
+    }
+
+    //Como profesor y alumno: Obtener registro horas (solo categorias)
+    function obtenerRegistroHorasSoloCategorias(){
+        var params = {
+            tipo: 1,
+            idActividadUHorario: $scope.actividad.idActividad
+        }
+        console.dir('params')
+        console.dir(params)
+        console.dir(JSON.stringify(params))
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
+            if (res.data.idRegistroEsfuerzo == null){
+                console.dir('no se encontro el registro de esfuerzo')
+                return;
+            } 
+            else{
+                console.dir('viendo registro de horas solo categoria')
+                console.dir(res)
+                //Asigno el objeto registro horas categoria al registro horas con respuestas
+                $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+                $scope.regEsfuerzoHorasidAlumno = $scope.usuario.idUser;
+                $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+                for (let i = 0; i < $scope.regEsfuerzoHoras.listaCategorias.length; i++) {
+                    $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas = []
+                }
+                console.dir('regEsfuerzoHoras')
+                console.dir($scope.regEsfuerzoHoras)
+            }
+            
+        })
+    }
+
+    //Como profesor: Agregar una categoria
+    $scope.btnAgregarCategoria = function(){
+        $scope.regEsfuerzo.listaCategorias.push({
+            descripcion: ''
+        });
+    }
+
+    //Como profesor: Quitar una categoria
+    $scope.btnQuitarCategoria = function(categoria){
+        var pos = $scope.regEsfuerzo.listaCategorias.indexOf(categoria)
+        $scope.regEsfuerzo.listaCategorias.splice(pos, 1)
+    }
+
+    //Como alumno puedo agregar una respuesta a una categoria
+    $scope.btnAgregarRespuesta = function(categoria){
+        var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
+        console.dir(pos)
         
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.push({
+            descripcion: '',
+            horasPlanificadas: null,
+            horasReales: null
+        })
+        console.dir($scope.regEsfuerzoHoras)
+    }
+
+    //Como alumno: Quitar una respuesta de una categoria
+    $scope.btnQuitarRespuesta = function(categoria,respuesta){
+        var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
+        var pos2 = $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.indexOf(respuesta);
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.splice(pos2,1)
     }
 
     function init() {
         $scope.listarGrupo();
+        console.dir('liste grupos gaa')
+        obtenerRegistroHorasSoloCategorias();
     }
 
     init();
