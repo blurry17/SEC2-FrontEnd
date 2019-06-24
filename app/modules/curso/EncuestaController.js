@@ -27,6 +27,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.hayRegHorasActividad = false;
+    $scope.hayRegCategoriasActividad = false;
 
 
     //console.dir($scope.usuario );
@@ -218,7 +219,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             $scope.regEsfuerzoHoras.tipo = res.data.tipo;
             $scope.regEsfuerzoHoras.idAlumno = $scope.usuario.idUser
             $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
-            $scope.hayRegHorasAlumno = true;
+            $scope.hayRegHorasActividad = true;
         })
     }
 
@@ -241,6 +242,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 for (let i = 0; i < $scope.regEsfuerzoHoras.listaCategorias.length; i++) {
                     $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas = []
                 }
+                $scope.hayRegCategoriasActividad = true;
             }
             
         })
