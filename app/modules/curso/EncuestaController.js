@@ -9,18 +9,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.listaAl = null;
     $scope.esActGrupal = false;
     $scope.idRub=0;
-    //console.dir($scope.usuario );
-
-    /**
-     $scope.btnGuardarEncuesta = function () {
-        $("#formEva").addClass("was-validated");
-        
-        serviceCRUD.TypePost('actividad/', $scope.rubrica).then(function (response) {
-            
-            window.alert("Se guardaron los cambios!")
-        })
-    }
-     */
+    //console.dir($scope.usuario);
 
     if ($scope.actividad.tipo == "G") {
         $scope.esActGrupal = true;
@@ -29,12 +18,12 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.btnListarGrupo = function () {
-        console.dir("hola");
+        //console.dir("hola");
         var params = {
             idActividad: $scope.actividad.idActividad,
             idUsuario: $scope.usuario.idUser
         }
-        console.dir(params);
+        //console.dir(params);
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).them(function (res) {
             $scope.listaAl = res.data.lista;
         })
@@ -57,8 +46,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 $scope.rubricaCoauto = $scope.rubrica;
 
             }
-            console.dir('Esta es la rubricaCoAuto');
-            console.dir(res);
+            //console.dir('Esta es la rubricaCoAuto');
+            //console.dir(res);
         })
     }
 
@@ -75,8 +64,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             }
             $scope.rubrica = res.data;
             $scope.idRub=res.data.idRubrica;
-            console.dir('Leer la rubricaa');
-            console.dir($scope.rubrica);
+            //console.dir('Leer la rubricaa');
+            //console.dir($scope.rubrica);
             if (tipo == 2) {
                 $scope.rubricaAuto = $scope.rubrica;
                 $scope.rubricaCoauto = null;
@@ -94,8 +83,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
         }
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).then(function (res) {
-            console.dir("ESTOOOOO")
-            console.dir(res.data);
+            //console.dir("ESTOOOOO")
+            //console.dir(res.data);
             $scope.listaAl = res.data;
         })
     }
@@ -107,11 +96,11 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idCalificador: $scope.usuario.idUser,
 
         }
-        console.dir('este es el yeison');
-        console.dir(params);
+        //console.dir('este es el yeison');
+        //console.dir(params);
         serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion', params).then(function (res) {
-            console.dir('LA RES');
-            console.dir(res.data);
+            //console.dir('LA RES');
+            //console.dir(res.data);
             
         })
     }
@@ -126,35 +115,28 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             listaNotaAspectos: $scope.rubrica.listaAspectos,
             flgCompleto: 0,
         }
-        console.dir('LEEEE ESTO');
-        console.dir(params);
+        //console.dir('LEEEE ESTO');
+        //console.dir(params);
         serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion', params).then(function (res) {
 
         })
     }
 
-    $scope.btnGuardarEvaluacion = function (tipo) {
-        console.dir("guardar")
+    $scope.btnGuardarEvaluacion = function () {
+        var r = window.confirm("Esta seguro que quiere guardar la autoevaluación");
         let params = {
             idActividad: $scope.actividad.idActividad,
-            idAlumno: $scope.usuario.alumno,
-            nota: 12,
-            idRubrica: 1,
+            idAlumno: $scope.idalumno,
+            idCalificador: $scope.usuario.idUser,
+            nota: 0,
             flgFalta: 0,
-            listaAspectos: [],
-            flgCompleto: 0
-
+            listaNotaAspectos: $scope.rubrica.listaAspectos,
+            flgCompleto: 0,
         }
-
+        console.dir(params);
         serviceCRUD.TypePost('actividad/calificar_autoevaluacion', params).then(function (res) {
-
-            //$scope.listaAl=res.data;
             console.dir(res.data);
         })
-
-    }
-
-    $scope.btnAgregarEsfuerzo = function () {
 
     }
 

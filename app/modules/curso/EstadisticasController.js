@@ -42,17 +42,12 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaNotas() {
     serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
-      console.dir("VER ACA");
-      console.dir(res.data);
       $scope.listaN = res.data.listaNotas;
       $scope.listaFrec = res.data.notaFrecuencia;
 
       $scope.cantidadN = res.data.cantidadNotas;
       $scope.cantidadF = res.data.cantidadFalta;
       $scope.cantidadT = res.data.cantidadTotal;
-      //console.dir($scope.cantidadF);
-      console.dir("CANTIDAD FALTAS:");
-      console.dir(res.data.cantidadFalta);
     })
 
   }

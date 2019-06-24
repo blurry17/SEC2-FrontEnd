@@ -60,6 +60,11 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'MantenimientoController'
         })
 
+        .when('/ListarNotas', {
+            templateUrl: 'app/modules/curso/ListarNotas.html?v=' + Date.now(),
+            controller: 'ListarNotasController'
+        })
+
         .otherwise({
             redirectTo: '/main'
         });

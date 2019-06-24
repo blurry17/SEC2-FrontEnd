@@ -60,6 +60,10 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
         $location.path("rubrica")
     }
 
+    $scope.btnListarNotas = function () {
+        $location.path("ListarNotas")
+    }
+
     $scope.btnEstadisticas = function () {
         $location.path("estadisticas")
     }

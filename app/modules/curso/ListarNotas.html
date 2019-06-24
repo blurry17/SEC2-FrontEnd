@@ -1,0 +1,37 @@
+<div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item"><a href="#!actividad">{{actividad.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Notas</li>
+      </ol>
+    </nav>
+    <br />
+  
+    <div>
+      <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>Notas de todos los alumnos</b></label>
+    </div>
+
+    <div>
+            <div style="float: left" class="row form-group col-md-10" class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr class="table-info">
+                      <th style="width: 10%">Código</th>
+                      <th style="width: 80%">Nombre del alumno</th>
+                      <th style="width: 10%">Nota</th>
+                    </tr>
+                  </thead>
+                          <tbody>
+                              <tr ng-repeat="list in listaN" style="width: 100%">
+                                  <td>{{list.codigo}}</td>
+                                  <td>{{list.nombre}}</td>
+                                  <td>{{list.nota}}</td>
+                                </tr>
+                          </tbody>
+                  </table>
+            </div>    
+          </div>        
+
+
+   </div> 
