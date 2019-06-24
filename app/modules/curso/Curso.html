@@ -20,6 +20,24 @@
             <button class="btn btn-success" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
                 actividad</button>
         </div>
+        <div ng-show="usuario.profesor && !hayRegHorasHorario" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+            <button class="btn btn-info" ng-click="btnCrearRegistroHoras()"><i class="fas fa-plus"></i>&nbspCrear
+                Registro de Horas</button>
+        </div>
+        <div ng-show="usuario.profesor && hayRegHorasHorario" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+            <button class="btn btn-info" ng-click="btnVerRegistroHoras()"><i class="fas fa-plus"></i>&nbspVer Registro
+                de Horas</button>
+        </div>
+        <div ng-show="!usuario.profesor && hayRegHorasHorario" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+            <button class="btn btn-info" ng-click="btnRegistrarHoras()"><i class="fas fa-plus"></i>&nbspIngresar
+                Registro de Horas</button>
+        </div>
+        <div ng-show="!usuario.profesor && regHorasIngresado" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-info" ng-click="btnVerRegistroHorasAlumno()"><i class="fas fa-plus"></i>&nbspVer Registro
+                    de Horas</button>
+        </div>
+
+
     </div>
 
     <div class="row" style="padding-top: 15px">
@@ -403,5 +421,290 @@
             </div>
         </div>
     </div>
+
+    <!-- REGISTRO DE CATEGORIAS COMO PROFESOR -->
+    <div class="modal fade modal-md modal-dialog" id="mdRegistroCategorias" tabindex="-1" role="dialog"
+        data-backdrop="static" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear Registro de Horas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert3">
+                        El nombre de la categoría es un campo obligatorio
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert4">
+                        Debe ingresar por lo menos una categoría
+                    </div>
+                    <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
+                        <div class="col-md-12 form-group">
+                            <button type="button" class="btn btn-success" ng-click="btnAgregarCategoria()"><i
+                                    class="fas fa-plus"></i>&nbsp;</button>
+                        </div>
+                        <div ng-repeat="categoria in regEsfuerzo.listaCategorias">
+                            <div class="form-row">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label class="negrita">Categoría</label>
+                                        <input maxlength="50" class="form-control" ng-model="categoria.descripcion" />
+                                        <div class="invalid-feedback">
+                                            Este campo es requerido.
+                                        </div>
+                                    </div>
+                                    <div class=" form-group btn-group d-flex align-items-end">
+                                        <button type="button" class="btn btn-danger" title="Quitar Categoría"
+                                            ng-click="btnQuitarCategoria(categoria)"><i
+                                                class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit" ng-click="btnGuardarRegHoras()"
+                        ng-disabled="busy">Crear</button>
+                    <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- VER REGISTRO DE HORAS COMO PROFESOR -->
+    <div class="modal fade modal-md modal-dialog" id="mdVerRegHoras" tabindex="-1" role="dialog" data-backdrop="static"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ver Registro de Horas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group col-md-12">
+                        <label style="font-weight: bold">Alumno</label>
+                        <select ng-change="obtenerRegistroHorasXAlumno()" class="form-control custom-select"
+                            ng-model="idalumno" ng-init="idalumno = '0'">
+                            <option value="0">Seleccione</option>
+                            <option ng-repeat="item in listaAl" ng-value="item.idUsuario">
+                                {{item.idUsuario +" - "+ item.nombre + " " + item.apellidoPaterno}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
+                        <div class="col-md-12 form-group">
+                        </div>
+                        <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                            <div class="form-row">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label class="negrita">Categoría</label>
+                                        <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                            ng-model="categoria.descripcion" />
+                                        <div class="invalid-feedback">
+                                            Este campo es requerido.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-repeat="respuesta in categoria.listaRespuestas">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-4" style="width: 70px">
+                                        <label class="negrita">Respuesta</label>
+                                        <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                            ng-model="respuesta.descripcion" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="negrita">H. Estim.</label>
+                                        <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasPlanificadas"
+                                            required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                        <div class="invalid-feedback">
+                                            Ingrese un puntaje.
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="negrita">H. Reales</label>
+                                        <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasReales"
+                                            required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                        <div class="invalid-feedback">
+                                            Ingrese un puntaje.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default " data-dismiss="modal">Salir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- REGISTRO DE HORAS COMO ALUMNO -->
+    <div class="modal fade modal-md modal-dialog" id="mdRegHoras" tabindex="-1" role="dialog" data-backdrop="static"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Horas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert5">
+                            Debe ingresar por lo menos una respuesta a una categoría
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert6">
+                            El campo Respuesta es obligatorio
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert7">
+                            El campo Horas Estimadas es obligatorio
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="showAlert8">
+                            El campo Horas Reales es obligatorio
+                        </div>
+                    <form id="formActRegHorasAlumno" name="formActRegHorasAlumno" class="needs-validation" novalidate>
+
+                        <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                            <div class="col-md-12 form-group">
+                                <button type="button" class="btn btn-success"
+                                    ng-click="btnAgregarRespuesta(categoria)"><i class="fas fa-plus"></i>&nbsp;</button>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label class="negrita">Categoría</label>
+                                        <input maxlength="50" class="form-control" ng-model="categoria.descripcion" />
+                                        <div class="invalid-feedback">
+                                            Este campo es requerido.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-repeat="respuesta in categoria.listaRespuestas">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-4" style="width: 70px">
+                                        <label class="negrita">Respuesta</label>
+                                        <input ng-disabled="!hayRegHorasHorario" maxlength="50" class="form-control"
+                                            ng-model="respuesta.descripcion" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="negrita">H. Estim.</label>
+                                        <input ng-disabled="!hayRegHorasHorario" ng-model="respuesta.horasPlanificadas"
+                                            required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                        <div class="invalid-feedback">
+                                            Ingrese un puntaje.
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="negrita">H. Reales</label>
+                                        <input ng-disabled="!hayRegHorasHorario" ng-model="respuesta.horasReales"
+                                            required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                        <div class="invalid-feedback">
+                                            Ingrese un puntaje.
+                                        </div>
+                                    </div>
+                                    <div class=" form-group btn-group d-flex align-items-end">
+                                            <button type="button" class="btn btn-danger" title="Quitar Respuesta"
+                                              ng-click="btnQuitarRespuesta(categoria, respuesta)"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit" ng-click="btnGuardarRegHoras()"
+                        ng-disabled="busy">Guardar</button>
+                    <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- VER REGISTRO DE HORAS COMO ALUMNO -->
+        <div class="modal fade modal-md modal-dialog" id="mdVerRegHorasAlumno" tabindex="-1" role="dialog" data-backdrop="static"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ver Registro de Horas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
+                        <div class="col-md-12 form-group">
+                        </div>
+                        <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                            <div class="form-row">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label class="negrita">Categoría</label>
+                                        <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                            ng-model="categoria.descripcion" />
+                                        <div class="invalid-feedback">
+                                            Este campo es requerido.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-repeat="respuesta in categoria.listaRespuestas">
+                                <div class="form-row col-md-12">
+                                    <div class="form-group col-md-4" style="width: 70px">
+                                        <label class="negrita">Respuesta</label>
+                                        <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                            ng-model="respuesta.descripcion" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="negrita">H. Estim.</label>
+                                        <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasPlanificadas"
+                                            required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                        <div class="invalid-feedback">
+                                            Ingrese un puntaje.
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3 ">
+                                        <label class="negrita">H. Reales</label>
+                                        <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasReales"
+                                            required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                        <div class="invalid-feedback">
+                                            Ingrese un puntaje.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default " data-dismiss="modal">Salir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal fade" id="mdAdvertenciaAgrupaciones"></div>

@@ -3,11 +3,18 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
+    $scope.esProfesor = $scope.usuario.profesor;
     $scope.nuevo = true; // true->crear false->editar
     $scope.hoy = serviceUtil.yyyymmdd(new Date());
     $scope.busy = false;
     $scope.showAlert1 = false;
     $scope.showAlert2 = false;
+    $scope.showAlert3 = false;
+    $scope.showAlert4 = false;
+    $scope.showAlert5 = false;
+    $scope.showAlert6 = false;
+    $scope.showAlert7 = false;
+    $scope.showAlert8 = false;
     $scope.lstGrupos = [];
     $scope.lstVerAgrupacion= [];
     $scope.regAct = {
@@ -26,6 +33,24 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         minFin: '00'
     }
     $scope.lstNuevoGrupo = [];
+
+    //Como me encuentro en el curso, el tipo es 2 y el idActividadUHorario es idhorario
+    $scope.regEsfuerzo = {
+        tipo: 2,
+        idActividadUHorario: $scope.curso.idhorario,
+        idUsuarioCreador: $scope.usuario.idUser,
+        listaCategorias: []
+    };
+
+    $scope.regEsfuerzoHoras = {
+        idRegistroEsfuerzo: $scope.regEsfuerzo.idRegistroEsfuerzo,
+        idAlumno: null,
+        listaCategorias: $scope.regEsfuerzo.listaCategorias
+    }
+
+    $scope.hayRegHorasHorario = false;
+    $scope.regHorasIngresado = false;
+    
     
     var idActEdit = null;
 
@@ -317,10 +342,215 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         return date;
     }
 
+    //Como profesor: Crear Registro Horas
+    $scope.btnGuardarRegHoras = function () {
+        $("#formActRegHoras").addClass("was-validated");
+
+        if ($scope.regEsfuerzo.listaCategorias.length == 0) {
+            $("#formActRegHoras").removeClass("was-validated");
+            $scope.showAlert4 = true;
+            return;
+        }
+        for (let i = 0; i < $scope.regEsfuerzo.listaCategorias.length; i++) {
+            if ($scope.regEsfuerzo.listaCategorias[i].descripcion.length == 0) {
+                $("#formActRegHoras").removeClass("was-validated");
+                $scope.showAlert3 = true;
+                return;
+            }
+        }
+
+        if (formActRegHoras.checkValidity()){
+            console.dir($scope.regEsfuerzo)
+            console.dir(JSON.stringify($scope.regEsfuerzo))
+            serviceCRUD.TypePost('registro_horas/crear_registro_horas', $scope.regEsfuerzo).then(function (res) {
+                console.dir(res)
+            })
+        }
+    }
+
+    //Como alumno: Registrar Horas
+    $scope.btnGuardarRegHoras = function (){
+        console.dir($scope.regEsfuerzoHoras)
+        $("#formActRegHorasAlumno").addClass("was-validated");
+
+        for (let i = 0; i < $scope.regEsfuerzoHoras.listaCategorias.length; i++) {
+            for (let j = 0; j < $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas.length; j++) {
+                if ($scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas.length == 0) {
+                    $("#formActRegHorasAlumno").removeClass("was-validated");
+                    $scope.showAlert5 = true;
+                    return;
+                }
+                if ($scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas[j].descripcion.length == 0) {
+                    $("#formActRegHorasAlumno").removeClass("was-validated");
+                    $scope.showAlert6 = true;
+                    return;
+                }
+                if ($scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas[j].horasPlanificadas == null) {
+                    $("#formActRegHorasAlumno").removeClass("was-validated");
+                    $scope.showAlert7 = true;
+                    return;
+                }
+                if ( $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas[j].horasReales == null) {
+                    $("#formActRegHorasAlumno").removeClass("was-validated");
+                    $scope.showAlert8 = true;
+                    return;
+                }
+            }
+        }
+        console.dir('regEsfuerzoHoras cuando presiono el boton')
+        console.dir($scope.regEsfuerzoHoras)
+
+        if (formActRegHorasAlumno.checkValidity()){
+            serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
+                console.dir(res)
+            })
+        }
+
+
+    }
+
+    //Como profesor y alumno: Obtener registro horas (solo categorias)
+    function obtenerRegistroHorasSoloCategorias(){
+        var params = {
+            tipo: 2,
+            idActividadUHorario: $scope.curso.idhorario
+        }
+        console.dir(params)
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
+            if (res.data.succeed == false){
+                console.dir('no se encontro el registro de esfuerzo')
+                return;
+            } 
+            else{
+                $scope.hayRegHorasHorario = true;
+                console.dir(res.data)
+                //Asigno el objeto registro horas categoria al registro horas con respuestas
+                $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+                $scope.regEsfuerzoHorasidAlumno = $scope.usuario.idUser;
+                $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+                for (let i = 0; i < $scope.regEsfuerzoHoras.listaCategorias.length; i++) {
+                    $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas = []
+                }
+            }
+            
+        })
+    }
+
+        //Como profesor y alumno: Obtener registro horas x alumno
+        $scope.obtenerRegistroHorasXAlumno = function(){
+            var params = {
+                tipo: 2,
+                idActividadUHorario: $scope.curso.idhorario,
+                //esto lo saco del select alumno
+                idAlumno: $scope.idalumno
+            }
+            serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
+                $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+                $scope.regEsfuerzoHoras.tipo = res.data.tipo;
+                $scope.regEsfuerzoHoras.idAlumno = $scope.idalumno
+                $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+                $scope.hayRegHorasHorario = true;
+
+            })
+        }
+
+        function obtenerRegHorasComoAlumno(){
+            var params = {
+                tipo: 2,
+                idActividadUHorario: $scope.curso.idhorario,
+                //esto lo saco del select alumno
+                idAlumno: $scope.usuario.idUser
+            }
+            serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
+                console.dir(res.data)
+                $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+                $scope.regEsfuerzoHoras.tipo = res.data.tipo;
+                $scope.regEsfuerzoHoras.idAlumno = $scope.usuario.idUser
+                $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+    
+                if($scope.regEsfuerzoHoras.listaCategorias[0].listaRespuestas.length != 0)
+                $scope.regHorasIngresado = true;
+            if($scope.regEsfuerzoHoras.listaCategorias[0].listaRespuestas.length == 0)
+                $scope.hayRegHorasHorario = true;
+                
+                console.dir($scope.regEsfuerzoHoras)
+            })
+        }
+
+
+    //Como profesor: Llamar al modal de crear categorias
+    $scope.btnCrearRegistroHoras = function () {
+        $('#mdRegistroCategorias').appendTo("body").modal('show');
+    }
+
+    //Como profesor: Llamar al modal de ver registro horas
+    $scope.btnVerRegistroHoras = function(){
+        $('#mdVerRegHoras').appendTo("body").modal('show');
+    }
+    
+    //Como alumno: Llamar al modal de registrar horas
+    $scope.btnRegistrarHoras = function(){
+        $('#mdRegHoras').appendTo("body").modal('show');
+    }
+
+    $scope.btnVerRegistroHorasAlumno = function(){
+        $('#mdVerRegHorasAlumno').appendTo("body").modal('show');        
+    }
+
+    //Como profesor: Agregar una categoria
+    $scope.btnAgregarCategoria = function(){
+        $scope.showAlert4 = false;
+        $scope.regEsfuerzo.listaCategorias.push({
+            descripcion: ''
+        });
+    }
+
+    //Como profesor: Quitar una categoria
+    $scope.btnQuitarCategoria = function(categoria){
+        var pos = $scope.regEsfuerzo.listaCategorias.indexOf(categoria)
+        $scope.regEsfuerzo.listaCategorias.splice(pos, 1)
+    }
+
+    //Como alumno puedo agregar una respuesta a una categoria
+    $scope.btnAgregarRespuesta = function(categoria){
+        var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
+        console.dir(pos)
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.push({
+            descripcion: '',
+            horasPlanificadas: null,
+            horasReales: null
+        })
+        console.dir($scope.regEsfuerzoHoras)
+    }
+
+    //Como alumno: Quitar una respuesta de una categoria
+    $scope.btnQuitarRespuesta = function(categoria,respuesta){
+        var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
+        var pos2 = $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.indexOf(respuesta);
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.splice(pos2,1)
+    }
+
+    function ListarAlumnos() {
+            var params = { idHorario: $scope.curso.idhorario }
+            serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
+                $scope.listaAl = res.data;
+            })
+        
+    }
+
+
+
+
+
     function init() {
         ListarActividades();
         ListarAgrupaciones();
         hayAgrupaciones();
+        obtenerRegistroHorasSoloCategorias();
+        ListarAlumnos();
+
+        if(!$scope.esProfesor)
+            obtenerRegHorasComoAlumno();
     }
 
     init();
