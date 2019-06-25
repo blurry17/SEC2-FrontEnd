@@ -66,7 +66,7 @@
             <a data-target="#cargamenus" data-toggle="collapse" aria-expanded="false"
               class="dropdown-toggle menu-item"><i class="fas fa-file-excel"></i>&nbsp;Carga Masiva</a>
             <ul class="collapse list-unstyled" id="cargamenus">
-              <!-- <li><a class="submenu-item">Alumnos por horario</a></li> -->
+              <li ng-click="btnCargaHorarios()"><a class="submenu-item">Horarios</a></li>
               <li ng-click="btnCargaCursos()"><a class="submenu-item">Cursos</a></li>
               <li ng-click="btnCargaProfs()"><a class="submenu-item">Profesores/JP</a></li>
             </ul>
@@ -218,6 +218,48 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" ng-click="cargarProfs()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="mdCargaHorarios" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de horarios</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp" ng-change="listarCursos()">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Curso</label>
+                <select class="custom-select" ng-model="idCur" ng-disabled="idEsp=='0'">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="curso.id_curso" ng-repeat="curso in lstCursos">{{curso.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileHorarios" name="fileHorarios">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarHorarios()">Subir</button>
           <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>

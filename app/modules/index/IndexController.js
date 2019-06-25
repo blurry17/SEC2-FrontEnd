@@ -32,6 +32,7 @@
     }
 
     $scope.btnCargaCursos = function () {
+        $scope.idEsp = '0';
         $scope.idCur = '0';
         serviceCRUD.TypePost('mantenimiento/especialidad_semestre', null).then(function (res) {
             $scope.lstEsp = res.data.listaEspecialidades;
@@ -45,6 +46,15 @@
             $scope.lstEsp = res.data.listaEspecialidades;
         })
         $('#mdCargaProfs').appendTo("body").modal('show');
+    }
+
+    $scope.btnCargaHorarios = function () {
+        $scope.idEsp = '0';
+        $scope.idCur = '0';
+        serviceCRUD.TypePost('mantenimiento/especialidad_semestre', null).then(function (res) {
+            $scope.lstEsp = res.data.listaEspecialidades;
+        })
+        $('#mdCargaHorarios').appendTo("body").modal('show');
     }
 
     $scope.listarCursos = function () {
@@ -69,6 +79,7 @@
 
         serviceCRUD.TypePostFile('carga-masiva/cursos', datos).then(function (res) {
             console.dir(res);
+            $('#mdCargaCursos').modal('hide');
         })
     }
 
@@ -87,6 +98,26 @@
 
         serviceCRUD.TypePostFile('carga-masiva/profesor-jp', datos).then(function (res) {
             console.dir(res);
+            $('#mdCargaProfs').modal('hide');
+        })
+    }
+
+    $scope.cargarHorarios = function () {
+        file = document.getElementById('fileHorarios').files;
+        var datos = new FormData();
+
+        datos.append('idEspecialidad', $scope.idEsp);
+        datos.append('idCurso', $scope.idCur);
+        datos.append('arch', file[0]);
+
+        /* for (var i = 0; i < file.length; i++) {
+            var name = 'file ' + (i + 1);
+            datos.append(name, file[i]);
+        } */
+
+        serviceCRUD.TypePostFile('carga-masiva/horarios', datos).then(function (res) {
+            console.dir(res);
+            $('#mdCargaHorarios').modal('hide');
         })
     }
 })
