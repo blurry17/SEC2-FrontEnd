@@ -116,6 +116,102 @@
               <div class="row">
                 <div ng-repeat="asp in rubricaCoauto.listaNotaAspectos" class="col-md-12 border border-solid rounded"
                   style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+                  <div ng-if="aspecto.tipoClasificacion == 1">
+                    <div class="form-row">
+                      <div class="form-group col-md-3 col-lg-2">
+                        <label class="negrita">Nombre del Aspecto</label>
+                        <input ng-disabled="bloqEval" type="text" required maxlength="25" class="form-control"
+                          ng-model="aspecto.descripcion" />
+                        <div class="invalid-feedback">
+                          Ingrese un nombre.
+                        </div>
+                      </div>
+                      <div class="form-group col-md-5 col-lg-4">
+                        <label class="negrita">Descripción</label>
+                        <input ng-disabled="bloqEval" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                      </div>
+                      <div class="form-group col-md-1">
+                        <label class="negrita">Puntaje</label>
+                        <input ng-disabled="bloqEval" ng-model="aspecto.puntajeMax" required type="text" class="form-control"
+                          style="width: 70px" maxlength="2"
+                          onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                        <div class="invalid-feedback">
+                          Ingrese un puntaje.
+                        </div>
+                      </div>
+                      <div ng-show="mostrarBtns" class="col-md-1 form-group btn-group d-flex align-items-end" role="group">
+                        <button type="button" class="btn btn-primary" title="Agregar Indicador"
+                          ng-click="btnAgregarIndicador(aspecto)"><i class="fa fa-plus"></i></button>
+                        <button type="button" data-toggle="button" aria-pressed="false" autocomplete="off"
+                          class="btn btn-info" title="Indicadores" ng-click="btnOcultarIndicadores(aspecto)"><i
+                            class="fas fa-chevron-down"></i></button>
+                        <button type="button" class="btn btn-danger" title="Eliminar Aspecto"
+                          ng-click="btnQuitarAspecto(aspecto)"><i class="fas fa-times"></i></button>
+                      </div>
+                    </div>
+                    <div ng-repeat="indicador in aspecto.listaIndicadores" ng-show="aspecto.mostrar" style="padding-left: 2%">
+                      <div class="form-row">
+                        <div class="form-group col-md-3 col-lg-2">
+                          <label class="negrita">Nombre del indicador</label>
+                          <input ng-disabled="bloqEval" required maxlength="25" class="form-control"
+                            ng-model="indicador.descripcion" />
+                          <div class="invalid-feedback">
+                            Ingrese un nombre.
+                          </div>
+                        </div>
+                        <div class="form-group col-md-5 col-lg-4">
+                          <label class="negrita">Descripción</label>
+                          <input ng-disabled="bloqEval" maxlength="50" class="form-control"
+                            ng-model="indicador.informacion" />
+                        </div>
+                        <!-- <div class="form-group col-md-1">
+                            <label>Puntaje</label>
+                            <input required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="2"
+                              class="form-control" style="width: 70px" ng-model="indicador.puntajeMax" />
+                            <div class="invalid-feedback">
+                              Ingrese un puntaje.
+                            </div>
+                          </div> -->
+                        <div ng-show="mostrarBtns" class="col-md-1 form-group btn-group d-flex align-items-end" role="group">
+                          <button type="button" class="btn btn-primary" title="Agregar nivel"
+                            ng-click="btnAgregarNivel(indicador)"><i class="fa fa-plus"></i></button>
+                          <button data-toggle="button" aria-pressed="false" autocomplete="off" type="button"
+                            class="btn btn-info" title="Niveles" ng-click="btnOcultarNiveles(indicador)"><i
+                              class="fas fa-chevron-down"></i></button>
+                          <button type="button" class="btn btn-danger" title="Eliminar"
+                            ng-click="btnQuitarIndicador(aspecto, indicador)"><i class="fas fa-times"></i></button>
+                        </div>
+                      </div>
+                      <div ng-show="indicador.mostrar" ng-repeat="nivel in indicador.listaNiveles" style="padding-left: 4%">
+                        <div class="form-row">
+                          <div class="form-group col-md-1">
+                            <label class="negrita">{{'Nivel ' + ($index + 1)}}</label>
+                            <div class="invalid-feedback">
+                              Ingrese un nombre.
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4 col-lg-4">
+                            <label class="negrita">Descripción</label>
+                            <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200"
+                              class="form-control"></textarea>
+                          </div>
+                          <div class="form-group col-md-1">
+                            <label class="negrita">Puntaje</label>
+                            <input ng-disabled="bloqEval" required type="text"
+                              onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                              maxlength="2" class="form-control" style="width: 70px" ng-model="nivel.puntaje" />
+                            <div class="invalid-feedback">
+                              Ingrese un puntaje.
+                            </div>
+                          </div>
+                          <div class="form-group col-md-1 d-flex align-items-end">
+                            <button ng-show="mostrarBtns" type="button" class="btn btn-danger" title="Eliminar"
+                              ng-click="btnEliminarNivel($index, indicador)"><i class="fas fa-times"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                    <div ng-if="asp.tipoClasificacion == 2">
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
