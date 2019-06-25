@@ -12,6 +12,7 @@
     <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>Evaluación del entregable</b></label>
   </div>
   <div style="margin-top: 14px; margin-left: 30px">
+    <form>
     <div>
         <div class="row">
             <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Autoevaluación</b></label>
@@ -87,7 +88,10 @@
           <button class="btn btn-primary" type="submit" ng-click="btnGuardarEvaluacion(2)">Guardar</button>
         </div>
     </div>
+  </form>
+  <form id="formCo" name="formCo" class="needs-validation" novalidate>
     <div ng-show="actividad.tipo=='G'">
+
       <div class="row">
         <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Coevaluación</b></label>
         <div class="form-group col-md-2">
@@ -107,7 +111,7 @@
       <div class="row">
           <div class="col-md-12">
               <div class="row">
-                <div ng-repeat="asp in rubricaCoauto.listaAspectos" class="col-md-12 border border-solid rounded"
+                <div ng-repeat="asp in rubricaCoauto.listaNotaAspectos" class="col-md-12 border border-solid rounded"
                   style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
                    <div ng-if="asp.tipoClasificacion == 2">
                     <div class="form-row">
@@ -132,7 +136,7 @@
                       </div>
                       <div class="form-group col-md-4">
                           <label class="negrita">Puntaje Asignado</label>
-                          <input required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                          <input ng-disabled="coTieneNota" ng-model="asp.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                             maxlength="2" style="width: 70px" class="form-control" />
                           <div class="invalid-feedback">
                             Ingrese un puntaje.
@@ -169,10 +173,11 @@
             </div>
       </div>
     <div class="modal-footer" ng-show = "rubricaCoauto != null">
-      <button class="btn btn-primary" type="submit" ng-click="btnGuardarCo()">Guardar y Enviar</button>
+      <button ng-show="!coTieneNota" class="btn btn-primary" type="submit" ng-click="btnGuardarCo()">Guardar y Enviar</button>
     </div>
   
     </div>
+  </form>
   </br></br> 
    
   </div>
