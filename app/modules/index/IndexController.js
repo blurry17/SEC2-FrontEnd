@@ -54,4 +54,39 @@
             $scope.lstCursos = res.data.listaCursos;
         })
     }
+
+    $scope.cargarCursos = function () {
+        file = document.getElementById('fileCursos').files;
+        var datos = new FormData();
+
+        datos.append('idEspecialidad', $scope.idEsp);
+        datos.append('arch', file[0]);
+
+        /* for (var i = 0; i < file.length; i++) {
+            var name = 'file ' + (i + 1);
+            datos.append(name, file[i]);
+        } */
+
+        serviceCRUD.TypePostFile('carga-masiva/cursos', datos).then(function (res) {
+            console.dir(res);
+        })
+    }
+
+    $scope.cargarProfs = function () {
+        file = document.getElementById('fileProfs').files;
+        var datos = new FormData();
+
+        datos.append('idEspecialidad', $scope.idEsp);
+        datos.append('idCurso', $scope.idCur);
+        datos.append('arch', file[0]);
+
+        /* for (var i = 0; i < file.length; i++) {
+            var name = 'file ' + (i + 1);
+            datos.append(name, file[i]);
+        } */
+
+        serviceCRUD.TypePostFile('carga-masiva/profesor-jp', datos).then(function (res) {
+            console.dir(res);
+        })
+    }
 })

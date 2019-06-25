@@ -62,7 +62,7 @@
                   class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
             </ul>
           </li>
-          <li class="active" ng-show="usuario.profesor">
+          <li class="active" ng-show="usuario.superUsuario">
             <a data-target="#cargamenus" data-toggle="collapse" aria-expanded="false"
               class="dropdown-toggle menu-item"><i class="fas fa-file-excel"></i>&nbsp;Carga Masiva</a>
             <ul class="collapse list-unstyled" id="cargamenus">
@@ -171,11 +171,11 @@
             </div>
           </form>
           <div>
-            <input type="file" class="form-control-file" id="file" name="file">
+            <input type="file" class="form-control-file" id="fileCursos" name="fileCursos">
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" ng-click="">Subir</button>
+          <button class="btn btn-primary" ng-click="cargarCursos()">Subir</button>
           <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>
@@ -213,11 +213,11 @@
             </div>
           </form>
           <div>
-            <input type="file" class="form-control-file" id="file" name="file">
+            <input type="file" class="form-control-file" id="fileProfs" name="fileProfs">
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-primary" ng-click="">Subir</button>
+          <button class="btn btn-primary" ng-click="cargarProfs()">Subir</button>
           <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
         </div>
       </div>
