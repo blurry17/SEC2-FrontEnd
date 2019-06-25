@@ -1,12 +1,8 @@
 app.controller('EncuestaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD, serviceUtil) {
     $scope.usuario = $cookies.getObject('usuario');
-<<<<<<< HEAD
     $rootScope.user = $scope.usuario;
-    $scope.idalumno = null;
-=======
     $scope.esProfesor = $scope.usuario.profesor;
     $scope.idalumno=null;
->>>>>>> 349ac550a20beecf334deec18e07e6793de3e670
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
@@ -161,9 +157,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         serviceCRUD.TypePost('actividad/calificar_autoevaluacion', params).then(function (res) {
             console.dir(res.data);
         })
-<<<<<<< HEAD
-
-=======
         
     }
     
@@ -292,7 +285,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             })
             $scope.mostrar = true;
         }
->>>>>>> 349ac550a20beecf334deec18e07e6793de3e670
     }
 
     function init() {
