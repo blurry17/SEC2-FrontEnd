@@ -202,12 +202,13 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idAlumno: $scope.idalumno,
             idCalificador: $scope.idalumno,
             nota: 0,
+            idRubrica:$scope.idRub,
             flgFalta: 0,
-            listaNotaAspectos: $scope.rubrica.listaAspectos,
+            listaNotaAspectos: $scope.rubricaAuto.listaAspectos,
             flgCompleto: 0,
         }
         console.dir(params);
-        serviceCRUD.TypePost('actividad/calificar_autoevaluacion', params).then(function (res) {
+        serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion', params).then(function (res) {
             console.dir(res.data);
         })
         

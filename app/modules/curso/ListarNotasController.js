@@ -6,18 +6,16 @@ app.controller('ListarNotasController', function ($rootScope, $scope, $location,
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
     $scope.esProfesor = $scope.usuario.profesor;
+    $scope.listaNotasAlum =[];
 
-    console.dir("holaaaa1");
+ 
     function ListarNotas() {
-        console.dir("holaaaa");
         var params = { idActividad: $scope.actividad.idActividad }
-        serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
-          $scope.listaN = res.data.listaNotas;
-          $scope.listaFrec = res.data.notaFrecuencia;
-          $scope.cantidadN = res.data.cantidadNotas;
-          $scope.cantidadF = res.data.cantidadFalta;
-          $scope.cantidadT = res.data.cantidadTotal;
-          console.dir(res.data);
+        
+        console.dir(params);
+        serviceCRUD.TypePost('notas-finales', params).then(function (res) {
+          $scope.listaNotasAlum = res.data.listaNotas;
+          console.dir("holaaaa");
         })
     }
     function init() {

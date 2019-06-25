@@ -44,7 +44,6 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
       $scope.listaN = res.data.listaNotas;
       $scope.listaFrec = res.data.notaFrecuencia;
-
       $scope.cantidadN = res.data.cantidadNotas;
       $scope.cantidadF = res.data.cantidadFalta;
       $scope.cantidadT = res.data.cantidadTotal;
