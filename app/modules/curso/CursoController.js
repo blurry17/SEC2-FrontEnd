@@ -533,8 +533,10 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     function ListarAlumnos() {
             var params = { idHorario: $scope.curso.idhorario }
             serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
+                console.dir(res.data)
                 $scope.listaAl = res.data;
             })
+            console.dir($scope.listaAl)
         
     }
 

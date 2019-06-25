@@ -197,7 +197,7 @@
                   <select ng-change="obtenerRegistroHorasXAlumno()" class="form-control custom-select" ng-model="idalumno"
                       ng-init="idalumno = '0'">
                       <option value="0">Seleccione</option>
-                      <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.idAlumno +" - "+ item.nombre}}
+                      <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
                       </option>
                   </select>
               </div>

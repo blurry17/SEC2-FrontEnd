@@ -3,10 +3,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.esProfesor = $scope.usuario.profesor;
     $scope.idalumno=null;
     if ($scope.usuario == undefined) $location.path('/');
-    console.dir($scope.usuario)
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
-    console.dir($scope.curso)
     $scope.vistaAlumno =$scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
@@ -231,7 +229,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
             if (res.data.succeed == false){
-                console.dir('no se encontro el registro de esfuerzo')
                 return;
             } 
             else{
@@ -264,14 +261,12 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     //Como alumno puedo agregar una respuesta a una categoria
     $scope.btnAgregarRespuesta = function(categoria){
         var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
-        console.dir(pos)
         
         $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.push({
             descripcion: '',
             horasPlanificadas: null,
             horasReales: null
         })
-        console.dir($scope.regEsfuerzoHoras)
     }
 
     //Como alumno: Quitar una respuesta de una categoria
@@ -295,7 +290,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             $scope.esActIndividual = true;
             var params = { idActividad: $scope.actividad.idActividad }
             serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
-                console.dir(res.data);
                 $scope.listaAl = res.data.lista;
             })
             $scope.mostrar = true;
