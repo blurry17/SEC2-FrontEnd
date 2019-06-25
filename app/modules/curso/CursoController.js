@@ -351,6 +351,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             $scope.showAlert4 = true;
             return;
         }
+        $scope.showAlert4 = false;
         for (let i = 0; i < $scope.regEsfuerzo.listaCategorias.length; i++) {
             if ($scope.regEsfuerzo.listaCategorias[i].descripcion.length == 0) {
                 $("#formActRegHoras").removeClass("was-validated");
@@ -358,6 +359,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 return;
             }
         }
+        $scope.showAlert3 = false;
 
         if (formActRegHoras.checkValidity()){
             console.dir($scope.regEsfuerzo)
@@ -369,7 +371,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     //Como alumno: Registrar Horas
-    $scope.btnGuardarRegHoras = function (){
+    $scope.btnGuardarRegHorasAlumno = function (){
         console.dir($scope.regEsfuerzoHoras)
         $("#formActRegHorasAlumno").addClass("was-validated");
 
@@ -380,21 +382,28 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     $scope.showAlert5 = true;
                     return;
                 }
+                $scope.showAlert5 = false;
+
                 if ($scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas[j].descripcion.length == 0) {
                     $("#formActRegHorasAlumno").removeClass("was-validated");
                     $scope.showAlert6 = true;
                     return;
                 }
+                $scope.showAlert6 = false;
+
                 if ($scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas[j].horasPlanificadas == null) {
                     $("#formActRegHorasAlumno").removeClass("was-validated");
                     $scope.showAlert7 = true;
                     return;
                 }
+                $scope.showAlert7 = false;
+
                 if ( $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas[j].horasReales == null) {
                     $("#formActRegHorasAlumno").removeClass("was-validated");
                     $scope.showAlert8 = true;
                     return;
                 }
+                $scope.showAlert8 = false;
             }
         }
         console.dir('regEsfuerzoHoras cuando presiono el boton')
@@ -403,6 +412,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         if (formActRegHorasAlumno.checkValidity()){
             serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
                 console.dir(res)
+                $("#mdRegHoras").modal('hide');
             })
         }
 
