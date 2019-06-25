@@ -51,8 +51,8 @@
         </div>
         <div ng-show="idalumno!='0' || idgrupo!='0'" class="form-group col-md-3">
             <div style="float: right">
-                <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
-                    Archivo</button>
+                <!-- <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
+                    Archivo</button> -->
                 <button type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i
                         class="fas fa-pen"></i>&nbsp;Editar</button>
                 <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
@@ -69,7 +69,7 @@
             <div class="card-body">
 
                 <div ng-repeat="aspecto in rubrica.listaNotaAspectos" style="width: 100%">
-                
+
                     <h3 style="color: rgb(5, 5, 105)"><b> Aspecto</b> </h3>
                     <div class="col-12">
                         <h5 style="color: rgb(5, 5, 5)"><b> {{($index + 1) + '. ' + aspecto.descripcion}} </b></h4>
