@@ -9,6 +9,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.listaAl = null;
     $scope.esActGrupal = false;
     $scope.idRub=0;
+    $scope.coTieneNota=false;
     //console.dir($scope.usuario );
 
     /**
@@ -111,6 +112,11 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         console.dir(params);
         serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
             $scope.rubricaCoauto=res.data;
+            if(res.data.nota==null){
+                $scope.coTieneNota=false;
+            }else {
+                $scope.coTieneNota=true;
+            }
             console.dir('LA RES');
             console.dir(res.data);
             
@@ -118,21 +124,67 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.btnGuardarCo=function(){
-        let params={
-            idActividad:$scope.actividad.idActividad,
-            idAlumno:$scope.idalumno,
-            idCalificador:$scope.usuario.idUser,
-            nota:0,
-            idRubrica:$scope.idRub,
-            flgFalta:0,
-            listaNotaAspectos:$scope.rubricaCoauto.listaNotaAspectos,
-            flgCompleto:0,
+        if(formCo.checkValidity()){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+              })
+              
+              swalWithBootstrapButtons.fire({
+                title: 'Está seguro que quiere continuar?',
+                text: "No podrá modificar la nota luego",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, continuar',
+                cancelButtonText: 'No, cancelar',
+                
+              }).then((result) => {
+                if (result.value) {
+                  swalWithBootstrapButtons.fire(
+                    'Listo!',
+                    'Se calificó a tu compañero.',
+                    'success'
+                  )
+                  let params={
+                    idActividad:$scope.actividad.idActividad,
+                    idAlumno:$scope.idalumno,
+                    idCalificador:$scope.usuario.idUser,
+                    nota:0,
+                    idRubrica:$scope.idRub,
+                    flgFalta:0,
+                    listaNotaAspectos:$scope.rubricaCoauto.listaNotaAspectos,
+                    flgCompleto:0,
+                }
+                console.dir('LEEEE ESTO');
+                console.dir(params);
+                serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion',params).then(function(res){
+                
+                })
+                $scope.coTieneNota=true;
+                } else if (
+                  // Read more about handling dismissals
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                  swalWithBootstrapButtons.fire(
+                    'Se canceló la calificación',
+                    
+                  )
+                }
+              })
+            
         }
-        console.dir('LEEEE ESTO');
-        console.dir(params);
-        serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion',params).then(function(res){
-
-        })
+        else{
+            Swal.fire({
+                title: 'Error!',
+                text: 'Debe llenar todos los puntajes',
+                type: 'error',
+                confirmButtonText: 'Ok'
+              })
+           /*  $('#mdCompletar').appendTo("body").modal('show'); */
+        }
     }
 
     $scope.btnGuardarEvaluacion = function (tipo) {
