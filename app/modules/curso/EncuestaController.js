@@ -200,7 +200,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         let params = {
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.idalumno,
-            idCalificador: $scope.usuario.idUser,
+            idCalificador: $scope.idalumno,
             nota: 0,
             flgFalta: 0,
             listaNotaAspectos: $scope.rubrica.listaAspectos,
