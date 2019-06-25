@@ -303,6 +303,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         
         serviceCRUD.TypePost('grupo/crear-general', params).then(function(res){
             console.dir(res.data);
+            hayAgrupaciones();
         })
         $("#mdAgregarAgrupacion").modal('hide');
     }
