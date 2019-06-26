@@ -102,25 +102,30 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.obtenerCo=function(){
-        let params={
-            idActividad:$scope.actividad.idActividad,
-            idCalificado:$scope.idalumno,
-            idCalificador:$scope.usuario.idUser,
+        if($scope.idalumno==0){
+            $scope.coTieneNota=true;
+        }else{
+            let params={
+                idActividad:$scope.actividad.idActividad,
+                idCalificado:$scope.idalumno,
+                idCalificador:$scope.usuario.idUser,
+    
+            }
+            console.dir('este es el yeison');
+            console.dir(params);
+            serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
+                $scope.rubricaCoauto=res.data;
+                if(res.data.nota==null){
+                    $scope.coTieneNota=false;
+                }else {
+                    $scope.coTieneNota=true;
+                }
+                console.dir('LA RES');
+                console.dir(res.data);
+                
+            })
 
         }
-        console.dir('este es el yeison');
-        console.dir(params);
-        serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
-            $scope.rubricaCoauto=res.data;
-            if(res.data.nota==null){
-                $scope.coTieneNota=false;
-            }else {
-                $scope.coTieneNota=true;
-            }
-            console.dir('LA RES');
-            console.dir(res.data);
-            
-        })
     }
 
     $scope.btnGuardarCo=function(){
