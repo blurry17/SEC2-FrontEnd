@@ -2,7 +2,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.usuario = $cookies.getObject('usuario');
     $rootScope.user = $scope.usuario;
     $scope.esProfesor = $scope.usuario.profesor;
-    $scope.idalumno=null;
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
@@ -10,7 +9,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.listaAl = null;
     $scope.esActGrupal = false;
     $scope.idActividadUHorario = null;
-    $scope.idalumno = null;
+    $scope.notaAuto=null;
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
         tipo: 1,
@@ -166,8 +165,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                     listaNotaAspectos:$scope.rubricaCoauto.listaNotaAspectos,
                     flgCompleto:0,
                 }
-                console.dir('LEEEE ESTO');
-                console.dir(params);
+                //console.dir('LEEEE ESTO');
+                //console.dir(params);
                 serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion',params).then(function(res){
                 
                 })
@@ -195,23 +194,84 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
     }
 
-    $scope.btnGuardarEvaluacion = function () {
-        var r = window.confirm("Esta seguro que quiere guardar la autoevaluación");
+
+    $scope.obtenerAuto = function () {
         let params = {
             idActividad: $scope.actividad.idActividad,
-            idAlumno: $scope.idalumno,
-            idCalificador: $scope.idalumno,
-            nota: 0,
-            idRubrica:$scope.idRub,
-            flgFalta: 0,
-            listaNotaAspectos: $scope.rubricaAuto.listaAspectos,
-            flgCompleto: 0,
+            idAlumno: $scope.usuario.idUser,
         }
-        console.dir(params);
-        serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion', params).then(function (res) {
-            console.dir(res.data);
+        //console.dir('este es el yeison');
+        //console.dir(params);
+        serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
+            $scope.rubricaAuto=res.data;
+            $scope.notaAuto=res.data.nota;
+            //console.dir(res.data.nota);
+            if(res.data.nota==null){
+                $scope.auTieneNota=false;
+            }else {
+                $scope.auTieneNota=true;
+            }
         })
-        
+    }
+    $scope.btnGuardarEvaluacion = function () {
+        if(formCo.checkValidity()){
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false,
+              })
+              
+              swalWithBootstrapButtons.fire({
+                title: 'Está seguro que quiere continuar?',
+                text: "No podrá modificar la nota luego",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, continuar',
+                cancelButtonText: 'No, cancelar',
+                
+              }).then((result) => {
+                if (result.value) {
+                  swalWithBootstrapButtons.fire(
+                    'Listo!',
+                    'Se calificó a tu compañero.',
+                    'success'
+                  )
+                  let params={
+                    idActividad:$scope.actividad.idActividad,
+                    idAlumno:$scope.usuario.idUser,
+                    idCalificador:$scope.usuario.idUser,
+                    nota:0,
+                    idRubrica:$scope.rubricaAuto.idRubrica,
+                    flgFalta:0,
+                    listaNotaAspectos:$scope.rubricaAuto.listaNotaAspectos,
+                    flgCompleto:0,
+                }
+                serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
+                
+                })
+                $scope.auTieneNota=true;
+                } else if (
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                  swalWithBootstrapButtons.fire(
+                    'Se canceló la calificación',
+                    
+                  )
+                }
+              })
+            
+        }
+        else{
+            Swal.fire({
+                title: 'Error!',
+                text: 'Debe llenar todos los puntajes',
+                type: 'error',
+                confirmButtonText: 'Ok'
+              })
+           /*  $('#mdCompletar').appendTo("body").modal('show'); */
+        }
     }
     
     //Como profesor: Crear Registro Horas

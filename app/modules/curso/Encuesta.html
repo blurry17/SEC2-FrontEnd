@@ -17,14 +17,14 @@
       <div class="row">
         <label class="vertical-center" style="margin-top: 14px;font-size: 100%"><b>Autoevaluación</b></label>
         <div class="form-group col-md-2">
-          <button ng-click="btnEvaluacion(2)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          <button ng-click="obtenerAuto()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
             class="btn btn-sm btn-info dropdown-toggle"><i class="fas fa-eye"></i>&nbsp;</button>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12 ">
           <div class="row">
-            <div ng-repeat="aspecto in rubricaAuto.listaAspectos" class="col-md-12 border border-solid rounded"
+            <div ng-repeat="aspecto in rubricaAuto.listaNotaAspectos" class="col-md-12 border border-solid rounded"
               style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
               <div ng-if="aspecto.tipoClasificacion == 1">
                 <div class="form-row">
@@ -51,7 +51,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label class="negrita">Puntaje Asignado</label>
-                    <input ng-disabled="coTieneNota" ng-model="asp.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                    <input ng-disabled="auTieneNota" ng-model="aspecto.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                       maxlength="2" style="width: 70px" class="form-control" />
                     <div class="invalid-feedback">
                       Ingrese un puntaje.
@@ -134,7 +134,7 @@
                   </div>
                   <div class="form-group col-md-4">
                     <label class="negrita">Puntaje Asignado</label>
-                    <input required type="text"
+                    <input ng-disabled="auTieneNota" ng-model="aspecto.nota" required type="text"
                       onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                       maxlength="2" style="width: 70px" class="form-control" />
                     <div class="invalid-feedback">
@@ -159,7 +159,7 @@
                   </div>
                   <div class="form-group col-md-5 col-lg-4">
                     <label class="negrita">Comentario sobre desempeño</label>
-                    <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200"
+                    <textarea ng-disabled="auTieneNota" ng-model="nivel.descripcion" maxlength="200"
                       class="form-control"></textarea>
                     <div class="invalid-feedback">
                       Ingrese un puntaje.
@@ -172,7 +172,7 @@
           </div>
         </div>
         <div class="modal-footer" ng-show = "rubricaAuto != null">
-          <button class="btn btn-primary" type="submit" ng-click="btnGuardarEvaluacion()">Guardar y Enviar</button>
+          <button ng-show="!auTieneNota" class="btn btn-primary" type="submit" ng-click="btnGuardarEvaluacion()">Guardar y Enviar</button>
         </div>
     </div>
   </form>
