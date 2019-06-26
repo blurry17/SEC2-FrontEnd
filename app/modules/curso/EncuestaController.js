@@ -10,6 +10,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.esActGrupal = false;
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
+    $scope.auTieneNota=false;
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
         tipo: 1,
@@ -200,12 +201,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.usuario.idUser,
         }
-        //console.dir('este es el yeison');
-        //console.dir(params);
         serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
             $scope.rubricaAuto=res.data;
-            $scope.notaAuto=res.data.nota;
-            //console.dir(res.data.nota);
             if(res.data.nota==null){
                 $scope.auTieneNota=false;
             }else {
@@ -213,7 +210,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             }
         })
     }
-    $scope.btnGuardarEvaluacion = function () {
+
+    $scope.btnGuardarAutoEvaluacion = function () {
         if(formCo.checkValidity()){
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
@@ -235,7 +233,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 if (result.value) {
                   swalWithBootstrapButtons.fire(
                     'Listo!',
-                    'Se calificó a tu compañero.',
                     'success'
                   )
                   let params={

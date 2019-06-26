@@ -30,8 +30,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
                     <label class="negrita">Nombre del Aspecto</label>
-                    <input disabled type="text" required maxlength="25" class="form-control"
-                      ng-model="aspecto.descripcion" />
+                    <input disabled type="text" required maxlength="25" class="form-control" ng-model="aspecto.descripcion" />
                     <div class="invalid-feedback">
                       Ingrese un nombre.
                     </div>
@@ -59,24 +58,23 @@
                   </div>
                   
                 </div>
-                <div ng-repeat="indicador in aspecto.listaIndicadores" style="padding-left: 2%">
+                <div ng-repeat="ind in aspecto.listaIndicadores" style="padding-left: 2%">
                   <div class="form-row">
                     <div class="form-group col-md-3 col-lg-2">
                       <label class="negrita">Nombre del indicador</label>
-                      <input disabled required maxlength="25" class="form-control" ng-model="indicador.descripcion" />
+                      <input disabled required maxlength="25" class="form-control" ng-model="ind.descripcion" />
                       <div class="invalid-feedback">
                         Ingrese un nombre.
                       </div>
                     </div>
                     <div class="form-group col-md-5 col-lg-4">
                       <label class="negrita">Descripción</label>
-                      <input disabled maxlength="50" class="form-control"
-                        ng-model="indicador.informacion" />
+                      <input disabled maxlength="50" class="form-control" ng-model="ind.informacion" />
                     </div>
                     <!--AQUI AGREGAMOS EL PUNTAJE DEL INDICADOR-->
                     <div class="form-group col-md-4">
                       <label class="negrita">Puntaje Asignado</label>
-                      <input ng-disabled="coTieneNota" ng-model="asp.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                      <input ng-disabled="auTieneNota" ng-model="ind.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                         maxlength="2" style="width: 70px" class="form-control" />
                       <div class="invalid-feedback">
                         Ingrese un puntaje.
@@ -84,7 +82,7 @@
                     </div>
 
                   </div>
-                  <div ng-repeat="nivel in indicador.listaNiveles" style="padding-left: 4%">
+                  <div ng-repeat="nv in ind.listaNiveles" style="padding-left: 4%">
                     <div class="form-row">
                       <div class="form-group col-md-1">
                         <label class="negrita">{{'Nivel ' + ($index + 1)}}</label>
@@ -94,14 +92,14 @@
                       </div>
                       <div class="form-group col-md-4 col-lg-4">
                         <label class="negrita">Descripción</label>
-                        <textarea disabled ng-model="nivel.descripcion" maxlength="200"
+                        <textarea disabled ng-model="nv.descripcion" maxlength="200"
                           class="form-control"></textarea>
                       </div>
                       <div class="form-group col-md-1">
                         <label class="negrita">Puntaje</label>
                         <input disabled required type="text"
                           onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                          maxlength="2" class="form-control" style="width: 70px" ng-model="nivel.puntaje" />
+                          maxlength="2" class="form-control" style="width: 70px" ng-model="nv.puntaje" />
                         <div class="invalid-feedback">
                           Ingrese un puntaje.
                         </div>
@@ -171,10 +169,10 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer" ng-show = "rubricaAuto != null">
-          <button ng-show="!auTieneNota" class="btn btn-primary" type="submit" ng-click="btnGuardarEvaluacion()">Guardar y Enviar</button>
-        </div>
     </div>
+    <div class="modal-footer" ng-show = "rubricaAuto != null">
+        <button ng-show="!auTieneNota" class="btn btn-primary" type="submit" ng-click="btnGuardarAutoEvaluacion()">Guardar y Enviar</button>
+      </div>
   </form>
   <form id="formCo" name="formCo" class="needs-validation" novalidate>
     <div ng-show="actividad.tipo=='G'">
