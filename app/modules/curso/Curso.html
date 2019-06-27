@@ -1,92 +1,90 @@
 <div>
     <h3 style="font-weight: bold">{{curso.codigo + ' ' + curso.nombre + ' [H' + curso.horario + ']'}}</h3>
-    <button class="btn btn-info" ng-if="usuario.profesor"><i class="fas fa-file-excel"></i>&nbsp;Cargar alumnos</button>
     <div class="line"></div>
-    <h4>Actividades</h4>
+    <h2 class="btn btn-link" style="font-size: 2rem" data-toggle="collapse" data-target="#acts">Actividades</h2>
+    <div class="collapse" id="acts">
+        <div class="row justify-content-between">
+            <div class="col-xs-12 col-md-5">
+                <h5 style="display:inline-block"><span class="badge badge-pill badge-success">
+                        <div style="margin: 5px">Entregado</div>
+                    </span></h5>
+                <h5 style="display:inline-block"><span class="badge badge-pill badge-warning">
+                        <div style="margin: 5px">Pendiente</div>
+                    </span>
+                </h5>
+                <h5 style="display:inline-block"><span class="badge badge-pill badge-dark">
+                        <div style="margin: 5px">Inactivo</div>
+                    </span></h5>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-success" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
+                    actividad</button>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 15px">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px"
+                ng-repeat="act in lstActividad">
+                <div class="card text-center border-dark" style="border-width: 3px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{act.nombre}}&nbsp;<i
+                                ng-class="act.tipo=='I' ? 'fas fa-user' : 'fas fa-users'"></i></h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
+                        <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
+                        <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <button class="btn btn-primary" title="Ver" ng-click="btnVerActividad(act)"><i
+                                class="fas fa-eye"></i></button>
+                        <button class="btn btn-info" title="Editar" ng-click="btnEditarActividad(act)"
+                            ng-show="enCurso(act) && usuario.profesor"><i class="fas fa-pen"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="row justify-content-between">
-        <div class="col-xs-12 col-md-5">
-            <h5 style="display:inline-block"><span class="badge badge-pill badge-success">
-                    <div style="margin: 5px">Entregado</div>
-                </span></h5>
-            <h5 style="display:inline-block"><span class="badge badge-pill badge-warning" style="color: white">
-                    <div style="margin: 5px">Pendiente</div>
-                </span>
-            </h5>
-            <h5 style="display:inline-block"><span class="badge badge-pill badge-dark">
-                    <div style="margin: 5px">Inactivo</div>
-                </span></h5>
-        </div>
-        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-            <button class="btn btn-success" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
-                actividad</button>
-        </div>
     </div>
 
-    <div class="row" style="padding-top: 15px">
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px" ng-repeat="act in lstActividad">
-            <div class="card text-center border-dark" style="border-width: 3px">
-                <div class="card-body">
-                    <h5 class="card-title">{{act.nombre}}&nbsp;<i
-                            ng-class="act.tipo=='I' ? 'fas fa-user' : 'fas fa-users'"></i></h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
-                    <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
-                    <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>
-                </ul>
-                <div class="card-body">
-                    <button class="btn btn-primary" title="Ver" ng-click="btnVerActividad(act)"><i
-                            class="fas fa-eye"></i></button>
-                    <button class="btn btn-info" title="Editar" ng-click="btnEditarActividad(act)"
-                        ng-show="enCurso(act) && usuario.profesor"><i class="fas fa-pen"></i></button>
+
+    <div class="line"></div>
+    <h2 class="btn btn-link" style="font-size: 2rem" data-toggle="collapse" data-target="#groups">Grupos</h2>
+    <div class="collapse" id="groups">
+        <div class="row justify-content-between">
+            <div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-success" ng-click="btnAgregarAgrupacion()" ng-show="!existeAgrupaciones"><i
+                        class="fas fa-plus"></i>&nbspAgregar
+                    agrupación</button>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 15px">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px"
+                ng-repeat="grupo in lstAgrupaciones">
+                <div class="card text-center border-dark" style="border-width: 3px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{grupo.nombre}}&nbsp<i class="fas fa-users"></i></h5>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <label ng-repeat="alumno in grupo.lstIntegrantes">{{alumno.codigoPucp}} -
+                            {{alumno.nombre}}</label>
+                        <!--<li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
+                                <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
+                                <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>-->
+                    </ul>
+                    <div class="card-body">
+                        <!--<button id="btnVer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
+                                    title="Ver" ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"
+                                    ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>-->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="line"></div>
-    <div class="row">
-        <h2 style="margin:15px;" class="col-1"> Grupos </h2>
-        <!--<button id="btnVerAgrupaciones" style="margin-left:15px; margin-top:14px; background-color:#388697; height:43px;" class = "btn btn-info" ng-click="btnMostrarAgrupaciones()" ><i class="fas fa-eye"></i> &nbspMostrar</button>-->
-    </div>
-
-
-    <div class="row justify-content-between">
-        <div>
-
-        </div>
-        <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-            <button class="btn btn-success" ng-click="btnAgregarAgrupacion()" ng-show="!existeAgrupaciones"><i
-                    class="fas fa-plus"></i>&nbspAgregar
-                agrupación</button>
-        </div>
-
-    </div>
-
-    <div class="row" style="padding-top: 15px">
-        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px"
-            ng-repeat="grupo in lstAgrupaciones">
-            <div class="card text-center border-dark" style="border-width: 3px">
-                <div class="card-body">
-                    <h5 class="card-title">{{grupo.nombre}}&nbsp<i class="fas fa-users"></i></h5>
-
-                </div>
-                <ul class="list-group list-group-flush">
-                    <label ng-repeat="alumno in grupo.lstIntegrantes">{{alumno.codigoPucp}} - {{alumno.nombre}}</label>
-                    <!--<li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
-                            <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
-                            <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>-->
-                </ul>
-                <div class="card-body">
-                    <!--<button id="btnVer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
-                                title="Ver" ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
-                            <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"
-                                ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>-->
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <div class="modal fade" id="mdAgregarActividad" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -277,11 +275,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="btn-group" role="group">
-                    <button ng-click="btnCrearGrupos()" style="margin-bottom: 20px" type="button"
-                        class="btn btn-success">Crear Grupos</button>
-                </div>
-                <div class="row" ng-show="creacionGrupos">
+                <div class="row">
                     <div class="col-md-5">
                         <div class="table-responsive">
                             <table class="table table-bordered table-condensed table-hover">

@@ -29,6 +29,8 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.lstNuevoGrupo = [];
 
     var idActEdit = null;
+    $('#acts').collapse('show');
+    $('#groups').collapse('show');
 
     function ListarActividades() {
         var params = { idHorario: $scope.curso.idhorario };
