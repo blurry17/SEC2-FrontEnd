@@ -1,5 +1,6 @@
 app.controller('RubricaController', function ($rootScope, $scope, $location, $cookies, serviceCRUD) {
     $scope.usuario = $cookies.getObject('usuario');
+    $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
     $scope.actividad = $cookies.getObject('actividadActual');
     $scope.curso = $cookies.getObject("cursoActual");

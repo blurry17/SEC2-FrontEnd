@@ -1,5 +1,6 @@
 app.controller('ComentariosController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
     var usuario = $cookies.getObject('usuario');
+    $rootScope.user = usuario;
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject('actividadActual');

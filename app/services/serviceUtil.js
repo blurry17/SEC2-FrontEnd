@@ -15,7 +15,7 @@
             return [day, month, year].join('/');
         }
 
-        var getObjDate = function(date) {
+        var getObjDate = function (date) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
@@ -69,7 +69,7 @@
             return new Date(yyyy, mm - 1, dd);
         }
 
-        var SQLtoJSDate = function(datestring){
+        var SQLtoJSDate = function (datestring) {
             var yyyy = parseInt(datestring.substring(0, 4));
             var mm = parseInt(datestring.substring(5, 7));
             var dd = parseInt(datestring.substring(8, 10));

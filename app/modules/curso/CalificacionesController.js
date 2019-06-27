@@ -1,5 +1,7 @@
 app.controller('CalificacionesController', function ($rootScope, $scope, $location, $cookies, $http, serviceUtil, serviceCRUD) {
+   
     $scope.usuario = $cookies.getObject('usuario');
+    $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
@@ -219,7 +221,14 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 }
             }
         } else {
-            $('#mdCompletar').appendTo("body").modal('show');
+           
+            
+            Swal.fire({
+                title: 'Error!',
+                text: 'Debe llenar todos los puntajes',
+                type: 'error',
+                confirmButtonText: 'Ok'
+              })
         }
     }
 
