@@ -27,7 +27,7 @@
                 </option>
             </select>
         </div>
-        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno" class="form-group col-md-2">
+        <div ng-show="idalumno!='0' || idgrupo!='0' && !usuario.alumno" class="form-group col-md-2">
             <label style="font-weight: bold">No asistió</label>
             <input ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox">
         </div>

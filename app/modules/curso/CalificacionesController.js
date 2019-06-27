@@ -32,7 +32,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     }
     //sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
-        if ($scope.actividad.tipo == "I") {
+        if ($scope.actividad.tipo == "I" || $scope.usuario.alumno) {
             console.dir($scope.usuario);
             if($scope.usuario.alumno==1){
                 $scope.idalumno=$scope.usuario.idUser;
@@ -71,7 +71,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             }
             console.dir(params);
             serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo', params).then(function (res) {
-                console.dir("ESTO ES LA RUB GRUPO")
+                //console.dir("ESTO ES LA RUB GRUPO")
                 console.dir(res.data);
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
@@ -258,6 +258,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             idUsuario: idAl
         }
         serviceCRUD.TypePost('entregables/lista', params).then(function (res) {
+            console.dir(res.data);
             $scope.archivos = res.data;
         })
     }
@@ -276,6 +277,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.descargarArchivo = function (arch) {
         var params = { idEntregable: arch.idEntregable }
         serviceCRUD.TypePost('entregable/descarga', params).then(function (res) {
+            console.dir(res.data);
             document.getElementById('my_iframe').src = res.data.url;
         })
     }
