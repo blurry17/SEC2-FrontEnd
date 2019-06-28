@@ -1,0 +1,58 @@
+<div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item"><a href="#!actividad">{{actividad.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Notas</li>
+      </ol>
+    </nav>
+    <br />
+    <div ng-show="actividad.tipo=='I'" >
+        <div>
+            <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>Notas de todos los alumnos</b></label>
+          </div>
+            <div style="float: left" class="row form-group col-md-10" class="table-responsive">
+                
+              <table class="table table-hover">
+                  <thead>
+                    <tr class="table-info">
+                      <th style="width: 10%">Código</th>
+                      <th style="width: 80%">Nombre del alumno</th>
+                      <th style="width: 10%">Nota</th>
+                    </tr>
+                  </thead>
+                          <tbody>
+                              <tr ng-repeat="list in listaNotasAlum" style="width: 100%">
+                                  <td>{{list.codigoPucp}}</td>
+                                  <td>{{list.nombreAlumno}}</td>
+                                  <td>{{list.nota}}</td>
+                                </tr>
+                          </tbody>
+                  </table>
+            </div>
+    </div>
+
+    <div ng-show="actividad.tipo=='G'">
+        <div>
+            <label class="vertical-center" style="margin-top: 14px;font-size: 150%"><b>Notas de todos los grupos</b></label>
+          </div>
+        <div  style="float: left" class="row form-group col-md-10" class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr class="table-info">
+                  <th style="width: 80%">Nombre del Grupo</th>
+                  <th style="width: 10%">Nota</th>
+                </tr>
+              </thead>
+                      <tbody>
+                          <tr ng-repeat="list in listaNotasAlum" style="width: 100%">
+                              <td>{{list.nombreGrupo}}</td>
+                              <td>{{list.nota}}</td>
+                            </tr>
+                      </tbody>
+              </table>
+        </div>   
+
+    </div>       
+
+   </div> 
