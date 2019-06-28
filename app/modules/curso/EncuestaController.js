@@ -8,6 +8,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.vistaAlumno = $scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
+    $scope.idRub = 0;
+    $scope.coTieneNota = false;
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
     $scope.auTieneNota=false;
@@ -118,80 +120,80 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
         console.dir('este es el yeison');
         console.dir(params);
-        serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
-            $scope.rubricaCoauto=res.data;
-            if(res.data.nota==null){
-                $scope.coTieneNota=false;
-            }else {
-                $scope.coTieneNota=true;
+        serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion', params).then(function (res) {
+            $scope.rubricaCoauto = res.data;
+            if (res.data.nota == null) {
+                $scope.coTieneNota = false;
+            } else {
+                $scope.coTieneNota = true;
             }
             console.dir('LA RES');
             console.dir(res.data);
-            
+
         })
     }
 
-    $scope.btnGuardarCo=function(){
-        if(formCo.checkValidity()){
+    $scope.btnGuardarCo = function () {
+        if (formCo.checkValidity()) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 },
                 buttonsStyling: false,
-              })
-              
-              swalWithBootstrapButtons.fire({
+            })
+
+            swalWithBootstrapButtons.fire({
                 title: 'Está seguro que quiere continuar?',
                 text: "No podrá modificar la nota luego",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Si, continuar',
                 cancelButtonText: 'No, cancelar',
-                
-              }).then((result) => {
+
+            }).then((result) => {
                 if (result.value) {
-                  swalWithBootstrapButtons.fire(
-                    'Listo!',
-                    'Se calificó a tu compañero.',
-                    'success'
-                  )
-                  let params={
-                    idActividad:$scope.actividad.idActividad,
-                    idAlumno:$scope.idalumno,
-                    idCalificador:$scope.usuario.idUser,
-                    nota:0,
-                    idRubrica:$scope.idRub,
-                    flgFalta:0,
-                    listaNotaAspectos:$scope.rubricaCoauto.listaNotaAspectos,
-                    flgCompleto:0,
-                }
-                //console.dir('LEEEE ESTO');
-                //console.dir(params);
-                serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion',params).then(function(res){
-                
-                })
-                $scope.coTieneNota=true;
+                    swalWithBootstrapButtons.fire(
+                        'Listo!',
+                        'Se calificó a tu compañero.',
+                        'success'
+                    )
+                    let params = {
+                        idActividad: $scope.actividad.idActividad,
+                        idAlumno: $scope.idalumno,
+                        idCalificador: $scope.usuario.idUser,
+                        nota: 0,
+                        idRubrica: $scope.idRub,
+                        flgFalta: 0,
+                        listaNotaAspectos: $scope.rubricaCoauto.listaNotaAspectos,
+                        flgCompleto: 0,
+                    }
+                    console.dir('LEEEE ESTO');
+                    console.dir(params);
+                    serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion', params).then(function (res) {
+
+                    })
+                    $scope.coTieneNota = true;
                 } else if (
-                  // Read more about handling dismissals
-                  result.dismiss === Swal.DismissReason.cancel
+                    // Read more about handling dismissals
+                    result.dismiss === Swal.DismissReason.cancel
                 ) {
-                  swalWithBootstrapButtons.fire(
-                    'Se canceló la calificación',
-                    
-                  )
+                    swalWithBootstrapButtons.fire(
+                        'Se canceló la calificación',
+
+                    )
                 }
-              })
-            
+            })
+
         }
-        else{
+        else {
             Swal.fire({
                 title: 'Error!',
                 text: 'Debe llenar todos los puntajes',
                 type: 'error',
                 confirmButtonText: 'Ok'
-              })
-           /*  $('#mdCompletar').appendTo("body").modal('show'); */
+            })
+            /*  $('#mdCompletar').appendTo("body").modal('show'); */
         }
     }
 
@@ -281,17 +283,17 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     //Como alumno: Registrar Horas
-    $scope.btnRegistrarHoras = function (){
+    $scope.btnRegistrarHoras = function () {
         console.dir('regEsfuerzoHoras cuando presiono el boton')
         console.dir($scope.regEsfuerzoHoras)
-        
+
         serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
             console.dir(res)
         })
     }
 
     //Como profesor y alumno: Obtener registro horas x alumno
-    $scope.obtenerRegistroHorasXAlumno = function(){
+    $scope.obtenerRegistroHorasXAlumno = function () {
         var params = {
             tipo: 1,
             idActividadUHorario: $scope.actividad.idActividad,
@@ -307,7 +309,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         })
     }
 
-    $scope.obtenerRegHorasComoAlumno = function(){
+    $scope.obtenerRegHorasComoAlumno = function () {
         var params = {
             tipo: 1,
             idActividadUHorario: $scope.actividad.idActividad,
@@ -324,16 +326,16 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     //Como profesor y alumno: Obtener registro horas (solo categorias)
-    function obtenerRegistroHorasSoloCategorias(){
+    function obtenerRegistroHorasSoloCategorias() {
         var params = {
             tipo: 1,
             idActividadUHorario: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
-            if (res.data.succeed == false){
+            if (res.data.succeed == false) {
                 return;
-            } 
-            else{
+            }
+            else {
                 //Asigno el objeto registro horas categoria al registro horas con respuestas
                 $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
                 $scope.regEsfuerzoHorasidAlumno = $scope.usuario.idUser;
@@ -343,27 +345,27 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 }
                 $scope.hayRegCategoriasActividad = true;
             }
-            
+
         })
     }
 
     //Como profesor: Agregar una categoria
-    $scope.btnAgregarCategoria = function(){
+    $scope.btnAgregarCategoria = function () {
         $scope.regEsfuerzo.listaCategorias.push({
             descripcion: ''
         });
     }
 
     //Como profesor: Quitar una categoria
-    $scope.btnQuitarCategoria = function(categoria){
+    $scope.btnQuitarCategoria = function (categoria) {
         var pos = $scope.regEsfuerzo.listaCategorias.indexOf(categoria)
         $scope.regEsfuerzo.listaCategorias.splice(pos, 1)
     }
 
     //Como alumno puedo agregar una respuesta a una categoria
-    $scope.btnAgregarRespuesta = function(categoria){
+    $scope.btnAgregarRespuesta = function (categoria) {
         var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
-        
+
         $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.push({
             descripcion: '',
             horasPlanificadas: null,
@@ -372,10 +374,10 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     //Como alumno: Quitar una respuesta de una categoria
-    $scope.btnQuitarRespuesta = function(categoria,respuesta){
+    $scope.btnQuitarRespuesta = function (categoria, respuesta) {
         var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
         var pos2 = $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.indexOf(respuesta);
-        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.splice(pos2,1)
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.splice(pos2, 1)
     }
 
     function ListarAlumnos() {
@@ -399,19 +401,19 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     function init() {
-        if($scope.esProfesor){
+        if ($scope.esProfesor) {
             ListarAlumnos();
             obtenerRegistroHorasSoloCategorias();
             $scope.obtenerRegistroHorasXAlumno();
         }
-        if(!$scope.esProfesor){
+        if (!$scope.esProfesor) {
             $scope.listarGrupo();
             $scope.obtenerRegHorasComoAlumno();
         }
-            
 
-        
-        
+
+
+
     }
 
     init();

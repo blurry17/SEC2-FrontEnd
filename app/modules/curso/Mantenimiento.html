@@ -78,7 +78,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label>Nombre</label>
-                            <input type="text" class="form-control" maxlength="20" required>
+                            <input type="text" class="form-control" maxlength="20" ng-model="nomSem" required>
                             <div class="invalid-feedback">
                                 Este campo es requerido.
                             </div>
@@ -87,7 +87,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="">Crear</button>
+                <button class="btn btn-primary" type="submit" ng-click="crearSemestre()">Crear</button>
                 <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -105,15 +105,15 @@
             <div class="modal-body">
                 <div class="col-md-12">
                     <label>Semestre</label>
-                    <select class="custom-select">
+                    <select class="custom-select" ng-model="idSemAct">
                         <option value="0">Seleccione</option>
-                        <option ng-value="" ng-repeat="sem in semestres">{{sem}}</option>
+                        <option ng-value="sem.idSemestre" ng-repeat="sem in lstSemActivos">{{sem.nombre}}</option>
                     </select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="">Activar</button>
-                <button class="btn btn-default" type="submit" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-primary" type="submit" ng-click="btnActivarSemestre()">Activar</button>
+                <button class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
