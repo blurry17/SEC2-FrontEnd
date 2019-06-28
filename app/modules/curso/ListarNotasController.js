@@ -5,17 +5,20 @@ app.controller('ListarNotasController', function ($rootScope, $scope, $location,
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
+    $scope.rubrica = $cookies.getObject("rubricaActual");
     $scope.esProfesor = $scope.usuario.profesor;
     $scope.listaNotasAlum =[];
 
  
     function ListarNotas() {
-        var params = { idActividad: $scope.actividad.idActividad }
+        var params = { 
+          idActividad: $scope.actividad.idActividad,
+          idRubrica: $scope.rubrica.idRubrica }
         
-        console.dir(params);
-        serviceCRUD.TypePost('notas-finales', params).then(function (res) {
+          //console.dir(params);
+          serviceCRUD.TypePost('notas-finales', params).then(function (res) {
           $scope.listaNotasAlum = res.data.listaNotas;
-          console.dir("holaaaa");
+          //console.dir("holaaaa");
         })
     }
     function init() {
