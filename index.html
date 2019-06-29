@@ -29,7 +29,7 @@
     <div class="row">
 
       <nav class="navbar fixed-top topbar" ng-show="showLayout">
-        <button type="button" id="sidebarCollapse" class="btn btn-light btn-menu"><i class="fas fa-bars"></i></button>
+        <button type="button" id="sidebarCollapse" class="btn btn-menu"><i class="fas fa-bars"></i></button>
         <div>
           <!-- <img src="src/img/logo-fullSEC.png" alt="SEC2" width="30px" height="45px"> -->
           <label style="font-size: 1.4rem; font-weight: bold">SEC&nbsp;<sup>2</sup></label>
@@ -37,7 +37,7 @@
 
         <div class="dropdown">
           <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
-            style="font-size: 100%; cursor: pointer; margin: 0px">{{usuario.nombre}}&nbsp;<i class="fas fa-user-circle"
+            style="font-size: 100%; cursor: pointer; margin: 0px">{{user.nombre}}&nbsp;<i class="fas fa-user-circle"
               style="font-size: 150%"></i></label>
           <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbsp;Mi Perfil</a>
@@ -62,15 +62,17 @@
                   class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
             </ul>
           </li>
-          <li class="active">
+          <li class="active" ng-show="usuario.superUsuario">
             <a data-target="#cargamenus" data-toggle="collapse" aria-expanded="false"
               class="dropdown-toggle menu-item"><i class="fas fa-file-excel"></i>&nbsp;Carga Masiva</a>
             <ul class="collapse list-unstyled" id="cargamenus">
-              <li><a class="submenu-item">Alumnos por horario</a></li>
-              <li><a class="submenu-item">Cursos</a></li>
-              <li><a class="submenu-item">Profesores</a></li>
-              <li><a class="submenu-item">Jefes de práctica</a></li>
+              <li ng-click="btnCargaHorarios()"><a class="submenu-item">Horarios</a></li>
+              <li ng-click="btnCargaCursos()"><a class="submenu-item">Cursos</a></li>
+              <li ng-click="btnCargaProfs()"><a class="submenu-item">Profesores/JP</a></li>
             </ul>
+          </li>
+          <li class="menu-item" ng-show="usuario.superUsuario" ng-click="btnMant()">
+            <a><i class="fas fa-cogs"></i>&nbsp;Mantenimiento</a>
           </li>
           <li class="menu-item">
             <a><i class="fas fa-history"></i>&nbsp;Información Histórica</a>
@@ -98,13 +100,12 @@
     document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
     document.write("<script type='text/javascript' src='app/modules/curso/EncuestaController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/MantenimientoController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/ListarNotasController.js?v=" + Date.now() + "'><\/script>");
 
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <!-- <script src="src/sweetalert2/dist/sweetalert2.all.min.js"></script> -->
-<!-- Optional: include a polyfill for ES6 Promises for IE11 and Android browser -->
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -123,8 +124,7 @@
 
       $('#sidebarCollapse').on('click', function () {
         if ($('#sidebar').hasClass('active')) {
-          $('#sidebar').removeClass('active');
-          $('.overlay').removeClass('active');
+          console.dir('hola');
         } else {
           $('#sidebar').addClass('active');
           $('.overlay').addClass('active');
@@ -146,6 +146,120 @@
       }
     });
   </script>
+
+  <div class="modal fade" id="mdCargaCursos" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de cursos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileCursos" name="fileCursos">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarCursos()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="mdCargaProfs" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de profesores/JP</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp" ng-change="listarCursos()">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileProfs" name="fileProfs">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarProfs()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="mdCargaHorarios" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de horarios</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp" ng-change="listarCursos()">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Curso</label>
+                <select class="custom-select" ng-model="idCur" ng-disabled="idEsp=='0'">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="curso.id_curso" ng-repeat="curso in lstCursos">{{curso.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileHorarios" name="fileHorarios">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarHorarios()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 
 </html>

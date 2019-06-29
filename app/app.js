@@ -55,10 +55,16 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'ComentariosController'
         })
 
-        .when('/alarmas', {
-            templateUrl: 'app/modules/curso/Alarmas.html?v=' + Date.now(),
-            controller: 'AlarmasController'
+        .when('/mantenimiento', {
+            templateUrl: 'app/modules/curso/Mantenimiento.html?v=' + Date.now(),
+            controller: 'MantenimientoController'
         })
+
+        .when('/ListarNotas', {
+            templateUrl: 'app/modules/curso/ListarNotas.html?v=' + Date.now(),
+            controller: 'ListarNotasController'
+        })
+
         .otherwise({
             redirectTo: '/main'
         });

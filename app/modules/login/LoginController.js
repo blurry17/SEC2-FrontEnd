@@ -11,7 +11,6 @@
     $scope.showAlert1 = false;
     $scope.showAlert2 = false;
 
-    
     var params = {
       email: $scope.email,
       clave: $scope.pass
@@ -22,14 +21,12 @@
         $scope.showAlert2 = true;
         return;
       }
-      var usuario = res.data;   
+      var usuario = res.data;
+      $rootScope.user = res.data;
       $cookies.putObject('usuario', usuario);
-
       $scope.showAlert2 = false;
-      
       location.href = indexURL + 'main';
     })
-    
   }
 
   $scope.btnForgotPassword = function () {
