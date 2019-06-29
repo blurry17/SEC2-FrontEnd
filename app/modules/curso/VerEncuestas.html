@@ -1,0 +1,27 @@
+<div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
+            <li class="breadcrumb-item"><a href="#!actividad"> {{actividad.nombre}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Ver Encuestas</li>
+        </ol>
+    </nav><br />
+    <h1 style="color: black"><b>Auto Evaluación</b></h1>
+    <div class="card" style="background-color: rgb(135, 177, 166)">
+        <div class="row">
+            <div class="card-body">
+                <div class="col-12">
+                    <h3 style="color: black">Seleccione Alumno:</h3>
+                </div>
+                <div class="col-3">
+                    <select ng-change="obtenerAuto()" class="form-control custom-select" ng-model="idAlumno" ng-init="idAlumno = '0'">
+                            <option value="0">Seleccione</option>
+                            <option ng-repeat="alumno in listaAl" ng-value="item.idUsuario">{{alumno.codigoPucp +" - "+ alumno.nombre+" "+alumno.apellidoPaterno+" "+alumno.apellidoMaterno}}
+                            </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

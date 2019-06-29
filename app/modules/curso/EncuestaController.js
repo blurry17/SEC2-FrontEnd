@@ -13,6 +13,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
     $scope.auTieneNota=false;
+
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
         tipo: 1,
@@ -136,6 +137,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             })
 
         }
+    }
 
     $scope.btnGuardarCo = function () {
         if (formCo.checkValidity()) {
