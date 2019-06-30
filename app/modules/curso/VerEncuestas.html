@@ -6,7 +6,7 @@
             <li class="breadcrumb-item active" aria-current="page">Ver Encuestas</li>
         </ol>
     </nav><br />
-    <div>
+    <div style="padding-bottom: 25px">
         <h1 style="color: black"><b>Auto Evaluación</b></h1>
         <div class="card" style="background-color: rgb(135, 177, 166)">
             <div class="row">
@@ -17,9 +17,9 @@
                     </div>
                     <div class="form-row" >
                     <div class="col-4" style="padding-right: 1%; padding-left: 1%">
-                            <select ng-change="obtenerAuto()" class="form-control custom-select" ng-model="idAlumno" ng-init="idAlumno = '0'">
-                                    <option ng-if="idAlumno==0" value="0">Seleccione</option>
-                                    <option ng-repeat="alumno in listaAl" ng-value="alumno.idUsuario">{{alumno.codigoPucp +" - "+ alumno.nombre+" "+alumno.apellidoPaterno+" "+alumno.apellidoMaterno}}
+                            <select ng-change="obtenerAuto()" class="form-control custom-select" ng-model="alumno.idAlumno" ng-init="alumno.idAlumno = '0'">
+                                    <option ng-if="alumno.idAlumno==0" value="0">Seleccione</option>
+                                    <option ng-repeat="alumnos in listaAl" ng-value="alumnos.idUsuario">{{alumnos.codigoPucp +" - "+ alumnos.nombre+" "+alumnos.apellidoPaterno+" "+alumnos.apellidoMaterno}}
                                     </option>
                             </select>
                         </div>
@@ -183,7 +183,39 @@
     
         </div>
     </div>
-    <div >
+    <div ng-if="actividad.tipo=='G'">   
+            <h1 style="color: black"><b>Co Evaluación</b></h1>
+            <div class="card" style="background-color: rgb(135, 177, 166)">
+                    <div class="row">
+                        <div class="card-body">
+                            <div class="col-12">
+                                <h3 style="color: black">Seleccione Grupo:</h3>
+                                
+                            </div>
+                            <div class="form-row" >
+                            <div class="col-4" style="padding-right: 1%; padding-left: 1%">
+                                    <select ng-change="obtenerCo()" class="form-control custom-select" ng-model="grupo.idGrupal" ng-init="grupo.idGrupal = '0'">
+                                            <option ng-if="grupo.idGrupal==0" value="0">Seleccione</option>
+                                            <option ng-repeat="grupo in listaGrupal" ng-value="grupo.idGrupo">{{grupo.nombreGrupo}}
+                                            </option>
+                                    </select>
+                                </div>
+                                <col-2>
+                            
+                                <button class="btn btn-success" ng-click="siguienteG()"><i class="fas fa-arrow-circle-right"></i></button>
+                                </col-2>
+                            </div>
+                            <!-- Aca empieza todo autoeval -->
+                            <div class="row">
+                                <div class="col-6"></div>
+                                <div class="col-6">
 
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+            
+                </div>
     </div>
 </div>
