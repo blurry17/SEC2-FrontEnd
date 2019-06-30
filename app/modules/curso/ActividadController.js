@@ -48,6 +48,10 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
         $('#mdConfirmacionEliminacionCo').appendTo("body").modal('show');
     }
 
+    $scope.btnVerEnc=function(){
+        $location.path('verEncuestas');
+    }
+
     $scope.btnCalificaciones = function () {
         $location.path('calificaciones');
     }
@@ -58,6 +62,10 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
 
     $scope.btnRubrica = function () {
         $location.path("rubrica")
+    }
+
+    $scope.btnListarNotas = function () {
+        $location.path("ListarNotas")
     }
 
     $scope.btnEstadisticas = function () {

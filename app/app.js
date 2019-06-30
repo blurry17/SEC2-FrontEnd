@@ -40,6 +40,11 @@ app.config(function ($routeProvider, $httpProvider) {
             controller: 'EstadisticasController'
         })
 
+        .when('/verEncuestas',{
+            templateUrl:'app/modules/curso/VerEncuestas.html?v=' + Date.now(),
+            controller: 'VerEncuestasController'
+        })
+
         .when('/encuesta', {
             templateUrl: 'app/modules/curso/Encuesta.html?v=' + Date.now(),
             controller: 'EncuestaController'
@@ -58,6 +63,11 @@ app.config(function ($routeProvider, $httpProvider) {
         .when('/mantenimiento', {
             templateUrl: 'app/modules/curso/Mantenimiento.html?v=' + Date.now(),
             controller: 'MantenimientoController'
+        })
+
+        .when('/ListarNotas', {
+            templateUrl: 'app/modules/curso/ListarNotas.html?v=' + Date.now(),
+            controller: 'ListarNotasController'
         })
 
         .otherwise({
