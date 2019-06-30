@@ -22,7 +22,7 @@ app.controller('ListarNotasController', function ($rootScope, $scope, $location,
             idActividad: $scope.actividad.idActividad,
             idRubrica: $scope.idRub }
           
-            //console.dir(params);
+            console.dir(params);
             serviceCRUD.TypePost('notas-finales', params).then(function (res) {
             $scope.listaNotasAlum = res.data.listaNotas;
             //console.dir("holaaaa");

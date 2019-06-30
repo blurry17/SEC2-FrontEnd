@@ -29,6 +29,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
     $scope.hayRegHorasActividad = false;
     $scope.hayRegCategoriasActividad = false;
+    //$scope.hayEncuesta=true;
 
 
     //console.dir($scope.usuario );
@@ -210,6 +211,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             }else {
                 $scope.auTieneNota=true;
             }
+            //$scope.hayEncuesta=false;
         })
     }
 
