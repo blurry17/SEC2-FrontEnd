@@ -505,6 +505,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
     }
 
+    $scope.btnObtenerRevisiones = function(){
+        var params  = {
+            idProfesor: $scope.usuario.idUser
+        }
+        serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
+            console.dir(res.data);
+        })
+    }
+
     function ObtenerRubrica() {
         var params = {
             idActividad: $scope.actividad.idActividad,
@@ -516,6 +525,21 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             $scope.idRub = res.data.idRubrica;
             $scope.rubrica.nombreRubrica = res.data.nombreRubrica
         })
+    }
+
+    $scope.aprobarRevision  = function(){
+        var params = {
+            idActividad: $scope.actividad.idActividad
+
+        }
+        console.dir(params)
+        serviceCRUD.TypePost('publicar-notas/publicar_notas_directo_profesor', params).then(function (res) {
+            if(res.data.succeed = false){
+                console.dir('no se pudo aprobar la calificacion')
+                return;
+            }
+            console.dir('Se aprobo la calificacion correctamente')
+        })    
     }
 
     function init() {
