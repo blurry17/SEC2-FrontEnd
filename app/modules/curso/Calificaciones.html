@@ -65,8 +65,12 @@
     </div>
 
     <div class="line"></div>
+    <div class="row" style="height: 200px"ng-show="!Calificado"></div>
+        <div class="row justify-content-center" style="padding-top: 20px" ng-show="!Calificado">
+            <h1 style="font-family: Arial, Helvetica, sans-serif; vertical-align: bottom">Aún no se ha calificado la actividad</h1>
+        </div>
     <form id="formCal" name="formCal" class="needs-validation" novalidate>
-        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno" class="card"
+        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno && Calificado" class="card"
             style="background-color: rgb(135, 177, 166)">
             <div class="card-body">
 
@@ -244,6 +248,7 @@
                 </div>
             </div>
         </div>
+        
 
         <div class="line"></div>
 
