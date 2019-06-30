@@ -72,7 +72,12 @@
         datos.append('arch', file[0]);
 
         serviceCRUD.TypePostFile('carga-masiva/cursos', datos).then(function (res) {
-            console.dir(res);
+            Swal.fire({
+                type: 'success',
+                title: 'Carga exitosa',
+                showConfirmButton: 'OK',
+                timer: 2000
+            })
             $('#mdCargaCursos').modal('hide');
         })
     }
@@ -84,7 +89,12 @@
         datos.append('arch', file[0]);
 
         serviceCRUD.TypePostFile('carga-masiva/profesor-jp', datos).then(function (res) {
-            console.dir(res);
+            Swal.fire({
+                type: 'success',
+                title: 'Carga exitosa',
+                showConfirmButton: 'OK',
+                timer: 2000
+            })
             $('#mdCargaProfs').modal('hide');
         })
     }
@@ -97,7 +107,12 @@
         datos.append('arch', file[0]);
 
         serviceCRUD.TypePostFile('carga-masiva/horarios', datos).then(function (res) {
-            console.dir(res);
+            Swal.fire({
+                type: 'success',
+                title: 'Carga exitosa',
+                showConfirmButton: 'OK',
+                timer: 2000
+            })
             $('#mdCargaHorarios').modal('hide');
         })
     }
