@@ -1,5 +1,4 @@
 app.controller('CalificacionesController', function ($rootScope, $scope, $location, $cookies, $http, serviceUtil, serviceCRUD) {
-
     $scope.usuario = $cookies.getObject('usuario');
     $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
@@ -26,6 +25,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     }
     $scope.archivos = null;
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+
     $scope.btnEditar = function () {
         $scope.flgCalificado = false;
         $scope.editar = true;
@@ -33,10 +39,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     //sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
         if ($scope.actividad.tipo == "I" || $scope.usuario.alumno) {
-            console.dir($scope.usuario);
             if ($scope.usuario.alumno == 1) {
                 $scope.idalumno = $scope.usuario.idUser;
-                console.dir($scope.idalumno);
             }
             else if ($scope.idalumno == '0') return;
             $scope.editar = false;
@@ -85,8 +89,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 }
             })
         }
-
-
     }
 
 
@@ -99,14 +101,16 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     }
 
     $scope.btnGuardarPuntaje = function () {
-
         for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
             if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion != 3) {
                 if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 1) {
                     for (let j = 0; j < $scope.rubrica.listaNotaAspectos[i].listaNotaIndicador.length; j++) {
                         for (let k = 0; k < $scope.rubrica.listaNotaAspectos[i].listaNotaIndicador[j].listaNiveles.length; k++) {
                             if ($scope.rubrica.listaNotaAspectos[i].listaNotaIndicador[j].listaNiveles[k].puntaje == null || $scope.rubrica.listaNotaAspectos[i].listaNotaIndicador[j].listaNiveles[k].puntaje == NaN) {
-                                window.alert('Falta registrar la nota de un nivel');
+                                Toast.fire({
+                                    type: 'error',
+                                    title: 'Falta registrar la nota de un nivel'
+                                })
                                 return;
                             }
                         }
@@ -115,7 +119,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 }
             }
         }
-        if($scope.falta==false){
+        if ($scope.falta == false) {
             if (formCal.checkValidity()) {
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
@@ -124,15 +128,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     },
                     buttonsStyling: false,
                 })
-    
+
                 swalWithBootstrapButtons.fire({
-                    title: 'Está seguro que quiere calificar al alumno con la nota "'+ $scope.notaFinal +'" ?',
+                    title: 'Está seguro que quiere calificar al alumno con la nota "' + $scope.notaFinal + '" ?',
                     text: "Si debe cambiar algo, cancele",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Si, continuar',
                     cancelButtonText: 'No, cancelar',
-    
+
                 }).then((result) => {
                     if (result.value) {
                         swalWithBootstrapButtons.fire(
@@ -158,7 +162,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota ? 1 : 0;
                             }
                         }
-    
+
                         if ($scope.editar == false) {
                             if ($scope.actividad.tipo == "I") {
                                 var params = {
@@ -240,19 +244,19 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     $scope.ObtenerNotas();
                                 })
                             }
-    
-    
+
+
                         }
                     } else if (
                         result.dismiss === Swal.DismissReason.cancel
                     ) {
                         swalWithBootstrapButtons.fire(
                             'Se canceló la calificación',
-    
+
                         )
                     }
                 })
-    
+
             }
             else {
                 Swal.fire({
@@ -263,7 +267,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 })
             }
 
-        }else{
+        } else {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -405,12 +409,27 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.btnSubir = function () {
         file = document.getElementById('file').files;
         var datos = new FormData();
+        var tipo = 3;
+
+        if ($scope.url && file.length > 0) tipo = 3;
+        else if (!$scope.url && file.length > 0) tipo = 1;
+        else if ($scope.url && file.length == 0) tipo = 2;
+        else {
+            Swal.fire({
+                title: 'Error',
+                text: 'Ingrese un archivo y/o url',
+                type: 'error',
+                confirmButtonText: 'OK'
+            })
+            return;
+        }
+
 
         datos.append('idActividad', $scope.actividad.idActividad);
         datos.append('idUsuario', $scope.usuario.idUser);
         datos.append('tipo', 1);
         datos.append('cantidadFiles', file.length)
-        datos.append('url', '');
+        datos.append('url', $scope.url);
 
         for (var i = 0; i < file.length; i++) {
             var name = 'file ' + (i + 1);
@@ -418,7 +437,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
 
         serviceCRUD.TypePostFile('entregable/entrega', datos).then(function (res) {
-            console.dir(res);
+            Swal.fire({
+                title: 'Correcto',
+                text: 'Entrega exitosa',
+                type: 'success',
+                confirmButtonText: 'OK'
+            })
         })
     }
 

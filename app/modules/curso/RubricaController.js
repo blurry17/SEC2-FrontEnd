@@ -23,7 +23,13 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
         listaAspectos: [],
         tipo: null
     }
-    var ev = [0, 0, 0, 0, 0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval    
+    var ev = [0, 0, 0, 0, 0]; // chequea si tiene rubrica del curso, autoeval, coeval y eval
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
 
     $scope.btnObtenerEval = function (tipo) {
         $scope.mostrarEv = false;
@@ -38,7 +44,10 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
 
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
             if (res.data.succeed == false) {
-                window.alert('No existe esta evaluación');
+                Toast.fire({
+                    type: 'error',
+                    title: 'No existe esta evaluación'
+                })
                 return;
             }
             ev[tipo] = 1;
@@ -60,21 +69,30 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
         $("#formEva").addClass("was-validated");
         if ($scope.rubrica.listaAspectos.length == 0) {
             $("#formEva").removeClass("was-validated");
-            window.alert('No se agregó ninguna pregunta');
+            Toast.fire({
+                type: 'error',
+                title: 'No se agregó ninguna pregunta'
+            })
             return;
         }
 
         for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
             if ($scope.rubrica.listaAspectos[i].tipoClasificacion != 3 && $scope.rubrica.listaAspectos[i].puntajeMax == '--') {
                 $("#formEva").removeClass("was-validated");
-                window.alert('El puntaje de un aspecto tiene formato incorrecto');
+                Toast.fire({
+                    type: 'error',
+                    title: 'El puntaje de un aspecto tiene formato incorrecto'
+                })
                 return;
             }
             for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
                 for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
                     if ($scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == '--') {
                         $("#formEva").removeClass("was-validated");
-                        window.alert('El puntaje de un nivel tiene formato incorrecto');
+                        Toast.fire({
+                            type: 'error',
+                            title: 'El puntaje de un nivel tiene formato incorrecto'
+                        })
                         return;
                     }
                 }
@@ -95,15 +113,21 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
                 $scope.edicion = false;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
-                console.dir($scope.rubrica);
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Evaluacion guardada'
+                    })
                 })
             } else {
                 $scope.bloqEval = true;
                 $scope.mostrarBtns = false;
                 $scope.mostrarBtnEditar = true;
-                console.dir($scope.rubrica);
                 serviceCRUD.TypePost('actividad/crear_rubrica', $scope.rubrica).then(function (res) {
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Evaluacion guardada'
+                    })
                 })
             }
             $scope.mostrarCrearRubrica = false;
