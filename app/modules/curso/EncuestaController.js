@@ -209,6 +209,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.usuario.idUser,
         }
+        console.dir(params.idAlumno);
         serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
             $scope.rubricaAuto=res.data;
             if(res.data.nota==null){
