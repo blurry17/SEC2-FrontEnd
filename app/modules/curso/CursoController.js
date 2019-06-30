@@ -52,6 +52,13 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.hayRegHorasHorario = false;
     $scope.regHorasIngresado = false;
 
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+    });
+
 
     var idActEdit = null;
     $('#acts').collapse('show');
@@ -60,6 +67,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     function ListarActividades() {
         var params = { idHorario: $scope.curso.idhorario };
         serviceCRUD.TypePost('actividad/lista', params).then(function (res) {
+            console.dir(res.data);
             for (let i = 0; i < res.data.length; i++) {
                 var dtIni = serviceUtil.getObjDate(res.data[i].fechaInicio);
                 var dtFin = serviceUtil.getObjDate(res.data[i].fechaFin);
@@ -186,6 +194,10 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                     ListarActividades();
                     $("#mdAgregarActividad").modal('hide');
                     $scope.busy = false;
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Actividad creada'
+                    })
                 })
 
             }
@@ -222,6 +234,10 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 serviceCRUD.TypePost('actividad/editar_actividad', params).then(function (res) {
                     ListarActividades();
                     $("#mdAgregarActividad").modal('hide');
+                    Toast.fire({
+                        type: 'success',
+                        title: 'Actividad editada'
+                    })
                     $scope.busy = false;
                 })
             }
@@ -318,7 +334,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     $scope.verGrupo = function (grupo) {
         $scope.lstVerAgrupacion = grupo;
-        console.dir($scope.lstVerAgrupacion);
         $('#mdVerAgrupaciones').appendTo("body").modal('show');
     }
 
@@ -327,10 +342,8 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             idHorario: $scope.curso.idhorario,
             grupos: $scope.lstGrupos
         }
-        //console.dir(params);
 
         serviceCRUD.TypePost('grupo/crear-general', params).then(function (res) {
-            console.dir(res.data);
             hayAgrupaciones();
         })
         $("#mdAgregarAgrupacion").modal('hide');
@@ -366,8 +379,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $scope.showAlert3 = false;
 
         if (formActRegHoras.checkValidity()) {
-            console.dir($scope.regEsfuerzo)
-            console.dir(JSON.stringify($scope.regEsfuerzo))
             serviceCRUD.TypePost('registro_horas/crear_registro_horas', $scope.regEsfuerzo).then(function (res) {
                 console.dir(res)
             })
@@ -376,7 +387,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
     //Como alumno: Registrar Horas
     $scope.btnGuardarRegHorasAlumno = function () {
-        console.dir($scope.regEsfuerzoHoras)
         $("#formActRegHorasAlumno").addClass("was-validated");
 
         for (let i = 0; i < $scope.regEsfuerzoHoras.listaCategorias.length; i++) {
@@ -410,12 +420,9 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 $scope.showAlert8 = false;
             }
         }
-        console.dir('regEsfuerzoHoras cuando presiono el boton')
-        console.dir($scope.regEsfuerzoHoras)
 
         if (formActRegHorasAlumno.checkValidity()) {
             serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
-                console.dir(res)
                 $("#mdRegHoras").modal('hide');
             })
         }
@@ -429,15 +436,13 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             tipo: 2,
             idActividadUHorario: $scope.curso.idhorario
         }
-        console.dir(params)
+
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
             if (res.data.succeed == false) {
-                console.dir('no se encontro el registro de esfuerzo')
                 return;
             }
             else {
                 $scope.hayRegHorasHorario = true;
-                console.dir(res.data)
                 //Asigno el objeto registro horas categoria al registro horas con respuestas
                 $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
                 $scope.regEsfuerzoHorasidAlumno = $scope.usuario.idUser;
@@ -476,7 +481,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             idAlumno: $scope.usuario.idUser
         }
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
-            console.dir(res.data)
             $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
             $scope.regEsfuerzoHoras.tipo = res.data.tipo;
             $scope.regEsfuerzoHoras.idAlumno = $scope.usuario.idUser
@@ -486,8 +490,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
                 $scope.regHorasIngresado = true;
             if ($scope.regEsfuerzoHoras.listaCategorias[0].listaRespuestas.length == 0)
                 $scope.hayRegHorasHorario = true;
-
-            console.dir($scope.regEsfuerzoHoras)
         })
     }
 
@@ -528,13 +530,11 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     //Como alumno puedo agregar una respuesta a una categoria
     $scope.btnAgregarRespuesta = function (categoria) {
         var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
-        console.dir(pos)
         $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.push({
             descripcion: '',
             horasPlanificadas: null,
             horasReales: null
         })
-        console.dir($scope.regEsfuerzoHoras)
     }
 
     //Como alumno: Quitar una respuesta de una categoria
@@ -547,16 +547,29 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     function ListarAlumnos() {
         var params = { idHorario: $scope.curso.idhorario }
         serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
-            console.dir(res.data)
             $scope.listaAl = res.data;
         })
-        console.dir($scope.listaAl)
-
     }
 
+    $scope.btnCargarAlu = function () {
+        $('#mdCargaAlumni').appendTo("body").modal('show');
+    }
 
+    $scope.cargarAlumnos = function () {
+        file = document.getElementById('fileAl').files;
+        var datos = new FormData();
+        datos.append('idEspecialidad', $scope.curso.idEspecialidad);
+        datos.append('idCurso', $scope.curso.idcurso);
+        datos.append('arch', file[0]);
 
-
+        serviceCRUD.TypePostFile('carga-masiva/horarios', datos).then(function (res) {
+            $('#mdCargaHorarios').modal('hide');
+            Toast.fire({
+                type: 'success',
+                title: 'Carga exitosa'
+            })
+        })
+    }
 
     function init() {
         ListarActividades();
@@ -577,7 +590,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         }
 
         serviceCRUD.TypePost('grupo/listar-general', params).then(function (res) {
-            console.dir(res.data);
             if (res.length == null) {
 
             } else {
