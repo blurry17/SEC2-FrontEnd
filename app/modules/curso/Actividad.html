@@ -9,25 +9,24 @@
   <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 30px">
 
     <div>
-      <label class="vertical-center" style="margin-top: 14px;font-size: 210%"><b>{{actividad.nombre.toUpperCase()}}</b><i
-          style="color: rgb(54, 105, 2);padding-left: 25px;" class="fas fa-user"></i></label>
+      <label class="vertical-center" style="margin-top: 14px;font-size: 210%"><b>{{actividad.nombre}}</b></label>
     </div>
 
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
-      <button ng-click="btnCalificaciones()" class="btn btn-dark" style="margin: 2px;"><i
+      <button ng-click="btnCalificaciones()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-check"></i>&nbsp;Calificaciones</button>
-      <button ng-click="btnRubrica()" class="btn btn-dark" style="margin: 2px;"><i
-          class="fas fa-scroll"></i>&nbsp;Hojas de
+      <button ng-click="btnRubrica()" class="btn btn-info" style="margin: 2px;"><i class="fas fa-scroll"></i>&nbsp;Hojas
+        de
         evaluación</button>
-      <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-dark"
-        style="margin: 2px;height: 32px;"><i class="fas fa-users"></i>&nbsp;Grupos</button>
-      <button ng-click="btnComentarios()" type="button" class="btn btn-dark" style="margin: 2px;"><i
+      <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-info"
+        style="margin: 2px;"><i class="fas fa-users"></i>&nbsp;Grupos</button>
+      <button ng-click="btnComentarios()" type="button" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-comments"></i>&nbsp;Comentarios</button>
 
       <button ng-show="usuario.profesor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        id="dropdownMenuButton" type="button" class="btn btn-dark" style="margin: 2px"
-        ng-click="btnlistarAlarmas()"><i class="fas fa-bell"></i>&nbsp;Alertas</button>
+        id="dropdownMenuButton" type="button" class="btn btn-info" style="margin: 2px" ng-click="btnlistarAlarmas()"><i
+          class="fas fa-bell"></i>&nbsp;Alertas</button>
       <div class="dropdown-menu">
         <a class="dropdown-item" style="cursor:pointer" ng-click="btnAlerta()"><i class="fas fa-plus"></i>&nbsp;Crear
         </a>
@@ -36,9 +35,15 @@
             class="fas fa-bell"></i> &nbsp;{{p.nombre}}
         </a>
       </div>
-      <button ng-click="btnEstadisticas()" class="btn btn-dark" style="margin: 2px;">Estadísticas</button>
-      <button ng-show="usuario.alumno" ng-click="btnEncuesta()" class="btn btn-dark" style="margin: 2px;">Encuestas</button>
-      
+      <button ng-click="btnEstadisticas()" class="btn btn-info" style="margin: 2px;"><i
+          class="fas fa-chart-bar"></i>&nbsp;Estadísticas</button>
+      <button ng-show="usuario.alumno" ng-click="btnEncuesta()" class="btn btn-info" style="margin: 2px;"><i
+          class="fas fa-bookmark"></i>&nbsp;Encuestas</button>
+      <button ng-show="usuario.profesor" ng-click="btnListarNotas()" class="btn btn-info" style="margin: 2px;"><i
+          class="fas fa-chart-line"></i>&nbsp;Notas</button>
+      <button ng-show="usuario.profesor" ng-click="btnVerEnc()" class="btn btn-info" style="margin: 2px;"><i
+          class="fas fa-chart-line"></i>&nbsp;Encuestas</button>
+
       <div>
         <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdErrorCoEval" tabindex="-1" role="dialog"
           data-backdrop="static" aria-hidden="true">
@@ -124,7 +129,7 @@
 
   <div class="row" style="padding-left: 15px">
     <div class="form-group col-md-6 col-lg-5">
-      <label style="font-weight: bold; font-size: 140%" >Indicaciones</label>
+      <label style="font-weight: bold; font-size: 140%">Indicaciones</label>
       <textarea style="resize: none" class="form-control" readonly ng-model="actividad.descripcion"></textarea>
     </div>
     <div class="form-group col-md-6 col-lg-5">

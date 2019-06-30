@@ -1,5 +1,6 @@
 app.controller('EstadisticasController', function ($rootScope, $scope, $location, $cookies, serviceUtil, serviceCRUD) {
   $scope.usuario = $cookies.getObject('usuario');
+  $rootScope.user = $scope.usuario;
   if ($scope.usuario == undefined) $location.path('/');
   $rootScope.lstCursos = $cookies.getObject('cursos');
   $scope.curso = $cookies.getObject("cursoActual");
@@ -13,13 +14,13 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     $location.path("curso")
   }
 
-  $scope.listaFrec=[];
+  $scope.listaFrec = [];
   $scope.gc = false;
   $scope.gb = false;
   $scope.seleccion = 'g';
-  
 
-  var params = { idActividad: $scope.actividad.idActividad}
+
+  var params = { idActividad: $scope.actividad.idActividad }
   function listarRanking() {
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
       //console.dir(res.data);
@@ -41,17 +42,11 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
 
   function tablaNotas() {
     serviceCRUD.TypePost('alumnos/notas', params).then(function (res) {
-      console.dir("VER ACA");
-      console.dir(res.data);
       $scope.listaN = res.data.listaNotas;
       $scope.listaFrec = res.data.notaFrecuencia;
-     
       $scope.cantidadN = res.data.cantidadNotas;
       $scope.cantidadF = res.data.cantidadFalta;
       $scope.cantidadT = res.data.cantidadTotal;
-      //console.dir($scope.cantidadF);
-      console.dir("CANTIDAD FALTAS:");
-      console.dir(res.data.cantidadFalta);
     })
 
   }
@@ -84,26 +79,26 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     var data = new google.visualization.DataTable();
     data.addColumn('number', 'Notas');
     data.addColumn('number', 'Cantidad de Alumnos');
-    data.addColumn({type: 'string', role: 'style'});
+    data.addColumn({ type: 'string', role: 'style' });
     for (let i = 0; i < $scope.listaFrec.length; i++) {
-      var auxnota =$scope.listaFrec[i].nota;
-      
-      var colorNota ;
-      if  ( auxnota <= 10) colorNota = 'color: red' ;
-      else colorNota = 'color: blue'; 
-      data.addRow([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia,colorNota])
+      var auxnota = $scope.listaFrec[i].nota;
+
+      var colorNota;
+      if (auxnota <= 10) colorNota = 'color: red';
+      else colorNota = 'color: blue';
+      data.addRow([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia, colorNota])
     }
 
     //console.dir(arregloFrec);
-    
+
     var options = {
       chart: {
         title: 'Estadisticas de notas'
       },
       bars: 'vertical',
-      backgroundColor: '#E4E4E4',  
-      opacity : 0.7
-       // Required for Material Bar Charts.
+      backgroundColor: '#E4E4E4',
+      opacity: 0.7
+      // Required for Material Bar Charts.
     };
 
     //var chart = new google.charts.Bar(document.getElementById('barchart_material'));
@@ -118,7 +113,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
       google.charts.load('current', { 'packages': ['corechart'] });
       google.charts.setOnLoadCallback(drawChartC);
     } else if ($scope.seleccion == 'gb') {
-      google.charts.load('visualization','current', { 'packages': ['corechart'] ,callback : drawChartB}); // corechart
+      google.charts.load('visualization', 'current', { 'packages': ['corechart'], callback: drawChartB }); // corechart
       //google.charts.setOnLoadCallback(drawChartB);
       $scope.gc = false;
       $scope.gb = true;
@@ -132,7 +127,7 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
     listarRanking();
   }
 
-init();
+  init();
 
 })
 

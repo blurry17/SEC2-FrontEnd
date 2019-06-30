@@ -103,10 +103,13 @@ a:focus {
 }
 
 .btn-menu{
-    background-color: rgb(169, 174, 184);
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(58, 61, 75);
+    background-color: #272729;
+    color: whitesmoke
+}
+
+.btn-menu:hover{
+    background-color: #353538;
+    color: whitesmoke
 }
 
 /* ---------------------------------------------------
