@@ -8,11 +8,12 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.vistaAlumno = $scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
-    $scope.idRub = 0;
-    $scope.coTieneNota = false;
+    $scope.idRub=0;
+    $scope.coTieneNota=false;
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
     $scope.auTieneNota=false;
+
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
         tipo: 1,
@@ -112,26 +113,31 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         })
     }
 
-    $scope.obtenerCo = function () {
-        let params = {
-            idActividad: $scope.actividad.idActividad,
-            idCalificado: $scope.idalumno,
-            idCalificador: $scope.usuario.idUser,
+    $scope.obtenerCo=function(){
+        if($scope.idalumno==0){
+            $scope.coTieneNota=true;
+        }else{
+            let params={
+                idActividad:$scope.actividad.idActividad,
+                idCalificado:$scope.idalumno,
+                idCalificador:$scope.usuario.idUser,
+    
+            }
+            console.dir('este es el yeison');
+            console.dir(params);
+            serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
+                $scope.rubricaCoauto=res.data;
+                if(res.data.nota==null){
+                    $scope.coTieneNota=false;
+                }else {
+                    $scope.coTieneNota=true;
+                }
+                console.dir('LA RES');
+                console.dir(res.data);
+                
+            })
 
         }
-        console.dir('este es el yeison');
-        console.dir(params);
-        serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion', params).then(function (res) {
-            $scope.rubricaCoauto = res.data;
-            if (res.data.nota == null) {
-                $scope.coTieneNota = false;
-            } else {
-                $scope.coTieneNota = true;
-            }
-            console.dir('LA RES');
-            console.dir(res.data);
-
-        })
     }
 
     $scope.btnGuardarCo = function () {
@@ -204,6 +210,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.usuario.idUser,
         }
+        console.dir(params.idAlumno);
         serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
             $scope.rubricaAuto=res.data;
             if(res.data.nota==null){
