@@ -137,7 +137,7 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
     $scope.btnCrearEval = function (tipo) {
         $("#formEva").removeClass("was-validated");
         if (ev[tipo]) {
-            var r = window.confirm("Ya existe una evalución de este tipo. ¿Desea crear una nueva?");
+            var r = window.confirm("Ya existe una evaluación de este tipo. ¿Desea crear una nueva?");
             if (r) {
                 $scope.rubrica.nombreRubrica = '';
                 $scope.rubrica.listaAspectos = [];
@@ -148,6 +148,7 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
                 $scope.mostrarBtnEditar = false;
                 $scope.mostrarBtns = true;
             }
+
         } else {
             $scope.rubrica.nombreRubrica = '';
             $scope.rubrica.listaAspectos = [];
