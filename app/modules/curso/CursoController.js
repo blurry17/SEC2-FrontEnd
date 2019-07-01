@@ -2,6 +2,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.usuario = $cookies.getObject('usuario');
     $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
+    console.dir($scope.usuario)
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.esProfesor = $scope.usuario.profesor;
@@ -49,6 +50,9 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         listaCategorias: $scope.regEsfuerzo.listaCategorias
     }
 
+    $scope.listaFeedbacks = []
+    $scope.listaActividadesFeedback = [];
+
     $scope.hayRegHorasHorario = false;
     $scope.regHorasIngresado = false;
 
@@ -64,24 +68,41 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $('#acts').collapse('show');
     $('#groups').collapse('show');
 
+    function obtenerEtapa(ini, fin) {
+        let hoy = new Date();
+        let etapa = null;
+
+        if (hoy < ini) etapa = 1;
+        else if (hoy > ini && hoy < fin) etapa = 2;
+        else if (hoy > fin) etapa = 3;
+
+        return etapa;
+    }
+
     function ListarActividades() {
         var params = { idHorario: $scope.curso.idhorario };
         serviceCRUD.TypePost('actividad/lista', params).then(function (res) {
-            console.dir(res.data);
             for (let i = 0; i < res.data.length; i++) {
                 var dtIni = serviceUtil.getObjDate(res.data[i].fechaInicio);
                 var dtFin = serviceUtil.getObjDate(res.data[i].fechaFin);
-
+                res.data[i].etapa = obtenerEtapa(serviceUtil.SQLtoJSDate(res.data[i].fechaInicio), serviceUtil.SQLtoJSDate(res.data[i].fechaFin));
                 res.data[i].fechaInicio = dtIni.datestr;
                 res.data[i].horaInicio = dtIni.hora;
                 res.data[i].minInicio = dtIni.min;
-
                 res.data[i].fechaFin = dtFin.datestr;
                 res.data[i].horaFin = dtFin.hora;
                 res.data[i].minFin = dtFin.min;
             }
             $scope.lstActividad = res.data;
         })
+    }
+
+    $scope.obtenerColorBorde = function (act) {
+        let color = 'card text-center ';
+        if (act.etapa == 1) color += 'border-warning';
+        else if (act.etapa == 2) color += 'border-success';
+        else if (act.etapa == 3) color += 'border-dark';
+        return color;
     }
 
     function ListarAgrupaciones() {
@@ -96,7 +117,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             idHorario: $scope.curso.idhorario
         }
         serviceCRUD.TypePost('existencia/agrupaciones', params).then(function (res) {
-            console.dir(res);
             if (res.data.message == false) {
                 $scope.existeAgrupaciones = false;
                 $scope.lstAgrupaciones = [];
@@ -571,12 +591,66 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         })
     }
 
+    $scope.btnVerObtenerRevisiones = function () {
+        $('#mdObtenerRevisiones').appendTo("body").modal('show');
+        ObtenerRevisiones();
+    }
+
+    function ObtenerRevisiones(){
+        if($scope.listaFeedbacks.length > 0)
+            return;
+        var params  = {
+            idProfesor: $scope.usuario.idUser
+        }   
+        serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
+            console.dir('Lo que devuelve el servicio obtener revisiones profesor')
+            console.dir(res)
+            if(res.data.succeed == false){
+                console.dir('no se encontro')
+                return;
+            }
+            $scope.listaFeedbacks = res.data.listaFeedbacks;
+
+            //Tengo que sacar los datos de la actividad usando el id
+            for (let i = 0; i < $scope.listaFeedbacks.length; i++){
+                let idActFeedback = $scope.listaFeedbacks[i].idActividad;
+                console.dir($scope.lstActividad)
+                for (let j = 0; j < $scope.lstActividad.length; j++){
+                    console.dir($scope.lstActividad[j].idActividad);
+                    if (idActFeedback == $scope.lstActividad[j].idActividad){
+                        let todoActividad = $scope.lstActividad[j];
+                        $scope.listaActividadesFeedback.push(todoActividad);
+                    }
+                }
+            }
+            console.dir($scope.listaActividadesFeedback)
+        })
+    }
+
+    $scope.irActividad = function(feedback){
+        let idact = feedback.idActividad;
+        //Iterar por la lista de actividades hasta encontrar
+        //la que haga match con el idActividad
+        for (let i = 0; i < $scope.lstActividad.length; i++){
+            if(idact == $scope.lstActividad.idActividad) {
+                let act = $scope.lstActividad[i];
+                break;
+            }
+        }
+        $cookies.putObject('actividadActual', act)
+        $location.path("actividad");
+
+    }   
+
+
+
     function init() {
         ListarActividades();
         ListarAgrupaciones();
         hayAgrupaciones();
         obtenerRegistroHorasSoloCategorias();
         ListarAlumnos();
+        
 
         if (!$scope.esProfesor)
             obtenerRegHorasComoAlumno();
@@ -597,5 +671,52 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
             }
         })
 
+    }
+
+    $scope.siguienteAlumno = function () {
+        console.dir('llamando al sgte alumno')
+        let i = 0;
+        let encontrado = false;
+        if ($scope.idalumno == 0) {
+            $scope.idalumno = $scope.listaAl[0].idUsuario;
+        } else {
+            for (i; i < $scope.listaAl.length; i++) {
+                if (($scope.listaAl[i].idUsuario == $scope.idalumno) && (encontrado == false)) {
+                    let aux = $scope.listaAl[i + 1].idUsuario;
+                    $scope.idalumno = aux;
+                    encontrado = true;
+                    //$scope.grupo.idGrupal=$scope.listaGrupal[i+1].idGrupo;
+                }
+
+            }
+
+        }
+        var params = {
+            tipo: 2,
+            idActividadUHorario: $scope.curso.idhorario,
+            //esto lo saco del select alumno
+            idAlumno: $scope.idalumno
+        }
+
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
+            if (res.data.succeed == false) {
+                Swal.fire({
+                    title: 'Aviso!',
+                    text: 'No existe un registro de horas del alumno seleccionado',
+                    type: 'warning',
+                    confirmButtonText: 'Ok'
+                })
+                $scope.rubricaAuto = null;
+            }
+            else {
+                $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+                $scope.regEsfuerzoHoras.tipo = res.data.tipo;
+                $scope.regEsfuerzoHoras.idAlumno = $scope.idalumno
+                $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+                $scope.hayRegHorasHorario = true;
+            }
+
+
+        })
     }
 })

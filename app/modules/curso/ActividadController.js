@@ -5,6 +5,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
+    console.dir($scope.actividad)
     $scope.fechaMaxActividad = $scope.actividad.fechaFin.slice(6, 10) + "-" + $scope.actividad.fechaFin.slice(3, 5) + "-" + $scope.actividad.fechaFin.slice(0, 2);
     $scope.esIndividual = false;
     $scope.esGrupal = false;
