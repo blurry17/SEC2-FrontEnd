@@ -581,7 +581,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         datos.append('arch', file[0]);
 
         serviceCRUD.TypePostFile('carga-masiva/horarios', datos).then(function (res) {
-            $('#mdCargaHorarios').modal('hide');
+            $('#mdCargaAlumni').modal('hide');
             Toast.fire({
                 type: 'success',
                 title: 'Carga exitosa'
