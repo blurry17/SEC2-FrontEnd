@@ -13,6 +13,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
     $scope.auTieneNota=false;
+    $scope.correcto = false;
 
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
@@ -51,6 +52,10 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).them(function (res) {
             $scope.listaAl = res.data.lista;
         })
+    }
+
+    $scope.marcado = function () {
+        $scope.correcto = !$scope.correcto;
     }
 
     $scope.btnEvaluacionE = function (tipo) {
