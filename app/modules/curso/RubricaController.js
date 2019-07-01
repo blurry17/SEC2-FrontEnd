@@ -77,6 +77,14 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
         }
 
         for (let i = 0; i < $scope.rubrica.listaAspectos.length; i++) {
+            if ($scope.rubrica.listaAspectos[i].tipoClasificacion == 1 && $scope.rubrica.listaAspectos[i].listaIndicadores.length == 0) {
+                $("#formEva").removeClass("was-validated");
+                Toast.fire({
+                    type: 'error',
+                    title: 'Falta agregar indicadores en un aspecto'
+                })
+                return;
+            }
             if ($scope.rubrica.listaAspectos[i].tipoClasificacion != 3 && $scope.rubrica.listaAspectos[i].puntajeMax == '--') {
                 $("#formEva").removeClass("was-validated");
                 Toast.fire({
@@ -86,6 +94,14 @@ app.controller('RubricaController', function ($rootScope, $scope, $location, $co
                 return;
             }
             for (let j = 0; j < $scope.rubrica.listaAspectos[i].listaIndicadores.length; j++) {
+                if ($scope.rubrica.listaAspectos[i].tipoClasificacion == 1 && $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length == 0) {
+                    $("#formEva").removeClass("was-validated");
+                    Toast.fire({
+                        type: 'error',
+                        title: 'Falta agregar niveles en un indicador'
+                    })
+                    return;
+                }
                 for (let k = 0; k < $scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles.length; k++) {
                     if ($scope.rubrica.listaAspectos[i].listaIndicadores[j].listaNiveles[k].puntaje == '--') {
                         $("#formEva").removeClass("was-validated");
