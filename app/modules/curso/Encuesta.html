@@ -463,7 +463,7 @@
       <label class="vertical-center" style="margin-left: 14px; margin-top: 14px;font-size: 150%"><b>Registro de
           Esfuerzo</b></label>
       <div class="form-group col-md-2">
-        <button ng-show="!hayRegHorasActividad" type="button" class="btn btn-primary" ng-click="btnRegistrarHoras()"><i
+        <button ng-show="!hayRegHorasActividad || flgCrear" type="button" class="btn btn-primary" ng-click="btnRegistrarHoras()"><i
             class="fas fa-save"></i>&nbsp;Guardar Registro</button>
       </div>
 
@@ -480,7 +480,7 @@
             ng-model="categoria.descripcion" />
         </div>
         <div class=" form-group btn-group d-flex align-items-end">
-          <button ng-show="!hayRegHorasActividad" type="button" class="btn btn-success" title="Agregar Respuesta"
+          <button ng-show="!hayRegHorasActividad || flgCrear" type="button" class="btn btn-success" title="Agregar Respuesta"
             ng-click="btnAgregarRespuesta(categoria)"><i class="fas fa-plus"></i></button>
         </div>
       </div>
@@ -488,12 +488,12 @@
         <div class="form-row ">
           <div class="form-group col-md-2 " style="width: 70px">
             <label class="negrita">Respuesta</label>
-            <input ng-disabled="hayRegHorasActividad" maxlength="50" class="form-control"
+            <input ng-disabled="!hayRegHorasActividad || !flgCrear" maxlength="50" class="form-control"
               ng-model="respuesta.descripcion" />
           </div>
           <div class="form-group col-md-1 ">
             <label class="negrita">H. Estim.</label>
-            <input ng-disabled="hayRegHorasActividad" ng-model="respuesta.horasPlanificadas" required type="text"
+            <input ng-disabled="!hayRegHorasActividad || !flgCrear " ng-model="respuesta.horasPlanificadas" required type="text"
               class="form-control" style="width: 70px" maxlength="2"
               onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
             <div class="invalid-feedback">
@@ -502,7 +502,7 @@
           </div>
           <div class="form-group col-md-1">
             <label class="negrita">H. Reales</label>
-            <input ng-disabled="hayRegHorasActividad" ng-model="respuesta.horasReales" required type="text"
+            <input ng-disabled="!hayRegHorasActividad || !flgCrear " ng-model="respuesta.horasReales" required type="text"
               class="form-control" style="width: 70px" maxlength="2"
               onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
             <div class="invalid-feedback">
@@ -510,7 +510,7 @@
             </div>
           </div>
           <div class=" form-group btn-group d-flex align-items-end">
-            <button ng-show="!hayRegHorasActividad" type="button" class="btn btn-danger" title="Quitar Respuesta"
+            <button ng-show="!hayRegHorasActividad || flgCrear" type="button" class="btn btn-danger" title="Quitar Respuesta"
               ng-click="btnQuitarRespuesta(categoria, respuesta)"><i class="fas fa-times"></i></button>
           </div>
         </div>

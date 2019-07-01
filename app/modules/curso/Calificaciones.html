@@ -63,17 +63,21 @@
         </div>
         <div ng-show="idalumno!='0' || idgrupo!='0'" class="form-group col-md-3">
             <div style="float: right">
-                <!-- <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
-                    Archivo</button> -->
-                <button type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i
+                <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
+                    Archivo</button>
+                <button ng-show="!usuario.alumno" type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i
                         class="fas fa-pen"></i>&nbsp;Editar</button>
-                <button class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+                <button ng-show="!usuario.alumno" class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
                     Resultados</button>
             </div>
         </div>
     </div>
 
     <div class="line"></div>
+    <div class="row" style="height: 200px"ng-show="!Calificado"></div>
+        <div class="row justify-content-center" style="padding-top: 20px" ng-show="!Calificado">
+            <h1 style="font-family: Arial, Helvetica, sans-serif; vertical-align: bottom">Aún no se ha calificado la actividad</h1>
+        </div>
     <form id="formCal" name="formCal" class="needs-validation" novalidate>
         <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno || usuario.jp" class="card"
             style="background-color: rgb(135, 177, 166)">
@@ -136,6 +140,18 @@
                                         required>
 
                                 </div>
+                                <div ng-show="!usuario.alumno" class="form-group col-sm-3">
+                                    <label style="color: rgb(5, 5, 5)"><b> Comentarios </b></label>
+                                    <button style="display: block" ng-show="!aspecto.puedeComentar" type="button"
+                                        class="btn btn-warning" ng-click="btnAgregarComentario(aspecto)"><i
+                                            class="fas fa-plus"></i></button>
+                                    <div>
+                                        <textarea style="resize: none" ng-show="aspecto.puedeComentar"
+                                            ng-model="aspecto.comentario" ng-disabled="flgCalificado"
+                                            class="form-control" type="text"></textarea>
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="form-group col-sm-3">
                                 <label style="color: rgb(5, 5, 5)"><b> Comentarios </b></label>
@@ -177,6 +193,26 @@
                                         ng-model="aspecto.comentario" ng-disabled="flgCalificado" class="form-control"
                                         type="text"></textarea>
                                 </div>
+                              
+                                <!--<div class="form-group col-sm-2">
+                                    <label style="font-size: 100% ;color: rgb(5, 5, 5)"><b>Realizado </b> </label>
+                                    <div style="padding-left: 18px;padding-top: 5px">
+                                        <input style="height: 25px;width: 25px" type="checkbox"
+                                            ng-disabled="flgCalificado" ng-model="aspecto.nota" required>
+                                    </div>
+
+                                </div>
+                                <div class="col-2"></div>
+                                <div ng-show="!usuario.alumno" class="form-group col-sm-3">
+                                    <label style="color: rgb(5, 5, 5)"><b> Comentarios</b></label>
+                                    <button style="display: block" ng-show="!aspecto.puedeComentar" type="button"
+                                        class="btn btn-warning" ng-click="btnAgregarComentario(aspecto)"><i
+                                            class="fas fa-plus"></i></button>
+                                    <div>
+                                        <textarea style="resize: none" ng-show="aspecto.puedeComentar"
+                                            ng-model="aspecto.comentario" ng-disabled="flgCalificado"
+                                            class="form-control" type="text"></textarea>
+                                    </div> -->  
 
                             </div>
                         </div>
@@ -213,6 +249,7 @@
                 </div>
             </div>
         </div>
+        
 
         <div class="line"></div>
 
