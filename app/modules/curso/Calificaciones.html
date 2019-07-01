@@ -11,22 +11,18 @@
 
 
     <div class="row d-flex align-items-end">
-        <div ng-show="esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-8">
+        <div ng-show="esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)"
+            class="form-group col-8">
             <label style="font-weight: bold">Alumno</label>
-            
-
-                <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
-                    ng-init="idalumno = '0'">
-                    <option value="0">Seleccione</option>
-                    <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group col-2">
-
-                <button ng-show="(usuario.profesor || usuario.jp)" class="btn btn-success" ng-click="siguiente()"><i class="fas fa-arrow-circle-right"></i></button>
-            </div>
-        <div ng-show="!esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-md-4">
+            <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
+                ng-init="idalumno = '0'">
+                <option value="0">Seleccione</option>
+                <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
+                </option>
+            </select>
+        </div>
+        <div ng-show="!esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)"
+            class="form-group col-md-4">
             <label style="font-weight: bold">Grupo</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idgrupo"
                 ng-init="idgrupo = '0'">
@@ -35,7 +31,11 @@
                 </option>
             </select>
         </div>
-        <div ng-show="idlumno!='0' || idgrupo!='0' && !usuario.alumno" class="form-group col-md-2">
+        <div class="form-group col-2">
+            <button ng-show="(usuario.profesor || usuario.jp) && esActIndividual" class="btn btn-success"
+                ng-click="siguiente()"><i class="fas fa-arrow-circle-right"></i></button>
+        </div>
+        <div ng-show="idalumno!='0' || idgrupo!='0' && !usuario.alumno" class="form-group col-md-2">
             <label style="font-weight: bold">No asistió</label>
             <input ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox">
         </div>
@@ -62,12 +62,11 @@
             </div>
         </div>
         <div ng-show="idalumno!='0' || idgrupo!='0'" class="form-group col-md-3">
-            <div style="float: right">
-                <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
-                    Archivo</button>
-                <button ng-show="!usuario.alumno" type="button" class="btn btn-warning" ng-show="flgCalificado" ng-click="btnEditar()"><i
-                        class="fas fa-pen"></i>&nbsp;Editar</button>
-                <button ng-show="!usuario.alumno" class="btn btn-success" type="submit" ng-show="profe" ng-click="btnValidarPuntaje()">Validar
+            <div>
+                <button ng-show="!usuario.alumno" type="button" class="btn btn-warning" ng-show="flgCalificado"
+                    ng-click="btnEditar()"><i class="fas fa-pen"></i>&nbsp;Editar</button>
+                <button ng-show="!usuario.alumno" class="btn btn-success" type="submit" ng-show="profe"
+                    ng-click="btnValidarPuntaje()">Validar
                     Resultados</button>
             </div>
         </div>
@@ -189,7 +188,7 @@
                                         ng-model="aspecto.comentario" ng-disabled="flgCalificado" class="form-control"
                                         type="text"></textarea>
                                 </div>
-                              
+
                                 <!--<div class="form-group col-sm-2">
                                     <label style="font-size: 100% ;color: rgb(5, 5, 5)"><b>Realizado </b> </label>
                                     <div style="padding-left: 18px;padding-top: 5px">
@@ -208,7 +207,7 @@
                                         <textarea style="resize: none" ng-show="aspecto.puedeComentar"
                                             ng-model="aspecto.comentario" ng-disabled="flgCalificado"
                                             class="form-control" type="text"></textarea>
-                                    </div> -->  
+                                    </div> -->
 
                             </div>
                         </div>

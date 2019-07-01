@@ -11,8 +11,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.idRub = 0;
     $scope.coTieneNota = false;
     $scope.idActividadUHorario = null;
-    $scope.notaAuto=null;
-    $scope.auTieneNota=false;
+    $scope.notaAuto = null;
+    $scope.auTieneNota = false;
     $scope.falta = false;
     $scope.flgCalificado = false;
     $scope.mostrarAspecto = true;
@@ -35,9 +35,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.hayRegCategoriasActividad = false;
     //$scope.hayEncuesta=true;
 
-
-    //console.dir($scope.usuario );
-
     if ($scope.actividad.tipo == "G") {
         $scope.esActGrupal = true;
     } else {
@@ -45,12 +42,12 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.btnListarGrupo = function () {
-        //console.dir("hola");
+
         var params = {
             idActividad: $scope.actividad.idActividad,
             idUsuario: $scope.usuario.idUser
         }
-        //console.dir(params);
+
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).them(function (res) {
             $scope.listaAl = res.data.lista;
         })
@@ -58,7 +55,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
     $scope.marcado = function () {
         $scope.falta = true;
-        $scope.flgCalificado=true;
+        $scope.flgCalificado = true;
     }
 
     $scope.btnEvaluacionE = function (tipo) {
@@ -78,8 +75,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 $scope.rubricaCoauto = $scope.rubrica;
 
             }
-            //console.dir('Esta es la rubricaCoAuto');
-            //console.dir(res);
         })
     }
 
@@ -105,8 +100,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             }
             $scope.rubrica = res.data;
             $scope.idRub = res.data.idRubrica;
-            //console.dir('Leer la rubricaa');
-            //console.dir($scope.rubrica);
+
             if (tipo == 2) {
                 $scope.rubricaAuto = $scope.rubrica;
                 $scope.rubricaCoauto = null;
@@ -124,8 +118,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
         }
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).then(function (res) {
-            //console.dir("ESTOOOOO")
-            //console.dir(res.data);
+
             $scope.listaAl = res.data;
         })
     }
@@ -138,10 +131,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 idActividad: $scope.actividad.idActividad,
                 idCalificado: $scope.idalumno,
                 idCalificador: $scope.usuario.idUser,
-
             }
-            console.dir('este es el yeison');
-            console.dir(params);
+
             serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion', params).then(function (res) {
                 $scope.rubricaCoauto = res.data;
                 if (res.data.nota == null) {
@@ -149,8 +140,6 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 } else {
                     $scope.coTieneNota = true;
                 }
-                console.dir('LA RES');
-                console.dir(res.data);
 
             })
 
@@ -160,7 +149,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.btnGuardarCo = function () {
         if (formCo.checkValidity()) {
             //cond para no exceder puntaje max
-            
+
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -194,8 +183,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                         listaNotaAspectos: $scope.rubricaCoauto.listaNotaAspectos,
                         flgCompleto: 0,
                     }
-                    console.dir('LEEEE ESTO');
-                    console.dir(params);
+
                     serviceCRUD.TypePost('coevaluacion/calificar_coevaluacion', params).then(function (res) {
 
                     })
@@ -229,17 +217,17 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.usuario.idUser,
         }
-        //console.dir(params.idAlumno);
-        serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
-            $scope.rubricaAuto=res.data;
-            if(res.data.nota==null){
-                $scope.auTieneNota=false;
-                $scope.falta=false;
-                $scope.flgCalificado=false;
-            }else {
-                $scope.auTieneNota=true;
-                $scope.falta=true;
-                $scope.flgCalificado=true;
+
+        serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion', params).then(function (res) {
+            $scope.rubricaAuto = res.data;
+            if (res.data.nota == null) {
+                $scope.auTieneNota = false;
+                $scope.falta = false;
+                $scope.flgCalificado = false;
+            } else {
+                $scope.auTieneNota = true;
+                $scope.falta = true;
+                $scope.flgCalificado = true;
             }
             //$scope.hayEncuesta=false;
         })
@@ -265,25 +253,25 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
             }).then((result) => {
                 if (result.value) {
-                  swalWithBootstrapButtons.fire(
-                    'Listo!',
-                    'success'
-                  )
-                  let params={
-                    idActividad:$scope.actividad.idActividad,
-                    idAlumno:$scope.usuario.idUser,
-                    idCalificador:$scope.usuario.idUser,
-                    nota:0,
-                    idRubrica:$scope.rubricaAuto.idRubrica,
-                    flgFalta: $scope.falta ? 1 : 0,
-                    listaNotaAspectos:$scope.rubricaAuto.listaNotaAspectos,
-                    flgCompleto:0,
+                    swalWithBootstrapButtons.fire(
+                        'Listo!',
+                        'success'
+                    )
+                    let params = {
+                        idActividad: $scope.actividad.idActividad,
+                        idAlumno: $scope.usuario.idUser,
+                        idCalificador: $scope.usuario.idUser,
+                        nota: 0,
+                        idRubrica: $scope.rubricaAuto.idRubrica,
+                        flgFalta: $scope.falta ? 1 : 0,
+                        listaNotaAspectos: $scope.rubricaAuto.listaNotaAspectos,
+                        flgCompleto: 0,
                     }
-                    console.dir($scope.rubricaAuto.listaNotaAspectos);
-                    serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
-                        $scope.flgCalificado=false?0:1;
+
+                    serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion', params).then(function (res) {
+                        $scope.flgCalificado = false ? 0 : 1;
                     })
-                    $scope.auTieneNota=true;
+                    $scope.auTieneNota = true;
                 } else if (
                     result.dismiss === Swal.DismissReason.cancel
                 ) {
@@ -308,20 +296,21 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
     //Como profesor: Crear Registro Horas
     $scope.btnCrearRegistroHoras = function () {
-        console.dir($scope.regEsfuerzo)
-        console.dir(JSON.stringify($scope.regEsfuerzo))
         serviceCRUD.TypePost('registro_horas/crear_registro_horas', $scope.regEsfuerzo).then(function (res) {
-            console.dir(res)
+            Swal.fire({
+                type: 'success',
+                title: 'Se creó el registro de horas correctamente'
+            })
         })
     }
 
     //Como alumno: Registrar Horas
     $scope.btnRegistrarHoras = function () {
-        console.dir('regEsfuerzoHoras cuando presiono el boton')
-        console.dir($scope.regEsfuerzoHoras)
-
         serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
-            console.dir(res)
+            Swal.fire({
+                type: 'success',
+                title: 'Se registraron las horas correctamente'
+            })
         })
     }
 
@@ -351,11 +340,11 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
             if (res.data.succeed == false) {
-                $scope.flgCrear=false;
+                $scope.flgCrear = false;
                 return;
             }
-            else{
-                $scope.flgCrear=true;
+            else {
+                $scope.flgCrear = true;
                 $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
                 $scope.regEsfuerzoHoras.tipo = res.data.tipo;
                 $scope.regEsfuerzoHoras.idAlumno = $scope.usuario.idUser
@@ -373,13 +362,13 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
         serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
             if (res.data.succeed == false) {
-                $scope.flgCrear=false;
+                $scope.flgCrear = false;
                 return;
             }
             else {
                 //Asigno el objeto registro horas categoria al registro horas con respuestas
-                $scope.flgCrear=true;
-                console.dir($scope.flgCrear);
+                $scope.flgCrear = true;
+
                 $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
                 $scope.regEsfuerzoHorasidAlumno = $scope.usuario.idUser;
                 $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;

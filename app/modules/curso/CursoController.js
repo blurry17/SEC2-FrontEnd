@@ -2,7 +2,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.usuario = $cookies.getObject('usuario');
     $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
-    console.dir($scope.usuario)
+
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.esProfesor = $scope.usuario.profesor;
@@ -126,8 +126,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
                 serviceCRUD.TypePost('grupo/listar-general', params).then(function (res2) {
                     $scope.lstAgrupaciones = res2.data;
-                    //console.dir(res2);
-                    //console.dir($scope.lstAgrupaciones);
                 })
             }
         })
@@ -400,7 +398,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
         if (formActRegHoras.checkValidity()) {
             serviceCRUD.TypePost('registro_horas/crear_registro_horas', $scope.regEsfuerzo).then(function (res) {
-                console.dir(res)
+
             })
         }
     }
@@ -596,43 +594,41 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         ObtenerRevisiones();
     }
 
-    function ObtenerRevisiones(){
-        if($scope.listaFeedbacks.length > 0)
+    function ObtenerRevisiones() {
+        if ($scope.listaFeedbacks.length > 0)
             return;
-        var params  = {
+        var params = {
             idProfesor: $scope.usuario.idUser
-        }   
+        }
         serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
-            console.dir('Lo que devuelve el servicio obtener revisiones profesor')
-            console.dir(res)
-            if(res.data.succeed == false){
-                console.dir('no se encontro')
+
+            if (res.data.succeed == false) {
                 return;
             }
             $scope.listaFeedbacks = res.data.listaFeedbacks;
 
             //Tengo que sacar los datos de la actividad usando el id
-            for (let i = 0; i < $scope.listaFeedbacks.length; i++){
+            for (let i = 0; i < $scope.listaFeedbacks.length; i++) {
                 let idActFeedback = $scope.listaFeedbacks[i].idActividad;
-                console.dir($scope.lstActividad)
-                for (let j = 0; j < $scope.lstActividad.length; j++){
-                    console.dir($scope.lstActividad[j].idActividad);
-                    if (idActFeedback == $scope.lstActividad[j].idActividad){
+
+                for (let j = 0; j < $scope.lstActividad.length; j++) {
+
+                    if (idActFeedback == $scope.lstActividad[j].idActividad) {
                         let todoActividad = $scope.lstActividad[j];
                         $scope.listaActividadesFeedback.push(todoActividad);
                     }
                 }
             }
-            console.dir($scope.listaActividadesFeedback)
+
         })
     }
 
-    $scope.irActividad = function(feedback){
+    $scope.irActividad = function (feedback) {
         let idact = feedback.idActividad;
         //Iterar por la lista de actividades hasta encontrar
         //la que haga match con el idActividad
-        for (let i = 0; i < $scope.lstActividad.length; i++){
-            if(idact == $scope.lstActividad.idActividad) {
+        for (let i = 0; i < $scope.lstActividad.length; i++) {
+            if (idact == $scope.lstActividad.idActividad) {
                 let act = $scope.lstActividad[i];
                 break;
             }
@@ -640,7 +636,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         $cookies.putObject('actividadActual', act)
         $location.path("actividad");
 
-    }   
+    }
 
 
 
@@ -650,7 +646,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         hayAgrupaciones();
         obtenerRegistroHorasSoloCategorias();
         ListarAlumnos();
-        
+
 
         if (!$scope.esProfesor)
             obtenerRegHorasComoAlumno();
@@ -674,7 +670,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     $scope.siguienteAlumno = function () {
-        console.dir('llamando al sgte alumno')
         let i = 0;
         let encontrado = false;
         if ($scope.idalumno == 0) {

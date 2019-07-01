@@ -54,7 +54,6 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     function obtenerComentarios() {
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/listar_comentarios', params).then(function (res) {
-            console.dir(res.data)
             $scope.lstComentarios = res.data.listaComentarios;
             if (!usuario.profesor) {
                 for (let i = 0; i < $scope.lstComentarios.length; i++) {

@@ -32,7 +32,7 @@ app.controller('MantenimientoController', function ($rootScope, $cookies, servic
     $scope.crearSemestre = function () {
         var params = { nombreSemestre: $scope.nomSem };
         serviceCRUD.TypePost('mantenimiento/semestre/crear', params).then(function (res) {
-            console.dir(res);
+
         })
     }
 
