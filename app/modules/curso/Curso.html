@@ -6,18 +6,19 @@
         <div class="row justify-content-between">
             <div class="col-xs-12 col-md-5">
                 <h5 style="display:inline-block"><span class="badge badge-pill badge-success">
-                        <div style="margin: 5px">Entregado</div>
+                        <div style="margin: 5px">En curso</div>
                     </span></h5>
                 <h5 style="display:inline-block"><span class="badge badge-pill badge-warning">
                         <div style="margin: 5px">Pendiente</div>
                     </span>
                 </h5>
                 <h5 style="display:inline-block"><span class="badge badge-pill badge-dark">
-                        <div style="margin: 5px">Inactivo</div>
+                        <div style="margin: 5px">Finalizado</div>
                     </span></h5>
             </div>
             <div ng-show="usuario.profesor" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
-                <button class="btn btn-success" ng-click="btnAgregarActividad()"><i class="fas fa-plus"></i>&nbspAgregar
+                <button class="btn btn-success" ng-click="btnAgregarActividad()"><i
+                        class="fas fa-plus"></i>&nbsp;Agregar
                     actividad</button>
             </div>
             <div ng-show="usuario.profesor && !hayRegHorasHorario" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
@@ -49,7 +50,7 @@
         <div class="row" style="padding-top: 15px">
             <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px"
                 ng-repeat="act in lstActividad">
-                <div class="card text-center border-dark" style="border-width: 3px">
+                <div ng-class="obtenerColorBorde(act)" style="border-width: 3px">
                     <div class="card-body">
                         <h5 class="card-title">{{act.nombre}}&nbsp;<i
                                 ng-class="act.tipo=='I' ? 'fas fa-user' : 'fas fa-users'"></i></h5>
@@ -486,16 +487,26 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group col-md-12">
-                    <label style="font-weight: bold">Alumno</label>
-                    <select ng-change="obtenerRegistroHorasXAlumno()" class="form-control custom-select"
-                        ng-model="idalumno" ng-init="idalumno = '0'">
-                        <option value="0">Seleccione</option>
-                        <option ng-repeat="item in listaAl" ng-value="item.idUsuario">
-                            {{item.codigoPucp +" - "+ item.nombre + " " + item.apellidoPaterno}}
-                        </option>
-                    </select>
+                <div class="form-row">
+                    <div class="col-10" style="padding-right: 1%; padding-left: 1%">
+                        <select ng-change="obtenerRegistroHorasXAlumno()" class="form-control custom-select"
+                            ng-model="idalumno" ng-init="idalumno = '0'">
+                            <option value="0">Seleccione</option>
+                            <option ng-repeat="item in listaAl" ng-value="item.idUsuario">
+                                {{item.codigoPucp +" - "+ item.nombre + " " + item.apellidoPaterno}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+
+                        <button class="btn btn-success" ng-click="siguienteAlumno()"><i
+                                class="fas fa-arrow-circle-right"></i></button>
+                    </div>
                 </div>
+
+            </div>
+            <div class="form-group col-md-12">
+
 
                 <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
                     <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
