@@ -12,7 +12,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.mostrar = false;
     $scope.falta = false;
     $scope.idRub = null;
-    $scope.idalumno=0;
+    $scope.idalumno = 0;
     $scope.profe = $scope.usuario.profesor;
     $scope.notaFinal = null;
     $scope.flgCalificado = null;
@@ -111,7 +111,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             })
         }
     }
-    
+
     $scope.btnEditar = function () {
         $scope.flgCalificado = false;
         $scope.editar = true;
@@ -120,7 +120,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.ObtenerNotas = function () {
         console.dir($scope.idalumno)
         if ($scope.actividad.tipo == "I" || $scope.usuario.alumno) {
-            if($scope.usuario.alumno==1){
+            if ($scope.usuario.alumno == 1) {
                 if ($scope.usuario.alumno == 1) {
                     $scope.idalumno = $scope.usuario.idUser;
                 }
@@ -136,15 +136,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno_publicada', params).then(function (res) {
                     console.dir("respuesta de alumno");
                     console.dir(res);
-                    if(res.data.succeed==false){
+                    if (res.data.succeed == false) {
                         Swal.fire({
                             title: 'Error!',
                             text: 'Aun no ha sido calificado',
                             type: 'error',
                             confirmButtonText: 'Ok'
                         })
-                        $scope.rubrica=null;
-                    }else{
+                        $scope.rubrica = null;
+                    } else {
 
                         $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                         $scope.notaFinal = res.data.calificacion.nota;
@@ -158,7 +158,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     }
                 })
 
-            }else{
+            } else {
                 if ($scope.usuario.alumno == 1) {
                     $scope.idalumno = $scope.usuario.idUser;
                 }
@@ -187,7 +187,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
         else {
             if ($scope.idgrupo == '0') return;
-            if($scope.usuario.alumno==1){
+            if ($scope.usuario.alumno == 1) {
                 if ($scope.usuario.alumno == 1) {
                     $scope.idalumno = $scope.usuario.idUser;
                 }
@@ -203,15 +203,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo_publicada', params).then(function (res) {
                     console.dir("respuesta de alumno");
                     console.dir(res);
-                    if(res.data.succeed==false){
+                    if (res.data.succeed == false) {
                         Swal.fire({
                             title: 'Error!',
                             text: 'Aun no han sido calificados',
                             type: 'error',
                             confirmButtonText: 'Ok'
                         })
-                        $scope.rubrica=null;
-                    }else{
+                        $scope.rubrica = null;
+                    } else {
 
                         $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                         $scope.notaFinal = res.data.calificacion.nota;
@@ -225,8 +225,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     }
                 })
 
-            }else{
-           
+            } else {
+
                 $scope.editar = false;
                 mostrarEntregables($scope.idgrupo);
                 var params = {
@@ -639,8 +639,8 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
     }
 
-    $scope.btnObtenerRevisiones = function(){
-        var params  = {
+    $scope.btnObtenerRevisiones = function () {
+        var params = {
             idProfesor: $scope.usuario.idUser
         }
         serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
@@ -660,21 +660,25 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         })
     }
 
-    $scope.btnValidarPuntaje  = function(){
+    $scope.btnValidarPuntaje = function () {
         var params = {
             idProfesor: $scope.usuario.idUser,
             idActividad: $scope.actividad.idActividad
-
         }
-        console.dir(params)
         serviceCRUD.TypePost('publicar-notas/publicar_notas_directo_profesor', params).then(function (res) {
-            if(res.data.succeed == false){
-                console.dir('no se pudo aprobar la calificacion')
+            if (res.data.succeed == false) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrió un error al validar los resultados',
+                })
                 return;
             }
-            console.dir(res.data)
-            console.dir('Se aprobo la calificacion correctamente')
-        })    
+            Swal.fire({
+                type: 'success',
+                title: 'Se validaron los resultados correctamente',
+            })
+        })
     }
 
 
@@ -760,7 +764,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     }
                                     $scope.ObtenerNotas();
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
@@ -770,7 +774,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                         console.dir('califique como JP y')
                                         console.dir('lo mande al servicio de aprobacion pendiente')
                                         console.dir(JSON.stringify(res))
-                                        
+
                                     })
                                 })
 
@@ -794,7 +798,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     $scope.ObtenerNotas();
 
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
@@ -828,7 +832,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     }
                                     $scope.ObtenerNotas();
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
@@ -862,7 +866,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     }
                                     $scope.ObtenerNotas();
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
@@ -961,7 +965,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
@@ -992,7 +996,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
@@ -1025,7 +1029,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
@@ -1058,7 +1062,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
