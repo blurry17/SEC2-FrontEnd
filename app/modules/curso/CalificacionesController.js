@@ -530,20 +530,23 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         })
     }
 
-    $scope.aprobarRevision  = function(){
+    $scope.btnValidarPuntaje  = function(){
         var params = {
+            idProfesor: $scope.usuario.idUser,
             idActividad: $scope.actividad.idActividad
 
         }
         console.dir(params)
         serviceCRUD.TypePost('publicar-notas/publicar_notas_directo_profesor', params).then(function (res) {
-            if(res.data.succeed = false){
+            if(res.data.succeed == false){
                 console.dir('no se pudo aprobar la calificacion')
                 return;
             }
+            console.dir(res.data)
             console.dir('Se aprobo la calificacion correctamente')
         })    
     }
+
 
     $scope.btnCalificarComoJP = function () {
         for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {

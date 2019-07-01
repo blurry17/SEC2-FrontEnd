@@ -51,6 +51,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     }
 
     $scope.listaFeedbacks = []
+    $scope.listaActividadesFeedback = [];
 
     $scope.hayRegHorasHorario = false;
     $scope.regHorasIngresado = false;
@@ -574,21 +575,39 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         })
     }
 
+    $scope.btnVerObtenerRevisiones = function () {
+        $('#mdObtenerRevisiones').appendTo("body").modal('show');
+        ObtenerRevisiones();
+    }
+
     function ObtenerRevisiones(){
+        if($scope.listaFeedbacks.length > 0)
+            return;
         var params  = {
             idProfesor: $scope.usuario.idUser
-        }
-        console.dir('Llamando al servicio de obtener revisiones')
+        }   
         serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
             console.dir('Lo que devuelve el servicio obtener revisiones profesor')
-            //console.dir(res.data)
+            console.dir(res)
             if(res.data.succeed == false){
                 console.dir('no se encontro')
                 return;
             }
             $scope.listaFeedbacks = res.data.listaFeedbacks;
-            console.dir('$scope.listaFeedbacks')
-            console.dir($scope.listaFeedbacks)
+
+            //Tengo que sacar los datos de la actividad usando el id
+            for (let i = 0; i < $scope.listaFeedbacks.length; i++){
+                let idActFeedback = $scope.listaFeedbacks[i].idActividad;
+                console.dir($scope.lstActividad)
+                for (let j = 0; j < $scope.lstActividad.length; j++){
+                    console.dir($scope.lstActividad[j].idActividad);
+                    if (idActFeedback == $scope.lstActividad[j].idActividad){
+                        let todoActividad = $scope.lstActividad[j];
+                        $scope.listaActividadesFeedback.push(todoActividad);
+                    }
+                }
+            }
+            console.dir($scope.listaActividadesFeedback)
         })
     }
 
@@ -615,7 +634,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         hayAgrupaciones();
         obtenerRegistroHorasSoloCategorias();
         ListarAlumnos();
-        ObtenerRevisiones();
+        
 
         if (!$scope.esProfesor)
             obtenerRegHorasComoAlumno();
@@ -640,8 +659,6 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
 
 
 
-    $scope.btnVerObtenerRevisiones = function () {
-        $('#mdObtenerRevisiones').appendTo("body").modal('show');
-    }
+
 
 })
