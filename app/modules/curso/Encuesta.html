@@ -25,6 +25,7 @@
           <div class="row">
             <div ng-repeat="aspecto in rubricaAuto.listaNotaAspectos" class="col-md-12 border border-solid rounded"
               style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+            
               <div ng-if="aspecto.tipoClasificacion == 1">
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
@@ -57,7 +58,7 @@
                   </div>
                   
                 </div>
-                <div ng-repeat="ind in aspecto.listaIndicadores" style="padding-left: 2%">
+                <div ng-repeat="ind in aspecto.listaNotaIndicador" style="padding-left: 2%">
                   <div class="form-row">
                     <div class="form-group col-md-3 col-lg-2">
                       <label class="negrita">Nombre del indicador</label>
@@ -70,7 +71,7 @@
                       <label class="negrita">Descripción</label>
                       <input disabled maxlength="50" class="form-control" ng-model="ind.informacion" />
                     </div>
-                    <!--AQUI AGREGAMOS EL PUNTAJE DEL INDICADOR-->
+                    
                     <div class="form-group col-md-4">
                       <label class="negrita">Puntaje Asignado</label>
                       <input ng-disabled="auTieneNota" ng-model="ind.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
@@ -107,6 +108,8 @@
                   </div>
                 </div>
               </div>
+              
+              
               <div ng-if="aspecto.tipoClasificacion == 2">
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
@@ -238,7 +241,7 @@
                       </div>
                       
                     </div>
-                    <div ng-repeat="indicador in aspecto.listaIndicadores" style="padding-left: 2%">
+                    <div ng-repeat="indicador in aspecto.listaNotaIndicador" style="padding-left: 2%">
                       <div class="form-row">
                         <div class="form-group col-md-3 col-lg-2">
                           <label class="negrita">Nombre del indicador</label>

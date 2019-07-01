@@ -15,6 +15,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.auTieneNota=false;
     $scope.falta = false;
     $scope.flgCalificado = false;
+    $scope.mostrarAspecto = true;
 
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
@@ -217,7 +218,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.usuario.idUser,
         }
-        console.dir(params.idAlumno);
+        //console.dir(params.idAlumno);
         serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
             $scope.rubricaAuto=res.data;
             if(res.data.nota==null){
@@ -267,6 +268,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                     listaNotaAspectos:$scope.rubricaAuto.listaNotaAspectos,
                     flgCompleto:0,
                     }
+                    console.dir($scope.rubricaAuto.listaNotaAspectos);
                     serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
                         $scope.flgCalificado=false?0:1;
                     })
