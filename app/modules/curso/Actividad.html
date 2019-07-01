@@ -16,7 +16,8 @@
 
       <button ng-click="btnCalificaciones()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-check"></i>&nbsp;Calificaciones</button>
-      <button ng-click="btnRubrica()" class="btn btn-info" style="margin: 2px;"><i class="fas fa-scroll"></i>&nbsp;Hojas
+      <button ng-click="btnRubrica()" ng-show="usuario.profesor" class="btn btn-info" style="margin: 2px;"><i
+          class="fas fa-scroll"></i>&nbsp;Hojas
         de
         evaluación</button>
       <button ng-if="actividad.tipo=='G'" ng-click="btnGrupos()" type="button" class="btn btn-info"
@@ -39,92 +40,12 @@
           class="fas fa-chart-bar"></i>&nbsp;Estadísticas</button>
       <button ng-show="usuario.alumno" ng-click="btnEncuesta()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-bookmark"></i>&nbsp;Encuestas</button>
-      <button ng-show="usuario.profesor" ng-click="btnListarNotas()" class="btn btn-info" style="margin: 2px;"><i
-          class="fas fa-chart-line"></i>&nbsp;Notas</button>
+      <button ng-show="usuario.profesor && actividad.tipo=='G'" ng-click="btnListarNotas()" class="btn btn-info"
+        style="margin: 2px;"><i class="fas fa-chart-line"></i>&nbsp;Notas grupales</button>
       <button ng-show="usuario.profesor" ng-click="btnVerEnc()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-chart-line"></i>&nbsp;Encuestas</button>
-
-      <div>
-        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdErrorCoEval" tabindex="-1" role="dialog"
-          data-backdrop="static" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-                <form class="form-inlin justify-content-center form-group">
-                  <div class="form-group" style="text-align: center">
-                    <span><b> CoEvaluación ya existente </b></span>
-                  </div>
-
-                  <div class="form-group">
-                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
-                      data-dismiss="modal">OK</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdError" tabindex="-1" role="dialog"
-          data-backdrop="static" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-                <form class="form-inlin justify-content-center form-group">
-                  <div class="form-group" style="text-align: center">
-                    <span><b> Autoevaluación ya existente </b></span>
-                  </div>
-
-                  <div class="form-group">
-                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
-                      data-dismiss="modal">OK</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdNoHayCoEval" tabindex="-1" role="dialog"
-          data-backdrop="static" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-                <form class="form-inlin justify-content-center">
-                  <div class="form-group" style="text-align: center">
-                    <span><b> No se encontró una coevaluación </b></span>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
-                      data-dismiss="modal">OK</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div ng-show="error" class="modal fade modal-sm modal-dialog" id="mdNoHayRubrica" tabindex="-1" role="dialog"
-          data-backdrop="static" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-                <form class="form-inlin justify-content-center">
-                  <div class="form-group" style="text-align: center">
-                    <span><b> No se encontró una autoevaluación </b></span>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-success" style="display: block ;margin: 0 auto"
-                      data-dismiss="modal">OK</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     <br>
-
   </div>
 
   <div class="row" style="padding-left: 15px">
@@ -157,33 +78,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="col-10">
-    <div class="row">
-      <div class="form-group col-md-2">
-        <label style="font-weight: bold">Fecha de inicio</label>
-        <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaInicio">
-      </div>
-
-      <div class="form-group col-md-2">
-        <label style="font-weight: bold">Hora de inicio</label>
-        <input style="width: 100px" type="text" class="form-control" readonly ng-value="">
-      </div>
-    </div>
-  </div>
-
-  <div class="col-10">
-    <div class="row">
-      <div class="form-group col-md-2">
-        <label style="font-weight: bold">Fecha de fin</label>
-        <input style="width: 120px" type="text" class="form-control" readonly ng-value="actividad.fechaFin">
-      </div>
-      <div class="form-group col-md-2">
-        <label style="font-weight: bold">Hora de fin</label>
-        <input style="width: 100px" type="text" class="form-control" readonly ng-value="">
-      </div>
-    </div>
-  </div> -->
 </div>
 
 

@@ -27,42 +27,6 @@
             </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header" id="headingTwo">
-            <h2>
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="false" aria-controls="collapseTwo">
-                    Mantenimiento de especialidades por semestre
-                </button>
-            </h2>
-        </div>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-            <div class="card-body row">
-                <div class="col-md-6">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Especialidad</th>
-                                <th scope="col">
-                                    <input type="checkbox" ng-model="checkeados" ng-change="changeCheckAll()">
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="esp in especialidades">
-                                <td>{{esp.nombre}}</td>
-                                <td><input type="checkbox" ng-model="esp.checked" ng-change="changeCheck(esp.checked)">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-primary"><i class="fas fa-plus"></i>&nbsp;Agregar al semestre actual</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <div class="modal fade" id="mdCrearSemestre" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
