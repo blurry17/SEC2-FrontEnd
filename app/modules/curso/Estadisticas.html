@@ -10,7 +10,7 @@
   </div>
   <div>
     <br />
-    <div class="row">
+    <div  class="row">
       <div class="form-group col-md-3">
         <label style="font-size: 120%"><b>Estadísticas de Evaluación</b></label>
         <table class="table ">
@@ -41,7 +41,7 @@
         </table>
       </div>
       
-      <div ng-show="usuario.profesor">
+      <div ng-show="actividad.tipo=='I'&& usuario.profesor">
           <div style="float: right" class="row form-group col-md-12" class="table-responsive">
               <label style="font-size: 120%"><b>Ranking de los mejores alumnos</b></label>
               <table class="table table-hover">
@@ -61,7 +61,26 @@
                         </tbody>
                 </table>
           </div>    
-        </div>
+      </div>
+      <div ng-show="actividad.tipo=='G' && usuario.profesor">
+        <div style="float: right" class="row form-group col-md-12" class="table-responsive">
+            <label style="font-size: 120%"><b>Ranking de los mejores Grupos</b></label>
+            <table class="table table-hover">
+              <thead>
+                <tr class="table-info">
+                  <th style="width: 80%">Grupo</th>
+                  <th style="width: 10%">Nota</th>
+                </tr>
+              </thead>
+                      <tbody>
+                          <tr ng-repeat="list in listaR" style="width: 100%">
+                              <td>{{list.nombre}}</td>
+                              <td>{{list.nota}}</td>
+                            </tr>
+                      </tbody>
+              </table>
+        </div>    
+    </div>
         
     </div>
 
