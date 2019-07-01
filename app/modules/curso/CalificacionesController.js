@@ -512,6 +512,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         serviceCRUD.TypePost('publicar-notas/publicar_notas_directo_profesor', params).then(function (res) {
             if(res.data.succeed == false){
                 console.dir('no se pudo aprobar la calificacion')
+                $('#mdFaltaCalificarTodos').appendTo("body").modal('show');
                 return;
             }
             console.dir(res.data)
