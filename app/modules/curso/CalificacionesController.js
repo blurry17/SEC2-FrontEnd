@@ -56,7 +56,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 console.dir(res.data);
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
-                $scope.Calificado=res.data.flgCalificado;
+                $scope.Calificado = res.data.flgCalificado;
                 $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
                 $scope.falta = res.data.calificacion.flgFalta == 1;
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {

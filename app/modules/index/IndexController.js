@@ -6,6 +6,7 @@
     $scope.idCur = '0';
     $scope.lstEsp = null;
 
+    $cookies.putObject('flgCrear', 0);
     $scope.mostrarCurso = function (curso) {
         $cookies.putObject('cursoActual', curso);
 
