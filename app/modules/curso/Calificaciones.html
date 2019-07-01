@@ -11,7 +11,7 @@
 
 
     <div class="row d-flex align-items-end">
-        <div ng-show="esActIndividual && mostrar && !usuario.alumno && usuario.profesor" class="form-group col-md-4">
+        <div ng-show="esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-md-4">
             <label style="font-weight: bold">Alumno</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
                 ng-init="idalumno = '0'">
@@ -20,7 +20,7 @@
                 </option>
             </select>
         </div>
-        <div ng-show="!esActIndividual && mostrar && !usuario.alumno && usuario.profesor" class="form-group col-md-4">
+        <div ng-show="!esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-md-4">
             <label style="font-weight: bold">Grupo</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idgrupo"
                 ng-init="idgrupo = '0'">
@@ -68,7 +68,7 @@
 
     <div class="line"></div>
     <form id="formCal" name="formCal" class="needs-validation" novalidate>
-        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno" class="card"
+        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno || usuario.jp" class="card"
             style="background-color: rgb(135, 177, 166)">
             <div class="card-body">
 
@@ -229,9 +229,13 @@
             </div>
 
     </form>
-    <div class="form-group col-sm-2">
+    <div ng-show="profe" class="form-group col-sm-2">
         <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita"
             ng-click="btnGuardarPuntaje()">Guardar</button>
+    </div>
+    <div ng-show="esJP" class="form-group col-sm-2">
+        <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita"
+            ng-click="btnCalificarComoJP()">Calificar</button>
     </div>
     <script>
         $(document).ready(function () {

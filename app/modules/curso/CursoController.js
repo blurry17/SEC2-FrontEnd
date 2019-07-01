@@ -578,12 +578,16 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         var params  = {
             idProfesor: $scope.usuario.idUser
         }
+        console.dir('Llamando al servicio de obtener revisiones')
         serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
-            if(res.data.succeed = false){
+            console.dir('Lo que devuelve el servicio obtener revisiones profesor')
+            //console.dir(res.data)
+            if(res.data.succeed == false){
                 console.dir('no se encontro')
                 return;
             }
             $scope.listaFeedbacks = res.data.listaFeedbacks;
+            console.dir('$scope.listaFeedbacks')
             console.dir($scope.listaFeedbacks)
         })
     }
