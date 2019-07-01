@@ -11,15 +11,21 @@
 
 
     <div class="row d-flex align-items-end">
-        <div ng-show="esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-md-4">
+        <div ng-show="esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-8">
             <label style="font-weight: bold">Alumno</label>
-            <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
-                ng-init="idalumno = '0'">
-                <option value="0">Seleccione</option>
-                <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
-                </option>
-            </select>
-        </div>
+            
+
+                <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
+                    ng-init="idalumno = '0'">
+                    <option value="0">Seleccione</option>
+                    <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-2">
+
+                <button ng-show="(usuario.profesor || usuario.jp)" class="btn btn-success" ng-click="siguiente()"><i class="fas fa-arrow-circle-right"></i></button>
+            </div>
         <div ng-show="!esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-md-4">
             <label style="font-weight: bold">Grupo</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idgrupo"
