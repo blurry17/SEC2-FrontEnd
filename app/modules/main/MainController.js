@@ -5,7 +5,6 @@ app.controller('MainController', function ($rootScope, $cookies, serviceCRUD, $s
     $rootScope.showLayout = true;
     var params = { idProfesor: $scope.usuario.idUser }
     serviceCRUD.TypePost('profesor/cursos', params).then(function (res) {
-        console.dir(res.data);
         $rootScope.lstCursos = res.data.listaCursos;
         $cookies.putObject('cursos', $rootScope.lstCursos);
     })

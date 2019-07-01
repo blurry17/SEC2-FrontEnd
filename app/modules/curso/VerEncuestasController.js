@@ -70,7 +70,7 @@ app.controller('VerEncuestasController', function ($rootScope, $scope, $location
             console.dir(res.data);
             $scope.coEval = res.data.listaNotas;
             $scope.lstAspectos = res.data.listaNotas[0].nombreAspectos;
-            console.dir($scope.lstAspectos);
+
         })
     }
 

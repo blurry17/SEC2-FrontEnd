@@ -23,14 +23,12 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
   var params = { idActividad: $scope.actividad.idActividad }
   function listarRanking() {
     serviceCRUD.TypePost('actividad/alumnos_destaca', params).then(function (res) {
-      //console.dir(res.data);
       $scope.listaR = res.data.lista5Alumnos;
     })
   }
 
   function tablaPorcentajes() {
     serviceCRUD.TypePost('actividad/estadistica', params).then(function (res) {
-      console.dir(res.data);
       $scope.mediaS = res.data.media;
       $scope.desv = res.data.desviacionEstandar;
       $scope.porcentaje = res.data.porcentajeAprobados;
@@ -88,8 +86,6 @@ app.controller('EstadisticasController', function ($rootScope, $scope, $location
       else colorNota = 'color: blue';
       data.addRow([$scope.listaFrec[i].nota, $scope.listaFrec[i].frecuencia, colorNota])
     }
-
-    //console.dir(arregloFrec);
 
     var options = {
       chart: {

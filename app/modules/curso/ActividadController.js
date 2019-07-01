@@ -5,7 +5,6 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
-    console.dir($scope.actividad)
     $scope.fechaMaxActividad = $scope.actividad.fechaFin.slice(6, 10) + "-" + $scope.actividad.fechaFin.slice(3, 5) + "-" + $scope.actividad.fechaFin.slice(0, 2);
     $scope.esIndividual = false;
     $scope.esGrupal = false;
@@ -49,7 +48,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
         $('#mdConfirmacionEliminacionCo').appendTo("body").modal('show');
     }
 
-    $scope.btnVerEnc=function(){
+    $scope.btnVerEnc = function () {
         $location.path('verEncuestas');
     }
 
@@ -132,7 +131,6 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
             $scope.guardado = !($scope.guardado);
 
             serviceCRUD.TypePost("auto-evaluacion/creacion", params).then(function (response) {
-                console.dir(response.data);
             })
             $("#mdCrearAutoEval").modal('hide');
             $("#mdConfirmacionCreacion").appendTo("body").modal('show');
@@ -154,7 +152,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
             $scope.guardado = !($scope.guardado);
 
             serviceCRUD.TypePost("co-evaluacion/crear_co_evaluacion", params).then(function (response) {
-                console.dir($scope.listaPregunta);
+
             })
             $("#mdCrearCoEval").modal('hide');
             $("#mdConfirmacionCreacion").appendTo("body").modal('show');
@@ -257,13 +255,11 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
             idActividad: $scope.actividad.idActividad
         }
         serviceCRUD.TypePost('alarma/listar', params).then(function (res) {
-            console.dir(res);
             $scope.listaAlarmas = res.data;
         })
     }
     $scope.btnVerAlerta = function (p) {
         $scope.nuevaAlarma = false;
-        //console.dir($scope.fechaMaxActividad);
         var objFecha = serviceUtil.getObjDate(p.fechaEjecucion);
         $scope.regAlarma = {
             idAlarma: p.idAlarma,
@@ -274,7 +270,6 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
             minInicio: objFecha.min,
             nombre: p.nombre
         }
-        console.dir($scope.regAlarma);
         $("#mdCrearAlarma").appendTo("body").modal('show')
     }
 
@@ -293,9 +288,7 @@ app.controller('ActividadController', function ($rootScope, $scope, $location, $
             asunto: $scope.regAlarma.asunto,
             fechaEjecucion: $scope.regAlarma.fechaEjecucion
         }
-        console.dir(params);
         serviceCRUD.TypePost('alarma/editar', params).then(function (res) {
-            console.dir(res);
             $("#mdCrearAlarma").modal('hide');
         })
     }
