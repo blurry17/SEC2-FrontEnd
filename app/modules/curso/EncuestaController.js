@@ -8,11 +8,14 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.vistaAlumno = $scope.usuario.alumno;
     $scope.listaAl = null;
     $scope.esActGrupal = false;
-    $scope.idRub=0;
-    $scope.coTieneNota=false;
+    $scope.idRub = 0;
+    $scope.coTieneNota = false;
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
     $scope.auTieneNota=false;
+    $scope.falta = false;
+    $scope.flgCalificado = false;
+    $scope.mostrarAspecto = true;
 
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
@@ -30,6 +33,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
     $scope.hayRegHorasActividad = false;
     $scope.hayRegCategoriasActividad = false;
+    //$scope.hayEncuesta=true;
 
 
     //console.dir($scope.usuario );
@@ -50,6 +54,11 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         serviceCRUD.TypePost('actividad/grupo/lista-integrantes/coevaluacion', params).them(function (res) {
             $scope.listaAl = res.data.lista;
         })
+    }
+
+    $scope.marcado = function () {
+        $scope.falta = true;
+        $scope.flgCalificado=true;
     }
 
     $scope.btnEvaluacionE = function (tipo) {
@@ -81,12 +90,21 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         }
 
         serviceCRUD.TypePost('actividad/obtener_rubrica', params).then(function (res) {
+
+
+
+
             if (res.data.succeed == false) {
-                window.alert('No existe esta evaluación');
+                Swal.fire({
+                    title: 'Aviso!',
+                    text: 'No existe esta evaluación',
+                    type: 'warning',
+                    confirmButtonText: 'Ok'
+                })
                 return;
             }
             $scope.rubrica = res.data;
-            $scope.idRub=res.data.idRubrica;
+            $scope.idRub = res.data.idRubrica;
             //console.dir('Leer la rubricaa');
             //console.dir($scope.rubrica);
             if (tipo == 2) {
@@ -112,28 +130,28 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
         })
     }
 
-    $scope.obtenerCo=function(){
-        if($scope.idalumno==0){
-            $scope.coTieneNota=true;
-        }else{
-            let params={
-                idActividad:$scope.actividad.idActividad,
-                idCalificado:$scope.idalumno,
-                idCalificador:$scope.usuario.idUser,
-    
+    $scope.obtenerCo = function () {
+        if ($scope.idalumno == 0) {
+            $scope.coTieneNota = true;
+        } else {
+            let params = {
+                idActividad: $scope.actividad.idActividad,
+                idCalificado: $scope.idalumno,
+                idCalificador: $scope.usuario.idUser,
+
             }
             console.dir('este es el yeison');
             console.dir(params);
-            serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion',params).then(function(res){
-                $scope.rubricaCoauto=res.data;
-                if(res.data.nota==null){
-                    $scope.coTieneNota=false;
-                }else {
-                    $scope.coTieneNota=true;
+            serviceCRUD.TypePost('coevaluacion/obtener_coevaluacion', params).then(function (res) {
+                $scope.rubricaCoauto = res.data;
+                if (res.data.nota == null) {
+                    $scope.coTieneNota = false;
+                } else {
+                    $scope.coTieneNota = true;
                 }
                 console.dir('LA RES');
                 console.dir(res.data);
-                
+
             })
 
         }
@@ -141,6 +159,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
 
     $scope.btnGuardarCo = function () {
         if (formCo.checkValidity()) {
+            //cond para no exceder puntaje max
+
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -209,36 +229,41 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
             idActividad: $scope.actividad.idActividad,
             idAlumno: $scope.usuario.idUser,
         }
-        console.dir(params.idAlumno);
+        //console.dir(params.idAlumno);
         serviceCRUD.TypePost('autoevaluacion/obtener_autoevaluacion',params).then(function(res){
             $scope.rubricaAuto=res.data;
             if(res.data.nota==null){
                 $scope.auTieneNota=false;
+                $scope.falta=false;
+                $scope.flgCalificado=false;
             }else {
                 $scope.auTieneNota=true;
+                $scope.falta=true;
+                $scope.flgCalificado=true;
             }
+            //$scope.hayEncuesta=false;
         })
     }
 
     $scope.btnGuardarAutoEvaluacion = function () {
-        if(formCo.checkValidity()){
+        if (formCo.checkValidity()) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
-                  confirmButton: 'btn btn-success',
-                  cancelButton: 'btn btn-danger'
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 },
                 buttonsStyling: false,
-              })
-              
-              swalWithBootstrapButtons.fire({
+            })
+
+            swalWithBootstrapButtons.fire({
                 title: 'Está seguro que quiere continuar?',
                 text: "No podrá modificar la nota luego",
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Si, continuar',
                 cancelButtonText: 'No, cancelar',
-                
-              }).then((result) => {
+
+            }).then((result) => {
                 if (result.value) {
                   swalWithBootstrapButtons.fire(
                     'Listo!',
@@ -250,36 +275,37 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                     idCalificador:$scope.usuario.idUser,
                     nota:0,
                     idRubrica:$scope.rubricaAuto.idRubrica,
-                    flgFalta:0,
+                    flgFalta: $scope.falta ? 1 : 0,
                     listaNotaAspectos:$scope.rubricaAuto.listaNotaAspectos,
                     flgCompleto:0,
-                }
-                serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
-                
-                })
-                $scope.auTieneNota=true;
+                    }
+                    console.dir($scope.rubricaAuto.listaNotaAspectos);
+                    serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
+                        $scope.flgCalificado=false?0:1;
+                    })
+                    $scope.auTieneNota=true;
                 } else if (
-                  result.dismiss === Swal.DismissReason.cancel
+                    result.dismiss === Swal.DismissReason.cancel
                 ) {
-                  swalWithBootstrapButtons.fire(
-                    'Se canceló la calificación',
-                    
-                  )
+                    swalWithBootstrapButtons.fire(
+                        'Se canceló la calificación',
+
+                    )
                 }
-              })
-            
+            })
+
         }
-        else{
+        else {
             Swal.fire({
                 title: 'Error!',
                 text: 'Debe llenar todos los puntajes',
                 type: 'error',
                 confirmButtonText: 'Ok'
-              })
-           /*  $('#mdCompletar').appendTo("body").modal('show'); */
+            })
+            /*  $('#mdCompletar').appendTo("body").modal('show'); */
         }
     }
-    
+
     //Como profesor: Crear Registro Horas
     $scope.btnCrearRegistroHoras = function () {
         console.dir($scope.regEsfuerzo)
