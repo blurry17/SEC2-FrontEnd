@@ -4,7 +4,7 @@
     <h2 class="btn btn-link" style="font-size: 2rem" data-toggle="collapse" data-target="#acts">Actividades</h2>
     <div class="collapse" id="acts">
         <div class="row justify-content-between">
-            <div class="col-xs-12 col-md-5">
+            <div class="col-xs-12 col-md-3">
                 <h5 style="display:inline-block"><span class="badge badge-pill badge-success">
                         <div style="margin: 5px">En curso</div>
                     </span></h5>
@@ -25,17 +25,18 @@
                 <button class="btn btn-info" ng-click="btnCrearRegistroHoras()"><i class="fas fa-plus"></i>&nbsp;Crear
                     Registro de Horas</button>
             </div>
-            <div ng-show="usuario.profesor && hayRegHorasHorario" class="col-xs-12 col-sm-8 col-md-5 col-lg-3">
+            <div ng-show="(usuario.profesor || usuario.jp) && hayRegHorasHorario"
+                class="col-xs-12 col-sm-8 col-md-5 col-lg-3">
                 <button class="btn btn-info" ng-click="btnVerRegistroHoras()"><i class="fas fa-eye"></i>&nbsp;Ver
                     Registro
                     de Horas</button>
             </div>
-            <div ng-show="!usuario.profesor && hayRegHorasHorario && !regHorasIngresado"
+            <div ng-show="!usuario.profesor && !usuario.jp && hayRegHorasHorario && !regHorasIngresado"
                 class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
                 <button class="btn btn-info" ng-click="btnRegistrarHoras()"><i class="fas fa-plus"></i>&nbsp;Ingresar
                     Registro de Horas</button>
             </div>
-            <div ng-show="!usuario.profesor && hayRegHorasHorario && regHorasIngresado"
+            <div ng-show="!usuario.profesor && !usuario.jp && hayRegHorasHorario && regHorasIngresado"
                 class="col-xs-12 col-sm-8 col-md-5 col-lg-3">
                 <button class="btn btn-info" ng-click="btnVerRegistroHorasAlumno()"><i class="fas fa-eye"></i>&nbsp;Ver
                     Registro
@@ -45,6 +46,12 @@
                 <button class="btn btn-info" ng-click="btnCargarAlu()"><i class="fas fa-file-excel"></i>&nbsp;Cargar
                     alumnos</button>
             </div>
+            <div ng-show="usuario.profesor" class="col-xs-12 col-sm-8 col-md-3 col-lg-2">
+                <button class="btn btn-warning" ng-click="btnVerObtenerRevisiones()"><i
+                        class="fas fa-check"></i>&nbsp;Aprobar revisión</button>
+            </div>
+
+
         </div>
 
         <div class="row" style="padding-top: 15px">
@@ -740,4 +747,40 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="mdObtenerRevisiones" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aprobar correcciones</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div ng-repeat="act in listaActividadesFeedback">
+                            <div class="form-row col-md-12 d-flex align-items-center">
+
+                                <div class="form-group col-md-10">
+                                    <label>Actividad: {{act.nombre}}</label>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <button data-dismiss="modal" class="btn btn-primary" title="Ver"
+                                        ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+
+            <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+    </div>
+</div>
 </div>
