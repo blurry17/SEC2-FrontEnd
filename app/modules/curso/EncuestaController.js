@@ -160,7 +160,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.btnGuardarCo = function () {
         if (formCo.checkValidity()) {
             //cond para no exceder puntaje max
-
+            
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
