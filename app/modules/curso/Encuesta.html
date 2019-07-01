@@ -108,8 +108,7 @@
                   </div>
                 </div>
               </div>
-              
-              
+
               <div ng-if="aspecto.tipoClasificacion == 2">
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
@@ -212,19 +211,18 @@
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
                         <label class="negrita">Nombre del Aspecto</label>
-                        <input disabled type="text" required maxlength="25" class="form-control"
-                          ng-model="aspecto.descripcion" />
+                        <input disabled type="text" required maxlength="25" class="form-control" ng-model="asp.descripcion" />
                         <div class="invalid-feedback">
                           Ingrese un nombre.
                         </div>
                       </div>
                       <div class="form-group col-md-5 col-lg-4">
                         <label class="negrita">Descripción</label>
-                        <input disabled maxlength="50" class="form-control" ng-model="aspecto.informacion" />
+                        <input disabled maxlength="50" class="form-control" ng-model="asp.informacion" />
                       </div>
                       <div class="form-group col-md-1">
                         <label class="negrita">Puntaje</label>
-                        <input disabled ng-model="aspecto.puntajeMax" required type="text" class="form-control"
+                        <input disabled ng-model="asp.puntajeMax" required type="text" class="form-control"
                           style="width: 70px" maxlength="2"
                           onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
                         <div class="invalid-feedback">
@@ -241,24 +239,23 @@
                       </div>
                       
                     </div>
-                    <div ng-repeat="indicador in aspecto.listaNotaIndicador" style="padding-left: 2%">
+                    <div ng-repeat="indi in asp.listaNotaIndicador" style="padding-left: 2%">
                       <div class="form-row">
                         <div class="form-group col-md-3 col-lg-2">
                           <label class="negrita">Nombre del indicador</label>
-                          <input disabled required maxlength="25" class="form-control" ng-model="indicador.descripcion" />
+                          <input disabled maxlength="25" class="form-control" ng-model="indi.descripcion" />
                           <div class="invalid-feedback">
                             Ingrese un nombre.
                           </div>
                         </div>
                         <div class="form-group col-md-5 col-lg-4">
                           <label class="negrita">Descripción</label>
-                          <input disabled maxlength="50" class="form-control"
-                            ng-model="indicador.informacion" />
+                          <input disabled maxlength="50" class="form-control" ng-model="indi.informacion" />
                         </div>
                         
                         <div class="form-group col-md-4">
                           <label class="negrita">Puntaje Asignado</label>
-                          <input ng-disabled="coTieneNota" ng-model="asp.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
+                          <input ng-disabled="coTieneNota" ng-model="indi.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                             maxlength="2" style="width: 70px" class="form-control" />
                           <div class="invalid-feedback">
                             Ingrese un puntaje.
@@ -266,7 +263,7 @@
                         </div>
     
                       </div>
-                      <div ng-repeat="nivel in indicador.listaNiveles" style="padding-left: 4%">
+                      <div ng-repeat="nvl in indi.listaNiveles" style="padding-left: 4%">
                         <div class="form-row">
                           <div class="form-group col-md-1">
                             <label class="negrita">{{'Nivel ' + ($index + 1)}}</label>
@@ -276,14 +273,14 @@
                           </div>
                           <div class="form-group col-md-4 col-lg-4">
                             <label class="negrita">Descripción</label>
-                            <textarea disabled ng-model="nivel.descripcion" maxlength="200"
+                            <textarea disabled ng-model="nvl.descripcion" maxlength="200"
                               class="form-control"></textarea>
                           </div>
                           <div class="form-group col-md-1">
                             <label class="negrita">Puntaje</label>
-                            <input disabled required type="text"
+                            <input disabled  type="text"
                               onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
-                              maxlength="2" class="form-control" style="width: 70px" ng-model="nivel.puntaje" />
+                              maxlength="2" class="form-control" style="width: 70px" ng-model="nvl.puntaje" />
                             <div class="invalid-feedback">
                               Ingrese un puntaje.
                             </div>
@@ -291,7 +288,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>              
+                  </div>            
                   <div ng-if="asp.tipoClasificacion == 2">
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
