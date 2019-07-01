@@ -32,7 +32,11 @@ app.controller('MantenimientoController', function ($rootScope, $cookies, servic
     $scope.crearSemestre = function () {
         var params = { nombreSemestre: $scope.nomSem };
         serviceCRUD.TypePost('mantenimiento/semestre/crear', params).then(function (res) {
-
+            $('#mdCrearSemestre').modal('hide');
+            Swal.fire({
+                type: 'success',
+                title: 'Semestre creado'
+            })
         })
     }
 
@@ -40,6 +44,10 @@ app.controller('MantenimientoController', function ($rootScope, $cookies, servic
         var params = { idSemestre: $scope.idSemAct };
         serviceCRUD.TypePost('mantenimiento/semestre_activar', params).then(function (res) {
             $('#mdActivarSemestre').modal('hide');
+            Swal.fire({
+                type: 'success',
+                title: 'Semestre activado'
+            })
             obtenerSemActual();
         })
     }
