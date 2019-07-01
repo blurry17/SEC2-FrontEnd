@@ -18,6 +18,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.editar = null;
     $scope.auxNotaNivel = 0;
     $scope.nomRubrica = "";
+    $scope.getColor="";
     $scope.rubrica = {
         flgRubricaEspecial: 0,
         idUsuarioCreador: $scope.usuario.idUser,
@@ -160,9 +161,9 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     idCalificador: $scope.usuario.idUser
                 }
                 serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
-                    
                     $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                     $scope.notaFinal = res.data.calificacion.nota;
+            
                     $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
                     $scope.falta = res.data.calificacion.flgFalta == 1;
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
@@ -612,6 +613,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             var params = { idActividad: $scope.actividad.idActividad }
             serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
                 $scope.listaAl = res.data.lista;
+                console.dir($scope.listaAl);
             })
             $scope.mostrar = true;
         }

@@ -17,8 +17,7 @@
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
                 ng-init="idalumno = '0'">
                 <option value="0">Seleccione</option>
-                <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
-                </option>
+                <option ng-repeat="item in listaAl" ng-value="item.idAlumno" >{{item.codigoPUCP +" - "+ item.nombre}}</option>
             </select>
         </div>
         <div ng-show="!esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)"
