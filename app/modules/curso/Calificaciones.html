@@ -62,9 +62,7 @@
             </div>
         </div>
         <div ng-show="idalumno!='0' || idgrupo!='0'" class="form-group col-md-3">
-            <div style="float: right">
-                <button type="button" class="btn btn-info" ng-click=""><i class="fas fa-download"></i>&nbsp;Descargar
-                    Archivo</button>
+            <div>
                 <button ng-show="!usuario.alumno" type="button" class="btn btn-warning" ng-show="flgCalificado"
                     ng-click="btnEditar()"><i class="fas fa-pen"></i>&nbsp;Editar</button>
                 <button ng-show="!usuario.alumno" class="btn btn-success" type="submit" ng-show="profe"
