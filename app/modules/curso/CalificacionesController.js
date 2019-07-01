@@ -54,9 +54,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     encontrado = true;
                     //$scope.grupo.idGrupal=$scope.listaGrupal[i+1].idGrupo;
                 }
-
             }
-
         }
         if ($scope.actividad.tipo == "I" || $scope.usuario.alumno) {
             if ($scope.usuario.alumno == 1) {
@@ -119,7 +117,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     //sacar de frende de lista aspectos
     $scope.ObtenerNotas = function () {
         console.dir($scope.idalumno)
-        if ($scope.actividad.tipo == "I" || $scope.usuario.alumno) {
+        if ($scope.actividad.tipo == "I") {
             if ($scope.usuario.alumno == 1) {
                 if ($scope.usuario.alumno == 1) {
                     $scope.idalumno = $scope.usuario.idUser;
@@ -172,6 +170,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     idCalificador: $scope.usuario.idUser
                 }
                 serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
+                    console.dir(res.data.calificacion.listaNotaAspectos);
                     $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                     $scope.notaFinal = res.data.calificacion.nota;
                     $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
@@ -191,7 +190,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 if ($scope.usuario.alumno == 1) {
                     $scope.idalumno = $scope.usuario.idUser;
                 }
-                if ($scope.idalumno == '0') return;
                 $scope.editar = false;
                 mostrarEntregables($scope.idgrupo);
                 var params = {
@@ -201,7 +199,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     idRubrica: $scope.idRub,
                 }
                 serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo_publicada', params).then(function (res) {
-                    console.dir("respuesta de alumno");
                     console.dir(res);
                     if (res.data.succeed == false) {
                         Swal.fire({
@@ -226,7 +223,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 })
 
             } else {
-
                 $scope.editar = false;
                 mostrarEntregables($scope.idgrupo);
                 var params = {
@@ -236,6 +232,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     idRubrica: $scope.idRub,
                 }
                 serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo', params).then(function (res) {
+                    console.dir(res.data.calificacion.listaNotaAspectos);
                     $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                     $scope.notaFinal = res.data.calificacion.nota;
                     $scope.flgCalificado = res.data.flgCalificado;
