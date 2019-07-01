@@ -13,7 +13,8 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.idActividadUHorario = null;
     $scope.notaAuto=null;
     $scope.auTieneNota=false;
-    $scope.correcto = false;
+    $scope.falta = false;
+    $scope.flgCalificado = null;
 
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
@@ -55,7 +56,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     }
 
     $scope.marcado = function () {
-        $scope.correcto = !$scope.correcto;
+        $scope.falta = !$scope.falta;
     }
 
     $scope.btnEvaluacionE = function (tipo) {
@@ -257,14 +258,14 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                     idCalificador:$scope.usuario.idUser,
                     nota:0,
                     idRubrica:$scope.rubricaAuto.idRubrica,
-                    flgFalta:0,
+                    flgFalta: $scope.falta ? 1 : 0,
                     listaNotaAspectos:$scope.rubricaAuto.listaNotaAspectos,
                     flgCompleto:0,
-                }
-                serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
-                
-                })
-                $scope.auTieneNota=true;
+                    }
+                    serviceCRUD.TypePost('autoevaluacion/calificar_autoevaluacion',params).then(function(res){
+                        $scope.flgCalificado=null?0:1;
+                    })
+                    $scope.auTieneNota=true;
                 } else if (
                   result.dismiss === Swal.DismissReason.cancel
                 ) {
