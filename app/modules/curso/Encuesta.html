@@ -25,6 +25,7 @@
           <div class="row">
             <div ng-repeat="aspecto in rubricaAuto.listaNotaAspectos" class="col-md-12 border border-solid rounded"
               style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+            
               <div ng-if="aspecto.tipoClasificacion == 1">
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
@@ -57,11 +58,11 @@
                   </div>
                   
                 </div>
-                <div ng-repeat="ind in aspecto.listaIndicadores" style="padding-left: 2%">
+                <div ng-repeat="ind in aspecto.listaNotaIndicador" style="padding-left: 2%">
                   <div class="form-row">
                     <div class="form-group col-md-3 col-lg-2">
                       <label class="negrita">Nombre del indicador</label>
-                      <input disabled required maxlength="25" class="form-control" ng-model="ind.descripcion" />
+                      <input disabled maxlength="25" class="form-control" ng-model="ind.descripcion" />
                       <div class="invalid-feedback">
                         Ingrese un nombre.
                       </div>
@@ -70,7 +71,7 @@
                       <label class="negrita">Descripción</label>
                       <input disabled maxlength="50" class="form-control" ng-model="ind.informacion" />
                     </div>
-                    <!--AQUI AGREGAMOS EL PUNTAJE DEL INDICADOR-->
+                    
                     <div class="form-group col-md-4">
                       <label class="negrita">Puntaje Asignado</label>
                       <input ng-disabled="auTieneNota" ng-model="ind.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
@@ -96,7 +97,7 @@
                       </div>
                       <div class="form-group col-md-1">
                         <label class="negrita">Puntaje</label>
-                        <input disabled required type="text"
+                        <input disabled  type="text"
                           onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
                           maxlength="2" class="form-control" style="width: 70px" ng-model="nv.puntaje" />
                         <div class="invalid-feedback">
@@ -107,6 +108,8 @@
                   </div>
                 </div>
               </div>
+              
+              
               <div ng-if="aspecto.tipoClasificacion == 2">
                 <div class="form-row">
                   <div class="form-group col-md-3 col-lg-2">
@@ -154,7 +157,10 @@
                     <label class="negrita">Descripción</label>
                     <input disabled type="text" maxlength="50" class="form-control" ng-model="aspecto.informacion" />
                   </div>
-                  <div class="form-group col-md-5 col-lg-4">
+                  <!--AQUI FALTA PONER EL CHECK-->
+                  
+                  <!--
+                    <div class="form-group col-md-5 col-lg-4">
                     <label class="negrita">Comentario sobre desempeño</label>
                     <textarea ng-disabled="auTieneNota" ng-model="nivel.descripcion" maxlength="200"
                       class="form-control"></textarea>
@@ -162,7 +168,12 @@
                       Ingrese un puntaje.
                     </div>
                   </div>
-
+                  -->
+                  <div class="form-group col-md-5 col-lg-4">
+                    <label style="font-weight: bold">Marque si considera correcto</label><br>
+                    <input ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox">
+                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -196,6 +207,7 @@
               <div class="row">
                 <div ng-repeat="asp in rubricaCoauto.listaNotaAspectos" class="col-md-12 border border-solid rounded"
                   style=" background-color: #e9ecef; margin-bottom: 10px; margin-left: 10px; padding-top: 10px">
+
                   <div ng-if="asp.tipoClasificacion == 1">
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
@@ -229,7 +241,7 @@
                       </div>
                       
                     </div>
-                    <div ng-repeat="indicador in aspecto.listaIndicadores" style="padding-left: 2%">
+                    <div ng-repeat="indicador in aspecto.listaNotaIndicador" style="padding-left: 2%">
                       <div class="form-row">
                         <div class="form-group col-md-3 col-lg-2">
                           <label class="negrita">Nombre del indicador</label>
@@ -243,7 +255,7 @@
                           <input disabled maxlength="50" class="form-control"
                             ng-model="indicador.informacion" />
                         </div>
-                        <!--AQUI AGREGAMOS EL PUNTAJE DEL INDICADOR-->
+                        
                         <div class="form-group col-md-4">
                           <label class="negrita">Puntaje Asignado</label>
                           <input ng-disabled="coTieneNota" ng-model="asp.nota" required type="text" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
@@ -279,7 +291,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>              
                   <div ng-if="asp.tipoClasificacion == 2">
                     <div class="form-row">
                       <div class="form-group col-md-3 col-lg-2">
@@ -325,14 +337,22 @@
                         <label class="negrita">Descripción</label>
                         <input disabled type="text" maxlength="50" class="form-control" ng-model="asp.informacion" />
                       </div>
-                      <div class="form-group col-md-5 col-lg-4">
-                        <label class="negrita">Comentario sobre desempeño</label>
-                        <textarea ng-disabled="bloqEval" ng-model="nivel.descripcion" maxlength="200"
-                          class="form-control"></textarea>
-                        <div class="invalid-feedback">
-                          Ingrese un puntaje.
-                        </div>
-                      </div>
+                      <!--AQUI FALTA PONER EL CHECK-->
+                  
+                  <!--
+                    <div class="form-group col-md-5 col-lg-4">
+                    <label class="negrita">Comentario sobre desempeño</label>
+                    <textarea ng-disabled="auTieneNota" ng-model="nivel.descripcion" maxlength="200"
+                      class="form-control"></textarea>
+                    <div class="invalid-feedback">
+                      Ingrese un puntaje.
+                    </div>
+                  </div>
+                  -->
+                  <div class="form-group col-md-5 col-lg-4">
+                    <label style="font-weight: bold">Marque si considera correcto</label>
+                    <input ng-disabled="flgCalificado" ng-model="falta" ng-click="marcado()" type="checkbox">
+                  </div>
     
                     </div>
                   </div>

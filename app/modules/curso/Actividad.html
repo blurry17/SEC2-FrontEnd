@@ -36,12 +36,14 @@
             class="fas fa-bell"></i> &nbsp;{{p.nombre}}
         </a>
       </div>
-      <button ng-click="btnEstadisticas()" ng-if="actividad.tipo=='I'" class="btn btn-info" style="margin: 2px;"><i
+      <button ng-show="actividad.tipo=='I'"  ng-click="btnEstadisticas()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-chart-bar"></i>&nbsp;Estadísticas</button>
       <button ng-show="usuario.alumno" ng-click="btnEncuesta()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-bookmark"></i>&nbsp;Encuestas</button>
-      <button ng-show="usuario.profesor && actividad.tipo=='G'" ng-click="btnListarNotas()" class="btn btn-info"
-        style="margin: 2px;"><i class="fas fa-chart-line"></i>&nbsp;Notas grupales</button>
+        <button ng-show="usuario.profesor && actividad.tipo=='G'" ng-click="btnListarNotas()" class="btn btn-info"
+          style="margin: 2px;"><i class="fas fa-chart-line"></i>&nbsp;Notas grupales</button>
+          <button ng-show="usuario.profesor && actividad.tipo=='I'" ng-click="btnListarNotas()" class="btn btn-info"
+          style="margin: 2px;"><i class="fas fa-chart-line"></i>&nbsp;Notas Individuales</button>
       <button ng-show="usuario.profesor" ng-click="btnVerEnc()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-chart-line"></i>&nbsp;Encuestas</button>
     </div>

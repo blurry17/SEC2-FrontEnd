@@ -2,6 +2,7 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
     $scope.usuario = $cookies.getObject('usuario');
     $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
+    console.dir($scope.usuario)
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject('cursoActual');
     $scope.esProfesor = $scope.usuario.profesor;
@@ -48,6 +49,9 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         idAlumno: null,
         listaCategorias: $scope.regEsfuerzo.listaCategorias
     }
+
+    $scope.listaFeedbacks = []
+    $scope.listaActividadesFeedback = [];
 
     $scope.hayRegHorasHorario = false;
     $scope.regHorasIngresado = false;
@@ -587,12 +591,66 @@ app.controller('CursoController', function ($rootScope, $scope, $location, $cook
         })
     }
 
+    $scope.btnVerObtenerRevisiones = function () {
+        $('#mdObtenerRevisiones').appendTo("body").modal('show');
+        ObtenerRevisiones();
+    }
+
+    function ObtenerRevisiones(){
+        if($scope.listaFeedbacks.length > 0)
+            return;
+        var params  = {
+            idProfesor: $scope.usuario.idUser
+        }   
+        serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
+            console.dir('Lo que devuelve el servicio obtener revisiones profesor')
+            console.dir(res)
+            if(res.data.succeed == false){
+                console.dir('no se encontro')
+                return;
+            }
+            $scope.listaFeedbacks = res.data.listaFeedbacks;
+
+            //Tengo que sacar los datos de la actividad usando el id
+            for (let i = 0; i < $scope.listaFeedbacks.length; i++){
+                let idActFeedback = $scope.listaFeedbacks[i].idActividad;
+                console.dir($scope.lstActividad)
+                for (let j = 0; j < $scope.lstActividad.length; j++){
+                    console.dir($scope.lstActividad[j].idActividad);
+                    if (idActFeedback == $scope.lstActividad[j].idActividad){
+                        let todoActividad = $scope.lstActividad[j];
+                        $scope.listaActividadesFeedback.push(todoActividad);
+                    }
+                }
+            }
+            console.dir($scope.listaActividadesFeedback)
+        })
+    }
+
+    $scope.irActividad = function(feedback){
+        let idact = feedback.idActividad;
+        //Iterar por la lista de actividades hasta encontrar
+        //la que haga match con el idActividad
+        for (let i = 0; i < $scope.lstActividad.length; i++){
+            if(idact == $scope.lstActividad.idActividad) {
+                let act = $scope.lstActividad[i];
+                break;
+            }
+        }
+        $cookies.putObject('actividadActual', act)
+        $location.path("actividad");
+
+    }   
+
+
+
     function init() {
         ListarActividades();
         ListarAgrupaciones();
         hayAgrupaciones();
         obtenerRegistroHorasSoloCategorias();
         ListarAlumnos();
+        
 
         if (!$scope.esProfesor)
             obtenerRegHorasComoAlumno();

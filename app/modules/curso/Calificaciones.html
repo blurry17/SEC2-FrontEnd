@@ -8,17 +8,25 @@
     </nav>
     <br />
 
+
+
     <div class="row d-flex align-items-end">
-        <div ng-show="esActIndividual && mostrar && !usuario.alumno && usuario.profesor" class="form-group col-md-4">
+        <div ng-show="esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-8">
             <label style="font-weight: bold">Alumno</label>
-            <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
-                ng-init="idalumno = '0'">
-                <option value="0">Seleccione</option>
-                <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
-                </option>
-            </select>
-        </div>
-        <div ng-show="!esActIndividual && mostrar && !usuario.alumno && usuario.profesor" class="form-group col-md-4">
+            
+
+                <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idalumno"
+                    ng-init="idalumno = '0'">
+                    <option value="0">Seleccione</option>
+                    <option ng-repeat="item in listaAl" ng-value="item.idAlumno">{{item.codigoPUCP +" - "+ item.nombre}}
+                    </option>
+                </select>
+            </div>
+            <div class="form-group col-2">
+
+                <button ng-show="(usuario.profesor || usuario.jp)" class="btn btn-success" ng-click="siguiente()"><i class="fas fa-arrow-circle-right"></i></button>
+            </div>
+        <div ng-show="!esActIndividual && mostrar && !usuario.alumno && (usuario.profesor || usuario.jp)" class="form-group col-md-4">
             <label style="font-weight: bold">Grupo</label>
             <select ng-change="ObtenerNotas()" class="form-control custom-select" ng-model="idgrupo"
                 ng-init="idgrupo = '0'">
@@ -36,7 +44,8 @@
                 <h5>Entregables</h5>
             </div>
             <div ng-repeat="arch in archivos">
-                <a href="" ng-click="descargarArchivo(arch)">{{arch.nombreArchivo}}</a>
+                <a href=""
+                    ng-click="descargarArchivo(arch)">{{arch.urlEntregable == null ? arch.nombreArchivo : arch.urlEntregable}}</a>
             </div>
         </div>
         <div class="form-group col-md-9 row" ng-if="usuario.alumno">
@@ -46,7 +55,7 @@
             </div>
             <div class="col-md-4 form-group">
                 <label for="file">Ingresar URL</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" ng-model="data.url">
             </div>
             <div class="col-md-3">
                 <button class="btn btn-primary" ng-click="btnSubir()"><i class="fas fa-upload"></i>&nbsp;Subir</button>
@@ -70,7 +79,8 @@
             <h1 style="font-family: Arial, Helvetica, sans-serif; vertical-align: bottom">Aún no se ha calificado la actividad</h1>
         </div>
     <form id="formCal" name="formCal" class="needs-validation" novalidate>
-        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno && Calificado" class="card" style="background-color: #9fc09f">
+        <div ng-show="idalumno!='0' || idgrupo!='0' || usuario.alumno || usuario.jp" class="card"
+            style="background-color: rgb(135, 177, 166)">
             <div class="card-body">
 
                 <div ng-repeat="aspecto in rubrica.listaNotaAspectos" style="width: 100%">
@@ -255,9 +265,13 @@
             </div>
 
     </form>
-    <div class="form-group col-sm-2">
+    <div ng-show="profe" class="form-group col-sm-2">
         <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita"
             ng-click="btnGuardarPuntaje()">Guardar</button>
+    </div>
+    <div ng-show="esJP" class="form-group col-sm-2">
+        <button class="btn btn-primary" type="submit" ng-show="!flgCalificado || edita"
+            ng-click="btnCalificarComoJP()">Calificar</button>
     </div>
     <script>
         $(document).ready(function () {
