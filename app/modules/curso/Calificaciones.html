@@ -36,7 +36,8 @@
                 <h5>Entregables</h5>
             </div>
             <div ng-repeat="arch in archivos">
-                <a href="" ng-click="descargarArchivo(arch)">{{arch.nombreArchivo}}</a>
+                <a href=""
+                    ng-click="descargarArchivo(arch)">{{arch.urlEntregable == null ? arch.nombreArchivo : arch.urlEntregable}}</a>
             </div>
         </div>
         <div class="form-group col-md-9 row" ng-if="usuario.alumno">
@@ -46,7 +47,7 @@
             </div>
             <div class="col-md-4 form-group">
                 <label for="file">Ingresar URL</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" ng-model="data.url">
             </div>
             <div class="col-md-3">
                 <button class="btn btn-primary" ng-click="btnSubir()"><i class="fas fa-upload"></i>&nbsp;Subir</button>
