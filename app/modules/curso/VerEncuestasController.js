@@ -9,6 +9,14 @@ app.controller('VerEncuestasController', function ($rootScope, $scope, $location
     $scope.listaGrupal = [];
     $scope.coEval = [];
     $scope.lstAspectos = [];
+    
+    $scope.reg={
+        idalumno:0,
+    };
+
+    $scope.flgCrear=$cookies.getObject("flgCrear");
+
+    if($scope.flgCrear)  $scope.hayRegHorasActividad=true;
 
     $scope.alumno = {
         idAlumno: 0,
@@ -18,6 +26,22 @@ app.controller('VerEncuestasController', function ($rootScope, $scope, $location
     };
     $scope.rubricaAuto = null;
     $scope.true = true;
+
+    $scope.regEsfuerzo = {
+        tipo: 1,
+        idActividadUHorario: $scope.actividad.idActividad,
+        idUsuarioCreador: $scope.usuario.idUser,
+        listaCategorias: []
+    };
+
+    $scope.regEsfuerzoHoras = {
+        idRegistroEsfuerzo: $scope.regEsfuerzo.idRegistroEsfuerzo,
+        idAlumno: null,
+        listaCategorias: $scope.regEsfuerzo.listaCategorias
+    }
+
+    $scope.hayRegHorasActividad = false;
+    $scope.hayRegCategoriasActividad = false;
 
     $scope.obtenerAuto = function () {
         let aux = {
@@ -161,13 +185,130 @@ app.controller('VerEncuestasController', function ($rootScope, $scope, $location
         })
     }
 
+    //Como profesor: Crear Registro Horas
+    $scope.btnCrearRegistroHoras = function () {
+        console.dir($scope.regEsfuerzo)
+        console.dir(JSON.stringify($scope.regEsfuerzo))
+        $cookies.putObject('flgCrear', 1);
+        console.dir($cookies.getObject("flgCrear"));
+        serviceCRUD.TypePost('registro_horas/crear_registro_horas', $scope.regEsfuerzo).then(function (res) {
+            console.dir(res)
+        })
+    }
+
+    //Como alumno: Registrar Horas
+    $scope.btnRegistrarHoras = function () {
+        console.dir('regEsfuerzoHoras cuando presiono el boton')
+        console.dir($scope.regEsfuerzoHoras)
+        serviceCRUD.TypePost('registro_horas/registrar_horas', $scope.regEsfuerzoHoras).then(function (res) {
+            console.dir(res)
+        })
+    }
+
+    //Como profesor y alumno: Obtener registro horas x alumno
+    $scope.obtenerRegistroHorasXAlumno = function () {
+        var params = {
+            tipo: 1,
+            idActividadUHorario: $scope.actividad.idActividad,
+            //esto lo saco del select alumno
+            idAlumno: $scope.reg.idalumno
+        }
+        console.dir(params);
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
+            $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+            $scope.regEsfuerzoHoras.tipo = res.data.tipo;
+            $scope.regEsfuerzoHoras.idAlumno = $scope.reg.idalumno
+            $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+            $scope.hayRegHorasActividad = true;
+        })
+    }
+
+    $scope.obtenerRegHorasComoAlumno = function () {
+        var params = {
+            tipo: 1,
+            idActividadUHorario: $scope.actividad.idActividad,
+            //esto lo saco del select alumno
+            idAlumno: $scope.usuario.idUser
+        }
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas_alumno', params).then(function (res) {
+            $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+            $scope.regEsfuerzoHoras.tipo = res.data.tipo;
+            $scope.regEsfuerzoHoras.idAlumno = $scope.usuario.idUser
+            $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+            $scope.hayRegHorasActividad = true;
+        })
+    }
+
+    //Como profesor y alumno: Obtener registro horas (solo categorias)
+    function obtenerRegistroHorasSoloCategorias() {
+        var params = {
+            tipo: 1,
+            idActividadUHorario: $scope.actividad.idActividad
+        }
+        serviceCRUD.TypePost('registro_horas/obtener_registro_horas', params).then(function (res) {
+            if (res.data.succeed == false) {
+                $scope.flgCrear=false;
+                return;
+            }
+            else {
+                //Asigno el objeto registro horas categoria al registro horas con respuestas
+                console.dir("Entro a Else");
+                $scope.flgCrear=true;
+                $scope.regEsfuerzoHoras.idRegistroEsfuerzo = res.data.idRegistroEsfuerzo;
+                $scope.regEsfuerzoHorasidAlumno = $scope.usuario.idUser;
+                $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
+                for (let i = 0; i < $scope.regEsfuerzoHoras.listaCategorias.length; i++) {
+                    $scope.regEsfuerzoHoras.listaCategorias[i].listaRespuestas = []
+                }
+                $scope.hayRegCategoriasActividad = true;
+            }
+
+        })
+    }
+
+    //Como profesor: Agregar una categoria
+    $scope.btnAgregarCategoria = function () {
+        $scope.regEsfuerzo.listaCategorias.push({
+            descripcion: ''
+        });
+    }
+
+    //Como profesor: Quitar una categoria
+    $scope.btnQuitarCategoria = function (categoria) {
+        var pos = $scope.regEsfuerzo.listaCategorias.indexOf(categoria)
+        $scope.regEsfuerzo.listaCategorias.splice(pos, 1)
+    }
+
+    //Como alumno puedo agregar una respuesta a una categoria
+    $scope.btnAgregarRespuesta = function (categoria) {
+        var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
+
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.push({
+            descripcion: '',
+            horasPlanificadas: null,
+            horasReales: null
+        })
+    }
+
+    //Como alumno: Quitar una respuesta de una categoria
+    $scope.btnQuitarRespuesta = function (categoria, respuesta) {
+        var pos = $scope.regEsfuerzoHoras.listaCategorias.indexOf(categoria)
+        var pos2 = $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.indexOf(respuesta);
+        $scope.regEsfuerzoHoras.listaCategorias[pos].listaRespuestas.splice(pos2, 1)
+    }
+
+
     function init() {
         var params = { idHorario: $scope.curso.idhorario }
         serviceCRUD.TypePost('horario/alumnos', params).then(function (res) {
             $scope.listaAl = res.data;
         })
         $scope.mostrar = true;
+        console.dir($scope.actividad);
+        console.dir($scope.flgCrear);
         $scope.listarGrupo();
+        obtenerRegistroHorasSoloCategorias();
+        if($scope.flgCrear) $scope.obtenerRegistroHorasXAlumno();
     }
 
     init();
