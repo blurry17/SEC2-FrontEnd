@@ -1,0 +1,113 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item"><a href="#!actividad">{{actividad.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Comentarios</li>
+    </ol>
+</nav>
+
+
+
+<!-- Vista de Profesor/JP -->
+<div ng-show="vistaProfesor">
+    <h1>Comentarios de los alumnos</h1>
+    <div>
+        <div ng-repeat="comentario in lstComentarios" class="border border-solid"
+            style=" background-color: #e9ecef; margin-bottom: 10px;">
+            <div class="row d-flex justify-content-between">
+
+                <div class="form-group col-md-5">
+                    <label for="exampleFormControlTextarea1">{{comentario.codAlumno}} - {{comentario.nomAlumno}}</label>
+                    <textarea readonly ng-model="comentario.comentario" class="form-control"
+                        id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
+
+                <div class="form-group col-md-5">
+                    <label for="exampleFormControlTextarea1">Su respuesta:</label>
+                    <textarea ng-disabled="comentario.respuesta.length != 0" class="form-control" ng-model="comentario.respuesta" id="exampleFormControlTextarea1"
+                        rows="3" maxlength="200"></textarea>
+                </div>
+                <div class="form-group col-md-2 d-flex justify-content-center align-self-center">
+                    <button ng-show="comentario.respuesta.length == 0" type="button" class="btn btn-success" ng-click="btnGuardarRespuesta(comentario)">Guardar
+                        Respuesta</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Vista de alumno -->
+<div ng-show="!vistaProfesor">
+
+    <!-- Si el alumno aún no envía su comentario -->
+    <div ng-show="!envioComentario && (mostrarPantallaComenta || mostrarPantallaNoComenta)">
+        <div ng-show="noPuedeComentarAun">
+            <form>
+                <div class="d-flex justify-content-center align-self-center row">
+                    <h1>Usted no puede comentar porque aún no ha sido calificado.</h1>
+                    <h1>Por favor, inténtelo más tarde.</h1>
+                </div>
+                <br>
+
+            </form>
+        </div>
+
+        <div ng-show="!noPuedeComentarAun">
+            <form>
+                <div class="d-flex justify-content-center align-self-center row">
+                    <h1>Escriba un comentario...</h1>
+                </div>
+                <br>
+
+                <div class="d-flex justify-content-center align-self-center row">
+                    <div class="form-group col-md-5">
+                        <textarea style="resize: none; background-color: whitesmoke" required
+                            ng-model="comentario.comentario" class="form-control" id="exampleFormControlTextarea1"
+                            rows="4" maxlength="200"></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="d-flex justify-content-center align-self-center row">
+                    <button type="submit" class="btn btn-success" ng-click="btnGuardarComentario()">Enviar
+                        Comentario</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Si el alumno ya envió su comentario -->
+    <div ng-show="envioComentario">
+        <div class="d-flex justify-content-center align-self-center row">
+            <h1>Respuesta del profesor</h1>
+        </div>
+        <br>
+        <div class="row d-flex justify-content-between">
+
+            <div class="col-md-1"></div>
+            <div class="form-group col-md-4">
+                <label for="exampleFormControlTextarea1">Su comentario</label>
+                <textarea style="resize: none; background-color: white" readonly ng-model="verRespuestaProf.comentario"
+                    class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="col-md-1"></div>
+
+            <div class="form-group col-md-4">
+                <label for="exampleFormControlTextarea1">Respondido por: Prof. <strong
+                        style="color: blue">{{verRespuestaProf.nomProfesor}}</strong></label>
+                <textarea style="resize: none; background-color: white" readonly class="form-control"
+                    ng-model="verRespuestaProf.respuesta" id="exampleFormControlTextarea1" rows="3"
+                    maxlength="200"></textarea>
+            </div>
+            <div class="col-md-1"></div>
+
+
+        </div>
+    </div>
+
+</div>

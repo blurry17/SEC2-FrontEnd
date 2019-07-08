@@ -1,0 +1,252 @@
+
+body {
+    font-family: 'Nunito', sans-serif;
+    color: rgb(63, 62, 61);
+    background:	whitesmoke;
+}
+
+p {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+/* a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration:  none;
+    transition: all 0.3s;
+} */
+ 
+/* .navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+} */
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 5px 0;
+}
+
+.dropdown-toggle::after {
+    display:none !important;
+}
+
+.vertical-center {
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
+.horizontal-center {
+    position: absolute;
+    left: 50%;
+    -moz-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.total-center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
+
+.btn-dark{
+    background-color: #06275c;
+    color: whitesmoke;
+}
+.btn-dark:hover{
+    background-color: #021635;
+}
+
+
+/* ---------------------------------------------------
+    TOPBAR STYLE
+----------------------------------------------------- */
+
+/* .topbar{
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    z-index: 991;
+    background-color: whitesmoke;
+    border-bottom: 1px solid #47748b;
+} */
+
+.topbar{
+    /*box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);*/
+    color: white;
+    width: 100%;
+    background-color: #272729 !important
+}
+
+.btn-menu{
+    background-color: #272729;
+    color: whitesmoke
+}
+
+.btn-menu:hover{
+    background-color: #353538;
+    color: whitesmoke
+}
+
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 54px;
+    left: -250px;
+    height: 100vh;
+    z-index: 991;
+    background: rgb(194, 201, 214);
+    color: #30323D;
+    transition: all 0.3s;
+    overflow-y: scroll;
+}
+
+#sidebar.active {
+    left: 0;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 990;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* #sidebar .sidebar-header {
+    padding: 20px;
+    background: whitesmoke;
+} */
+
+/* #sidebar ul.components {
+    padding: 0 0;
+    border-bottom: 1px solid #47748b;
+} */
+
+/* #sidebar ul p {
+    color: #fff;
+    padding: 10px;
+} */
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    border: #001942;
+    border-width: 1px;
+    border-style: none none solid none;
+}
+
+/* #sidebar ul li a:hover {
+    cursor: pointer;
+    color: #001942;
+    background: #fff;
+} */
+
+.menu-item:hover{
+    background-color: rgb(151, 163, 185);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submenu-item:hover{
+    background-color: rgb(219, 219, 219);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: whitesmoke;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: whitesmoke;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    z-index: 990;
+}
+
+.negrita {
+    font-weight: bold
+}

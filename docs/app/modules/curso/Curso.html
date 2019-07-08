@@ -1,0 +1,786 @@
+<div>
+    <h3 style="font-weight: bold">{{curso.codigo + ' ' + curso.nombre + ' [H' + curso.horario + ']'}}</h3>
+    <div class="line"></div>
+    <h2 class="btn btn-link" style="font-size: 2rem" data-toggle="collapse" data-target="#acts">Actividades</h2>
+    <div class="collapse" id="acts">
+        <div class="row justify-content-between">
+            <div class="col-xs-12 col-md-3">
+                <h5 style="display:inline-block"><span class="badge badge-pill badge-success">
+                        <div style="margin: 5px">En curso</div>
+                    </span></h5>
+                <h5 style="display:inline-block"><span class="badge badge-pill badge-warning">
+                        <div style="margin: 5px">Pendiente</div>
+                    </span>
+                </h5>
+                <h5 style="display:inline-block"><span class="badge badge-pill badge-dark">
+                        <div style="margin: 5px">Finalizado</div>
+                    </span></h5>
+            </div>
+            <div ng-show="usuario.profesor" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-success" ng-click="btnAgregarActividad()"><i
+                        class="fas fa-plus"></i>&nbsp;Agregar
+                    actividad</button>
+            </div>
+            <div ng-show="usuario.profesor && !hayRegHorasHorario" class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-info" ng-click="btnCrearRegistroHoras()"><i class="fas fa-plus"></i>&nbsp;Crear
+                    Registro de Horas</button>
+            </div>
+            <div ng-show="(usuario.profesor || usuario.jp) && hayRegHorasHorario"
+                class="col-xs-12 col-sm-8 col-md-5 col-lg-3">
+                <button class="btn btn-info" ng-click="btnVerRegistroHoras()"><i class="fas fa-eye"></i>&nbsp;Ver
+                    Registro
+                    de Horas</button>
+            </div>
+            <div ng-show="!usuario.profesor && !usuario.jp && hayRegHorasHorario && !regHorasIngresado"
+                class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-info" ng-click="btnRegistrarHoras()"><i class="fas fa-plus"></i>&nbsp;Ingresar
+                    Registro de Horas</button>
+            </div>
+            <div ng-show="!usuario.profesor && !usuario.jp && hayRegHorasHorario && regHorasIngresado"
+                class="col-xs-12 col-sm-8 col-md-5 col-lg-3">
+                <button class="btn btn-info" ng-click="btnVerRegistroHorasAlumno()"><i class="fas fa-eye"></i>&nbsp;Ver
+                    Registro
+                    de Horas</button>
+            </div>
+            <div ng-show="usuario.profesor" class="col-xs-12 col-sm-8 col-md-3 col-lg-2">
+                <button class="btn btn-info" ng-click="btnCargarAlu()"><i class="fas fa-file-excel"></i>&nbsp;Cargar
+                    alumnos</button>
+            </div>
+            <div ng-show="usuario.profesor" class="col-xs-12 col-sm-8 col-md-3 col-lg-2">
+                <button class="btn btn-warning" ng-click="btnVerObtenerRevisiones()"><i
+                        class="fas fa-check"></i>&nbsp;Aprobar revisión</button>
+            </div>
+
+
+        </div>
+
+        <div class="row" style="padding-top: 15px">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px"
+                ng-repeat="act in lstActividad">
+                <div ng-class="obtenerColorBorde(act)" style="border-width: 3px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{act.nombre}}&nbsp;<i
+                                ng-class="act.tipo=='I' ? 'fas fa-user' : 'fas fa-users'"></i></h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
+                        <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
+                        <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>
+                    </ul>
+                    <div class="card-body">
+                        <button class="btn btn-primary" title="Ver" ng-click="btnVerActividad(act)"><i
+                                class="fas fa-eye"></i></button>
+                        <button class="btn btn-info" title="Editar" ng-click="btnEditarActividad(act)"
+                            ng-show="enCurso(act) && usuario.profesor"><i class="fas fa-pen"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="line"></div>
+    <h2 class="btn btn-link" style="font-size: 2rem" data-toggle="collapse" data-target="#groups">Grupos</h2>
+    <div class="collapse" id="groups">
+        <div class="row justify-content-between">
+            <div>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-4 col-lg-2">
+                <button class="btn btn-success" ng-click="btnAgregarAgrupacion()" ng-show="!existeAgrupaciones"><i
+                        class="fas fa-plus"></i>&nbspAgregar
+                    agrupación</button>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 15px">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="margin-bottom: 15px"
+                ng-repeat="grupo in lstAgrupaciones">
+                <div class="card text-center border-dark" style="border-width: 3px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{grupo.nombre}}&nbsp<i class="fas fa-users"></i></h5>
+
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <label ng-repeat="alumno in grupo.lstIntegrantes">{{alumno.codigoPucp}} -
+                            {{alumno.nombre}}</label>
+                        <!--<li class="list-group-item" ng-if="usuario.esAlumno">Nota: {{act.nota}}</li>
+                                <li class="list-group-item">Fecha inicio: {{act.fechaInicio}}</li>
+                                <li class="list-group-item">Fecha fin: {{act.fechaFin}}</li>-->
+                    </ul>
+                    <div class="card-body">
+                        <!--<button id="btnVer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom"
+                                    title="Ver" ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
+                                <button class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar"
+                                    ng-click="btnEditarActividad(act)"><i class="fas fa-pen"></i></button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="mdAgregarActividad" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar actividad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+                    La fecha y hora final no puede ser menor o igual a la fecha y hora de inicio
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert2">
+                    El nombre y/o las indicaciones no pueden estar en blanco
+                </div>
+                <form id="formAct" name="formAct" class="needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" ng-model="regAct.nombre" maxlength="25" required>
+                            <div class="invalid-feedback">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Tipo</label>
+                            <select class="form-control custom-select" ng-model="regAct.tipo" ng-init="regAct.tipo='I'">
+                                <option value="I">Individual</option>
+                                <option value="G">Grupal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Indicaciones</label>
+                        <textarea class="form-control" ng-model="regAct.descripcion" maxlength="250"
+                            required></textarea>
+                        <div class="invalid-feedback">
+                            Este campo es requerido.
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label>Fecha inicio</label>
+                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaInicio"
+                                required>
+                            <div class="invalid-feedback">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Hora</label>
+                            <select class="form-control custom-select" ng-model="regAct.horaInicio">
+                                <option value='0'>0</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                                <option value='6'>6</option>
+                                <option value='7'>7</option>
+                                <option value='8'>8</option>
+                                <option value='9'>9</option>
+                                <option value='10'>10</option>
+                                <option value='11'>11</option>
+                                <option value='12'>12</option>
+                                <option value='13'>13</option>
+                                <option value='14'>14</option>
+                                <option value='15'>15</option>
+                                <option value='16'>16</option>
+                                <option value='17'>17</option>
+                                <option value='18'>18</option>
+                                <option value='19'>19</option>
+                                <option value='20'>20</option>
+                                <option value='21'>21</option>
+                                <option value='22'>22</option>
+                                <option value='23'>23</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Minuto</label>
+                            <select class="form-control custom-select" ng-model="regAct.minInicio">
+                                <option value='0'>00</option>
+                                <option value='15'>15</option>
+                                <option value='30'>30</option>
+                                <option value='45'>45</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label>Fecha fin</label>
+                            <input type="date" min="{{hoy}}" class="form-control" ng-model="regAct.fechaFin" required>
+                            <div class="invalid-feedback">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Hora</label>
+                            <select class="form-control custom-select" ng-model="regAct.horaFin">
+                                <option value='0'>0</option>
+                                <option value='1'>1</option>
+                                <option value='2'>2</option>
+                                <option value='3'>3</option>
+                                <option value='4'>4</option>
+                                <option value='5'>5</option>
+                                <option value='6'>6</option>
+                                <option value='7'>7</option>
+                                <option value='8'>8</option>
+                                <option value='9'>9</option>
+                                <option value='10'>10</option>
+                                <option value='11'>11</option>
+                                <option value='12'>12</option>
+                                <option value='13'>13</option>
+                                <option value='14'>14</option>
+                                <option value='15'>15</option>
+                                <option value='16'>16</option>
+                                <option value='17'>17</option>
+                                <option value='18'>18</option>
+                                <option value='19'>19</option>
+                                <option value='20'>20</option>
+                                <option value='21'>21</option>
+                                <option value='22'>22</option>
+                                <option value='23'>23</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Minuto</label>
+                            <select class="form-control custom-select" ng-model="regAct.minFin">
+                                <option value='0'>00</option>
+                                <option value='15'>15</option>
+                                <option value='30'>30</option>
+                                <option value='45'>45</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" ng-model="regAct.flgEntregable">
+                                <label class="form-check-label">
+                                    Tiene entregable
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" ng-model="regAct.flgConfianza">
+                                <label class="form-check-label">
+                                    Permitir al JP publicar las notas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" ng-model="regAct.flgMulticalificable">
+                                <label class="form-check-label">
+                                    Esta actividad será corregida por múltiples profesores.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()" ng-show="nuevo"
+                    ng-disabled="busy">Crear</button>
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarActividad()" ng-show="!nuevo"
+                    ng-disabled="busy">Guardar</button>
+                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdAgregarAgrupacion" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar agrupación</h5>
+                <button type="button" class="close" ng-click="btnNocrearGrupos()" data-dismiss="modal"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="al in lstAluSinGrupos" style="cursor: pointer"
+                                        ng-click="agregarAlu($index,al)">
+                                        <td>{{al.codigoPucp}}</td>
+                                        <td>{{al.nombre}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="text-align: center">
+                        <h1><i class="fas fa-arrow-right"></i></h1>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="al in lstNuevoGrupo">
+                                        <td>{{al.codigoPucp}}</td>
+                                        <td>{{al.nombre}}</td>
+                                        <td>
+                                            <button class="btn btn-danger" ng-click="elimAlu($index,al)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="text-align: center">
+                            <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+                                Debe ingresar un nombre del grupo
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-show="showAlert2">
+                                Grupo Invalido
+                            </div>
+                            <div class="form-group" style="display: inline-block">
+                                <input ng-model="Reg.nomGrupo" class="form-control" placeholder="Nombre del grupo">
+                            </div>
+                            <button type="submit" class="btn btn-primary" ng-click="btnGuardarGrupo()">Guardar
+                                grupo</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80%">Grupo</th>
+                                        <th style="width: 20%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="grupo in lstGrupos">
+                                        <td>
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                data-target="#lst{{grupo.lstAlumnos[0].codigoPucp}}"
+                                                aria-expanded="false" aria-controls="collapseExample">
+                                                {{grupo.nombre}}
+                                            </button>
+                                            <div class="collapse" id="lst{{grupo.lstAlumnos[0].codigoPucp}}">
+                                                <div class="card card-body">
+                                                    <label
+                                                        ng-repeat="al8 in grupo.lstAlumnos">{{al8.codigoPucp +' - '+ al8.nombre + ' ' +al8.apellidoPaterno}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-danger" ng-click="elimGrupo($index, grupo)">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-show="!lstAluSinGrupos.length && !lstNuevoGrupo.length" style="text-align: center">
+                            <button class="btn btn-success" ng-click="btnTerminar()">Terminar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" ng-click="btnNocrearGrupos()" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modal-md modal-dialog" id="mdVerAgrupaciones" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label ng-repeat="a4 in lstVerAgrupacion.lstAlumnos">{{a4.codigoPucp}}</label>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- REGISTRO DE CATEGORIAS COMO PROFESOR -->
+<div class="modal fade modal-md modal-dialog" id="mdRegistroCategorias" tabindex="-1" role="dialog"
+    data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Crear Registro de Horas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" ng-show="showAlert3">
+                    El nombre de la categoría es un campo obligatorio
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert4">
+                    Debe ingresar por lo menos una categoría
+                </div>
+                <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
+                    <div class="col-md-12 form-group">
+                        <button type="button" class="btn btn-success" ng-click="btnAgregarCategoria()"><i
+                                class="fas fa-plus"></i>&nbsp;</button>
+                    </div>
+                    <div ng-repeat="categoria in regEsfuerzo.listaCategorias">
+                        <div class="form-row">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label class="negrita">Categoría</label>
+                                    <input maxlength="50" class="form-control" ng-model="categoria.descripcion" />
+                                    <div class="invalid-feedback">
+                                        Este campo es requerido.
+                                    </div>
+                                </div>
+                                <div class=" form-group btn-group d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger" title="Quitar Categoría"
+                                        ng-click="btnQuitarCategoria(categoria)"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarRegHoras()"
+                    ng-disabled="busy">Crear</button>
+                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- VER REGISTRO DE HORAS COMO PROFESOR -->
+<div class="modal fade modal-md modal-dialog" id="mdVerRegHoras" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver Registro de Horas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-10" style="padding-right: 1%; padding-left: 1%">
+                        <select ng-change="obtenerRegistroHorasXAlumno()" class="form-control custom-select"
+                            ng-model="idalumno" ng-init="idalumno = '0'">
+                            <option value="0">Seleccione</option>
+                            <option ng-repeat="item in listaAl" ng-value="item.idUsuario">
+                                {{item.codigoPucp +" - "+ item.nombre + " " + item.apellidoPaterno}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+
+                        <button class="btn btn-success" ng-click="siguienteAlumno()"><i
+                                class="fas fa-arrow-circle-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group col-md-12">
+
+
+                <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
+                    <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                        <div class="form-row col-md-12">
+                            <div class="form-group col-md-12">
+                                <label class="negrita">Categoría</label>
+                                <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                    ng-model="categoria.descripcion" />
+                                <div class="invalid-feedback">
+                                    Este campo es requerido.
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-repeat="respuesta in categoria.listaRespuestas" style="padding-left: 2%">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-6" style="width: 70px">
+                                    <label class="negrita">Respuesta</label>
+                                    <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                        ng-model="respuesta.descripcion" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="negrita">H. Estim.</label>
+                                    <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasPlanificadas"
+                                        required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                    <div class="invalid-feedback">
+                                        Ingrese un puntaje.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="negrita">H. Reales</label>
+                                    <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasReales" required
+                                        type="text" class="form-control" style="width: 70px" maxlength="2"
+                                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                    <div class="invalid-feedback">
+                                        Ingrese un puntaje.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default " data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- REGISTRO DE HORAS COMO ALUMNO -->
+<div class="modal fade modal-md modal-dialog" id="mdRegHoras" tabindex="-1" role="dialog" data-backdrop="static"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registrar Horas como alumno</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" ng-show="showAlert5">
+                    Debe ingresar por lo menos una respuesta a una categoría
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert6">
+                    El campo Respuesta es obligatorio
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert7">
+                    El campo Horas Estimadas es obligatorio
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="showAlert8">
+                    El campo Horas Reales es obligatorio
+                </div>
+
+                <form id="formActRegHorasAlumno" name="formActRegHorasAlumno" class="needs-validation" novalidate>
+
+                    <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                        <div class="col-md-12 form-group">
+                            <button type="button" class="btn btn-success" ng-click="btnAgregarRespuesta(categoria)"><i
+                                    class="fas fa-plus"></i>&nbsp;</button>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label class="negrita">Categoría</label>
+                                    <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                        ng-model="categoria.descripcion" />
+                                    <div class="invalid-feedback">
+                                        Este campo es requerido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-repeat="respuesta in categoria.listaRespuestas">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-4" style="width: 70px">
+                                    <label class="negrita">Respuesta</label>
+                                    <input ng-disabled="!hayRegHorasHorario" maxlength="50" class="form-control"
+                                        ng-model="respuesta.descripcion" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="negrita">H. Estim.</label>
+                                    <input ng-disabled="!hayRegHorasHorario" ng-model="respuesta.horasPlanificadas"
+                                        required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                    <div class="invalid-feedback">
+                                        Ingrese un puntaje.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="negrita">H. Reales</label>
+                                    <input ng-disabled="!hayRegHorasHorario" ng-model="respuesta.horasReales" required
+                                        type="text" class="form-control" style="width: 70px" maxlength="2"
+                                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                    <div class="invalid-feedback">
+                                        Ingrese un puntaje.
+                                    </div>
+                                </div>
+                                <div class=" form-group btn-group d-flex align-items-end">
+                                    <button type="button" class="btn btn-danger" title="Quitar Respuesta"
+                                        ng-click="btnQuitarRespuesta(categoria, respuesta)"><i
+                                            class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" ng-click="btnGuardarRegHorasAlumno()"
+                    ng-disabled="busy">Guardar</button>
+                <button class="btn btn-default " data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VER REGISTRO DE HORAS COMO ALUMNO -->
+<div class="modal fade modal-md modal-dialog" id="mdVerRegHorasAlumno" tabindex="-1" role="dialog"
+    data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver Registro de Horas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formActRegHoras" name="formActRegHoras" class="needs-validation" novalidate>
+                    <div class="col-md-12 form-group">
+                    </div>
+                    <div ng-repeat="categoria in regEsfuerzoHoras.listaCategorias">
+                        <div class="form-row">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label class="negrita">Categoría</label>
+                                    <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                        ng-model="categoria.descripcion" />
+                                    <div class="invalid-feedback">
+                                        Este campo es requerido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-repeat="respuesta in categoria.listaRespuestas">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-4" style="width: 70px">
+                                    <label class="negrita">Respuesta</label>
+                                    <input ng-disabled="hayRegHorasHorario" maxlength="50" class="form-control"
+                                        ng-model="respuesta.descripcion" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="negrita">H. Estim.</label>
+                                    <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasPlanificadas"
+                                        required type="text" class="form-control" style="width: 70px" maxlength="2"
+                                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                    <div class="invalid-feedback">
+                                        Ingrese un puntaje.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 ">
+                                    <label class="negrita">H. Reales</label>
+                                    <input ng-disabled="hayRegHorasHorario" ng-model="respuesta.horasReales" required
+                                        type="text" class="form-control" style="width: 70px" maxlength="2"
+                                        onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45" />
+                                    <div class="invalid-feedback">
+                                        Ingrese un puntaje.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default " data-dismiss="modal">Salir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mdAdvertenciaAgrupaciones"></div>
+<div class="modal fade" id="mdCargaAlumni" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Carga de alumnos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>Seleccione un archivo Excel para cargar</label>
+                            <input type="file" class="form-control-file" id="fileAl" name="fileAl">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="cargarAlumnos()">Subir</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mdObtenerRevisiones" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aprobar correcciones</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div ng-repeat="act in listaActividadesFeedback">
+                            <div class="form-row col-md-12 d-flex align-items-center">
+
+                                <div class="form-group col-md-10">
+                                    <label>Actividad: {{act.nombre}}</label>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <button data-dismiss="modal" class="btn btn-primary" title="Ver"
+                                        ng-click="btnVerActividad(act)"><i class="fas fa-eye"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+
+            <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+    </div>
+</div>
+</div>

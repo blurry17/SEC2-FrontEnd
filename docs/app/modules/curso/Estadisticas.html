@@ -1,0 +1,100 @@
+<div>
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#!curso">{{curso.nombre}}</a></li>
+        <li class="breadcrumb-item"><a href="#!actividad">{{actividad.nombre}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Estadísticas</li>
+      </ol>
+    </nav>
+  </div>
+  <div>
+    <br />
+    <div  class="row">
+      <div class="form-group col-md-3">
+        <label style="font-size: 120%"><b>Estadísticas de Evaluación</b></label>
+        <table class="table ">
+          <tr>
+            <th class="table-dark">Media:</th>
+            <td>{{mediaS}}</td>
+          </tr>
+          <tr>
+            <th class="table-dark">Desviación:</th>
+            <td>{{desv}}</td>
+          </tr>
+          <tr>
+            <th class="table-dark">% de aprobados:</th>
+            <td>{{porcentaje}}</td>
+          </tr>
+          <tr>
+            <th class="table-dark">Máx. nota:</th>
+            <td>{{notaMaxS}}</td>
+          </tr>
+          <tr>
+            <th class="table-dark">Mín. nota:</th>
+            <td>{{notaMinS}}</td>
+          </tr>
+          <tr>
+            <th class="table-dark">Faltas:</th>
+            <td>{{cantidadF}}</td>
+          </tr>
+        </table>
+      </div>
+      
+      <div ng-show="actividad.tipo=='I'&& usuario.profesor">
+          <div style="float: right" class="row form-group col-md-12" class="table-responsive">
+              <label style="font-size: 120%"><b>Ranking de los mejores alumnos</b></label>
+              <table class="table table-hover">
+                <thead>
+                  <tr class="table-info">
+                    <th style="width: 10%">Código</th>
+                    <th style="width: 80%">Nombres</th>
+                    <th style="width: 10%">Nota</th>
+                  </tr>
+                </thead>
+                        <tbody>
+                            <tr ng-repeat="list in listaR" style="width: 100%">
+                                <td>{{list.codigo}}</td>
+                                <td>{{list.nombre}}</td>
+                                <td>{{list.nota}}</td>
+                              </tr>
+                        </tbody>
+                </table>
+          </div>    
+      </div>
+      <div ng-show="actividad.tipo=='G' && usuario.profesor">
+        <div style="float: right" class="row form-group col-md-12" class="table-responsive">
+            <label style="font-size: 120%"><b>Ranking de los mejores Grupos</b></label>
+            <table class="table table-hover">
+              <thead>
+                <tr class="table-info">
+                  <th style="width: 80%">Grupo</th>
+                  <th style="width: 10%">Nota</th>
+                </tr>
+              </thead>
+                      <tbody>
+                          <tr ng-repeat="list in listaR" style="width: 100%">
+                              <td>{{list.nombre}}</td>
+                              <td>{{list.nota}}</td>
+                            </tr>
+                      </tbody>
+              </table>
+        </div>    
+    </div>
+        
+    </div>
+
+    <div class="row" class="table-responsive">
+        <div>
+          <label style="font-size: 100%"><b>Elegir Grafico:</b></label>
+          <select ng-change=TipoGrafico() class="form-control" ng-model="seleccion">
+            <option value="g">Seleccione una opción</option>
+            <option value="gc">Gráfico Circular</option>
+            <option value="gb">Gráfico de Barras</option>
+          </select>
+        </div>
+        <div ng-show="gc" class="col-md-10 col-sm-15" id="piechart" style="width: 500px; height: 300px; color: whitesmoke "></div>
+        <div ng-show="gb" chart-colors="red" class="col-md-10 col-sm-15" id="barchart_material" style="width: 500px; height: 300px;"></div>
+      </div>
+  </div>
+</div>

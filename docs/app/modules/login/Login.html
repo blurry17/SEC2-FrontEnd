@@ -1,0 +1,42 @@
+﻿<div class="row justify-content-center col-12" style="background-color: whitesmoke; ">
+  <form>
+
+    <div class="form-group" style="padding-top: 15px;padding-bottom: 15px;">
+
+      <div class="row">
+
+        <div class="form-group col-4" style="margin-bottom: 15px; text-align: center">
+          <img src="src/img/logo-fullSEC.png" alt="SEC2Logo" style="width: auto; height: auto; text-shadow: black">
+        </div>
+        <div class="form-group col-8" style="align-content: center; padding-top: 55px">
+          <br>
+          <span
+            style="color: rgb(17, 1, 88);text-shadow:0 0 2px black ; font-size: 35px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"><b>SEC
+              <sup>2</sup></b> </span>
+          <br>
+          <span style="text-shadow:0 0 1px rgb(160, 160, 160)"><b>SISTEMA DE EVALUACION CONTINUA</b> </span>
+
+        </div>
+      </div>
+      <div class="alert alert-danger" role="alert" ng-show="showAlert1">
+        Debe ingresar usuario y contraseña
+      </div>
+      <div class="alert alert-danger" role="alert" ng-show="showAlert2">
+        Usuario o contraseña incorrectos
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" class="form-control" ng-model="email">
+        <small id="emailHelp" class="form-text text-muted">Debe ingresar con su correo PUCP</small>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" class="form-control" ng-model="pass">
+      </div>
+      <div style="text-align: center">
+        <button id="btnLogin" type="submit" class="btn btn-primary" ng-click="btnLogin()">Ingresar</button>
+        <button class="btn btn-default" ng-click="btnForgotPassword()">Olvidé mi contraseña</button>
+      </div>
+    </div>
+  </form>
+</div>

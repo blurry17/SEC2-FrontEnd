@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html ng-app="appFS" lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="src/css/layout.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito&display=swap">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-route.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-cookies.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <title>SEC2 - Sistema de Evaluación Continua</title>
+</head>
+
+<body ng-controller="IndexController" layout="column" ng-cloak>
+
+  <div ng-cloak class="container-fluid">
+
+    <div class="row">
+
+      <nav class="navbar fixed-top topbar" ng-show="showLayout">
+        <button type="button" id="sidebarCollapse" class="btn btn-menu"><i class="fas fa-bars"></i></button>
+        <div>
+          <!-- <img src="src/img/logo-fullSEC.png" alt="SEC2" width="30px" height="45px"> -->
+          <label style="font-size: 1.4rem; font-weight: bold">SEC&nbsp;<sup>2</sup></label>
+        </div>
+
+        <div class="dropdown">
+          <label data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"
+            style="font-size: 100%; cursor: pointer; margin: 0px">{{user.nombre}}&nbsp;<i class="fas fa-user-circle"
+              style="font-size: 150%"></i></label>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" style="cursor: pointer"><i class="fas fa-id-card"></i>&nbsp;Mi Perfil</a>
+            <a class="dropdown-item" style="cursor: pointer" ng-click="btnLogout()"><i
+                class="fas fa-sign-out-alt"></i>&nbsp;Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+
+      <div id="content" style="padding-top: 0px" ng-view></div>
+
+      <nav id="sidebar" ng-show="showLayout">
+        <ul class="list-unstyled components">
+          <li class="menu-item">
+            <a><i class="fas fa-tachometer-alt"></i>&nbspDashboard</a>
+          </li>
+          <li class="active">
+            <a data-target="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+              class="dropdown-toggle menu-item"><i class="fas fa-book"></i>&nbsp;Cursos</a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+              <li ng-click="mostrarCurso(curso)" ng-repeat="curso in lstCursos"><a
+                  class="submenu-item">{{curso.nombre + ' [H' + curso.horario +']'}}</a></li>
+            </ul>
+          </li>
+          <li class="active" ng-show="usuario.superUsuario">
+            <a data-target="#cargamenus" data-toggle="collapse" aria-expanded="false"
+              class="dropdown-toggle menu-item"><i class="fas fa-file-excel"></i>&nbsp;Carga Masiva</a>
+            <ul class="collapse list-unstyled" id="cargamenus">
+              <li ng-click="btnCargaHorarios()"><a class="submenu-item">Horarios</a></li>
+              <li ng-click="btnCargaCursos()"><a class="submenu-item">Cursos</a></li>
+              <li ng-click="btnCargaProfs()"><a class="submenu-item">Profesores/JP</a></li>
+            </ul>
+          </li>
+          <li class="menu-item" ng-show="usuario.superUsuario" ng-click="btnMant()">
+            <a><i class="fas fa-cogs"></i>&nbsp;Mantenimiento</a>
+          </li>
+          <li class="menu-item">
+            <a><i class="fas fa-history"></i>&nbsp;Información Histórica</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+
+  <div class="overlay"></div>
+
+  <script>
+    document.write("<script type='text/javascript' src='app/app.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/index/IndexController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/login/LoginController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/main/MainController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/CursoController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/services/serviceCRUD.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/services/serviceUtil.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/ActividadController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/RubricaController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/CalificacionesController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/EstadisticasController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/ComentariosController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/GruposController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/EncuestaController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/MantenimientoController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/ListarNotasController.js?v=" + Date.now() + "'><\/script>");
+    document.write("<script type='text/javascript' src='app/modules/curso/VerEncuestasController.js?v=" + Date.now() + "'><\/script>");
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+      });
+
+      $('#sidebarCollapse').on('click', function () {
+        if ($('#sidebar').hasClass('active')) {
+          console.dir('hola');
+        } else {
+          $('#sidebar').addClass('active');
+          $('.overlay').addClass('active');
+          $('.collapse.in').toggleClass('in');
+          $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        }
+      });
+    });
+  </script>
+
+  <script>
+    $(document).mouseup(function (e) {
+      var container = $("#sidebar");
+
+      // If the target of the click isn't the container
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        $('#sidebar').removeClass('active');
+        $('.overlay').removeClass('active');
+      }
+    });
+  </script>
+
+  <div class="modal fade" id="mdCargaCursos" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de cursos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileCursos" name="fileCursos">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarCursos()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="mdCargaProfs" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de profesores/JP</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp" ng-change="listarCursos()">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileProfs" name="fileProfs">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarProfs()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="mdCargaHorarios" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Carga de horarios</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label>Especialidad</label>
+                <select class="custom-select" ng-model="idEsp" ng-change="listarCursos()">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="esp.id_especialidad" ng-repeat="esp in lstEsp">{{esp.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                <label>Curso</label>
+                <select class="custom-select" ng-model="idCur" ng-disabled="idEsp=='0'">
+                  <option value="0">Seleccione</option>
+                  <option ng-value="curso.id_curso" ng-repeat="curso in lstCursos">{{curso.nombre}}</option>
+                </select>
+              </div>
+              <div class="form-group col-md-12">
+                Seleccione un archivo Excel para cargar
+              </div>
+            </div>
+          </form>
+          <div>
+            <input type="file" class="form-control-file" id="fileHorarios" name="fileHorarios">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="cargarHorarios()">Subir</button>
+          <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+</html>
