@@ -6,6 +6,7 @@
     $scope.idCur = '0';
     $scope.lstEsp = null;
 
+    $cookies.putObject('flgCrear', 0);
     $scope.mostrarCurso = function (curso) {
         $cookies.putObject('cursoActual', curso);
 
@@ -60,7 +61,6 @@
     $scope.listarCursos = function () {
         var params = { idEspecialidad: $scope.idEsp };
         serviceCRUD.TypePost('mantenimiento/curso_semestre', params).then(function (res) {
-            console.dir(res.data);
             $scope.lstCursos = res.data.listaCursos;
         })
     }

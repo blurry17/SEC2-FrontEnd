@@ -45,6 +45,7 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     $scope.btnGuardarRespuesta = function (comentario) {
         //Obtengo el idAlumno del comentario y lo envio junto a la respuesta
         $scope.respuesta.idAlumno = comentario.idAlumno;
+        $scope.respuesta.respuesta = comentario.respuesta;
         serviceCRUD.TypePost('actividad/responder_comentario_alumno', $scope.respuesta).then(function (response) {
             window.alert("Se guardó la respuesta!")
         })
@@ -54,7 +55,7 @@ app.controller('ComentariosController', function ($rootScope, $scope, $location,
     function obtenerComentarios() {
         var params = { idActividad: $scope.actividad.idActividad }
         serviceCRUD.TypePost('actividad/listar_comentarios', params).then(function (res) {
-            console.dir(res.data)
+            console.dir(res);   
             $scope.lstComentarios = res.data.listaComentarios;
             if (!usuario.profesor) {
                 for (let i = 0; i < $scope.lstComentarios.length; i++) {

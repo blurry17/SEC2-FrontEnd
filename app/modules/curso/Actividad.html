@@ -6,12 +6,10 @@
     </ol>
   </nav><br />
 
-  <div class="form-group col-12" style="padding-left: 15px; padding-bottom: 30px">
-
-    <div>
-      <label class="vertical-center" style="margin-top: 14px;font-size: 210%"><b>{{actividad.nombre}}</b></label>
+  <div class="row" style="padding-left: 15px; padding-bottom: 30px">
+    <div class="col-md-12">
+      <label style="font-size: 180%"><b>{{actividad.nombre}}</b></label>
     </div>
-
     <div class="row" style="float: left; margin-left: 1px;" role="group" aria-label="Basic example">
 
       <button ng-click="btnCalificaciones()" class="btn btn-info" style="margin: 2px;"><i
@@ -36,12 +34,14 @@
             class="fas fa-bell"></i> &nbsp;{{p.nombre}}
         </a>
       </div>
-      <button ng-show="actividad.tipo=='I'"  ng-click="btnEstadisticas()" class="btn btn-info" style="margin: 2px;"><i
+      <button ng-show="actividad.tipo=='I'" ng-click="btnEstadisticas()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-chart-bar"></i>&nbsp;Estadísticas</button>
       <button ng-show="usuario.alumno" ng-click="btnEncuesta()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-bookmark"></i>&nbsp;Encuestas</button>
       <button ng-show="usuario.profesor && actividad.tipo=='G'" ng-click="btnListarNotas()" class="btn btn-info"
         style="margin: 2px;"><i class="fas fa-chart-line"></i>&nbsp;Notas grupales</button>
+      <button ng-show="usuario.profesor && actividad.tipo=='I'" ng-click="btnListarNotas()" class="btn btn-info"
+        style="margin: 2px;"><i class="fas fa-chart-line"></i>&nbsp;Notas Individuales</button>
       <button ng-show="usuario.profesor" ng-click="btnVerEnc()" class="btn btn-info" style="margin: 2px;"><i
           class="fas fa-chart-line"></i>&nbsp;Encuestas</button>
     </div>

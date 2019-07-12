@@ -2,7 +2,6 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.usuario = $cookies.getObject('usuario');
     $rootScope.user = $scope.usuario;
     if ($scope.usuario == undefined) $location.path('/');
-    console.dir($scope.usuario)
     $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
@@ -12,12 +11,14 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
     $scope.mostrar = false;
     $scope.falta = false;
     $scope.idRub = null;
+    $scope.idalumno = 0;
     $scope.profe = $scope.usuario.profesor;
     $scope.notaFinal = null;
     $scope.flgCalificado = null;
     $scope.editar = null;
     $scope.auxNotaNivel = 0;
     $scope.nomRubrica = "";
+    $scope.getColor="";
     $scope.rubrica = {
         flgRubricaEspecial: 0,
         idUsuarioCreador: $scope.usuario.idUser,
@@ -38,17 +39,26 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         timer: 3000
     });
 
-    $scope.btnEditar = function () {
-        $scope.flgCalificado = false;
-        $scope.editar = true;
-    }
-    //sacar de frende de lista aspectos
-    $scope.ObtenerNotas = function () {
+    $scope.siguiente = function () {
+        let i = 0;
+        let encontrado = false;
+        if ($scope.idalumno == 0) {
+            $scope.idalumno = $scope.listaAl[0].idAlumno;
+        } else {
+            for (i; i < $scope.listaAl.length; i++) {
+                if (($scope.listaAl[i].idAlumno == $scope.idalumno) && (encontrado == false)) {
+                    let aux = $scope.listaAl[i + 1].idAlumno;
+                    $scope.idalumno = aux;
+                    encontrado = true;
+                    //$scope.grupo.idGrupal=$scope.listaGrupal[i+1].idGrupo;
+                }
+            }
+        }
         if ($scope.actividad.tipo == "I" || $scope.usuario.alumno) {
             if ($scope.usuario.alumno == 1) {
                 $scope.idalumno = $scope.usuario.idUser;
             }
-            if ($scope.idalumno == '0') return;
+            else if ($scope.idalumno == '0') return;
             $scope.editar = false;
             mostrarEntregables($scope.idalumno);
             var params = {
@@ -57,9 +67,10 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 tipo: 4,
                 idCalificador: $scope.usuario.idUser
             }
-            serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
+            serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {                
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
+                $scope.Calificado = res.data.flgCalificado;
                 $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
                 $scope.falta = res.data.calificacion.flgFalta == 1;
                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
@@ -72,14 +83,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         else {
             if ($scope.idgrupo == '0') return;
             $scope.editar = false;
-            mostrarEntregables($scope.idgrupo);
             var params = {
                 idActividad: $scope.actividad.idActividad,
                 idGrupo: $scope.idgrupo,
                 idJp: $scope.usuario.idUser,
                 idRubrica: $scope.idRub,
             }
-            serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo', params).then(function (res) {
+            serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo', params).then(function (res) {                
                 $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
                 $scope.notaFinal = res.data.calificacion.nota;
                 $scope.flgCalificado = res.data.flgCalificado;
@@ -90,6 +100,143 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     }
                 }
             })
+        }
+    }
+
+    $scope.btnEditar = function () {
+        $scope.flgCalificado = false;
+        $scope.editar = true;
+    }
+    //sacar de frende de lista aspectos
+    $scope.ObtenerNotas = function () {
+        if ($scope.actividad.tipo == "I") {
+            if ($scope.usuario.alumno == 1) {
+                if ($scope.usuario.alumno == 1) {
+                    $scope.idalumno = $scope.usuario.idUser;
+                }
+                if ($scope.idalumno == '0') return;
+                $scope.editar = false;
+                mostrarEntregables($scope.idalumno);
+                var params = {
+                    idAlumno: $scope.idalumno,
+                    idActividad: $scope.actividad.idActividad,
+                    tipo: 4,
+                    idCalificador: $scope.usuario.idUser
+                }
+                serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno_publicada', params).then(function (res) {
+                    
+                    if (res.data.succeed == false) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Aun no ha sido calificado',
+                            type: 'error',
+                            confirmButtonText: 'Ok'
+                        })
+                        $scope.rubrica = null;
+                    } else {
+
+                        $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
+                        $scope.notaFinal = res.data.calificacion.nota;
+                        $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
+                        $scope.falta = res.data.calificacion.flgFalta == 1;
+                        for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
+                            if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
+                                $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
+                            }
+                        }
+                    }
+                })
+
+            } else {
+                if ($scope.usuario.alumno == 1) {
+                    $scope.idalumno = $scope.usuario.idUser;
+                }
+                if ($scope.idalumno == '0') return;
+                $scope.editar = false;
+                mostrarEntregables($scope.idalumno);
+                var params = {
+                    idAlumno: $scope.idalumno,
+                    idActividad: $scope.actividad.idActividad,
+                    tipo: 4,
+                    idCalificador: $scope.usuario.idUser
+                }
+                serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno', params).then(function (res) {
+                    $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
+                    $scope.notaFinal = res.data.calificacion.nota;
+            
+                    $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
+                    $scope.falta = res.data.calificacion.flgFalta == 1;
+                    for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
+                        if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
+                            $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
+                        }
+                    }
+                })
+
+            }
+        }
+        else {
+            if ($scope.idgrupo == '0') return;
+            if ($scope.usuario.alumno == 1) {
+                if ($scope.usuario.alumno == 1) {
+                    $scope.idalumno = $scope.usuario.idUser;
+                }
+                $scope.editar = false;
+                mostrarEntregables($scope.idalumno);
+                var params = {
+                    idActividad: $scope.actividad.idActividad,
+                    idAlumno: $scope.idalumno,
+                    tipo: 4,
+                    idCalificador: $scope.usuario.idUser
+                }
+                console.dir(params);
+                serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno_publicada', params).then(function (res) {
+                    
+                    if (res.data.succeed == false) {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Aun no han sido calificados',
+                            type: 'error',
+                            confirmButtonText: 'Ok'
+                        })
+                        $scope.rubrica = null;
+                    } else {
+
+                        $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
+                        $scope.notaFinal = res.data.calificacion.nota;
+                        $scope.flgCalificado = $scope.usuario.alumno == 1 ? true : res.data.flgCalificado;
+                        $scope.falta = res.data.calificacion.flgFalta == 1;
+                        for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
+                            if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
+                                $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
+                            }
+                        }
+                    }
+                })
+
+            } else {
+                console.dir("puto maricon");
+                $scope.editar = false;
+                mostrarEntregables($scope.idgrupo);
+                var params = {
+                    idActividad: $scope.actividad.idActividad,
+                    idGrupo: $scope.idgrupo,
+                    idJp: $scope.usuario.idUser,
+                    idRubrica: $scope.idRub,
+                }
+                serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo', params).then(function (res) {                    
+                    $scope.rubrica.listaNotaAspectos = res.data.calificacion.listaNotaAspectos;
+                    $scope.notaFinal = res.data.calificacion.nota;
+                    $scope.flgCalificado = res.data.flgCalificado;
+                    $scope.falta = res.data.calificacion.flgFalta == 1;
+                    for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
+                        if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) {
+                            $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
+                        }
+                    }
+                })
+            }
+
         }
     }
 
@@ -468,6 +615,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
             var params = { idActividad: $scope.actividad.idActividad }
             serviceCRUD.TypePost('actividad/alumnos/entregables', params).then(function (res) {
                 $scope.listaAl = res.data.lista;
+                console.dir($scope.listaAl);
             })
             $scope.mostrar = true;
         }
@@ -481,12 +629,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         }
     }
 
-    $scope.btnObtenerRevisiones = function(){
-        var params  = {
+    $scope.btnObtenerRevisiones = function () {
+        var params = {
             idProfesor: $scope.usuario.idUser
         }
         serviceCRUD.TypePost('publicar-notas/obtener_revisiones_profesor', params).then(function (res) {
-            console.dir(res.data);
+            
         })
     }
 
@@ -502,22 +650,25 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
         })
     }
 
-    $scope.btnValidarPuntaje  = function(){
+    $scope.btnValidarPuntaje = function () {
         var params = {
             idProfesor: $scope.usuario.idUser,
             idActividad: $scope.actividad.idActividad
-
         }
-        console.dir(params)
         serviceCRUD.TypePost('publicar-notas/publicar_notas_directo_profesor', params).then(function (res) {
-            if(res.data.succeed == false){
-                console.dir('no se pudo aprobar la calificacion')
-                $('#mdFaltaCalificarTodos').appendTo("body").modal('show');
+            if (res.data.succeed == false) {
+                Swal.fire({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Ocurrió un error al validar los resultados',
+                })
                 return;
             }
-            console.dir(res.data)
-            console.dir('Se aprobo la calificacion correctamente')
-        })    
+            Swal.fire({
+                type: 'success',
+                title: 'Se validaron los resultados correctamente',
+            })
+        })
     }
 
 
@@ -565,7 +716,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                             'Se calificó correctamente.',
                             'success'
                         )
-                        console.dir('2');
+                        
                         for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                             if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion != 3) {
                                 $scope.rubrica.listaNotaAspectos[i].nota = parseInt($scope.rubrica.listaNotaAspectos[i].nota);
@@ -596,23 +747,18 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                                     flgCompleto: 1,
                                 }
-                                console.dir(params);
+                                
                                 serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
                                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
                                     }
                                     $scope.ObtenerNotas();
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
-                                    console.dir('Este es el json de lo que envio')
-                                    console.dir(JSON.stringify(paramsAprobacion))
                                     serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                        console.dir('califique como JP y')
-                                        console.dir('lo mande al servicio de aprobacion pendiente')
-                                        console.dir(JSON.stringify(res))
                                         
                                     })
                                 })
@@ -637,16 +783,12 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     $scope.ObtenerNotas();
 
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
-                                    console.dir('Este es el json de lo que envio')
-                                    console.dir(JSON.stringify(paramsAprobacion))
                                     serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                        console.dir('califique como JP y')
-                                        console.dir('lo mande al servicio de aprobacion pendiente')
-                                        console.dir(JSON.stringify(res))
+                                        
                                     })
                                 })
 
@@ -664,23 +806,20 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                                     flgCompleto: 1,
                                 }
-                                console.dir(JSON.stringify(params));
+                                
                                 serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
                                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
                                     }
                                     $scope.ObtenerNotas();
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
-                                    console.dir('Este es el json de lo que envio')
-                                    console.dir(JSON.stringify(paramsAprobacion))
+                                   
                                     serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                        console.dir(JSON.stringify(res))
-                                        console.dir('califique como JP y')
-                                        console.dir('lo mande al servicio de aprobacion pendiente')
+                                        
                                     })
                                 })
 
@@ -697,24 +836,20 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                     listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                                     flgCompleto: 1,
                                 }
-                                console.dir('Estos son los params que envio');
-                                console.dir(params);
+                                
                                 serviceCRUD.TypePost('actividad/alumnos/editar_nota_grupo', params).then(function (res) {
                                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
                                     }
                                     $scope.ObtenerNotas();
                                     //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                    var paramsAprobacion={
+                                    var paramsAprobacion = {
                                         idActividad: $scope.actividad.idActividad,
                                         idJpReviso: $scope.usuario.idUser
                                     }
-                                    console.dir('Este es el json de lo que envio')
-                                    console.dir(JSON.stringify(paramsAprobacion))
+                                    
                                     serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                        console.dir(JSON.stringify(res))
-                                        console.dir('califique como JP y')
-                                        console.dir('lo mande al servicio de aprobacion pendiente')
+                                        
                                     })
                                 })
 
@@ -766,7 +901,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                         'Se calificó correctamente.',
                         'success'
                     )
-                    console.dir('2');
+                    
                     for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                         if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion != 3) {
                             $scope.rubrica.listaNotaAspectos[i].nota = parseInt($scope.rubrica.listaNotaAspectos[i].nota);
@@ -797,23 +932,20 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                                 flgCompleto: 1,
                             }
-                            console.dir(params);
+                            
                             serviceCRUD.TypePost('actividad/alumnos/calificar', params).then(function (res) {
                                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
-                                console.dir('Este es el json de lo que envio')
-                                console.dir(JSON.stringify(paramsAprobacion))
+                                
                                 serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                    console.dir(JSON.stringify(res))
-                                    console.dir('califique como JP y')
-                                    console.dir('lo mande al servicio de aprobacion pendiente')
+                                   
                                 })
                             })
                         }
@@ -835,16 +967,13 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
-                                console.dir('Este es el json de lo que envio')
-                                console.dir(JSON.stringify(paramsAprobacion))
+                                
                                 serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                    console.dir(JSON.stringify(res))
-                                    console.dir('califique como JP y')
-                                    console.dir('lo mande al servicio de aprobacion pendiente')
+                                    
                                 })
                             })
                         }
@@ -861,23 +990,20 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                                 flgCompleto: 1,
                             }
-                            console.dir(JSON.stringify(params));
+                            
                             serviceCRUD.TypePost('actividad/alumnos/editar_nota', params).then(function (res) {
                                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
-                                console.dir('Este es el json de lo que envio')
-                                console.dir(JSON.stringify(paramsAprobacion))
+                                
                                 serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                    console.dir(JSON.stringify(res))
-                                    console.dir('califique como JP y')
-                                    console.dir('lo mande al servicio de aprobacion pendiente')
+                                    
                                 })
                             })
                         }
@@ -893,24 +1019,20 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                                 listaNotaAspectos: $scope.rubrica.listaNotaAspectos,
                                 flgCompleto: 1,
                             }
-                            console.dir('Estos son los params que envio');
-                            console.dir(params);
+                            
                             serviceCRUD.TypePost('actividad/alumnos/editar_nota_grupo', params).then(function (res) {
                                 for (let i = 0; i < $scope.rubrica.listaNotaAspectos.length; i++) {
                                     if ($scope.rubrica.listaNotaAspectos[i].tipoClasificacion == 3) $scope.rubrica.listaNotaAspectos[i].nota = $scope.rubrica.listaNotaAspectos[i].nota == 1;
                                 }
                                 $scope.ObtenerNotas();
                                 //Si soy JP, debo llamar al servicio de enviar calificacion para ser aprobada por profesor
-                                var paramsAprobacion={
+                                var paramsAprobacion = {
                                     idActividad: $scope.actividad.idActividad,
                                     idJpReviso: $scope.usuario.idUser
                                 }
-                                console.dir('Este es el json de lo que envio')
-                                console.dir(JSON.stringify(paramsAprobacion))
+                                
                                 serviceCRUD.TypePost('publicar-notas/jp_solicitud_publicar', paramsAprobacion).then(function (res) {
-                                    console.dir(JSON.stringify(res))
-                                    console.dir('califique como JP y')
-                                    console.dir('lo mande al servicio de aprobacion pendiente')
+                                    
                                 })
                             })
                         }
