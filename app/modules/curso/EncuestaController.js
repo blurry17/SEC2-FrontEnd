@@ -16,6 +16,7 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
     $scope.falta = false;
     $scope.flgCalificado = false;
     $scope.mostrarAspecto = true;
+    $scope.flgCrear=false;
 
     //Como me encuentro en la actividad, el tipo es 1 y el idActividadUHorario es idActividad
     $scope.regEsfuerzo = {
@@ -350,6 +351,9 @@ app.controller('EncuestaController', function ($rootScope, $scope, $location, $c
                 $scope.regEsfuerzoHoras.idAlumno = $scope.usuario.idUser
                 $scope.regEsfuerzoHoras.listaCategorias = res.data.listaCategorias;
                 $scope.hayRegHorasActividad = true;
+            }
+            if($scope.regEsfuerzoHoras.listaCategorias[0].length==0){
+                $scope.flgCrear=false;
             }
         })
     }

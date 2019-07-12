@@ -182,14 +182,15 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                     $scope.idalumno = $scope.usuario.idUser;
                 }
                 $scope.editar = false;
-                mostrarEntregables($scope.idgrupo);
+                mostrarEntregables($scope.idalumno);
                 var params = {
                     idActividad: $scope.actividad.idActividad,
-                    idGrupo: $scope.idgrupo,
-                    idJp: $scope.usuario.idUser,
-                    idRubrica: $scope.idRub,
+                    idAlumno: $scope.idalumno,
+                    tipo: 4,
+                    idCalificador: $scope.usuario.idUser
                 }
-                serviceCRUD.TypePost('actividad/alumnos/obtener_nota_grupo_publicada', params).then(function (res) {
+                console.dir(params);
+                serviceCRUD.TypePost('actividad/alumnos/obtener_nota_alumno_publicada', params).then(function (res) {
                     
                     if (res.data.succeed == false) {
                         Swal.fire({
@@ -214,6 +215,7 @@ app.controller('CalificacionesController', function ($rootScope, $scope, $locati
                 })
 
             } else {
+                console.dir("puto maricon");
                 $scope.editar = false;
                 mostrarEntregables($scope.idgrupo);
                 var params = {

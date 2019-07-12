@@ -4,6 +4,7 @@ app.controller('VerEncuestasController', function ($rootScope, $scope, $location
     if ($scope.usuario == undefined) $location.path('/');
     $scope.curso = $cookies.getObject("cursoActual");
     $scope.actividad = $cookies.getObject("actividadActual");
+    $rootScope.lstCursos = $cookies.getObject('cursos');
     $scope.hoy = serviceUtil.yyyymmdd(new Date());
     $scope.listaAl = [];
     $scope.listaGrupal = [];
@@ -115,10 +116,7 @@ app.controller('VerEncuestasController', function ($rootScope, $scope, $location
             }
 
         }
-        let aux = {
-            idGrupo: $scope.actividad.idActividad,
-            tipo: 3,
-        }
+        $scope.obtenerCo();
 
     }
 
